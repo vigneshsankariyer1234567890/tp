@@ -7,15 +7,23 @@ import static java.util.Objects.requireNonNull;
  * Guarantees: immutable; is always valid
  */
 public class Remark {
+    public static final String MESSAGE_CONSTRAINTS =
+            "Remarks can take any values, and it can be blank.";
+
     public final String value;
 
     /**
-     *  Constructs an {@code Address}.
-     *  @param remark A remark.
+     * Constructs a {@code Remark}.
+     *
+     * @param remark A valid remark.
      */
     public Remark(String remark) {
         requireNonNull(remark);
         value = remark;
+    }
+
+    public static boolean isValidRemark(String test) {
+        return test != null;
     }
 
     @Override
