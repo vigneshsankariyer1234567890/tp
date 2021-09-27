@@ -1,8 +1,10 @@
-[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/se-edu/addressbook-level3/actions)
+[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/AY2122S1-CS2103T-W15-4/tp/actions)
 
 Teletubbies is a desktop app for telemarketers and their supervisors to manage their customer lists.
 
 ![Ui](docs/images/Ui.png)
+
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 
 * This is **a sample project for Software Engineering (SE) students**.<br>
   Example usages:
