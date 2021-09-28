@@ -175,19 +175,23 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Teletubbies automatically saves the data in the hard disk after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+For exporting the current data as a separate JSON file, refer to [Exporting contacts](#exporting-contacts-export).
 
-AddressBook data are saved as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+### Loading the data
+
+Teletubbies will automatically load up the data from your previous session, allowing you to pick up right where you left off. There is no need to load manually.
+
+For importing a separate JSON file into the application, refer to [Importing contacts](#importing-contacts-import).
+
+### Editing the data
+
+Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubbies-ddmmyyyy-hhmm.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.
+If your changes to the data file makes its format invalid, Teletubbies will discard all data and start with an empty data file at the next run!
 </div>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
