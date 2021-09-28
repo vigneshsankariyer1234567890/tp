@@ -280,7 +280,11 @@ Anne Goh (a telemarketer manager)
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
+* Able to import / export data into an easy-to-view format, useful for those who are not experienced at working with data files such as JSON / CSV / etc.
+* Easy to add/annotate details on users to keep track of user defined metrics
+* Ability to get analytics about metrics for progress-tracking
+
 
 
 ### User stories
