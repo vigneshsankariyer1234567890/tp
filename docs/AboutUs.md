@@ -9,51 +9,37 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Gokul Rajiv
 
-<img src="images/johndoe.png" width="200px">
-
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Project Advisor
-
-### Jane Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
-
-* Role: Team Lead
-* Responsibilities: UI
-
-### Johnny Doe
-
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+<img src="images/gok99.jpg" width="200px">
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: Code Quality, Integration
 
-### Jean Doe
+### Lee Hyung Woon
 
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+<img src="images/lhw.png" width="200px">
 
 * Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Responsibilities: Documentation
 
-### James Doe
+### Ming Ann
 
-<img src="images/johndoe.png" width="200px">
-
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+<img src="images/skythefire.png" width="200px">
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Testing
+
+### Tan Qiya
+
+<img src="images/tanqiya.png" width="200px">
+
+* Role: Developer
+* Responsibilities: Deliverables, Deadlines, Scheduling, Tracking
+
+### Vignesh Sankar Iyer
+
+<img src="images/vigneshsankariyer1234567890.jpg" width="200px">
+
+* Role: Developer
+* Responsibilities: Testing
