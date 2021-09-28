@@ -3,7 +3,9 @@ layout: page
 title: User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+Teletubbies is a **desktop app for telemarketers and their supervisors to manage their customer contacts, optimized for 
+use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can
+type fast, Teletubbies can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
@@ -71,6 +73,13 @@ Shows a message explaning how to access the help page.
 ![help message](images/helpMessage.png)
 
 Format: `help`
+
+### Importing contacts: `import`
+Imports customer data into the application.
+
+Move the customer contact list JSON file to `[JAR file location]/data/filename.json]`
+
+Format: `import f/FILE_NAME`
 
 
 ### Adding a person: `add`
