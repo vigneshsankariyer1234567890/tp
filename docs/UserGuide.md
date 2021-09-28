@@ -82,19 +82,31 @@ Move the customer contact list JSON file to `[JAR file location]/data/filename.j
 Format: `import f/FILE_NAME`
 
 
-### Adding a person: `add`
+### Add Contacts: `add`
 
-Adds a person to the address book.
+Adds a customer to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+The customer’s name and phone number are mandatory. Address and email are optional fields.
+
+
+Format: `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 a/John street, block 123, #01-01 e/johnd@example.com `
+* `add n/Betsy Crowe a/Newgate Prison p/1234567 e/betsycrowe@example.com`
+
+### Delete Contacts : `delete`
+
+Deletes the customer with the specified phone number from the address book.
+
+Format: `delete PHONE_NUMBER`
+
+
+* Deletes the person at the specified `PHONE_NUMBER`.
 
 ### Listing all persons : `list`
 
@@ -136,21 +148,7 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-### Deleting a person : `delete`
-
-Deletes the specified person from the address book.
-
-Format: `delete INDEX`
-
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-
+  
 ### Marking a contact as completed : `complete`
 
 Marks a specified contact from the address book as completed.
@@ -202,14 +200,9 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action | Format, Examples
+Action | Format & Usage Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Export** | `export f/FILE_NAME` <br> e.g, `export f/210928_data`
-**Complete** | `complete INDEX`
-**List** | `list`
-**Help** | `help`
+**add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
+**delete** | `delete PHONE_NUMBER`<br> e.g., `delete 81234567`
+
