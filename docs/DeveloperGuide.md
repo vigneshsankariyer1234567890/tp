@@ -308,7 +308,42 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-*{More to be added}*
+**Use case: Telemarketer flow during a shift**
+
+* System: Teletubbies
+* Use case: UC1 - Telemarketer during a shift
+* Actor: Telemarketer User
+* Preconditions: Telemarketer has obtained a list of customers assigned by Supervisor
+
+**MSS**
+
+1. User moves the JSON file containing customer details assigned to the correct file location.
+2. User starts up the Teletubbies desktop application.
+3. Teletubbies loads contacts.
+4. User copies a customer’s contact number and makes the phone call
+5. User marks the call as completed
+6. Teletubbies updates the file and displays that the call for the customer is completed.
+
+Use case ends.
+
+**Extensions**
+
+* 3a. Teletubbies does not detect a JSON file in the default file location.
+
+  * 3a1. Teletubbies displays a message prompting the Telemarketer to select the JSON file using the app’s file selector interface.
+  * 3a2. Telemarketer selects a JSON file containing the customers’ details
+  * Steps 3a1 to 3a2 are repeated until a valid JSON file is selected
+  
+  Use case resumes from step 4
+  
+* 5a. Teletubbies detects that customer number input is invalid.
+  * 5a1. Teletubbies displays a message to inform Telemarketer about the input error
+  * 5a2. Telemarketer re-enters customer’s number
+  * Steps 5a1 to 5a2 are repeated until a valid customer phone number is input
+  
+  Use case resumes from step 6.
+
+
 
 ### Non-Functional Requirements
 
