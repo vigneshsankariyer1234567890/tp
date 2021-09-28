@@ -3,8 +3,8 @@ layout: page
 title: User Guide
 ---
 
-Teletubbies is a **desktop app for telemarketers and their supervisors to manage their customer contacts, optimized for 
-use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can
+Teletubbies is a **desktop app for telemarketers and their supervisors to manage their customer contacts**, optimized for 
+use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can
 type fast, Teletubbies can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
@@ -16,19 +16,19 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `addressbook.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `teletubbies.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your Teletubbies app.
 
-1. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+1. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
+   ![Ui](images/Ui.png)<br><br>
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * **`list`** : Lists all contacts.
 
-   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to Teletubbies.
 
    * **`delete`**`3` : Deletes the 3rd contact shown in the current list.
 
@@ -82,29 +82,41 @@ Move the customer contact list JSON file to `[JAR file location]/data/filename.j
 Format: `import f/FILE_NAME`
 
 
-### Adding a person: `add`
+### Add Contacts: `add`
 
-Adds a person to the address book.
+Adds a customer to the application.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+The customer’s name and phone number are mandatory. Address and email are optional fields.
+
+
+Format: `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 a/John street, block 123, #01-01 e/johnd@example.com `
+* `add n/Betsy Crowe a/Newgate Prison p/1234567 e/betsycrowe@example.com`
+
+### Delete Contacts : `delete`
+
+Deletes the customer with the specified phone number from the application.
+
+Format: `delete PHONE_NUMBER`
+
+
+* Deletes the person at the specified `PHONE_NUMBER`.
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the application.
 
 Format: `list`
 
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Edits an existing person in the application.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -136,24 +148,10 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
-
-### Deleting a person : `delete`
-
-Deletes the specified person from the address book.
-
-Format: `delete INDEX`
-
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
-
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
-
+  
 ### Marking a contact as completed : `complete`
 
-Marks a specified contact from the address book as completed.
+Marks a specified contact from the application as completed.
 
 Format: `complete INDEX`
 
@@ -165,7 +163,7 @@ Format: `export f/FILE_NAME`
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the application.
 
 Format: `clear`
 
@@ -177,19 +175,23 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Teletubbies automatically saves the data in the hard disk after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+For exporting the current data as a separate JSON file, refer to [Exporting contacts](#exporting-contacts-export).
 
-AddressBook data are saved as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+### Loading the data
+
+Teletubbies will automatically load up the data from your previous session, allowing you to pick up right where you left off. There is no need to load manually.
+
+For importing a separate JSON file into the application, refer to [Importing contacts](#importing-contacts-import).
+
+### Editing the data
+
+Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubbies-ddmmyyyy-hhmm.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.
+If your changes to the data file makes its format invalid, Teletubbies will discard all data and start with an empty data file at the next run!
 </div>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -202,14 +204,9 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action | Format, Examples
+Action | Format & Usage Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Export** | `export f/FILE_NAME` <br> e.g, `export f/210928_data`
-**Complete** | `complete INDEX`
-**List** | `list`
-**Help** | `help`
+**add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
+**delete** | `delete PHONE_NUMBER`<br> e.g., `delete 81234567`
+
