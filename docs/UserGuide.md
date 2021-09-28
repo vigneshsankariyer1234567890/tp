@@ -142,6 +142,12 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+### Marking a contact as completed : `complete`
+
+Marks a specified contact from the address book as completed.
+
+Format: `complete INDEX`
+
 ### Exporting contacts: `export`
 
 Exports customer data from the application to a JSON file in `[JAR file location]/data/filename.json`
@@ -195,5 +201,6 @@ Action | Format, Examples
 **Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Export** | `export f/FILE_NAME` <br> e.g, `export f/210928_data`
+**Complete** | `complete INDEX`
 **List** | `list`
 **Help** | `help`
