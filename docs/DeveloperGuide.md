@@ -291,16 +291,19 @@ Anne Goh (a telemarketer manager)
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
+| Priority | As a …​                              | I want to …​                 | So that I can…​                                                           |
+| -------- | --------------------------------------- | ------------------------------- | ---------------------------------------------------------------------------- |
+| `* * *`  | Telemarketer                            | import the list of customers    | easily view all the contacts I need to call                                  |
+| `* * *`  | Telemarketer                            | export the list of customers    | send the list to my supervisor                                               |
+| `* * *`  | Telemarketing Supervisor                | import the list of customers    | easily view the contacts completion status of my subordinates                |
+| `* * *`  | Telemarketing Supervisor                | export the list of customers    | send the list to my subordinates for them to complete                        |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | save data from current session  | save my current progress to continue during the next session                 |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | load data from previous session | pick up where I left off from my previous session                            |
+| `* * *`  | Telemarketer                            | mark a contact as completed     | see that I have already called a contact successfully                        |
+| `* * *`  | Telemarketing Supervisor                | add a contact                   | add contacts that need to be called by my subordinates                       |
+| `* * *`  | Telemarketing Supervisor                | delete a contact                | remove contacts that no longer need to be tracked or have been added wrongly |
 
-*{More to be added}*
+*{ More to be added as new features are introduced }*
 
 ### Use cases
 
