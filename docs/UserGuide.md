@@ -3,8 +3,8 @@ layout: page
 title: User Guide
 ---
 
-Teletubbies is a **desktop app for telemarketers and their supervisors to manage their customer contacts, optimized for 
-use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can
+Teletubbies is a **desktop app for telemarketers and their supervisors to manage their customer contacts**, optimized for 
+use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can
 type fast, Teletubbies can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
@@ -16,19 +16,19 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `addressbook.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `teletubbies.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for your Teletubbies app.
 
-1. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+1. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
+   ![Ui](images/Ui.png)<br><br>
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * **`list`** : Lists all contacts.
 
-   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to Teletubbies.
 
    * **`delete`**`3` : Deletes the 3rd contact shown in the current list.
 
@@ -84,7 +84,7 @@ Format: `import f/FILE_NAME`
 
 ### Add Contacts: `add`
 
-Adds a customer to the address book.
+Adds a customer to the application.
 
 The customer’s name and phone number are mandatory. Address and email are optional fields.
 
@@ -101,7 +101,7 @@ Examples:
 
 ### Delete Contacts : `delete`
 
-Deletes the customer with the specified phone number from the address book.
+Deletes the customer with the specified phone number from the application.
 
 Format: `delete PHONE_NUMBER`
 
@@ -110,13 +110,13 @@ Format: `delete PHONE_NUMBER`
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of all persons in the application.
 
 Format: `list`
 
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Edits an existing person in the application.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
 
@@ -151,7 +151,7 @@ Examples:
   
 ### Marking a contact as completed : `complete`
 
-Marks a specified contact from the address book as completed.
+Marks a specified contact from the application as completed.
 
 Format: `complete INDEX`
 
@@ -163,7 +163,7 @@ Format: `export f/FILE_NAME`
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the application.
 
 Format: `clear`
 
@@ -175,19 +175,23 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Teletubbies automatically saves the data in the hard disk after any command that changes the data. There is no need to save manually.
 
-### Editing the data file
+For exporting the current data as a separate JSON file, refer to [Exporting contacts](#exporting-contacts-export).
 
-AddressBook data are saved as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+### Loading the data
+
+Teletubbies will automatically load up the data from your previous session, allowing you to pick up right where you left off. There is no need to load manually.
+
+For importing a separate JSON file into the application, refer to [Importing contacts](#importing-contacts-import).
+
+### Editing the data
+
+Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubbies-ddmmyyyy-hhmm.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run.
+If your changes to the data file makes its format invalid, Teletubbies will discard all data and start with an empty data file at the next run!
 </div>
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
