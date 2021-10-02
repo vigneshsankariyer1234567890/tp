@@ -39,7 +39,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Vignesh Sankar Iyer
 
-<img src="images/vigneshsankariyer1234567890.jpg" width="200px">
+<img src="images/vigneshsankariyer1234567890.png" width="200px">
 
 * Role: Developer
 * Responsibilities: Testing
