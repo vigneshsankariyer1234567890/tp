@@ -11,14 +11,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Gokul Rajiv
 
-<img src="images/gok99.jpg" width="200px">
+<img src="images/gok99.png" width="200px">
 
 * Role: Developer
 * Responsibilities: Code Quality, Integration
 
 ### Lee Hyung Woon
 
-<img src="images/lhw.png" width="200px">
+<img src="images/lhw-1.png" width="200px">
 
 * Role: Developer
 * Responsibilities: Documentation
