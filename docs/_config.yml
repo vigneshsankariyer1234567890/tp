@@ -1,5 +1,5 @@
 title: "Teletubbies"
-theme: hacker
+theme: jekyll-theme-hacker
 
 header_pages:
   - UserGuide.md
