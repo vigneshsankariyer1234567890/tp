@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
@@ -15,6 +16,15 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+
+    private static final String COMPLETED_EMOJI = new String(
+            new byte[]{(byte) 0xE2, (byte) 0x9C, (byte) 0x85}, StandardCharsets.UTF_8
+    );
+
+    private static final String UNCOMPLETED_EMOJI = new String(
+            new byte[]{(byte) 0xE2, (byte) 0x9D, (byte) 0x8C}, StandardCharsets.UTF_8
+    );
+
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -54,6 +64,7 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
+        completionStatus.setText(person.getCompletionStatus().status ? COMPLETED_EMOJI : UNCOMPLETED_EMOJI);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
