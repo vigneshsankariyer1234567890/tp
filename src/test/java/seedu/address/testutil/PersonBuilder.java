@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.CompletionStatus;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -25,6 +26,7 @@ public class PersonBuilder {
     private Phone phone;
     private Email email;
     private Address address;
+    private CompletionStatus completionStatus;
     private Set<Tag> tags;
 
     /**
@@ -35,6 +37,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        completionStatus = new CompletionStatus();
         tags = new HashSet<>();
     }
 
@@ -46,6 +49,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        completionStatus = personToCopy.getCompletionStatus();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -90,7 +94,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, phone, email, address, completionStatus, tags);
     }
 
 }
