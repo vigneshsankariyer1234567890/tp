@@ -93,6 +93,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code CompletionStatus} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCompletionStatus(boolean completionStatusBoolean) {
+        this.completionStatus = new CompletionStatus(completionStatusBoolean);
+        return this;
+    }
+
     public Person build() {
         return new Person(name, phone, email, address, completionStatus, tags);
     }
