@@ -46,8 +46,5 @@ public class DoneCommandTest {
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new DoneCommand(INDEX_SECOND_PERSON)));
-
-        // different remark -> returns false
-        assertTrue(standardCommand.equals(new DoneCommand(INDEX_FIRST_PERSON)));
     }
 }

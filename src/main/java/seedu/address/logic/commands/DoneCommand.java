@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.CompletionStatus;
 
 public class DoneCommand extends Command {
 
@@ -18,13 +19,15 @@ public class DoneCommand extends Command {
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d";
 
     private final Index index;
+    private final CompletionStatus completionStatus;
 
     /**
      * @param index of the person in the filtered person list to edit the remark
      */
     public DoneCommand(Index index) {
-        requireAllNonNull();
+        requireAllNonNull(index);
         this.index = index;
+        this.completionStatus = new CompletionStatus(true);
     }
 
     @Override
@@ -46,6 +49,6 @@ public class DoneCommand extends Command {
 
         // state check
         DoneCommand e = (DoneCommand) other;
-        return index.equals(e.index);
+        return index.equals(e.index) && (this.completionStatus.equals(e.completionStatus));
     }
 }
