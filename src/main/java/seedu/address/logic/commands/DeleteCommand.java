@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -24,13 +23,7 @@ public class DeleteCommand extends Command {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
-//    private final Index targetIndex;
-
     private final Phone targetPhone;
-
-//    public DeleteCommand(Index targetIndex) {
-//        this.targetIndex = targetIndex;
-//    }
 
     public DeleteCommand(Phone targetPhone) {
         this.targetPhone = targetPhone;
