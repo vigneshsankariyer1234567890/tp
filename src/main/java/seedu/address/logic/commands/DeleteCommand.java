@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Person;
@@ -33,12 +34,13 @@ public class DeleteCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        // TODO: Return error message if Teletubbies does not contain the given phone number
-        // if (targetIndex.getZeroBased() >= lastShownList.size()) {
-        //     throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        // }
-
         List<Person> list = model.getAddressBook().getPersonList();
+        int matches = (int) list.stream().filter(p -> p.getPhone().equals(targetPhone)).count();
+
+        if (matches == 0) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_PHONE_NUMBER);
+        }
+
         Person personToDelete = list.stream().filter(p -> p.getPhone().equals(targetPhone))
                 .findFirst().get();
         model.deletePerson(personToDelete);
