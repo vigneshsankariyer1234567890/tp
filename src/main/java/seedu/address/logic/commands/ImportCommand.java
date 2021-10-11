@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -19,7 +18,7 @@ import seedu.address.storage.JsonSerializableAddressBook;
 public class ImportCommand extends Command {
     public static final String COMMAND_WORD = "import";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + "Click File -> Import in the menu bar and select file "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " Click File -> Import in the menu bar and select file "
             + "to import.";
     public static final String MESSAGE_SUCCESS = "Contacts imported successfully.";
     public static final String MESSAGE_FILE_NOT_FOUND = "Data file not found. Will be starting with sample contacts";
@@ -45,11 +44,14 @@ public class ImportCommand extends Command {
             addressBookOptional = readAddressBook(filePath);
             newContacts = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
             model.setAddressBook(newContacts);
-            return new CommandResult(addressBookOptional.isPresent() ? MESSAGE_SUCCESS : MESSAGE_FILE_NOT_FOUND);
+            if (!addressBookOptional.isPresent()) {
+                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
+            }
+            return new CommandResult(MESSAGE_SUCCESS);
         } catch (DataConversionException e) {
             newContacts = new AddressBook();
             model.setAddressBook(newContacts);
-            return new CommandResult(MESSAGE_INCORRECT_FORMAT);
+            throw new CommandException(MESSAGE_INCORRECT_FORMAT);
         }
     }
 
