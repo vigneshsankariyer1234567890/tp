@@ -10,7 +10,7 @@ import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
 /**
- * Sets the name of the address book user.
+ * Sets the name and role of the address book user.
  */
 public class ProfileCommand extends Command {
 
@@ -31,7 +31,7 @@ public class ProfileCommand extends Command {
     private final UserProfile userProfile;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates a ProfileCommand to add the specified {@code UserProfile}
      */
     public ProfileCommand(UserProfile userProfile) {
         requireNonNull(userProfile);
