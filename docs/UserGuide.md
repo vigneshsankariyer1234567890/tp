@@ -70,17 +70,16 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
 Shows a message explaning how to access the help page.
 
-![help message](images/helpMessage.png)
+![help message](images/userGuide/helpMessage.png)
 
 Format: `help`
 
-### Importing contacts: `import`
+### Importing contacts
 Imports customer data into the application.
 
-Move the customer contact list JSON file to `[JAR file location]/data/filename.json]`
+In the top menu bar, click `File -> Import` to browse and select your customer contacts JSON file. After selecting the file to import, click `open` and the file's contacts will be listed in the app if the file is properly formatted.
 
-Format: `import f/FILE_NAME`
-
+![import_file](images/userGuide/importFile.jpg)
 
 ### Add Contacts: `add`
 
@@ -147,7 +146,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
+  ![result for 'find alex david'](images/userGuide/findAlexDavidResult.png)
   
 ### Marking a contact as completed : `complete`
 
