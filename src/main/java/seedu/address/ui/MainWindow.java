@@ -1,5 +1,8 @@
 package seedu.address.ui;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -9,6 +12,7 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
@@ -161,6 +165,22 @@ public class MainWindow extends UiPart<Stage> {
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
+    }
+
+    /**
+     * Imports contacts from file.
+     */
+    @FXML
+    private void handleImport() throws CommandException, ParseException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Import Contacts File");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if (file != null) {
+            if (file.exists()) {
+                logic.execute("import " + file.getPath());
+            }
+        }
     }
 
     public PersonListPanel getPersonListPanel() {
