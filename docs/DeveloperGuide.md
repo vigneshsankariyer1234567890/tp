@@ -281,28 +281,32 @@ Anne Goh (a telemarketer manager)
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
+<br>
+
 **Value proposition**:
 * Able to import / export data into an easy-to-view format, useful for those who are not experienced at working with data files such as JSON / CSV / etc.
 * Easy to add/annotate details on users to keep track of user defined metrics
 * Ability to get analytics about metrics for progress-tracking
 
-
+<br>
 
 ### User stories
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​                              | I want to …​                 | So that I can…​                                                           |
-| -------- | --------------------------------------- | ------------------------------- | ---------------------------------------------------------------------------- |
-| `* * *`  | Telemarketer                            | import the list of customers    | easily view all the contacts I need to call                                  |
-| `* * *`  | Telemarketer                            | export the list of customers    | send the list to my supervisor                                               |
-| `* * *`  | Telemarketing Supervisor                | import the list of customers    | easily view the contacts completion status of my subordinates                |
-| `* * *`  | Telemarketing Supervisor                | export the list of customers    | send the list to my subordinates for them to complete                        |
-| `* * *`  | Telemarketer / Telemarketing Supervisor | save data from current session  | save my current progress to continue during the next session                 |
-| `* * *`  | Telemarketer / Telemarketing Supervisor | load data from previous session | pick up where I left off from my previous session                            |
-| `* * *`  | Telemarketer                            | mark a contact as completed     | see that I have already called a contact successfully                        |
-| `* * *`  | Telemarketing Supervisor                | add a contact                   | add contacts that need to be called by my subordinates                       |
-| `* * *`  | Telemarketing Supervisor                | delete a contact                | remove contacts that no longer need to be tracked or have been added wrongly |
+| Priority | As a …​                              | I want to …​                  | So that I can…​                                                           |
+| -------- | --------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------- |
+| `* * *`  | Telemarketer                            | import the list of customers     | easily view all the contacts I need to call                                  |
+| `* * *`  | Telemarketer                            | export the list of customers     | send the list to my supervisor                                               |
+| `* * *`  | Telemarketing Supervisor                | import the list of customers     | easily view the contacts completion status of my subordinates                |
+| `* * *`  | Telemarketing Supervisor                | export the list of customers     | send the list to my subordinates for them to complete                        |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | save data from current session   | save my current progress to continue during the next session                 |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | load data from previous session  | pick up where I left off from my previous session                            |
+| `* * *`  | Telemarketer                            | indicate my name under 'profile' | identify myself in progress reports for my supervisor                        |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | indicate my role under 'profile' | get access to the functionalities that cater to my specific job              |
+| `* * *`  | Telemarketer                            | mark a contact as completed      | see that I have already called a contact successfully                        |
+| `* * *`  | Telemarketing Supervisor                | add a contact                    | add contacts that need to be called by my subordinates                       |
+| `* * *`  | Telemarketing Supervisor                | delete a contact                 | remove contacts that no longer need to be tracked or have been added wrongly |
 
 *{ More to be added as new features are introduced }*
 

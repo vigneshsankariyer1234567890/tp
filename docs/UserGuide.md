@@ -81,6 +81,16 @@ Move the customer contact list JSON file to `[JAR file location]/data/filename.j
 
 Format: `import f/FILE_NAME`
 
+### Setting profile details: `profile`
+Sets the name and role of the application user.
+
+Both fields are mandatory, and the role can only be either "Telemarketer" or "Supervisor".
+
+Format: `add n/NAME r/ROLE`
+
+Examples:
+* `profile n/David Wong r/Telemarketer`
+* `profile n/Anne Goh r/Supervisor`
 
 ### Add Contacts: `add`
 
