@@ -16,25 +16,25 @@ public class UserProfile {
      * Constructs a {@code UserProfile} with no name.
      */
     public UserProfile() {
-        this.name = null;
-        this.role = null;
-    }
-
-    /**
-     * Constructs a {@code UserProfile} with the specified name.
-     */
-    public UserProfile(String name) {
-        this.name = name;
+        this.name = "";
         this.role = null;
     }
 
     /**
      * Constructs a {@code UserProfile} with the specified name and role.
      */
-//    public UserProfile(String name, Role userRole) {
-//        this.name = name;
-//        this.role = userRole;
-//    }
+    public UserProfile(String name, Role userRole) {
+        this.name = name;
+        this.role = userRole;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Role getRole() {
+        return role;
+    }
 
     @Override
     public boolean equals(Object other) {
