@@ -4,26 +4,48 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
+import seedu.address.commons.util.ThrowingConsumer;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.ui.MainWindow;
+
 /**
  * Represents the result of a command execution.
  */
 public class CommandResult {
 
+    /**
+     * UiEffects that commands can have on the UI
+     */
+    public enum UiEffect {
+        SHOW_HELP, // Help information should be shown to the user.
+        EXIT, // The application should exit.
+        EXPORT, // The application should export data
+        IMPORT, // The application should import data
+        NONE
+    }
+    private final ThrowingConsumer<MainWindow> uiConsumer;
+    private final UiEffect uiEffect;
     private final String feedbackToUser;
 
-    /** Help information should be shown to the user. */
-    private final boolean showHelp;
-
-    /** The application should exit. */
-    private final boolean exit;
+    /**
+     * Constructs a {@code CommandResult} with the specified fields.
+     *
+     * @param feedbackToUser String feedback to be displayed to user
+     * @param uiEffect type of uiEffect from command
+     * @param uiConsumer consumer of MainWindow for command to interact
+     *                   with ui
+     */
+    public CommandResult(String feedbackToUser, UiEffect uiEffect, ThrowingConsumer<MainWindow> uiConsumer) {
+        this.feedbackToUser = requireNonNull(feedbackToUser);
+        this.uiEffect = uiEffect;
+        this.uiConsumer = uiConsumer;
+    }
 
     /**
      * Constructs a {@code CommandResult} with the specified fields.
      */
-    public CommandResult(String feedbackToUser, boolean showHelp, boolean exit) {
-        this.feedbackToUser = requireNonNull(feedbackToUser);
-        this.showHelp = showHelp;
-        this.exit = exit;
+    public CommandResult(String feedbackToUser, UiEffect uiEffect) {
+        this(feedbackToUser, uiEffect, mainWindow -> {});
     }
 
     /**
@@ -31,19 +53,22 @@ public class CommandResult {
      * and other fields set to their default value.
      */
     public CommandResult(String feedbackToUser) {
-        this(feedbackToUser, false, false);
+        this(feedbackToUser, UiEffect.NONE);
     }
 
     public String getFeedbackToUser() {
         return feedbackToUser;
     }
 
-    public boolean isShowHelp() {
-        return showHelp;
-    }
-
-    public boolean isExit() {
-        return exit;
+    /**
+     * Execute uiConsumer if result has a uiEffect
+     *
+     * @param mainWindow reference to app's ui window
+     */
+    public void executeUiEffect(MainWindow mainWindow) throws CommandException {
+        if (!uiEffect.equals(UiEffect.NONE)) {
+            this.uiConsumer.accept(mainWindow);
+        }
     }
 
     @Override
@@ -59,13 +84,12 @@ public class CommandResult {
 
         CommandResult otherCommandResult = (CommandResult) other;
         return feedbackToUser.equals(otherCommandResult.feedbackToUser)
-                && showHelp == otherCommandResult.showHelp
-                && exit == otherCommandResult.exit;
+                && uiEffect.equals(otherCommandResult.uiEffect);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(feedbackToUser, showHelp, exit);
+        return Objects.hash(feedbackToUser, uiEffect);
     }
 
 }

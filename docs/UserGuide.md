@@ -157,9 +157,14 @@ Format: `complete INDEX`
 
 ### Exporting contacts: `export`
 
-Exports customer data from the application to a JSON file in `[JAR file location]/data/filename.json`
+Exports customer data from the application to a JSON file in desired specified
+folder selected from the file selector window.
 
-Format: `export f/FILE_NAME`
+Format: `export [t/ tag ...]`
+
+Examples:
+`export t/ friends family` will export all contacts containing BOTH the
+tags friends and family to the desired file location.
 
 ### Clearing all entries : `clear`
 
