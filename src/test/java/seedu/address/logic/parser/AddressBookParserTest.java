@@ -100,9 +100,8 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_profile() throws Exception {
-        assertTrue(parser.parseCommand(ProfileCommand.COMMAND_WORD) instanceof ProfileCommand);
-        ProfileCommand command = (ProfileCommand) parser.parseCommand(ProfileCommand.COMMAND_WORD + " "
-                + "n/Name r/Telemarketer");
+        ProfileCommand command = (ProfileCommand) parser.parseCommand(
+                ProfileCommand.COMMAND_WORD + " n/Name r/Telemarketer");
         assertEquals(new ProfileCommand(new UserProfile("Name", UserProfile.Role.TELEMARKETER)), command);
     }
 
