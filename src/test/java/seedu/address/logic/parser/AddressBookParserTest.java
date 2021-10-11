@@ -95,7 +95,8 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD) instanceof ExportCommand);
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD + " \t hi") instanceof ExportCommand);
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD + " ignore") instanceof ExportCommand);
-    
+    }
+
     @Test
     public void parseCommand_done() throws Exception {
         DoneCommand command = (DoneCommand) parser.parseCommand(DoneCommand.COMMAND_WORD + " "
