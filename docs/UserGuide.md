@@ -171,9 +171,14 @@ Format: `complete INDEX`
 
 ### Exporting contacts: `export`
 
-Exports customer data from the application to a JSON file in `[JAR file location]/data/filename.json`
+Exports customer data from the application to a JSON file in desired specified
+folder selected from the file selector window.
 
-Format: `export f/FILE_NAME`
+Format: `export [t/ tag ...]`
+
+Examples:
+`export t/ friends family` will export all contacts containing BOTH the
+tags friends and family to the desired file location.
 
 ### Clearing all entries : `clear`
 
@@ -220,7 +225,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 Action | Format & Usage Examples
 --------|------------------
-**Export** | `export f/FILE_NAME` <br> e.g, `export f/210928_data`
+**export** | `export [t/TAGS...]` <br> e.g, `export t/friends family`
 **add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
 **delete** | `delete PHONE_NUMBER`<br> e.g., `delete 81234567`
 
