@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.commons.core.UserProfile;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -25,6 +26,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ProfileCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
@@ -119,6 +121,13 @@ public class AddressBookParserTest {
                 + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DoneCommand(INDEX_FIRST_PERSON), command);
 
+    }
+
+    @Test
+    public void parseCommand_profile() throws Exception {
+        ProfileCommand command = (ProfileCommand) parser.parseCommand(
+                ProfileCommand.COMMAND_WORD + " n/Name r/Telemarketer");
+        assertEquals(new ProfileCommand(new UserProfile("Name", UserProfile.Role.TELEMARKETER)), command);
     }
 
     @Test

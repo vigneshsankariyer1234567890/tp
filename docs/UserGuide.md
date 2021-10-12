@@ -83,6 +83,17 @@ Alternatively, click `File -> Import` in the top menu bar to open the file selec
 
 ![import_file](images/userGuide/importFile.jpg)
 
+### Setting profile details: `profile`
+Sets the name and role of the application user.
+
+Both fields are mandatory, and the role can only be either "Telemarketer" or "Supervisor".
+
+Format: `profile n/NAME r/ROLE`
+
+Examples:
+* `profile n/David Wong r/Telemarketer`
+* `profile n/Anne Goh r/Supervisor`
+
 ### Add Contacts: `add`
 
 Adds a customer to the application.
@@ -226,4 +237,5 @@ Action | Format & Usage Examples
 **export** | `export [t/TAGS...]` <br> e.g, `export t/friends family`
 **add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
 **delete** | `delete PHONE_NUMBER`<br> `delete INDEX`<br> e.g., `delete p/81234567, delete i/1`
+**profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
 
