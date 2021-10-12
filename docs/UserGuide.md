@@ -225,7 +225,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 Action | Format & Usage Examples
 --------|------------------
-**Export** | `export f/FILE_NAME` <br> e.g, `export f/210928_data`
+**export** | `export [t/TAGS...]` <br> e.g, `export t/friends family`
 **add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
 **delete** | `delete PHONE_NUMBER`<br> e.g., `delete 81234567`
 

@@ -20,7 +20,6 @@ class ExportCommandParserTest {
 
     @Test
     void parse_validArgs_returnsExportCommand() throws ParseException {
-        System.out.println();
         assertEquals(parser.parse(" t/ 1     2 3"), parser.parse(" t/ 1 2 3"));
     }
 
