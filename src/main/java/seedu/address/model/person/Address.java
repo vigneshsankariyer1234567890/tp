@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.logic.parser.CliSyntax.DEFAULT_ADDRESS;
 
 /**
  * Represents a Person's address in the address book.
@@ -28,6 +29,13 @@ public class Address {
         requireNonNull(address);
         checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
         value = address;
+    }
+
+    /**
+     * Returns if an address is present.
+     */
+    public boolean isPresent() {
+        return !value.equals(DEFAULT_ADDRESS);
     }
 
     /**
