@@ -16,6 +16,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -197,6 +198,10 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    @FXML
+    public void handleExport() throws CommandException, ParseException {
+        this.executeCommand(ExportCommand.COMMAND_WORD);
+    }
 
     public PersonListPanel getPersonListPanel() {
         return personListPanel;
