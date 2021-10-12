@@ -42,7 +42,7 @@ public class ProfileCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        UserPrefs editedUserPrefs = new UserPrefs();
+        UserPrefs editedUserPrefs = (UserPrefs) model.getUserPrefs();
         editedUserPrefs.setUserProfile(userProfile);
         model.setUserPrefs(editedUserPrefs);
 
