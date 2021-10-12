@@ -3,7 +3,6 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -31,7 +30,8 @@ public class ImportCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         return new CommandResult(MESSAGE_SUCCESS, CommandResult.UiEffect.IMPORT, mainWindow -> {
             try {
-                File fileToImport = mainWindow.handleFileChooser("Import Contacts File", MainWindow.FileSelectType.OPEN);
+                File fileToImport = mainWindow.handleFileChooser("Import Contacts File",
+                        MainWindow.FileSelectType.OPEN);
                 requireNonNull(fileToImport);
 
                 Path filePath = fileToImport.toPath();
