@@ -74,10 +74,12 @@ Shows a message explaning how to access the help page.
 
 Format: `help`
 
-### Importing contacts
-Imports customer data into the application.
+### Importing contacts : `import`
+Imports customer data into the application from a JSON file selected from the file selector window.
 
-In the top menu bar, click `File -> Import` to browse and select your customer contacts JSON file. After selecting the file to import, click `open` and the file's contacts will be listed in the app if the file is properly formatted.
+Format: `import`
+
+Alternatively, click `File -> Import` in the top menu bar to open the file selector window. 
 
 ![import_file](images/userGuide/importFile.jpg)
 
@@ -161,12 +163,6 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/userGuide/findAlexDavidResult.png)
-  
-### Marking a contact as completed : `complete`
-
-Marks a specified contact from the application as completed.
-
-Format: `complete INDEX`
 
 ### Exporting contacts: `export`
 
