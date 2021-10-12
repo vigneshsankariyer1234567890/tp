@@ -17,6 +17,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -166,7 +167,6 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-
     /**
      * FileChooser selection type
      */
@@ -196,6 +196,11 @@ public class MainWindow extends UiPart<Stage> {
         default:
             return null;
         }
+    }
+
+    @FXML
+    public void handleImport() throws CommandException, ParseException {
+        this.executeCommand(ImportCommand.COMMAND_WORD);
     }
 
     @FXML
