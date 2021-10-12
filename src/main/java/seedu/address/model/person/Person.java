@@ -129,7 +129,6 @@ public class Person {
             builder.append("; Address: ")
                     .append(getAddress());
         }
-  
         builder.append(" Completed: ")
                .append(getCompletionStatus());
 
