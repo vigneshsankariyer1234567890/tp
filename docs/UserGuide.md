@@ -70,16 +70,18 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
 Shows a message explaning how to access the help page.
 
-![help message](images/helpMessage.png)
+![help message](images/userGuide/helpMessage.png)
 
 Format: `help`
 
-### Importing contacts: `import`
-Imports customer data into the application.
+### Importing contacts : `import`
+Imports customer data into the application from a JSON file selected from the file selector window.
 
-Move the customer contact list JSON file to `[JAR file location]/data/filename.json]`
+Format: `import`
 
-Format: `import f/FILE_NAME`
+Alternatively, click `File -> Import` in the top menu bar to open the file selector window. 
+
+![import_file](images/userGuide/importFile.jpg)
 
 ### Setting profile details: `profile`
 Sets the name and role of the application user.
@@ -111,12 +113,15 @@ Examples:
 
 ### Delete Contacts : `delete`
 
-Deletes the customer with the specified phone number from the application.
+Deletes the specified customer from the application.
 
-Format: `delete PHONE_NUMBER`
+Format: `delete p/PHONE_NUMBER or delete i/INDEX`
 
 
-* Deletes the person at the specified `PHONE_NUMBER`.
+* Deletes the person at the specified `PHONE_NUMBER` or `INDEX`.
+* The phone number must be associated with a customer in the application.  
+* The index refers to the index number shown in the displayed person list.
+* The index must be a positive integer 1, 2, 3, …​
 
 ### Listing all persons : `list`
 
@@ -171,19 +176,18 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-  
-### Marking a contact as completed : `complete`
-
-Marks a specified contact from the application as completed.
-
-Format: `complete INDEX`
+  ![result for 'find alex david'](images/userGuide/findAlexDavidResult.png)
 
 ### Exporting contacts: `export`
 
-Exports customer data from the application to a JSON file in `[JAR file location]/data/filename.json`
+Exports customer data from the application to a JSON file in desired specified
+folder selected from the file selector window.
 
-Format: `export f/FILE_NAME`
+Format: `export [t/ tag ...]`
+
+Examples:
+`export t/ friends family` will export all contacts containing BOTH the
+tags friends and family to the desired file location.
 
 ### Clearing all entries : `clear`
 
@@ -230,8 +234,8 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 Action | Format & Usage Examples
 --------|------------------
-**Export** | `export f/FILE_NAME` <br> e.g, `export f/210928_data`
+**export** | `export [t/TAGS...]` <br> e.g, `export t/friends family`
 **add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
-**delete** | `delete PHONE_NUMBER`<br> e.g., `delete 81234567`
+**delete** | `delete PHONE_NUMBER`<br> `delete INDEX`<br> e.g., `delete p/81234567, delete i/1`
 **profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
 
