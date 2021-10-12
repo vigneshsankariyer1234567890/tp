@@ -86,7 +86,7 @@ Sets the name and role of the application user.
 
 Both fields are mandatory, and the role can only be either "Telemarketer" or "Supervisor".
 
-Format: `add n/NAME r/ROLE`
+Format: `profile n/NAME r/ROLE`
 
 Examples:
 * `profile n/David Wong r/Telemarketer`
@@ -233,4 +233,5 @@ Action | Format & Usage Examples
 **Export** | `export f/FILE_NAME` <br> e.g, `export f/210928_data`
 **add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
 **delete** | `delete PHONE_NUMBER`<br> e.g., `delete 81234567`
+**profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
 
