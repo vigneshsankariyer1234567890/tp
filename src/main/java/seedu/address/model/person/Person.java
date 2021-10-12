@@ -22,17 +22,20 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final CompletionStatus completionStatus;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, CompletionStatus completionStatus,
+                  Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.completionStatus = completionStatus;
         this.tags.addAll(tags);
     }
 
@@ -50,6 +53,14 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    /**
+     * Returns an immutable CompletionStatus
+     * @return CompletionStatus
+     */
+    public CompletionStatus getCompletionStatus() {
+        return completionStatus;
     }
 
     /**
@@ -92,6 +103,7 @@ public class Person {
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
+                && otherPerson.getCompletionStatus().equals(getCompletionStatus())
                 && otherPerson.getTags().equals(getTags());
     }
 
@@ -117,6 +129,9 @@ public class Person {
             builder.append("; Address: ")
                     .append(getAddress());
         }
+  
+        builder.append(" Completed: ")
+               .append(getCompletionStatus());
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {
