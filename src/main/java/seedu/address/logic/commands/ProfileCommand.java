@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ROLE;
 import seedu.address.commons.core.UserProfile;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.UserPrefs;
 
 /**
  * Sets the name and role of the address book user.
