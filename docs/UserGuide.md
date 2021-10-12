@@ -101,12 +101,15 @@ Examples:
 
 ### Delete Contacts : `delete`
 
-Deletes the customer with the specified phone number from the application.
+Deletes the specified customer from the application.
 
-Format: `delete PHONE_NUMBER`
+Format: `delete p/PHONE_NUMBER or delete i/INDEX`
 
 
-* Deletes the person at the specified `PHONE_NUMBER`.
+* Deletes the person at the specified `PHONE_NUMBER` or `INDEX`.
+* The phone number must be associated with a customer in the application.  
+* The index refers to the index number shown in the displayed person list.
+* The index must be a positive integer 1, 2, 3, …​
 
 ### Listing all persons : `list`
 
@@ -227,5 +230,5 @@ Action | Format & Usage Examples
 --------|------------------
 **export** | `export [t/TAGS...]` <br> e.g, `export t/friends family`
 **add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
-**delete** | `delete PHONE_NUMBER`<br> e.g., `delete 81234567`
+**delete** | `delete PHONE_NUMBER`<br> `delete INDEX`<br> e.g., `delete p/81234567, delete i/1`
 
