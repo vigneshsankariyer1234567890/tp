@@ -35,8 +35,8 @@ public class ExportCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        String feedbackMessage = MESSAGE_SUCCESS + "\n" +
-                (tags.isEmpty() ? "All contacts exported" : "Exported tags: " + tags);
+        String feedbackMessage = MESSAGE_SUCCESS + "\n"
+                + (tags.isEmpty() ? "All contacts exported" : "Exported tags: " + tags);
 
         return new CommandResult(feedbackMessage, CommandResult.UiEffect.EXPORT, mainWindow -> {
             File fileToSave = mainWindow.handleFileChooser("Export Contacts File",
