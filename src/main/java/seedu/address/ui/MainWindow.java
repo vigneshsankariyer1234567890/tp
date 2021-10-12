@@ -16,6 +16,8 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ExportCommand;
+import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -157,7 +159,7 @@ public class MainWindow extends UiPart<Stage> {
      * Closes the application.
      */
     @FXML
-    private void handleExit() {
+    public void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
@@ -166,19 +168,44 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Imports contacts from file.
+     * FileChooser selection type
+     */
+    public enum FileSelectType {
+        OPEN, SAVE
+    }
+
+    /**
+     * Opens a FileChooser window of specified
+     * selection type
+     *
+     * @param windowTitle Title of FileChooser window
+     * @param selectType Type of selection for FileChooser
+     * @return chosen File
      */
     @FXML
-    private void handleImport() throws CommandException, ParseException {
+    public File handleFileChooser(String windowTitle, FileSelectType selectType) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Import Contacts File");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
-        File file = fileChooser.showOpenDialog(primaryStage);
-        if (file != null) {
-            if (file.exists()) {
-                logic.execute("import " + file.getPath());
-            }
+        fileChooser.setTitle(windowTitle);
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+        switch(selectType) {
+        case OPEN:
+            return fileChooser.showOpenDialog(primaryStage);
+        case SAVE:
+            return fileChooser.showSaveDialog(primaryStage);
+        default:
+            return null;
         }
+    }
+
+    @FXML
+    public void handleImport() throws CommandException, ParseException {
+        this.executeCommand(ImportCommand.COMMAND_WORD);
+    }
+
+    @FXML
+    public void handleExport() throws CommandException, ParseException {
+        this.executeCommand(ExportCommand.COMMAND_WORD);
     }
 
     public PersonListPanel getPersonListPanel() {
@@ -194,15 +221,9 @@ public class MainWindow extends UiPart<Stage> {
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
+
+            commandResult.executeUiEffect(this);
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-
-            if (commandResult.isShowHelp()) {
-                handleHelp();
-            }
-
-            if (commandResult.isExit()) {
-                handleExit();
-            }
 
             return commandResult;
         } catch (CommandException | ParseException e) {
