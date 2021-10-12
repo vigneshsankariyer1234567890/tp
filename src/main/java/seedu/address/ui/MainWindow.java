@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.io.File;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -9,11 +10,13 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -155,12 +158,49 @@ public class MainWindow extends UiPart<Stage> {
      * Closes the application.
      */
     @FXML
-    private void handleExit() {
+    public void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
+    }
+
+
+    /**
+     * FileChooser selection type
+     */
+    public enum FileSelectType {
+        OPEN, SAVE
+    }
+
+    /**
+     * Opens a FileChooser window of specified
+     * selection type
+     *
+     * @param windowTitle Title of FileChooser window
+     * @param selectType Type of selection for FileChooser
+     * @return chosen File
+     */
+    @FXML
+    public File handleFileChooser(String windowTitle, FileSelectType selectType) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(windowTitle);
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+        switch(selectType) {
+        case OPEN:
+            return fileChooser.showOpenDialog(primaryStage);
+        case SAVE:
+            return fileChooser.showSaveDialog(primaryStage);
+        default:
+            return null;
+        }
+    }
+
+    @FXML
+    public void handleExport() throws CommandException, ParseException {
+        this.executeCommand(ExportCommand.COMMAND_WORD);
     }
 
     public PersonListPanel getPersonListPanel() {
@@ -176,15 +216,9 @@ public class MainWindow extends UiPart<Stage> {
         try {
             CommandResult commandResult = logic.execute(commandText);
             logger.info("Result: " + commandResult.getFeedbackToUser());
+
+            commandResult.executeUiEffect(this);
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-
-            if (commandResult.isShowHelp()) {
-                handleHelp();
-            }
-
-            if (commandResult.isExit()) {
-                handleExit();
-            }
 
             return commandResult;
         } catch (CommandException | ParseException e) {
