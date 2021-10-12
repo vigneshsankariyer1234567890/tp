@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;
 
+import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ThrowingConsumer;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.ui.MainWindow;
@@ -67,7 +68,11 @@ public class CommandResult {
      */
     public void executeUiEffect(MainWindow mainWindow) throws CommandException {
         if (!uiEffect.equals(UiEffect.NONE)) {
-            this.uiConsumer.accept(mainWindow);
+            try {
+                this.uiConsumer.accept(mainWindow);
+            } catch (DataConversionException e) {
+                throw new CommandException(ImportCommand.MESSAGE_INCORRECT_FORMAT);
+            }
         }
     }
 
