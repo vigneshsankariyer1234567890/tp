@@ -41,10 +41,7 @@ public class ProfileCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-
-        UserPrefs editedUserPrefs = (UserPrefs) model.getUserPrefs();
-        editedUserPrefs.setUserProfile(userProfile);
-        model.setUserPrefs(editedUserPrefs);
+        model.setUserProfile(userProfile);
 
         return new CommandResult(String.format(MESSAGE_PROFILE_SUCCESS, userProfile));
     }
