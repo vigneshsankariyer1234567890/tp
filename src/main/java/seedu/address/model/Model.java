@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.UserProfile;
 import seedu.address.model.person.Person;
 
 /**
@@ -23,6 +24,16 @@ public interface Model {
      * Returns the user prefs.
      */
     ReadOnlyUserPrefs getUserPrefs();
+
+    /**
+     * Replaces user profile data with the data in {@code userProfile}.
+     */
+    void setUserProfile(UserProfile userProfile);
+
+    /**
+     * Returns the user profile.
+     */
+    UserProfile getUserProfile();
 
     /**
      * Returns the user prefs' GUI settings.
