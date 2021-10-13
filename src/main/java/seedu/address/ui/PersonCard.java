@@ -62,8 +62,19 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
+
+        if (person.getAddress().isPresent()) {
+            address.setText(person.getAddress().value);
+        } else {
+            address.setManaged(false);
+        }
+
+        if (person.getEmail().isPresent()) {
+            email.setText(person.getEmail().value);
+        } else {
+            email.setManaged(false);
+        }
+
         completionStatus.setText(person.getCompletionStatus().status ? COMPLETED_EMOJI : UNCOMPLETED_EMOJI);
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.UserProfile;
 import seedu.address.model.person.Person;
 
 /**
@@ -52,6 +53,17 @@ public class ModelManager implements Model {
     @Override
     public ReadOnlyUserPrefs getUserPrefs() {
         return userPrefs;
+    }
+
+    @Override
+    public void setUserProfile(UserProfile userProfile) {
+        requireNonNull(userProfile);
+        this.userPrefs.setUserProfile(userProfile);
+    }
+
+    @Override
+    public UserProfile getUserProfile() {
+        return userPrefs.getUserProfile();
     }
 
     @Override
