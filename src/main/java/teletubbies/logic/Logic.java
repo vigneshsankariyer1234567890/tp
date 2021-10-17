@@ -7,9 +7,9 @@ import teletubbies.commons.core.GuiSettings;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.exceptions.ParseException;
+import teletubbies.model.Model;
 import teletubbies.model.ReadOnlyAddressBook;
 import teletubbies.model.person.Person;
-import teletubbies.model.Model;
 
 /**
  * API of the Logic component

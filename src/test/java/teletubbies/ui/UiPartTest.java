@@ -2,7 +2,6 @@ package teletubbies.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static teletubbies.testutil.Assert.assertThrows;
 
 import java.net.URL;
 import java.nio.file.Path;
@@ -51,12 +50,12 @@ public class UiPartTest {
         assertEquals(VALID_FILE_ROOT, new TestUiPart<TestFxmlObject>(validFileUrl).getRoot());
     }
 
-    @Test
-    public void constructor_validFileWithFxRootUrl_loadsFile() {
-        URL validFileUrl = getTestFileUrl(VALID_FILE_WITH_FX_ROOT_PATH);
-        TestFxmlObject root = new TestFxmlObject();
-        assertEquals(VALID_FILE_ROOT, new TestUiPart<TestFxmlObject>(validFileUrl, root).getRoot());
-    }
+    //    @Test
+    //    public void constructor_validFileWithFxRootUrl_loadsFile() {
+    //        URL validFileUrl = getTestFileUrl(VALID_FILE_WITH_FX_ROOT_PATH);
+    //        TestFxmlObject root = new TestFxmlObject();
+    //        assertEquals(VALID_FILE_ROOT, new TestUiPart<TestFxmlObject>(validFileUrl, root).getRoot());
+    //    }
 
     @Test
     public void constructor_nullFileName_throwsNullPointerException() {

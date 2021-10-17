@@ -1,10 +1,9 @@
 package teletubbies.model.person;
 
-import teletubbies.commons.util.AppUtil;
-
 import static java.util.Objects.requireNonNull;
-import static teletubbies.commons.util.AppUtil.checkArgument;
 import static teletubbies.logic.parser.CliSyntax.DEFAULT_ADDRESS;
+
+import teletubbies.commons.util.AppUtil;
 
 /**
  * Represents a Person's address in the address book.

@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static teletubbies.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static teletubbies.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_PHONE_NUMBER;
 import static teletubbies.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static teletubbies.testutil.Assert.assertThrows;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import teletubbies.logic.commands.AddCommand;
 import teletubbies.logic.commands.CommandResult;
+import teletubbies.logic.commands.CommandTestUtil;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.exceptions.ParseException;
@@ -26,9 +26,8 @@ import teletubbies.model.person.Person;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.storage.JsonUserPrefsStorage;
 import teletubbies.storage.StorageManager;
-import teletubbies.testutil.PersonBuilder;
-import teletubbies.logic.commands.CommandTestUtil;
 import teletubbies.testutil.Assert;
+import teletubbies.testutil.PersonBuilder;
 import teletubbies.testutil.TypicalPersons;
 
 public class LogicManagerTest {
@@ -86,8 +85,8 @@ public class LogicManagerTest {
         logic = new LogicManager(model, storage);
 
         // Execute add command
-        String addCommand = AddCommand.COMMAND_WORD + CommandTestUtil.NAME_DESC_AMY + CommandTestUtil.PHONE_DESC_AMY + CommandTestUtil.EMAIL_DESC_AMY
-                + CommandTestUtil.ADDRESS_DESC_AMY;
+        String addCommand = AddCommand.COMMAND_WORD + CommandTestUtil.NAME_DESC_AMY + CommandTestUtil.PHONE_DESC_AMY
+                + CommandTestUtil.EMAIL_DESC_AMY + CommandTestUtil.ADDRESS_DESC_AMY;
         Person expectedPerson = new PersonBuilder(TypicalPersons.AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);

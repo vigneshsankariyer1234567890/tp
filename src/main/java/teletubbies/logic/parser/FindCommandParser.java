@@ -2,10 +2,10 @@ package teletubbies.logic.parser;
 
 import java.util.Arrays;
 
+import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.FindCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.NameContainsKeywordsPredicate;
-import teletubbies.commons.core.Messages;
 
 /**
  * Parses input arguments and creates a new FindCommand object

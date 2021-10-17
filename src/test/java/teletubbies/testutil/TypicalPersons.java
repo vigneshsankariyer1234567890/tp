@@ -1,5 +1,16 @@
 package teletubbies.testutil;
 
+import static teletubbies.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,7 +18,6 @@ import java.util.List;
 import teletubbies.logic.parser.CliSyntax;
 import teletubbies.model.AddressBook;
 import teletubbies.model.person.Person;
-import teletubbies.logic.commands.CommandTestUtil;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
@@ -39,15 +49,15 @@ public class TypicalPersons {
     public static final Person IDA = new PersonBuilder().withName("Ida Mueller").withPhone("8482131")
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
-    // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Person AMY = new PersonBuilder().withName(CommandTestUtil.VALID_NAME_AMY).withPhone(CommandTestUtil.VALID_PHONE_AMY)
-            .withEmail(CommandTestUtil.VALID_EMAIL_AMY).withAddress(CommandTestUtil.VALID_ADDRESS_AMY).withTags(CommandTestUtil.VALID_TAG_FRIEND).build();
-    public static final Person NO_EMAIL_AMY = new PersonBuilder().withName(CommandTestUtil.VALID_NAME_AMY).withPhone(CommandTestUtil.VALID_PHONE_AMY)
-            .withEmail(CliSyntax.DEFAULT_EMAIL).withAddress(CommandTestUtil.VALID_ADDRESS_AMY).withTags(CommandTestUtil.VALID_TAG_FRIEND).build();
-    public static final Person NO_ADDRESS_AMY = new PersonBuilder().withName(CommandTestUtil.VALID_NAME_AMY).withPhone(CommandTestUtil.VALID_PHONE_AMY)
-            .withEmail(CommandTestUtil.VALID_EMAIL_AMY).withAddress(CliSyntax.DEFAULT_ADDRESS).withTags(CommandTestUtil.VALID_TAG_FRIEND).build();
-    public static final Person BOB = new PersonBuilder().withName(CommandTestUtil.VALID_NAME_BOB).withPhone(CommandTestUtil.VALID_PHONE_BOB)
-            .withEmail(CommandTestUtil.VALID_EMAIL_BOB).withAddress(CommandTestUtil.VALID_ADDRESS_BOB).withTags(CommandTestUtil.VALID_TAG_HUSBAND, CommandTestUtil.VALID_TAG_FRIEND)
+    // Manually added - Person's details found in {@code
+    public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+    public static final Person NO_EMAIL_AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+            .withEmail(CliSyntax.DEFAULT_EMAIL).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
+    public static final Person NO_ADDRESS_AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
+            .withEmail(VALID_EMAIL_AMY).withAddress(CliSyntax.DEFAULT_ADDRESS).withTags(VALID_TAG_FRIEND).build();
+    public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER

@@ -1,16 +1,15 @@
 package teletubbies.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static teletubbies.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Iterator;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import teletubbies.commons.util.CollectionUtil;
 import teletubbies.model.person.exceptions.DuplicatePersonException;
 import teletubbies.model.person.exceptions.PersonNotFoundException;
-import teletubbies.commons.util.CollectionUtil;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.

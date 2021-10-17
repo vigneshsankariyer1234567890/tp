@@ -2,7 +2,6 @@ package teletubbies.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static teletubbies.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
-import static teletubbies.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;

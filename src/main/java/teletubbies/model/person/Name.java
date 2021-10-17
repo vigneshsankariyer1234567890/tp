@@ -1,9 +1,8 @@
 package teletubbies.model.person;
 
-import teletubbies.commons.util.AppUtil;
-
 import static java.util.Objects.requireNonNull;
-import static teletubbies.commons.util.AppUtil.checkArgument;
+
+import teletubbies.commons.util.AppUtil;
 
 /**
  * Represents a Person's name in the address book.

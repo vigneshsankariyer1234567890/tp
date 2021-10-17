@@ -3,6 +3,7 @@ package teletubbies.logic.parser;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.AddCommand;
 import teletubbies.logic.commands.ClearCommand;
 import teletubbies.logic.commands.Command;
@@ -17,7 +18,6 @@ import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.ProfileCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
-import teletubbies.commons.core.Messages;
 
 /**
  * Parses user input.

@@ -1,9 +1,8 @@
 package teletubbies.model.tag;
 
-import teletubbies.commons.util.AppUtil;
-
 import static java.util.Objects.requireNonNull;
-import static teletubbies.commons.util.AppUtil.checkArgument;
+
+import teletubbies.commons.util.AppUtil;
 
 /**
  * Represents a Tag in the address book.

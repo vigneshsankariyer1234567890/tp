@@ -2,10 +2,10 @@ package teletubbies.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.index.Index;
 import teletubbies.logic.commands.DoneCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
-import teletubbies.commons.core.Messages;
 
 /**
  * Parses input arguments and creates a new {@code DoneCommand} object

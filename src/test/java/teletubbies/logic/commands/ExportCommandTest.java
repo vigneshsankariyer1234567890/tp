@@ -2,7 +2,6 @@ package teletubbies.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static teletubbies.testutil.Assert.assertThrows;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,17 +1,16 @@
 package teletubbies.logic.commands;
 
-import static teletubbies.commons.util.CollectionUtil.requireAllNonNull;
 import static teletubbies.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
 
 import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.index.Index;
+import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.person.CompletionStatus;
 import teletubbies.model.person.Person;
-import teletubbies.commons.util.CollectionUtil;
 
 public class DoneCommand extends Command {
 

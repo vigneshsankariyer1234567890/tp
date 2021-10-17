@@ -2,9 +2,9 @@ package teletubbies.logic.parser;
 
 import org.junit.jupiter.api.Test;
 
+import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.ProfileCommand;
-import teletubbies.commons.core.Messages;
 
 class ProfileCommandParserTest {
     private ProfileCommandParser parser = new ProfileCommandParser();

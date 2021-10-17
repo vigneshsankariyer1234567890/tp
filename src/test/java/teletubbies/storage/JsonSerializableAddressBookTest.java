@@ -1,7 +1,6 @@
 package teletubbies.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static teletubbies.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,8 +10,8 @@ import org.junit.jupiter.api.Test;
 import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.commons.util.JsonUtil;
 import teletubbies.model.AddressBook;
-import teletubbies.testutil.TypicalPersons;
 import teletubbies.testutil.Assert;
+import teletubbies.testutil.TypicalPersons;
 
 public class JsonSerializableAddressBookTest {
 

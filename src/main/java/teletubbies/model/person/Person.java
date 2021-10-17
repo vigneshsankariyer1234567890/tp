@@ -1,14 +1,12 @@
 package teletubbies.model.person;
 
-import static teletubbies.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import teletubbies.model.tag.Tag;
 import teletubbies.commons.util.CollectionUtil;
+import teletubbies.model.tag.Tag;
 
 /**
  * Represents a Person in the address book.

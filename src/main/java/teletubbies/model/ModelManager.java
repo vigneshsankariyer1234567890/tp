@@ -1,7 +1,6 @@
 package teletubbies.model;
 
 import static java.util.Objects.requireNonNull;
-import static teletubbies.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
 import java.util.function.Predicate;
@@ -12,8 +11,8 @@ import javafx.collections.transformation.FilteredList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.core.UserProfile;
-import teletubbies.model.person.Person;
 import teletubbies.commons.util.CollectionUtil;
+import teletubbies.model.person.Person;
 
 /**
  * Represents the in-memory model of the address book data.

@@ -3,6 +3,7 @@ package teletubbies.logic.parser;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.AddCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.Address;
@@ -12,7 +13,6 @@ import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
 import teletubbies.model.tag.Tag;
-import teletubbies.commons.core.Messages;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -26,7 +26,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_PHONE, CliSyntax.PREFIX_EMAIL, CliSyntax.PREFIX_ADDRESS, CliSyntax.PREFIX_TAG);
+                ArgumentTokenizer.tokenize(args, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_PHONE, CliSyntax.PREFIX_EMAIL,
+                        CliSyntax.PREFIX_ADDRESS, CliSyntax.PREFIX_TAG);
 
         if (!arePrefixesPresent(argMultimap, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_PHONE)
                 || !argMultimap.getPreamble().isEmpty()) {

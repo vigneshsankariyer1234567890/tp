@@ -2,7 +2,7 @@ package teletubbies.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static teletubbies.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static teletubbies.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
@@ -26,10 +26,10 @@ public class DoneCommandTest {
 
     @Test
     public void execute_completedUnfilteredList_success() {
-        Person firstPerson = model.getFilteredPersonList().get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased());
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(firstPerson).withCompletionStatus(true).build();
 
-        DoneCommand doneCommand = new DoneCommand(TypicalIndexes.INDEX_FIRST_PERSON);
+        DoneCommand doneCommand = new DoneCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(DoneCommand.MESSAGE_COMPLETED_SUCCESS, editedPerson);
 
@@ -41,13 +41,13 @@ public class DoneCommandTest {
 
     @Test
     public void execute_filteredList_success() {
-        CommandTestUtil.showPersonAtIndex(model, TypicalIndexes.INDEX_FIRST_PERSON);
+        CommandTestUtil.showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
-        Person firstPerson = model.getFilteredPersonList().get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(TypicalIndexes.INDEX_FIRST_PERSON.getZeroBased()))
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
                 .withCompletionStatus(true).build();
 
-        DoneCommand doneCommand = new DoneCommand(TypicalIndexes.INDEX_FIRST_PERSON);
+        DoneCommand doneCommand = new DoneCommand(INDEX_FIRST_PERSON);
 
         String expectedMessage = String.format(DoneCommand.MESSAGE_COMPLETED_SUCCESS, editedPerson);
 
@@ -67,7 +67,7 @@ public class DoneCommandTest {
 
     @Test
     public void execute_invalidPersonIndexFilteredList_failure() {
-        CommandTestUtil.showPersonAtIndex(model, TypicalIndexes.INDEX_FIRST_PERSON);
+        CommandTestUtil.showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index outOfBoundIndex = TypicalIndexes.INDEX_SECOND_PERSON;
         // ensures that outOfBoundIndex is still in bounds of address book list
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
@@ -78,10 +78,10 @@ public class DoneCommandTest {
 
     @Test
     public void equals() {
-        final DoneCommand standardCommand = new DoneCommand(TypicalIndexes.INDEX_FIRST_PERSON);
+        final DoneCommand standardCommand = new DoneCommand(INDEX_FIRST_PERSON);
 
         // same values -> returns true
-        DoneCommand commandWithSameValues = new DoneCommand(TypicalIndexes.INDEX_FIRST_PERSON);
+        DoneCommand commandWithSameValues = new DoneCommand(INDEX_FIRST_PERSON);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true

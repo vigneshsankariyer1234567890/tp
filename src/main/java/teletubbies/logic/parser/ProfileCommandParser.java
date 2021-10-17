@@ -1,11 +1,12 @@
 package teletubbies.logic.parser;
 
+import static teletubbies.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.stream.Stream;
 
 import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.ProfileCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
-import teletubbies.commons.core.Messages;
 
 /**
  * Parses input arguments and creates a new ProfileCommand object
@@ -23,7 +24,7 @@ public class ProfileCommandParser implements Parser<ProfileCommand> {
 
         if (!arePrefixesPresent(argMultimap, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_ROLE)
                 || !argMultimap.getPreamble().isEmpty()) {
-            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ProfileCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProfileCommand.MESSAGE_USAGE));
         }
 
         try {

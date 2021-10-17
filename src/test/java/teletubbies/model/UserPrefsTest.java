@@ -1,8 +1,7 @@
 package teletubbies.model;
 
-import static teletubbies.testutil.Assert.assertThrows;
-
 import org.junit.jupiter.api.Test;
+
 import teletubbies.testutil.Assert;
 
 public class UserPrefsTest {

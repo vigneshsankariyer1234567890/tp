@@ -4,8 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.exceptions.CommandException;
-import teletubbies.model.Model;
 import teletubbies.logic.parser.CliSyntax;
+import teletubbies.model.Model;
 
 /**
  * Sets the name and role of the address book user.
