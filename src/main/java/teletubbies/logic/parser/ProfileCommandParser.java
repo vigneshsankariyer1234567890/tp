@@ -1,6 +1,8 @@
 package teletubbies.logic.parser;
 
 import static teletubbies.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_ROLE;
 
 import java.util.stream.Stream;
 
@@ -20,9 +22,9 @@ public class ProfileCommandParser implements Parser<ProfileCommand> {
      */
     public ProfileCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_ROLE);
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_ROLE);
 
-        if (!arePrefixesPresent(argMultimap, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_ROLE)
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ROLE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProfileCommand.MESSAGE_USAGE));
         }
@@ -45,8 +47,8 @@ public class ProfileCommandParser implements Parser<ProfileCommand> {
      */
     private UserProfile getUserProfileFromArgs(ArgumentMultimap argMultimap) throws ParseException {
         try {
-            String name = argMultimap.getValue(CliSyntax.PREFIX_NAME).get();
-            String roleString = argMultimap.getValue(CliSyntax.PREFIX_ROLE).get();
+            String name = argMultimap.getValue(PREFIX_NAME).get();
+            String roleString = argMultimap.getValue(PREFIX_ROLE).get();
             String upperCaseRoleString = roleString.toUpperCase();
             UserProfile.Role role = UserProfile.Role.valueOf(upperCaseRoleString);
             return new UserProfile(name, role);
