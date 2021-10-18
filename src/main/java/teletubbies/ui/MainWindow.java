@@ -215,7 +215,7 @@ public class MainWindow extends UiPart<Stage> {
     /**
      * Executes the command and returns the result.
      *
-     * @see Logic#execute(String)
+     * @see teletubbies.logic.Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
