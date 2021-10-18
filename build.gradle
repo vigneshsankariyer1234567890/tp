@@ -25,6 +25,14 @@ test {
     finalizedBy jacocoTestReport
 }
 
+task installLocalGitHook(type: Copy){
+    from new File(rootProject.rootDir, 'scripts/pre-push')
+    into { new File(rootProject.rootDir, '.git/hooks')}
+    fileMode 0775
+}
+
+build.dependsOn installLocalGitHook
+
 task coverage(type: JacocoReport) {
     sourceDirectories.from files(sourceSets.main.allSource.srcDirs)
     classDirectories.from files(sourceSets.main.output)
