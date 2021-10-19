@@ -9,7 +9,6 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 * SE-EDU Remark Command tutorial: https://nus-cs2103-ay2122s1.github.io/tp/tutorials/AddRemark.html
 
 --------------------------------------------------------------------------------------------------------------------
@@ -242,7 +241,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Documentation, logging, testing, configuration, dev-ops**
+## **Documentation, Logging, Testing, Configuration, Dev-ops**
 
 * [Documentation guide](Documentation.md)
 * [Testing guide](Testing.md)
@@ -256,12 +255,12 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-#### **Target user profile**:
+#### **Target User Profiles**:
 
-David Wong (a low-level telemarketer)
-* works as a telemarketer from home and makes internet calls on his computer
+David Wong
+* works as a **telemarketer** from home and makes internet calls on his computer
 * likes to import/export data quickly
-* wants to mark the contacts that he has successfully marketed to OR already called
+* wants to mark the contacts that he has already called and/or successfully marketed to 
 * wants to keep track of his progress
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -271,8 +270,8 @@ David Wong (a low-level telemarketer)
 
 <br>
 
-Anne Goh (a telemarketer manager)
-* works as a telemarketing supervisor from home
+Anne Goh 
+* works as a **telemarketing supervisor** from home
 * needs to pass lists of contacts to her subordinates to contact
 * wants to monitor the performance of her subordinates
 * has a need to manage a significant number of contacts
@@ -283,7 +282,7 @@ Anne Goh (a telemarketer manager)
 
 <br>
 
-**Value proposition**:
+####**Value proposition**:
 * Able to import / export data into an easy-to-view format, useful for those who are not experienced at working with data files such as JSON / CSV / etc.
 * Easy to add/annotate details on users to keep track of user defined metrics
 * Ability to get analytics about metrics for progress-tracking
@@ -292,7 +291,10 @@ Anne Goh (a telemarketer manager)
 
 ### User stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+Priorities: 
+* High (must have) - `* * *`
+* Medium (nice to have) - `* *`
+* Low (unlikely to have) - `*`
 
 | Priority | As a …​                              | I want to …​                  | So that I can…​                                                           |
 | -------- | --------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------- |
@@ -312,16 +314,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Delete a person**
+####**Use case: Delete a person**
 
 **MSS**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Teletubbies shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Teletubbies deletes the person
 
     Use case ends.
 
@@ -333,41 +335,47 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. Teletubbies shows an error message.
 
       Use case resumes at step 2.
 
-**Use case: Telemarketer flow during a shift**
-
-* System: Teletubbies
-* Use case: UC1 - Telemarketer during a shift
+####**Use case: Telemarketer workflow during a shift**
 * Actor: Telemarketer User
-* Preconditions: Telemarketer has obtained a list of customers assigned by Supervisor
+* Precondition: Telemarketer has obtained a list of customers assigned by Supervisor
 
 **MSS**
 
-1. User moves the JSON file containing customer details assigned to the correct file location.
-2. User starts up the Teletubbies desktop application.
-3. Teletubbies loads contacts.
+1. User starts up the Teletubbies desktop application.
+2. User selects and imports the JSON file containing the list of contacts for the shift from a file location.
+3. Teletubbies displays the imported contacts.
 4. User copies a customer’s contact number and makes the phone call
-5. User marks the call as completed
-6. Teletubbies updates the file and displays that the call for the customer is completed.
+5. User marks the customer as completed
+6. Teletubbies saves the file and displays that the call for the contact is completed.
 
 Use case ends.
 
 **Extensions**
 
-* 3a. Teletubbies does not detect a JSON file in the default file location.
+* 3a. Teletubbies does not detect a JSON file in the specified file path.
 
-  * 3a1. Teletubbies displays a message prompting the Telemarketer to select the JSON file using the app’s file selector interface.
-  * 3a2. Telemarketer selects a JSON file containing the customers’ details
+  * 3a1. Teletubbies displays a message prompting the Telemarketer to try importing JSON file again.
+  * 3a2. Telemarketer imports a JSON file containing the customers’ details
   * Steps 3a1 to 3a2 are repeated until a valid JSON file is selected
   
-  Use case resumes from step 4
+  Use case resumes from step 4.
+
+
+* 3b. Teletubbies detects that the JSON file selected is not in the correct format.
+
+    * 3b1. Teletubbies displays a message informing the Telemarketer that the file is not in the correct format.
+    * 3b2. Telemarketer informs their Supervisor about the error
+
+  Use case ends.
   
-* 5a. Teletubbies detects that customer number input is invalid.
+
+* 5a. Teletubbies detects that index used in the command is invalid.
   * 5a1. Teletubbies displays a message to inform Telemarketer about the input error
-  * 5a2. Telemarketer re-enters customer’s number
+  * 5a2. Telemarketer re-enters the command with a correct index number for the contact
   * Steps 5a1 to 5a2 are repeated until a valid customer phone number is input
   
   Use case resumes from step 6.
@@ -404,7 +412,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+   1. Download the [jar file](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases) and copy into an empty folder
 
    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
