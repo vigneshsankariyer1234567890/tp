@@ -22,6 +22,7 @@ Class Address
 Class Email
 Class Name
 Class Phone
+Class CompletionStatus
 Class Tag
 
 }
@@ -44,6 +45,7 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
+Person *--> CompletionStatus
 Person *--> "*" Tag
 
 Name -[hidden]right-> Phone
