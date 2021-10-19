@@ -155,6 +155,17 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Mark contacts as done feature
+
+#### Implementation
+
+Marking contacts as done, or contacted, is assisted by `CompletionStatus`. It has a composition association with `Person` 
+and holds a boolean value indicating that the person has been contacted by the telemarketer.
+
+The following sequence diagram shows how the done operation works:
+
+![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
+
 ### \[Proposed\] Undo/redo feature
 
 #### Proposed Implementation
