@@ -6,14 +6,19 @@ skinparam classBackgroundColor LOGIC_COLOR
 
 package Logic {
 
-Class AddressBookParser
+Class InputParser
 Class XYZCommand
 Class CommandResult
 Class "{abstract}\nCommand" as Command
 
-
 Interface Logic <<Interface>>
 Class LogicManager
+}
+
+Interface ThrowingConsumer<<Interface>>
+
+package UI {
+Class MainWindow
 }
 
 package Model{
@@ -27,8 +32,8 @@ Class HiddenOutside #FFFFFF
 HiddenOutside ..> Logic
 
 LogicManager .right.|> Logic
-LogicManager -right->"1" AddressBookParser
-AddressBookParser ..> XYZCommand : creates >
+LogicManager -right->"1" InputParser
+InputParser ..> XYZCommand : creates >
 
 XYZCommand -up-|> Command
 LogicManager .left.> Command : executes >
@@ -42,5 +47,7 @@ note right of XYZCommand: XYZCommand = AddCommand, \nFindCommand, etc
 
 Logic ..> CommandResult
 LogicManager .down.> CommandResult
+CommandResult -right->"1" ThrowingConsumer
+ThrowingConsumer .right.> MainWindow : consumes >
 Command .up.> CommandResult : produces >
 @enduml
