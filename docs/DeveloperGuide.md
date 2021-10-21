@@ -5,6 +5,91 @@ title: Developer Guide
 * Table of Contents
 {:toc}
 
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Setting up, getting started**
+
+Refer to the guide [_Setting up and getting started_](SettingUp.md). 
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Introduction**
+
+
+### **Purpose**
+This document describes the architecture and system design of the Teletubbies desktop application
+for Telemarketers and Telemarketer Supervisors.
+</br>
+</br>
+
+### **Scope**
+The document aims to comprehensively cover the software architecture and software design decisions for 
+the implementation of Teletubbies, and is meant for the developers, the designers, and the software testers 
+for the Teletubbies desktop application.</br>
+
+The definitions for emboldened terms can be found in the **Glossary** Section.
+</br>
+</br>
+
+### **Design Goals**
+The developers work closely with telemarketers and telemarketer supervisors to better understand their specific 
+needs, and therefore the requirements of the product.
+
+#### _User-Centricity_
+Teletubbies works for both telemarketers and supervisors by providing appropriate features that allows users of 
+either role to work effectively and efficiently to complete their tasks.
+
+#### _Improved Workflow Efficiency_
+Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which streamlines workflow 
+within the application as entering of commands is centralised in a single text input window.
+
+#### _Seamless Data Integration_
+Teletubbies allows telemarketers and their supervisors to share and merge data seamlessly. Synchronization of customer 
+data between telemarketers and their supervisors is often a necessary aspect of their job, and Teletubbies makes 
+this process easy and hassle-free.
+
+#### _Data Safety and Recoverability_
+With a large number of contacts stored in a contact list, it is vital that the user’s current progress is saved 
+frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved 
+after each command issued by the user.
+
+Additionally, in the event of human error, an undo command is available for users to revert to previous states 
+within the session itself.
+
+#### _Scalability & Maintainability_
+Within a team of developers, it is important that developers reduce dependencies within the project to increase 
+testability and extensibility.
+
+In addition, with changing requirements, it is important to be able to easily change functionality that has already 
+been written without disturbing other related components. Therefore, the main components of the application such as 
+the Logic, UI, Model and Storage are separated into decoupled modules.
+
+Along with the strict adherence to software design principles, such as Single Responsibility and 
+Separation of Concerns, the modularity of the software design allows future developers to add features to Teletubbies 
+without having to deal with tedious side-effects.
+</br>
+</br>
+
+### **Glossary**
+**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
+
+**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
+
+**_User stories_**: Simple descriptions of features told from the perspective of the user.
+
+**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact 
+has been contacted.
+
+**_Role_**: Users are assigned either the role of telemarketer or supervisor.
+
+**_Single Responsibility Principle_**:  A software engineering principle that states that every module, class or 
+function in a computer program should be responsible for and encapsulate only a single part of 
+the program’s functionality.
+
+**_Separation of Concerns Principle_**: A software engineering principle that states that programs should be separated 
+into distinct sections which address concerns, or sets of information that affects the code of a computer program.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Acknowledgements**
@@ -13,13 +98,8 @@ title: Developer Guide
 
 --------------------------------------------------------------------------------------------------------------------
 
-## **Setting up, getting started**
 
-Refer to the guide [_Setting up and getting started_](SettingUp.md).
-
---------------------------------------------------------------------------------------------------------------------
-
-## **Design**
+## **System Overview**
 
 <div markdown="span" class="alert alert-primary">
 
@@ -36,7 +116,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** has two classes called [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java). It is responsible for,
+**`Main`** has two classes called [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/MainApp.java). It is responsible for,
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup methods where necessary.
 
@@ -69,13 +149,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -86,17 +166,35 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
 How the `Logic` component works:
-1. When `Logic` is called upon to execute a command, it uses the `AddressBookParser` class to parse the user command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `AddCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to add a person).
-1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+1. When `Logic` is called upon to execute a command, it uses the `InputParser` class to parse the user command.
+2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `AddCommand`) which is executed by the `LogicManager`.
+3. The command can communicate with the `Model` when it is executed (e.g. to add a person).
+4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+
+#### Commands with Ui Effects
+
+Commands that need to require a UI response (e.g. opening a file chooser) will require setting up a UI consumer (ThrowingConsumer<MainWindow>), a functional
+interface that allows commands access to the functionality of MainWindow. The following is an example of a constructor for CommandResult that includes this
+set-up:
+
+```java
+return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
+```
+
+If the UiEffect type (second constructor argument) does not exist for a new command, you should add it into the `UiEffect` enum in `CommandResult`. If a 
+command has no special UI response, the `UiEffect` type is `NONE` (uiResponse function is ignored when CommandResult#executeUiEffect is run).
+
+The previous implementation of UiEffects was restricted to help and exit commands. Creating more commands with ui effects would have required hard-coding
+more flags for these effects in `CommandResult`, and then hard-coding these effects in `MainWindow`. This requires significant modifications in both of
+these classes. The implementation of the consumer interface, allows these ui effects to be open for extension (ui effects specific to the command can be 
+specified within the command, without changing the code in MainWindow that runs the command's ui effect), and closed for modification.
 
 The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete 1")` API call.
 
@@ -110,11 +208,11 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `AddressBookParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `AddressBookParser` returns back as a `Command` object.
+* When called upon to parse a user command, the `InputParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `InputParser` returns back as a `Command` object.
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -135,7 +233,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -146,7 +244,7 @@ The `Storage` component,
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `teletubbies.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -154,6 +252,19 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+
+### Mark contacts as done feature
+
+#### Implementation
+
+Marking contacts as done, or contacted, is assisted by `CompletionStatus`. It has a composition association with `Person` 
+and holds a boolean value indicating that the person has been contacted by the telemarketer.
+
+The following sequence diagram shows how the done operation works:
+
+![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
+
+                             
 ### Import/Export Feature
 
 #### Implementation
