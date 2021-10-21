@@ -20,17 +20,14 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 ### **Purpose**
 This document describes the architecture and system design of the Teletubbies desktop application
 for Telemarketers and Telemarketer Supervisors.
-</br>
-</br>
 
 ### **Scope**
 The document aims to comprehensively cover the software architecture and software design decisions for 
 the implementation of Teletubbies, and is meant for the developers, the designers, and the software testers 
-for the Teletubbies desktop application.</br>
+for the Teletubbies desktop application.
 
-The definitions for emboldened terms can be found in the **Glossary** Section.
-</br>
-</br>
+The definitions for emboldened terms can be found in the [_Glossary_](#glossary) Section.
+
 
 ### **Design Goals**
 The developers work closely with telemarketers and telemarketer supervisors to better understand their specific 
@@ -38,7 +35,7 @@ needs, and therefore the requirements of the product.
 
 #### _User-Centricity_
 Teletubbies works for both telemarketers and supervisors by providing appropriate features that allows users of 
-either role to work effectively and efficiently to complete their tasks.
+either **role** to work effectively and efficiently to complete their tasks.
 
 #### _Improved Workflow Efficiency_
 Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which streamlines workflow 
@@ -63,13 +60,12 @@ testability and extensibility.
 
 In addition, with changing requirements, it is important to be able to easily change functionality that has already 
 been written without disturbing other related components. Therefore, the main components of the application such as 
-the Logic, UI, Model and Storage are separated into decoupled modules.
+the `Logic`, `UI`, `Model` and `Storage` are separated into decoupled modules.
 
-Along with the strict adherence to software design principles, such as Single Responsibility and 
-Separation of Concerns, the modularity of the software design allows future developers to add features to Teletubbies 
+Along with the strict adherence to software design principles, such as **Single Responsibility** and
+**Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies 
 without having to deal with tedious side-effects.
-</br>
-</br>
+
 
 ### **Glossary**
 **_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
@@ -94,7 +90,7 @@ into distinct sections which address concerns, or sets of information that affec
 
 ## **Acknowledgements**
 
-* SE-EDU Remark Command tutorial: https://nus-cs2103-ay2122s1.github.io/tp/tutorials/AddRemark.html
+* [_SE-EDU Remark Command tutorial_](https://nus-cs2103-ay2122s1.github.io/tp/tutorials/AddRemark.html)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -116,7 +112,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** has two classes called [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/MainApp.java). It is responsible for,
+**`Main`** has two classes called [`Main`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/Main.java) and [`MainApp`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/MainApp.java). It is responsible for,
 * At app launch: Initializes the components in the correct sequence, and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup methods where necessary.
 
@@ -132,7 +128,7 @@ The rest of the App consists of four components.
 
 **How the architecture components interact with each other**
 
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete p/87654321`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -149,13 +145,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -166,7 +162,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -178,27 +174,27 @@ How the `Logic` component works:
 3. The command can communicate with the `Model` when it is executed (e.g. to add a person).
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
-#### Commands with Ui Effects
+#### Commands with UI Effects
 
-Commands that need to require a UI response (e.g. opening a file chooser) will require setting up a UI consumer (ThrowingConsumer<MainWindow>), a functional
-interface that allows commands access to the functionality of MainWindow. The following is an example of a constructor for CommandResult that includes this
+Commands that need to require a UI response (e.g. opening a file chooser) will require setting up a UI consumer (`ThrowingConsumer<MainWindow>`), a functional
+interface that allows commands access to the functionality of `MainWindow`. The following is an example of a constructor for `CommandResult` that includes this
 set-up:
 
 ```java
 return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
 ```
 
-If the UiEffect type (second constructor argument) does not exist for a new command, you should add it into the `UiEffect` enum in `CommandResult`. If a 
-command has no special UI response, the `UiEffect` type is `NONE` (uiResponse function is ignored when CommandResult#executeUiEffect is run).
+If the `UiEffect` type (second constructor argument) does not exist for a new command, you should add it into the `UiEffect` enum in `CommandResult`. If a 
+command has no special UI response, the `UiEffect` type is `NONE` (uiResponse function is ignored when `CommandResult#executeUiEffect` is run).
 
-The previous implementation of UiEffects was restricted to help and exit commands. Creating more commands with ui effects would have required hard-coding
+The previous implementation of UiEffects was restricted to help and exit commands. Creating more commands with UI effects would have required hard-coding
 more flags for these effects in `CommandResult`, and then hard-coding these effects in `MainWindow`. This requires significant modifications in both of
-these classes. The implementation of the consumer interface, allows these ui effects to be open for extension (ui effects specific to the command can be 
-specified within the command, without changing the code in MainWindow that runs the command's ui effect), and closed for modification.
+these classes. The implementation of the consumer interface, allows these UI effects to be open for extension (UI effects specific to the command can be 
+specified within the command, without changing the code in `MainWindow` that runs the command's UI effect), and closed for modification.
 
-The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete 1")` API call.
+The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete p/87654321")` API call.
 
-![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `delete p/87654321` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -212,7 +208,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -233,7 +229,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -252,6 +248,30 @@ Classes used by multiple components are in the `teletubbies.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Delete contacts feature
+
+The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
+The user can delete a contact via a `delete i/1` or `delete p/87654321` input.
+* delete using a contact's displayed index number by using the `i/` prefix.'
+* delete using a contact's phone number by using the `p/` prefix.
+
+The following activity diagram summarizes what happens when a user executes a delete command:
+
+![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
+
+#### Design considerations:
+
+**Aspect: Parameters of the `delete` command:**
+
+Since a telemarketer is responsible for talking to customers on the phone to sell products, 
+it will be useful for them to navigate their contact lists through a customer's phone number.
+
+* **Alternative 1 (current choice):** Delete using either index or phone number.
+    * Pros: Flexibility in method of deletion.
+    * Cons: Slightly more complicated for user to delete a contact.
+
+* **Alternative 2:** Delete via phone number only
+    * Cons: Removes the convenience of deleting using a contact's index.
 
 ### Mark contacts as done feature
 
@@ -264,7 +284,6 @@ The following sequence diagram shows how the done operation works:
 
 ![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
 
-                             
 ### Import/Export Feature
 
 #### Implementation
@@ -313,7 +332,7 @@ The following sequence diagram shows how the `import` operation works:
 
 ### Product scope
 
-#### **Target User Profiles**:
+#### Target user profile
 
 David Wong
 * works as a **telemarketer** from home and makes internet calls on his computer
@@ -441,14 +460,14 @@ Use case ends.
 
 
 ### Non-Functional Requirements
-1. New telemarketers should be able to easily use the application. (Quality requirement)
-2. The application should save and load data fast, and startup should take a few seconds at the most. (Performance requirement / Response time)
-3. Data should be saved frequently and automatically to allow for easy recovery on possible crashes. (Disaster recovery)
-4. The product should work on all OS, and both 32-bit and 64-bit environments. (Technical / Environment requirement)
-5. The application should be able to efficiently (without noticeable slowdown) handle standard operations (add, delete, search, etc) for up to 10,000 users. (Data requirement, ie. volatility)
-6. The product project is expected to adhere to a schedule that delivers a feature set every two weeks. (Process requirements)
-7. The product is not required to handle in-app sharing of data across users on different devices. (Project scope)
-8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (Testability)
+1. New telemarketers should be able to easily use the application. (**Quality requirement**)
+2. The application should save and load data fast, and startup should take a few seconds at the most. (**Performance requirement / Response time**)
+3. Data should be saved frequently and automatically to allow for easy recovery on possible crashes. (**Disaster recovery**)
+4. The product should work on all OS, and both 32-bit and 64-bit environments. (**Technical / Environment requirement**)
+5. The application should be able to efficiently (without a noticeable slowdown) handle standard operations (add, delete, search, etc) for up to 10,000 users. (**Data requirement**, ie. volatility)
+6. The product project is expected to adhere to a schedule that delivers a feature set every two weeks. (**Process requirements**)
+7. The product is not required to handle in-app sharing of data across users on different devices. (**Project scope**)
+8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (**Testability**)
 
 
 ### Glossary
@@ -495,7 +514,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete i/0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete i/x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
