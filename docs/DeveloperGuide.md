@@ -284,94 +284,41 @@ The following sequence diagram shows how the done operation works:
 
 ![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
 
-### \[Proposed\] Undo/redo feature
+### Import/Export Feature
 
-#### Proposed Implementation
+#### Implementation
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+The `import` and `export` mechanism is supported by all of the main App components, specifically in the following ways: 
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+* The execution of the `ImportCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the Ui consumer in the `CommandResult` due to their reliance on the UI file chooser.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+* The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFx FileChooser to select files to be imported/exported to.
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+* Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+* For import, the `Model` component is accessed to set the new AddressBook of contacts. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
 
-![UndoRedoState0](images/UndoRedoState0.png)
 
-Step 2. The user executes `delete i/5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete i/5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+The following sequence diagram shows how the `import` operation works:
 
-![UndoRedoState1](images/UndoRedoState1.png)
+![](images/ImportSequenceDiagram.png)
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+####**Design Considerations**
 
-![UndoRedoState3](images/UndoRedoState3.png)
+**Aspect: User Interface**
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how the undo operation works:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
+* Alternative 1: Import and export are buttons in the menu bar only
+  * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
+  * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags. 
+* Alternative 2: (current choice) Import/Export command can be executed by CLI command or menu bar button
+  * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference. 
+  * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
 --------------------------------------------------------------------------------------------------------------------
 
-## **Documentation, logging, testing, configuration, dev-ops**
+## **Documentation, Logging, Testing, Configuration, Dev-ops**
 
 * [Documentation guide](Documentation.md)
 * [Testing guide](Testing.md)
@@ -387,10 +334,10 @@ _{Explain here how the data archiving feature will be implemented}_
 
 #### Target user profile
 
-David Wong (a low-level telemarketer)
-* works as a telemarketer from home and makes internet calls on his computer
+David Wong
+* works as a **telemarketer** from home and makes internet calls on his computer
 * likes to import/export data quickly
-* wants to mark the contacts that he has successfully marketed to OR already called
+* wants to mark the contacts that he has already called and/or successfully marketed to 
 * wants to keep track of his progress
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -400,8 +347,8 @@ David Wong (a low-level telemarketer)
 
 <br>
 
-Anne Goh (a telemarketer manager)
-* works as a telemarketing supervisor from home
+Anne Goh 
+* works as a **telemarketing supervisor** from home
 * needs to pass lists of contacts to her subordinates to contact
 * wants to monitor the performance of her subordinates
 * has a need to manage a significant number of contacts
@@ -412,7 +359,7 @@ Anne Goh (a telemarketer manager)
 
 <br>
 
-**Value proposition**:
+####**Value proposition**:
 * Able to import / export data into an easy-to-view format, useful for those who are not experienced at working with data files such as JSON / CSV / etc.
 * Easy to add/annotate details on users to keep track of user defined metrics
 * Ability to get analytics about metrics for progress-tracking
@@ -421,7 +368,10 @@ Anne Goh (a telemarketer manager)
 
 ### User stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
+Priorities: 
+* High (must have) - `* * *`
+* Medium (nice to have) - `* *`
+* Low (unlikely to have) - `*`
 
 | Priority | As a …​                              | I want to …​                  | So that I can…​                                                           |
 | -------- | --------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------- |
@@ -441,9 +391,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
+<<<<<<< HEAD
 (For all use cases below, the **System** is `Teletubbies` and the **Actor** is the `user`, unless specified otherwise)
+=======
+(For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the `user`, unless specified otherwise)
+>>>>>>> 561a30c845266bdbb4933ca52e7ffa4e01ecf465
 
-**Use case: Delete a person**
+####**Use case: Delete a person**
 
 **MSS**
 
@@ -466,37 +420,43 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
       Use case resumes at step 2.
 
-**Use case: Telemarketer flow during a shift**
-
-* System: Teletubbies
-* Use case: UC1 - Telemarketer during a shift
+####**Use case: Telemarketer workflow during a shift**
 * Actor: Telemarketer User
-* Preconditions: Telemarketer has obtained a list of customers assigned by Supervisor
+* Precondition: Telemarketer has obtained a list of customers assigned by Supervisor
 
 **MSS**
 
-1. User moves the JSON file containing customer details assigned to the correct file location.
-2. User starts up the Teletubbies desktop application.
-3. Teletubbies loads contacts.
+1. User starts up the Teletubbies desktop application.
+2. User selects and imports the JSON file containing the list of contacts for the shift from a file location.
+3. Teletubbies displays the imported contacts.
 4. User copies a customer’s contact number and makes the phone call
-5. User marks the call as completed
-6. Teletubbies updates the file and displays that the call for the customer is completed.
+5. User marks the customer as completed
+6. Teletubbies saves the file and displays that the call for the contact is completed.
 
 Use case ends.
 
 **Extensions**
 
-* 3a. Teletubbies does not detect a JSON file in the default file location.
+* 3a. Teletubbies does not detect a JSON file in the specified file path.
 
-  * 3a1. Teletubbies displays a message prompting the Telemarketer to select the JSON file using the app’s file selector interface.
-  * 3a2. Telemarketer selects a JSON file containing the customers’ details
+  * 3a1. Teletubbies displays a message prompting the Telemarketer to try importing JSON file again.
+  * 3a2. Telemarketer imports a JSON file containing the customers’ details
   * Steps 3a1 to 3a2 are repeated until a valid JSON file is selected
   
-  Use case resumes from step 4
+  Use case resumes from step 4.
+
+
+* 3b. Teletubbies detects that the JSON file selected is not in the correct format.
+
+    * 3b1. Teletubbies displays a message informing the Telemarketer that the file is not in the correct format.
+    * 3b2. Telemarketer informs their Supervisor about the error
+
+  Use case ends.
   
-* 5a. Teletubbies detects that customer number input is invalid.
+
+* 5a. Teletubbies detects that index used in the command is invalid.
   * 5a1. Teletubbies displays a message to inform Telemarketer about the input error
-  * 5a2. Telemarketer re-enters customer’s number
+  * 5a2. Telemarketer re-enters the command with a correct index number for the contact
   * Steps 5a1 to 5a2 are repeated until a valid customer phone number is input
   
   Use case resumes from step 6.
@@ -533,7 +493,7 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the jar file and copy into an empty folder
+   1. Download the [jar file](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases) and copy into an empty folder
 
    1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
