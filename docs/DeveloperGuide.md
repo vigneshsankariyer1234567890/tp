@@ -391,11 +391,7 @@ Priorities:
 
 ### Use cases
 
-<<<<<<< HEAD
-(For all use cases below, the **System** is `Teletubbies` and the **Actor** is the `user`, unless specified otherwise)
-=======
 (For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the `user`, unless specified otherwise)
->>>>>>> 561a30c845266bdbb4933ca52e7ffa4e01ecf465
 
 ####**Use case: Delete a person**
 
