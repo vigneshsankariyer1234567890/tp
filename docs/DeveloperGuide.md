@@ -336,7 +336,7 @@ The following activity diagram summarizes what happens when a user executes a de
 
 ![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
 
-#### Design considerations:
+#### Design considerations
 
 **Aspect: Parameters of the `delete` command**
 
@@ -367,7 +367,9 @@ it will be useful for them to interact with their contact lists through the cust
 
 ### Product scope
 
-#### Target user profile
+
+#### **Target User Profiles**
+
 
 David Wong
 * works as a **telemarketer** from home and makes internet calls on his computer
@@ -394,12 +396,12 @@ Anne Goh
 
 <br>
 
-####**Value proposition**:
+#### **Value Proposition**
+
 * Able to import / export data into an easy-to-view format, useful for those who are not experienced at working with data files such as JSON / CSV / etc.
 * Easy to add/annotate details on users to keep track of user defined metrics
 * Ability to get analytics about metrics for progress-tracking
 
-<br>
 
 ### User stories
 
@@ -426,9 +428,9 @@ Priorities:
 
 ### Use cases
 
-(For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the `user`, unless specified otherwise)
+For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the user, unless specified otherwise.
 
-####**Use case: Delete a person**
+#### Use case: Delete a person
 
 **MSS**
 
@@ -449,9 +451,9 @@ Priorities:
 
     * 3a1. Teletubbies shows an error message.
 
-      Use case resumes at step 2.
+  Use case resumes at step 2.
 
-####**Use case: Telemarketer workflow during a shift**
+#### Use case: Telemarketer workflow during a shift
 * Actor: Telemarketer User
 * Precondition: Telemarketer has obtained a list of customers assigned by Supervisor
 
@@ -502,7 +504,6 @@ Use case ends.
 6. The product project is expected to adhere to a schedule that delivers a feature set every two weeks. (**Process requirements**)
 7. The product is not required to handle in-app sharing of data across users on different devices. (**Project scope**)
 8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (**Testability**)
-
 
 --------------------------------------------------------------------------------------------------------------------
 
