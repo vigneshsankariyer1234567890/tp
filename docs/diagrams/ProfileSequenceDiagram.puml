@@ -1,0 +1,78 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":InputParser" as InputParser LOGIC_COLOR
+participant ":ProfileCommandParser" as ProfileCommandParser LOGIC_COLOR
+participant "p:ProfileCommand" as ProfileCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant "userProfile:UserProfile" as UserProfile MODEL_COLOR
+end box
+
+[-> LogicManager : execute("profile n/NAME r/TELEMARKETER")
+activate LogicManager
+
+LogicManager -> InputParser : parseCommand("profile n/NAME r/TELEMARKETER")
+activate InputParser
+
+create ProfileCommandParser
+InputParser -> ProfileCommandParser
+activate ProfileCommandParser
+
+ProfileCommandParser --> InputParser
+deactivate ProfileCommandParser
+
+InputParser -> ProfileCommandParser : parse("n/NAME r/TELEMARKETER")
+activate ProfileCommandParser
+
+create ProfileCommand
+ProfileCommandParser -> ProfileCommand
+activate ProfileCommand
+
+create UserProfile
+ProfileCommand -> UserProfile
+activate UserProfile
+
+UserProfile --> ProfileCommand : userProfile
+deactivate UserProfile
+
+ProfileCommand --> ProfileCommandParser : p
+deactivate ProfileCommand
+
+ProfileCommandParser --> InputParser : p
+deactivate ProfileCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+ProfileCommandParser -[hidden]-> InputParser
+destroy ProfileCommandParser
+
+InputParser --> LogicManager : p
+deactivate InputParser
+
+LogicManager -> ProfileCommand : execute()
+activate ProfileCommand
+
+ProfileCommand --> Model : setUserProfile(userProfile)
+activate Model
+
+Model --> ProfileCommand
+deactivate Model
+
+create CommandResult
+ProfileCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ProfileCommand
+deactivate CommandResult
+
+ProfileCommand --> LogicManager : result
+deactivate ProfileCommand
+
+[<--LogicManager
+deactivate LogicManager
+destroy ProfileCommand
+@enduml

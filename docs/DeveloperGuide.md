@@ -255,6 +255,76 @@ Classes used by multiple components are in the `teletubbies.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Import / Export Features
+
+#### Implementation
+
+The `import` and `export` mechanism is supported by all of the main components, specifically in the following ways:
+
+* The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFx FileChooser to select files to be imported/exported to.
+
+* The execution of the `ImportCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
+
+* For import, the `Model` component is accessed to set the new AddressBook of contacts. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
+
+* Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
+
+The following sequence diagram shows how the `import` operation works:
+
+![](images/ImportSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+#### Design Considerations
+
+**Aspect: User Interface**
+
+* **Alternative 1 (current choice):** Import/Export command can be executed by CLI command or menu bar button.
+    * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference.
+    * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
+
+* **Alternative 2:** Import and export are buttons in the menu bar only.
+    * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
+    * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags.
+
+### Profile feature
+
+#### Implementation
+
+Setting the user's profile is facilitated through the `ProfileCommand` and the `ProfileCommandParser` class, which
+parses the user's input to create a new `UserProfile` object to be set in the current `Model` component.
+
+The following sequence diagram shows how the `profile` operation works:
+
+![ProfileSequenceDiagram](images/ProfileSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ProfileCommandParser` and `ProfileCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+#### Design Considerations
+
+**Aspect: Parameters of the `profile` command**
+
+* **Alternative 1 (current choice):** Profile is set with both name and role as mandatory fields.
+    * Pros: Ensures that both name and role are accounted for when changing the profile.
+    * Cons: Both fields must be entered for the user to set the profile, which can be tedious if it has to be done multiple times.
+
+* **Alternative 2 (possible future implementation):** Profile can be set with only the name, or both name and role.
+    * Pros: Allows users to change their name alone without having to enter role as well.
+    * Cons: The cost of implementation is not heavily outweighed by the explicit need for the feature, as there should be infrequent changes in the user's name.
+
+### Mark contacts as done feature
+
+#### Implementation
+
+Marking contacts as done, or contacted, is assisted by `CompletionStatus`. It has a composition association with `Person`
+and holds a boolean value indicating that the person has been contacted by the telemarketer.
+
+The following sequence diagram shows how the `done` operation works:
+
+![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
+
 ### Delete contacts feature
 
 The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
@@ -268,61 +338,19 @@ The following activity diagram summarizes what happens when a user executes a de
 
 #### Design considerations:
 
-**Aspect: Parameters of the `delete` command:**
+**Aspect: Parameters of the `delete` command**
 
-Since a telemarketer is responsible for talking to customers on the phone to sell products, 
-it will be useful for them to navigate their contact lists through a customer's phone number.
+Since the telemarketer is responsible for talking to customers on the phone to sell products, 
+it will be useful for them to interact with their contact lists through the customer's phone number.
 
 * **Alternative 1 (current choice):** Delete using either index or phone number.
     * Pros: Flexibility in method of deletion.
     * Cons: Slightly more complicated for user to delete a contact.
 
-* **Alternative 2:** Delete via phone number only
+* **Alternative 2:** Delete via phone number only.
+    * Pros: Implementation is more straightforward, as there is only one type of input to be expected.
     * Cons: Removes the convenience of deleting using a contact's index.
 
-### Mark contacts as done feature
-
-#### Implementation
-
-Marking contacts as done, or contacted, is assisted by `CompletionStatus`. It has a composition association with `Person` 
-and holds a boolean value indicating that the person has been contacted by the telemarketer.
-
-The following sequence diagram shows how the done operation works:
-
-![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
-
-### Import/Export Feature
-
-#### Implementation
-
-The `import` and `export` mechanism is supported by all of the main App components, specifically in the following ways: 
-
-* The execution of the `ImportCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the Ui consumer in the `CommandResult` due to their reliance on the UI file chooser.
-
-* The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFx FileChooser to select files to be imported/exported to.
-
-* Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
-
-* For import, the `Model` component is accessed to set the new AddressBook of contacts. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
-
-
-The following sequence diagram shows how the `import` operation works:
-
-![](images/ImportSequenceDiagram.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-</div>
-
-####**Design Considerations**
-
-**Aspect: User Interface**
-
-* Alternative 1: Import and export are buttons in the menu bar only
-  * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
-  * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags. 
-* Alternative 2: (current choice) Import/Export command can be executed by CLI command or menu bar button
-  * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference. 
-  * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, Logging, Testing, Configuration, Dev-ops**
@@ -455,7 +483,7 @@ Use case ends.
     * 3b2. Telemarketer informs their Supervisor about the error
 
   Use case ends.
-  
+
 
 * 5a. Teletubbies detects that index used in the command is invalid.
   * 5a1. Teletubbies displays a message to inform Telemarketer about the input error
@@ -463,7 +491,6 @@ Use case ends.
   * Steps 5a1 to 5a2 are repeated until a valid customer phone number is input
   
   Use case resumes from step 6.
-
 
 
 ### Non-Functional Requirements
@@ -476,10 +503,6 @@ Use case ends.
 7. The product is not required to handle in-app sharing of data across users on different devices. (**Project scope**)
 8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (**Testability**)
 
-
-### Glossary
-
-Not applicable at the moment. 
 
 --------------------------------------------------------------------------------------------------------------------
 
