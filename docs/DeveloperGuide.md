@@ -60,7 +60,7 @@ testability and extensibility.
 
 In addition, with changing requirements, it is important to be able to easily change functionality that has already 
 been written without disturbing other related components. Therefore, the main components of the application such as 
-the Logic, UI, Model and Storage are separated into decoupled modules.
+the `Logic`, `UI`, `Model` and `Storage` are separated into decoupled modules.
 
 Along with the strict adherence to software design principles, such as **Single Responsibility** and
 **Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies 
@@ -174,23 +174,23 @@ How the `Logic` component works:
 3. The command can communicate with the `Model` when it is executed (e.g. to add a person).
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
-#### Commands with Ui Effects
+#### Commands with UI Effects
 
-Commands that need to require a UI response (e.g. opening a file chooser) will require setting up a UI consumer (ThrowingConsumer<MainWindow>), a functional
-interface that allows commands access to the functionality of MainWindow. The following is an example of a constructor for CommandResult that includes this
+Commands that need to require a UI response (e.g. opening a file chooser) will require setting up a UI consumer (`ThrowingConsumer<MainWindow>`), a functional
+interface that allows commands access to the functionality of `MainWindow`. The following is an example of a constructor for `CommandResult` that includes this
 set-up:
 
 ```java
 return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
 ```
 
-If the UiEffect type (second constructor argument) does not exist for a new command, you should add it into the `UiEffect` enum in `CommandResult`. If a 
-command has no special UI response, the `UiEffect` type is `NONE` (uiResponse function is ignored when CommandResult#executeUiEffect is run).
+If the `UiEffect` type (second constructor argument) does not exist for a new command, you should add it into the `UiEffect` enum in `CommandResult`. If a 
+command has no special UI response, the `UiEffect` type is `NONE` (uiResponse function is ignored when `CommandResult#executeUiEffect` is run).
 
-The previous implementation of UiEffects was restricted to help and exit commands. Creating more commands with ui effects would have required hard-coding
+The previous implementation of UiEffects was restricted to help and exit commands. Creating more commands with UI effects would have required hard-coding
 more flags for these effects in `CommandResult`, and then hard-coding these effects in `MainWindow`. This requires significant modifications in both of
-these classes. The implementation of the consumer interface, allows these ui effects to be open for extension (ui effects specific to the command can be 
-specified within the command, without changing the code in MainWindow that runs the command's ui effect), and closed for modification.
+these classes. The implementation of the consumer interface, allows these UI effects to be open for extension (UI effects specific to the command can be 
+specified within the command, without changing the code in `MainWindow` that runs the command's UI effect), and closed for modification.
 
 The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete p/87654321")` API call.
 
@@ -277,7 +277,7 @@ Step 1. The user launches the application for the first time. The `VersionedAddr
 
 ![UndoRedoState0](images/UndoRedoState0.png)
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete i/5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete i/5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
 
 ![UndoRedoState1](images/UndoRedoState1.png)
 
@@ -416,16 +416,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is `Teletubbies` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Delete a person**
 
 **MSS**
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  Teletubbies shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  Teletubbies deletes the person
 
     Use case ends.
 
@@ -437,7 +437,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
+    * 3a1. Teletubbies shows an error message.
 
       Use case resumes at step 2.
 
@@ -479,14 +479,14 @@ Use case ends.
 
 
 ### Non-Functional Requirements
-1. New telemarketers should be able to easily use the application. (Quality requirement)
-2. The application should save and load data fast, and startup should take a few seconds at the most. (Performance requirement / Response time)
-3. Data should be saved frequently and automatically to allow for easy recovery on possible crashes. (Disaster recovery)
-4. The product should work on all OS, and both 32-bit and 64-bit environments. (Technical / Environment requirement)
-5. The application should be able to efficiently (without noticeable slowdown) handle standard operations (add, delete, search, etc) for up to 10,000 users. (Data requirement, ie. volatility)
-6. The product project is expected to adhere to a schedule that delivers a feature set every two weeks. (Process requirements)
-7. The product is not required to handle in-app sharing of data across users on different devices. (Project scope)
-8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (Testability)
+1. New telemarketers should be able to easily use the application. (**Quality requirement**)
+2. The application should save and load data fast, and startup should take a few seconds at the most. (**Performance requirement / Response time**)
+3. Data should be saved frequently and automatically to allow for easy recovery on possible crashes. (**Disaster recovery**)
+4. The product should work on all OS, and both 32-bit and 64-bit environments. (**Technical / Environment requirement**)
+5. The application should be able to efficiently (without a noticeable slowdown) handle standard operations (add, delete, search, etc) for up to 10,000 users. (**Data requirement**, ie. volatility)
+6. The product project is expected to adhere to a schedule that delivers a feature set every two weeks. (**Process requirements**)
+7. The product is not required to handle in-app sharing of data across users on different devices. (**Project scope**)
+8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (**Testability**)
 
 
 ### Glossary
@@ -533,7 +533,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete i/0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete i/x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
