@@ -253,7 +253,7 @@ Classes used by multiple components are in the `teletubbies.commons` package.
 This section describes some noteworthy details on how certain features are implemented.
 
 
-### Mark contacts as done feature
+### Feature to Mark Contacts as Done
 
 #### Implementation
 
@@ -287,7 +287,7 @@ The following sequence diagram shows how the `import` operation works:
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
-####**Design Considerations**
+#### Design Considerations
 
 **Aspect: User Interface**
 
@@ -297,6 +297,8 @@ The following sequence diagram shows how the `import` operation works:
 * Alternative 2: (current choice) Import/Export command can be executed by CLI command or menu bar button
   * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference. 
   * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
+<br>
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, Logging, Testing, Configuration, Dev-ops**
@@ -313,7 +315,7 @@ The following sequence diagram shows how the `import` operation works:
 
 ### Product scope
 
-#### **Target User Profiles**:
+#### **Target User Profiles**
 
 David Wong
 * works as a **telemarketer** from home and makes internet calls on his computer
@@ -340,12 +342,12 @@ Anne Goh
 
 <br>
 
-####**Value proposition**:
+#### **Value Proposition**
+
 * Able to import / export data into an easy-to-view format, useful for those who are not experienced at working with data files such as JSON / CSV / etc.
 * Easy to add/annotate details on users to keep track of user defined metrics
 * Ability to get analytics about metrics for progress-tracking
 
-<br>
 
 ### User stories
 
@@ -372,9 +374,9 @@ Priorities:
 
 ### Use cases
 
-(For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the `user`, unless specified otherwise)
+For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the user, unless specified otherwise.
 
-####**Use case: Delete a person**
+#### Use case: Delete a person
 
 **MSS**
 
@@ -395,9 +397,9 @@ Priorities:
 
     * 3a1. Teletubbies shows an error message.
 
-      Use case resumes at step 2.
+  Use case resumes at step 2.
 
-####**Use case: Telemarketer workflow during a shift**
+#### Use case: Telemarketer workflow during a shift
 * Actor: Telemarketer User
 * Precondition: Telemarketer has obtained a list of customers assigned by Supervisor
 
@@ -449,11 +451,6 @@ Use case ends.
 6. The product project is expected to adhere to a schedule that delivers a feature set every two weeks. (Process requirements)
 7. The product is not required to handle in-app sharing of data across users on different devices. (Project scope)
 8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (Testability)
-
-
-### Glossary
-
-Not applicable at the moment. 
 
 --------------------------------------------------------------------------------------------------------------------
 
