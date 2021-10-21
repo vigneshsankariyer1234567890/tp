@@ -248,6 +248,31 @@ Classes used by multiple components are in the `teletubbies.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Delete contacts feature
+
+The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
+The user can delete a contact via a `delete i/1` or `delete p/87654321` input.
+* delete using a contact's displayed index number by using the `i/` prefix.'
+* delete using a contact's phone number by using the `p/` prefix.
+
+The following activity diagram summarizes what happens when a user executes a delete command:
+
+![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
+
+#### Design considerations:
+
+**Aspect: Parameters of the `delete` command:**
+
+Since a telemarketer is responsible for talking to customers on the phone to sell products, 
+it will be useful for them to navigate their contact lists through a customer's phone number.
+
+* **Alternative 1 (current choice):** Delete using either index or phone number.
+    * Pros: Flexibility in method of deletion.
+    * Cons: Slightly more complicated for user to delete a contact.
+
+* **Alternative 2:** Delete via phone number only
+    * Cons: Removes the convenience of deleting using a contact's index.
+
 ### Mark contacts as done feature
 
 #### Implementation
@@ -360,7 +385,7 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Product scope
 
-#### **Target user profile**:
+#### Target user profile
 
 David Wong (a low-level telemarketer)
 * works as a telemarketer from home and makes internet calls on his computer
