@@ -1,0 +1,74 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant "c:ImportCommand" as ImportCommand LOGIC_COLOR
+participant "result:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Ui UI_COLOR_T1
+participant ":MainWindow" as MainWindow UI_COLOR
+end box
+
+box Storage STORAGE_COLOR_T1
+participant ":JsonAddressBookStorage" as JsonAddressBookStorage STORAGE_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("import")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("import")
+activate AddressBookParser
+
+create ImportCommand
+AddressBookParser -> ImportCommand
+activate ImportCommand
+
+ImportCommand --> AddressBookParser
+deactivate ImportCommand
+
+AddressBookParser --> LogicManager : c
+deactivate AddressBookParser
+
+LogicManager -> ImportCommand : execute()
+activate ImportCommand
+
+create CommandResult
+ImportCommand -> CommandResult
+activate CommandResult
+
+CommandResult -> MainWindow : handleFileChooser()
+activate MainWindow
+
+MainWindow --> CommandResult :fileToImport
+deactivate MainWindow
+
+create JsonAddressBookStorage
+CommandResult -> JsonAddressBookStorage
+activate JsonAddressBookStorage
+
+CommandResult -> JsonAddressBookStorage : readAddressBook()
+JsonAddressBookStorage --> CommandResult : addressBookOptional
+deactivate JsonAddressBookStorage
+
+
+CommandResult -> Model : setAddressBook()
+activate Model
+deactivate Model
+
+CommandResult --> ImportCommand
+deactivate CommandResult
+ImportCommand --> LogicManager : result
+deactivate ImportCommand
+ImportCommand -[hidden]-> LogicManager : result
+destroy ImportCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
