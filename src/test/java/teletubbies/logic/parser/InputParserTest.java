@@ -35,9 +35,9 @@ import teletubbies.testutil.EditPersonDescriptorBuilder;
 import teletubbies.testutil.PersonBuilder;
 import teletubbies.testutil.PersonUtil;
 
-public class AddressBookParserTest {
+public class InputParserTest {
 
-    private final AddressBookParser parser = new AddressBookParser();
+    private final InputParser parser = new InputParser();
 
     @Test
     public void parseCommand_add() throws Exception {

@@ -199,12 +199,12 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     @FXML
-    public void handleImport() throws CommandException, ParseException {
+    private void handleImport() throws CommandException, ParseException {
         this.executeCommand(ImportCommand.COMMAND_WORD);
     }
 
     @FXML
-    public void handleExport() throws CommandException, ParseException {
+    private void handleExport() throws CommandException, ParseException {
         this.executeCommand(ExportCommand.COMMAND_WORD);
     }
 
