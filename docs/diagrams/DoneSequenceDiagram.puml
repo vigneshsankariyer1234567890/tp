@@ -1,0 +1,91 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":DoneCommandParser" as DoneCommandParser LOGIC_COLOR
+participant "d:DoneCommand" as DoneCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant "completionStatus:CompletionStatus" as CompletionStatus MODEL_COLOR
+participant "editedPerson:Person" as EditedPerson MODEL_COLOR
+end box
+
+[-> LogicManager : execute("done 1")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("done 1")
+activate AddressBookParser
+
+create DoneCommandParser
+AddressBookParser -> DoneCommandParser
+activate DoneCommandParser
+
+DoneCommandParser --> AddressBookParser
+deactivate DoneCommandParser
+
+AddressBookParser -> DoneCommandParser : parse("1")
+activate DoneCommandParser
+
+create DoneCommand
+DoneCommandParser -> DoneCommand
+activate DoneCommand
+
+create CompletionStatus
+DoneCommand -> CompletionStatus
+activate CompletionStatus
+
+CompletionStatus --> DoneCommand : completionStatus
+deactivate CompletionStatus
+
+DoneCommand --> DoneCommandParser : d
+deactivate DoneCommand
+
+DoneCommandParser --> AddressBookParser : d
+deactivate DoneCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+DoneCommandParser -[hidden]-> AddressBookParser
+destroy DoneCommandParser
+
+AddressBookParser --> LogicManager : d
+deactivate AddressBookParser
+
+LogicManager -> DoneCommand : execute()
+activate DoneCommand
+
+DoneCommand -> Model : getFilteredPersonList()
+activate Model
+
+Model -> DoneCommand : lastShownList
+deactivate Model
+
+create EditedPerson
+DoneCommand -> EditedPerson
+activate EditedPerson
+
+EditedPerson --> DoneCommand
+deactivate EditedPerson
+
+DoneCommand --> Model : setPerson(editedPerson)
+activate Model
+
+Model --> DoneCommand
+deactivate Model
+
+create CommandResult
+DoneCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> DoneCommand
+deactivate CommandResult
+
+DoneCommand --> LogicManager : result
+deactivate DoneCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

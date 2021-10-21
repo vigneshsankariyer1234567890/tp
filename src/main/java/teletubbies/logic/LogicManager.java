@@ -10,7 +10,6 @@ import teletubbies.commons.core.LogsCenter;
 import teletubbies.logic.commands.Command;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.exceptions.CommandException;
-import teletubbies.logic.parser.AddressBookParser;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.Model;
 import teletubbies.model.ReadOnlyAddressBook;
@@ -26,7 +25,7 @@ public class LogicManager implements Logic {
 
     private final Model model;
     private final Storage storage;
-    private final AddressBookParser addressBookParser;
+    private final teletubbies.logic.parser.InputParser inputParser;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -34,7 +33,7 @@ public class LogicManager implements Logic {
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
-        addressBookParser = new AddressBookParser();
+        inputParser = new teletubbies.logic.parser.InputParser();
     }
 
     @Override
@@ -42,7 +41,7 @@ public class LogicManager implements Logic {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
 
         CommandResult commandResult;
-        Command command = addressBookParser.parseCommand(commandText);
+        Command command = inputParser.parseCommand(commandText);
         commandResult = command.execute(model);
 
         try {
