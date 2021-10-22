@@ -104,28 +104,24 @@ public class HistoryManager<T> {
 
     /**
      * Undoes the state to a previous version as stored by HistoryManager
-     * @return previous state stored by HistoryManager
      * @throws EarliestVersionException if HistoryManager is not undoable.
      */
-    public T undo() throws EarliestVersionException {
+    public void undo() throws EarliestVersionException {
         if (!isUndoable()) {
             throw new EarliestVersionException();
         }
         stackPointer--;
-        return historyStack.get(stackPointer);
     }
 
     /**
      * Reverts the state to a later version as stored by HistoryManager
-     * @return later state stored by HistoryManager
      * @throws LatestVersionException if HistoryManager is not redoable.
      */
-    public T redo() throws LatestVersionException {
+    public void redo() throws LatestVersionException {
         if (!isRedoable()) {
             throw new LatestVersionException();
         }
         stackPointer++;
-        return historyStack.get(stackPointer);
     }
 
     /**
@@ -154,5 +150,38 @@ public class HistoryManager<T> {
     public static <U> HistoryManager<U> clearedCopy(HistoryManager<U> original) {
         List<U> sublist = original.historyStack.subList(0, original.stackPointer + 1);
         return new HistoryManager<>(sublist);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof HistoryManager)) {
+            return false;
+        }
+
+        HistoryManager<?> oth = (HistoryManager<?>) other;
+
+        if (oth.stackPointer != this.stackPointer) {
+            return false;
+        }
+
+        if (oth.historyStack.size() != this.historyStack.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < this.historyStack.size(); i++) {
+            Object a = this.historyStack.get(i);
+            Object b = oth.historyStack.get(i);
+            if (!a.equals(b)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

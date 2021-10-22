@@ -2,6 +2,7 @@ package teletubbies.commons.core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -49,7 +50,8 @@ public class HistoryManagerTest {
         HistoryManager<String> historyManager = new HistoryManager<>(historyOfStrings);
         assertFalse(historyManager.isRedoable());
         String current = historyManager.peek();
-        String previous = historyManager.undo();
+        historyManager.undo();
+        String previous = historyManager.peek();
         assertEquals("hello", current);
         assertEquals("hell", previous);
         assertTrue(historyManager.isRedoable());
@@ -71,13 +73,14 @@ public class HistoryManagerTest {
     }
 
     @Test
-    public void isUndoableCountTest() throws EarliestVersionException {
+    public void isUndoableCountTest() throws EarliestVersionException, EmptyHistoryManagerException {
         int count = 0;
         int secondLastIndex = historyOfStrings.size() - 2;
         HistoryManager<String> historyManager = new HistoryManager<>(historyOfStrings);
         while (historyManager.isUndoable()) {
             String current = historyOfStrings.get(secondLastIndex - count);
-            String currentHM = historyManager.undo();
+            historyManager.undo();
+            String currentHM = historyManager.peek();
             assertEquals(current, currentHM);
             count++;
         }
@@ -85,13 +88,15 @@ public class HistoryManagerTest {
     }
 
     @Test
-    public void isRedoableCountTest() throws LatestVersionException, EarliestVersionException {
+    public void isRedoableCountTest() throws LatestVersionException, EarliestVersionException,
+            EmptyHistoryManagerException {
         int undoCount = 0;
         int secondLastIndex = historyOfStrings.size() - 2;
         HistoryManager<String> historyManager = new HistoryManager<>(historyOfStrings);
         while (historyManager.isUndoable()) {
             String current = historyOfStrings.get(secondLastIndex - undoCount);
-            String currentHM = historyManager.undo();
+            historyManager.undo();
+            String currentHM = historyManager.peek();
             assertEquals(current, currentHM);
             undoCount++;
         }
@@ -100,7 +105,8 @@ public class HistoryManagerTest {
         int redoCount = 0;
         while (historyManager.isRedoable()) {
             String current = historyOfStrings.get(redoCount + 1);
-            String currentHM = historyManager.redo();
+            historyManager.redo();
+            String currentHM = historyManager.peek();
             assertEquals(current, currentHM);
             redoCount++;
         }
@@ -161,5 +167,31 @@ public class HistoryManagerTest {
         }
         historyManager.resetFullHistory();
         assertEquals(historyOfStrings, historyManager.historyList());
+    }
+
+    @Test
+    public void equalsTest() throws EarliestVersionException, LatestVersionException, EmptyHistoryManagerException {
+        HistoryManager<String> historyManager = new HistoryManager<>(historyOfStrings);
+
+        // same HistoryManager -> returns true
+        assertEquals(historyManager, historyManager);
+
+        // same values as original HistoryManager -> returns true
+        HistoryManager<String> copyOfHistoryManager = new HistoryManager<>(historyOfStrings);
+        assertEquals(historyManager, copyOfHistoryManager);
+
+        // different pointer than original HistoryManager -> returns false
+        copyOfHistoryManager.undo();
+        assertNotEquals(historyManager, copyOfHistoryManager);
+
+        // same values as original -> returns true
+        copyOfHistoryManager.redo();
+        assertEquals(historyManager, copyOfHistoryManager);
+
+        // same values as original -> returns true
+        String last = copyOfHistoryManager.peek();
+        copyOfHistoryManager.undo();
+        copyOfHistoryManager = copyOfHistoryManager.commitAndPush(last);
+        assertEquals(historyManager, copyOfHistoryManager);
     }
 }

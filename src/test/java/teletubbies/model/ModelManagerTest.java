@@ -2,6 +2,7 @@ package teletubbies.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static teletubbies.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static teletubbies.testutil.TypicalPersons.ALICE;
@@ -10,6 +11,7 @@ import static teletubbies.testutil.TypicalPersons.BENSON;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -94,6 +96,18 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getFullHistoryList_addInput_success() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        modelManager = new ModelManager(addressBook, userPrefs);
+        List<String> target = List.of("1", "2", "3");
+        for (String s: target) {
+            modelManager.addCommandInput(s);
+        }
+        assertEquals(target, modelManager.getInputHistory());
+    }
+
+    @Test
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
@@ -128,5 +142,13 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+
+        // different inputHistory -> returns false
+        modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        modelManagerCopy.addCommandInput("hi");
+        assertNotEquals(modelManager, modelManagerCopy);
+
+
+
     }
 }
