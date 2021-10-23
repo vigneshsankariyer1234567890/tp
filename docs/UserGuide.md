@@ -197,6 +197,12 @@ Clears all entries from the application.
 
 Format: `clear`
 
+### Listing your previous commands : `history`
+
+Shows a list of previously typed commands from most recent to earliest.
+
+Format: `history`
+
 ### Exiting the program : `exit`
 
 Exits the program.
