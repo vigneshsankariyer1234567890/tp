@@ -166,18 +166,12 @@ public class ModelManager implements Model {
 
     //=========== InputHistory accessors and modifiers ======================================================
 
-    /**
-     * Adds the recent text input to the history as stored by {@code CommandInputHistory}.
-     * @param textInput to be added to the {@code CommandInputHistory}
-     */
+    @Override
     public void addCommandInput(String textInput) {
         inputHistory.addCommandInput(textInput);
     }
 
-    /**
-     * Returns the full list of previous inputs entered by user.
-     * @return list of previous inputs entered by user.
-     */
+    @Override
     public List<String> getInputHistory() {
         return inputHistory.getFullInputHistory();
     }

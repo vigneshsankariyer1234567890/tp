@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -15,11 +14,12 @@ import org.junit.jupiter.api.Test;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.EmptyHistoryManagerException;
 import teletubbies.commons.exceptions.LatestVersionException;
+import teletubbies.logic.commands.CommandTestUtil;
 
 public class HistoryManagerTest {
 
     private final String testString = "";
-    private final List<String> historyOfStrings = new ArrayList<>(Arrays.asList("", "h", "he", "hel", "hell", "hello"));
+    private final List<String> historyOfStrings = CommandTestUtil.VALID_COMMAND_HISTORY_INPUTS;
 
     @Test
     public void emptyConstructorTest_success() {

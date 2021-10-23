@@ -3,6 +3,7 @@ package teletubbies.model;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static teletubbies.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static teletubbies.testutil.TypicalPersons.ALICE;
@@ -12,10 +13,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
 import teletubbies.commons.core.GuiSettings;
+import teletubbies.logic.commands.CommandTestUtil;
 import teletubbies.model.person.NameContainsKeywordsPredicate;
 import teletubbies.testutil.AddressBookBuilder;
 import teletubbies.testutil.Assert;
@@ -105,6 +109,41 @@ public class ModelManagerTest {
             modelManager.addCommandInput(s);
         }
         assertEquals(target, modelManager.getInputHistory());
+    }
+
+    @Test
+    public void getFullHistoryList_addValidInputs_success() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        modelManager = new ModelManager(addressBook, userPrefs);
+        List<String> target = CommandTestUtil.VALID_COMMAND_HISTORY_INPUTS;
+        for (String s: target) {
+            modelManager.addCommandInput(s);
+        }
+        assertEquals(target, modelManager.getInputHistory());
+    }
+
+    @Test
+    public void addInvalidInputs_commandInputHistory_throws() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        UserPrefs userPrefs = new UserPrefs();
+        modelManager = new ModelManager(addressBook, userPrefs);
+        List<String> target = CommandTestUtil.INVALID_COMMAND_HISTORY_INPUTS;
+
+        int count = 0;
+        for (String s: target) {
+            if (s == null) {
+                assertThrows(NullPointerException.class, () -> modelManager.addCommandInput(s));
+            } else {
+                modelManager.addCommandInput(s);
+                count++;
+            }
+        }
+
+        List<String> newTarget = target.stream().filter(Objects::nonNull).collect(Collectors.toList());
+
+        assertEquals(newTarget.size(), count);
+        assertEquals(newTarget, modelManager.getInputHistory());
     }
 
     @Test
