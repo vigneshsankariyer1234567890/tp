@@ -106,10 +106,16 @@ public interface Model {
     void addCommandInput(String textInput);
 
     /**
-     * Returns the full list of previous inputs entered by user.
-     * @return list of previous inputs entered by user.
+     * Returns the full list of previous inputs entered by user in ascending order.
+     * @return list of previous inputs entered by user in ascending order.
      */
-    List<String> getInputHistory();
+    List<String> getChronologicallyAscendingHistory();
+
+    /**
+     * Returns the full list of previous inputs entered by user in descending order.
+     * @return list of previous inputs entered by user in descending order.
+     */
+    List<String> getChronologicallyDescendingHistory();
 
     /**
      * Returns true if the model has previous address book states to restore.

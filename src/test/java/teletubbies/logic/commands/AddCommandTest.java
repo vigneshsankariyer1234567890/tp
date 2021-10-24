@@ -166,7 +166,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public List<String> getInputHistory() {
+        public List<String> getChronologicallyAscendingHistory() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<String> getChronologicallyDescendingHistory() {
             throw new AssertionError("This method should not be called.");
         }
 

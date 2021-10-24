@@ -179,9 +179,15 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public List<String> getInputHistory() {
-        return inputHistory.getFullInputHistory();
+    public List<String> getChronologicallyAscendingHistory() {
+        return inputHistory.getChronologicallyAscendingHistory();
     }
+
+    @Override
+    public List<String> getChronologicallyDescendingHistory() {
+        return inputHistory.getChronologicallyDescendingHistory();
+    }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -202,5 +208,4 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && inputHistory.equals(other.inputHistory);
     }
-
 }

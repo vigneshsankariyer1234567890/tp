@@ -108,7 +108,7 @@ public class ModelManagerTest {
         for (String s: target) {
             modelManager.addCommandInput(s);
         }
-        assertEquals(target, modelManager.getInputHistory());
+        assertEquals(target, modelManager.getChronologicallyAscendingHistory());
     }
 
     @Test
@@ -120,7 +120,7 @@ public class ModelManagerTest {
         for (String s: target) {
             modelManager.addCommandInput(s);
         }
-        assertEquals(target, modelManager.getInputHistory());
+        assertEquals(target, modelManager.getChronologicallyAscendingHistory());
     }
 
     @Test
@@ -143,7 +143,7 @@ public class ModelManagerTest {
         List<String> newTarget = target.stream().filter(Objects::nonNull).collect(Collectors.toList());
 
         assertEquals(newTarget.size(), count);
-        assertEquals(newTarget, modelManager.getInputHistory());
+        assertEquals(newTarget, modelManager.getChronologicallyAscendingHistory());
     }
 
     @Test
