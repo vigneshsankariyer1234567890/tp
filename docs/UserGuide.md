@@ -257,4 +257,5 @@ Action | Format & Usage Examples
 **add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​ [t/TAGS...]` <br> e.g., `add n/david wong p/81234567`
 **delete** | `delete PHONE_NUMBER`<br> `delete INDEX`<br> e.g., `delete p/81234567, delete i/1`
 **profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
+**history** | `history`<br> e.g., `history`
 
