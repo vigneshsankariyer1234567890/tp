@@ -5,7 +5,6 @@ title: Developer Guide
 * Table of Contents
 {:toc}
 
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
@@ -16,38 +15,33 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 ## **Introduction**
 
-
 ### **Purpose**
 This document describes the architecture and system design of the Teletubbies desktop application
 for Telemarketers and Telemarketer Supervisors.
-</br>
-</br>
 
 ### **Scope**
 The document aims to comprehensively cover the software architecture and software design decisions for 
-the implementation of Teletubbies, and is meant for the developers, the designers, and the software testers 
-for the Teletubbies desktop application.</br>
+the implementation of Teletubbies. It is intended to serve as a guide for the developers, the designers, and the testers 
+for the application.
 
-The definitions for emboldened terms can be found in the **Glossary** Section.
-</br>
-</br>
+The definitions for the emboldened terms can be found in the [_Glossary_](#glossary) Section.
 
 ### **Design Goals**
-The developers work closely with telemarketers and telemarketer supervisors to better understand their specific 
-needs, and therefore the requirements of the product.
+The developers work closely with telemarketers and telemarketer supervisors to better understand their needs, so that 
+the requirements of the product can be as clear-cut as possible.
 
 #### _User-Centricity_
-Teletubbies works for both telemarketers and supervisors by providing appropriate features that allows users of 
-either role to work effectively and efficiently to complete their tasks.
+Teletubbies can be used by both telemarketers and supervisors, and chooses the appropriate features according to the 
+current user's **role**, so that the user can work effectively and efficiently to complete their tasks.
 
 #### _Improved Workflow Efficiency_
 Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which streamlines workflow 
-within the application as entering of commands is centralised in a single text input window.
+within the application by centralising the entering of commands in a single text input window.
 
 #### _Seamless Data Integration_
 Teletubbies allows telemarketers and their supervisors to share and merge data seamlessly. Synchronization of customer 
-data between telemarketers and their supervisors is often a necessary aspect of their job, and Teletubbies makes 
-this process easy and hassle-free.
+data between telemarketers and their supervisors is often a necessary aspect of their job, and Teletubbies provides
+avenues to make this process easy and hassle-free.
 
 #### _Data Safety and Recoverability_
 With a large number of contacts stored in a contact list, it is vital that the user’s current progress is saved 
@@ -58,18 +52,16 @@ Additionally, in the event of human error, an undo command is available for user
 within the session itself.
 
 #### _Scalability & Maintainability_
-Within a team of developers, it is important that developers reduce dependencies within the project to increase 
+Within a team of developers, it is important that the developers reduce dependencies within the project to increase 
 testability and extensibility.
 
-In addition, with changing requirements, it is important to be able to easily change functionality that has already 
-been written without disturbing other related components. Therefore, the main components of the application such as 
-the Logic, UI, Model and Storage are separated into decoupled modules.
+In addition, with requirements that constantly change, it is important to be able to easily modify features and 
+functionalities that have already been written without disturbing other related components. Therefore, the main 
+components of the application such as the `Logic`, `UI`, `Model`, and `Storage` are separated into decoupled modules.
 
-Along with the strict adherence to software design principles, such as Single Responsibility and 
-Separation of Concerns, the modularity of the software design allows future developers to add features to Teletubbies 
+Along with the strict adherence to software design principles, such as **Single Responsibility** and
+**Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies 
 without having to deal with tedious side-effects.
-</br>
-</br>
 
 ### **Glossary**
 **_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
@@ -94,10 +86,9 @@ into distinct sections which address concerns, or sets of information that affec
 
 ## **Acknowledgements**
 
-* SE-EDU Remark Command tutorial: https://nus-cs2103-ay2122s1.github.io/tp/tutorials/AddRemark.html
+* [_SE-EDU Remark Command tutorial_](https://nus-cs2103-ay2122s1.github.io/tp/tutorials/AddRemark.html)
 
 --------------------------------------------------------------------------------------------------------------------
-
 
 ## **System Overview**
 
@@ -114,11 +105,11 @@ The ***Architecture Diagram*** given above explains the high-level design of the
 
 Given below is a quick overview of main components and how they interact with each other.
 
-**Main components of the architecture**
+#### Main components of the architecture
 
-**`Main`** has two classes called [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/MainApp.java). It is responsible for,
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup methods where necessary.
+`Main` has two classes called [`Main`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/Main.java) and [`MainApp`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/MainApp.java). The `Main` component,
+* (At app launch) initializes the components in the correct sequence, and connects them up with each other.
+* (At shut down) shuts down the components and invokes cleanup methods where necessary.
 
 [**`Commons`**](#common-classes) represents a collection of classes used by multiple other components.
 
@@ -129,10 +120,9 @@ The rest of the App consists of four components.
 * [**`Model`**](#model-component): Holds the data of the App in memory.
 * [**`Storage`**](#storage-component): Reads data from, and writes data to, the hard disk.
 
+#### How the architecture components interact with each other
 
-**How the architecture components interact with each other**
-
-The *Sequence Diagram* below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The Sequence Diagram below outlines how the components interact with each other, in a scenario where the user issues the command `delete p/87654321`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -149,24 +139,26 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/ui/Ui.java)
+**API** : [`Ui.java`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/ui/Ui.java)
+
+Here's a (partial) class diagram of the `UI` component:
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
+The UI consists of a `MainWindow` that is made up of parts such as `CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, etc. All these parts, including the `MainWindow` itself, inherit from the abstract `UiPart` class which captures the commonalities between the classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFX UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/resources/view/MainWindow.fxml).
 
 The `UI` component,
 
 * executes user commands using the `Logic` component.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+* depends on some classes in the `Model` component, as it displays each `Person` object residing in the `Model`.
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -174,31 +166,35 @@ Here's a (partial) class diagram of the `Logic` component:
 
 How the `Logic` component works:
 1. When `Logic` is called upon to execute a command, it uses the `InputParser` class to parse the user command.
-2. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `AddCommand`) which is executed by the `LogicManager`.
+2. This results in a `Command` object (more precisely, an object of one of its subclasses, e.g. `AddCommand`) which is executed by the `LogicManager`.
 3. The command can communicate with the `Model` when it is executed (e.g. to add a person).
 4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
 
-#### Commands with Ui Effects
+#### Commands with UI Effects
 
-Commands that need to require a UI response (e.g. opening a file chooser) will require setting up a UI consumer (ThrowingConsumer<MainWindow>), a functional
-interface that allows commands access to the functionality of MainWindow. The following is an example of a constructor for CommandResult that includes this
+Commands that need the UI to require a UI response from the user (e.g. opening a file chooser) will need to set up a UI consumer (`ThrowingConsumer<MainWindow>`), a functional
+interface that allows the commands to access the functionality of `MainWindow`. The following is an example of a constructor for `CommandResult` that includes this
 set-up:
 
 ```java
 return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
 ```
 
-If the UiEffect type (second constructor argument) does not exist for a new command, you should add it into the `UiEffect` enum in `CommandResult`. If a 
-command has no special UI response, the `UiEffect` type is `NONE` (uiResponse function is ignored when CommandResult#executeUiEffect is run).
+If the `UiEffect` type (the second constructor argument) does not exist for any new command that gets added, this
+corresponding `UiEffect` type should be added into the `UiEffect` enum in `CommandResult`.
 
-The previous implementation of UiEffects was restricted to help and exit commands. Creating more commands with ui effects would have required hard-coding
-more flags for these effects in `CommandResult`, and then hard-coding these effects in `MainWindow`. This requires significant modifications in both of
-these classes. The implementation of the consumer interface, allows these ui effects to be open for extension (ui effects specific to the command can be 
-specified within the command, without changing the code in MainWindow that runs the command's ui effect), and closed for modification.
+On the other hand, if a command has no special UI response, the `UiEffect` type should be `NONE`.
 
-The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete 1")` API call.
+The previous implementation of `UiEffect` was solely restricted to help and exit commands. Creating more commands with UI effects would have required hard-coding
+more flags for these effects in `CommandResult`, and in turn hard-coding these effects again in `MainWindow`. This would have required significant modifications in both of
+these classes, especially if new commands are added in. 
 
-![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
+The implementation of the consumer interface instead allows these UI effects to be open for extension and closed for modification.
+Now, specific UI effects can be specified within the respective command, without having to change the code in `MainWindow` that handles the command's UI effect.
+
+The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete p/87654321")` API call.
+
+![Interactions Inside the Logic Component for the `delete p/87654321` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -208,21 +204,28 @@ Here are the other classes in `Logic` (omitted from the class diagram above) tha
 <img src="images/ParserClasses.png" width="600"/>
 
 How the parsing works:
-* When called upon to parse a user command, the `InputParser` class creates an `XYZCommandParser` (`XYZ` is a placeholder for the specific command name e.g., `AddCommandParser`) which uses the other classes shown above to parse the user command and create a `XYZCommand` object (e.g., `AddCommand`) which the `InputParser` returns back as a `Command` object.
-* All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
+1. When called upon to parse a user command, the `InputParser` class creates an `XYZCommandParser`. Here, `XYZ` is a placeholder for the specific command name, e.g. `AddCommandParser`.
+2. The newly created `XYZCommandParser` class utilizes the other classes shown above, such as `ParserUtil`, `CliSyntax`, etc. to parse the user command and create a `XYZCommand` object, e.g. `AddCommand`.
+3. The `InputParser` will then return the newly created `XYZCommand` object as a `Command` object.
+
+All `XYZCommandParser` classes like `AddCommandParser` and `DeleteCommandParser` inherit from the `Parser` interface so that they can be treated similarly where possible, such as during testing.
+Similarly, all `XYZCommand` classes inherit from the `Command` class.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/model/Model.java)
+
+**API** : [`Model.java`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/model/Model.java)
+
+Here's a (partial) class diagram of the `Model` component:
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+* stores the address book data, i.e. all `Person` objects (which are contained in a `UniquePersonList` object).
+* stores the currently 'selected' `Person` objects (e.g. results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' (e.g. the `Ui` component can be bound to this list so that the UI automatically updates when the data in the list change).
+* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` object.
+* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components).
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
@@ -233,7 +236,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/teletubbies/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2122S1-CS2103T-W15-4/tp/blob/master/src/main/java/teletubbies/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -252,33 +255,19 @@ Classes used by multiple components are in the `teletubbies.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-
-### Mark contacts as done feature
-
-#### Implementation
-
-Marking contacts as done, or contacted, is assisted by `CompletionStatus`. It has a composition association with `Person` 
-and holds a boolean value indicating that the person has been contacted by the telemarketer.
-
-The following sequence diagram shows how the done operation works:
-
-![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
-
-                             
-### Import/Export Feature
+### Import / Export Features
 
 #### Implementation
 
-The `import` and `export` mechanism is supported by all of the main App components, specifically in the following ways: 
-
-* The execution of the `ImportCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the Ui consumer in the `CommandResult` due to their reliance on the UI file chooser.
+The `import` and `export` mechanism is supported by all of the main components, specifically in the following ways:
 
 * The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFx FileChooser to select files to be imported/exported to.
 
-* Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
+* The execution of the `ImportCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
 
 * For import, the `Model` component is accessed to set the new AddressBook of contacts. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
 
+* Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
 
 The following sequence diagram shows how the `import` operation works:
 
@@ -287,16 +276,81 @@ The following sequence diagram shows how the `import` operation works:
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
-####**Design Considerations**
+#### Design Considerations
 
 **Aspect: User Interface**
 
-* Alternative 1: Import and export are buttons in the menu bar only
-  * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
-  * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags. 
-* Alternative 2: (current choice) Import/Export command can be executed by CLI command or menu bar button
-  * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference. 
-  * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
+* **Alternative 1 (current choice):** Import/Export command can be executed by CLI command or menu bar button.
+    * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference.
+    * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
+
+* **Alternative 2:** Import and export are buttons in the menu bar only.
+    * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
+    * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags.
+
+### Profile feature
+
+#### Implementation
+
+Setting the user's profile is facilitated through the `ProfileCommand` and the `ProfileCommandParser` class, which
+parses the user's input to create a new `UserProfile` object to be set in the current `Model` component.
+
+The following sequence diagram shows how the `profile` operation works:
+
+![ProfileSequenceDiagram](images/ProfileSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ProfileCommandParser` and `ProfileCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+#### Design Considerations
+
+**Aspect: Parameters of the `profile` command**
+
+* **Alternative 1 (current choice):** Profile is set with both name and role as mandatory fields.
+    * Pros: Ensures that both name and role are accounted for when changing the profile.
+    * Cons: Both fields must be entered for the user to set the profile, which can be tedious if it has to be done multiple times.
+
+* **Alternative 2 (possible future implementation):** Profile can be set with only the name, or both name and role.
+    * Pros: Allows users to change their name alone without having to enter role as well.
+    * Cons: The cost of implementation is not heavily outweighed by the explicit need for the feature, as there should be infrequent changes in the user's name.
+
+### Mark contacts as done feature
+
+#### Implementation
+
+Marking contacts as done, or contacted, is assisted by `CompletionStatus`. It has a composition association with `Person`
+and holds a boolean value indicating that the person has been contacted by the telemarketer.
+
+The following sequence diagram shows how the `done` operation works:
+
+![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
+
+### Delete contacts feature
+
+The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
+The user can delete a contact via a `delete i/1` or `delete p/87654321` input.
+* delete using a contact's displayed index number by using the `i/` prefix.'
+* delete using a contact's phone number by using the `p/` prefix.
+
+The following activity diagram summarizes what happens when a user executes a delete command:
+
+![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
+
+#### Design considerations
+
+**Aspect: Parameters of the `delete` command**
+
+Since the telemarketer is responsible for talking to customers on the phone to sell products, 
+it will be useful for them to interact with their contact lists through the customer's phone number.
+
+* **Alternative 1 (current choice):** Delete using either index or phone number.
+    * Pros: Flexibility in method of deletion.
+    * Cons: Slightly more complicated for user to delete a contact.
+
+* **Alternative 2:** Delete via phone number only.
+    * Pros: Implementation is more straightforward, as there is only one type of input to be expected.
+    * Cons: Removes the convenience of deleting using a contact's index.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, Logging, Testing, Configuration, Dev-ops**
@@ -313,7 +367,9 @@ The following sequence diagram shows how the `import` operation works:
 
 ### Product scope
 
-#### **Target User Profiles**:
+
+#### **Target User Profiles**
+
 
 David Wong
 * works as a **telemarketer** from home and makes internet calls on his computer
@@ -340,12 +396,12 @@ Anne Goh
 
 <br>
 
-####**Value proposition**:
+#### **Value Proposition**
+
 * Able to import / export data into an easy-to-view format, useful for those who are not experienced at working with data files such as JSON / CSV / etc.
 * Easy to add/annotate details on users to keep track of user defined metrics
 * Ability to get analytics about metrics for progress-tracking
 
-<br>
 
 ### User stories
 
@@ -372,9 +428,9 @@ Priorities:
 
 ### Use cases
 
-(For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the `user`, unless specified otherwise)
+For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the user, unless specified otherwise.
 
-####**Use case: Delete a person**
+#### Use case: Delete a person
 
 **MSS**
 
@@ -395,9 +451,9 @@ Priorities:
 
     * 3a1. Teletubbies shows an error message.
 
-      Use case resumes at step 2.
+  Use case resumes at step 2.
 
-####**Use case: Telemarketer workflow during a shift**
+#### Use case: Telemarketer workflow during a shift
 * Actor: Telemarketer User
 * Precondition: Telemarketer has obtained a list of customers assigned by Supervisor
 
@@ -429,7 +485,7 @@ Use case ends.
     * 3b2. Telemarketer informs their Supervisor about the error
 
   Use case ends.
-  
+
 
 * 5a. Teletubbies detects that index used in the command is invalid.
   * 5a1. Teletubbies displays a message to inform Telemarketer about the input error
@@ -439,21 +495,15 @@ Use case ends.
   Use case resumes from step 6.
 
 
-
 ### Non-Functional Requirements
-1. New telemarketers should be able to easily use the application. (Quality requirement)
-2. The application should save and load data fast, and startup should take a few seconds at the most. (Performance requirement / Response time)
-3. Data should be saved frequently and automatically to allow for easy recovery on possible crashes. (Disaster recovery)
-4. The product should work on all OS, and both 32-bit and 64-bit environments. (Technical / Environment requirement)
-5. The application should be able to efficiently (without noticeable slowdown) handle standard operations (add, delete, search, etc) for up to 10,000 users. (Data requirement, ie. volatility)
-6. The product project is expected to adhere to a schedule that delivers a feature set every two weeks. (Process requirements)
-7. The product is not required to handle in-app sharing of data across users on different devices. (Project scope)
-8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (Testability)
-
-
-### Glossary
-
-Not applicable at the moment. 
+1. New telemarketers should be able to easily use the application. (**Quality requirement**)
+2. The application should save and load data fast, and startup should take a few seconds at the most. (**Performance requirement / Response time**)
+3. Data should be saved frequently and automatically to allow for easy recovery on possible crashes. (**Disaster recovery**)
+4. The product should work on all OS, and both 32-bit and 64-bit environments. (**Technical / Environment requirement**)
+5. The application should be able to efficiently (without a noticeable slowdown) handle standard operations (add, delete, search, etc) for up to 10,000 users. (**Data requirement**, ie. volatility)
+6. The product project is expected to adhere to a schedule that delivers a feature set every two weeks. (**Process requirements**)
+7. The product is not required to handle in-app sharing of data across users on different devices. (**Project scope**)
+8. The product should be available for potential testers to test the capabilities of the product / find any bugs or issues. (**Testability**)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -495,7 +545,7 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete i/0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete i/x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
