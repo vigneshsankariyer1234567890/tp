@@ -51,7 +51,7 @@ public class HistoryManager<T> {
      * Checks if the HistoryManager is empty.
      */
     public boolean isEmpty() {
-        return historyStack.size() == 0 || stackPointer < 0;
+        return historyStack.isEmpty() || stackPointer < 0;
     }
 
     /**
