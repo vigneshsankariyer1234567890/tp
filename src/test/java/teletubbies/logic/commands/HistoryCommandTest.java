@@ -155,8 +155,15 @@ public class HistoryCommandTest {
         }
 
         @Override
-        public List<String> getInputHistory() {
+        public List<String> getChronologicallyAscendingHistory() {
             return new ArrayList<>(commandInputHistory);
+        }
+
+        @Override
+        public List<String> getChronologicallyDescendingHistory() {
+            List<String> result = new ArrayList<>(commandInputHistory);
+            Collections.reverse(result);
+            return result;
         }
     }
 }

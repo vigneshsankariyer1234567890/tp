@@ -172,8 +172,13 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public List<String> getInputHistory() {
-        return inputHistory.getFullInputHistory();
+    public List<String> getChronologicallyAscendingHistory() {
+        return inputHistory.getChronologicallyAscendingHistory();
+    }
+
+    @Override
+    public List<String> getChronologicallyDescendingHistory() {
+        return inputHistory.getChronologicallyDescendingHistory();
     }
 
 }

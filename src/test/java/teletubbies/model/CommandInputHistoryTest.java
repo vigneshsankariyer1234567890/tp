@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,21 @@ public class CommandInputHistoryTest {
         for (String s: inputs) {
             inputHistory.addCommandInput(s);
         }
-        List<String> historyList = inputHistory.getFullInputHistory();
+        List<String> historyList = inputHistory.getChronologicallyAscendingHistory();
         assertEquals(inputs, historyList);
+    }
+
+    @Test
+    public void addToCommandInputHistoryAndCompareDescending_success() {
+        CommandInputHistory inputHistory = new CommandInputHistory();
+        for (String s: inputs) {
+            inputHistory.addCommandInput(s);
+        }
+
+        List<String> expected = new ArrayList<>(List.copyOf(inputs));
+        Collections.reverse(expected);
+
+        assertEquals(expected, inputHistory.getChronologicallyDescendingHistory());
     }
 
     @Test
@@ -35,7 +49,7 @@ public class CommandInputHistoryTest {
         while (!inputHistory.isEarliest()) {
             inputHistory.previous();
         }
-        List<String> fullHistoryList = inputHistory.getFullInputHistory();
+        List<String> fullHistoryList = inputHistory.getChronologicallyAscendingHistory();
         assertEquals(inputs, fullHistoryList);
     }
 
@@ -52,7 +66,7 @@ public class CommandInputHistoryTest {
         }
         String first = inputHistory.peek();
         inputHistory.addCommandInput(first);
-        List<String> fullHistoryList = inputHistory.getFullInputHistory();
+        List<String> fullHistoryList = inputHistory.getChronologicallyAscendingHistory();
         assertEquals(targetList, fullHistoryList);
     }
 
@@ -88,7 +102,7 @@ public class CommandInputHistoryTest {
         assertEquals(inputs.get(randomPosition), first);
 
         inputHistory.addCommandInput(first);
-        List<String> fullHistoryList = inputHistory.getFullInputHistory();
+        List<String> fullHistoryList = inputHistory.getChronologicallyAscendingHistory();
         assertEquals(targetList, fullHistoryList);
     }
 

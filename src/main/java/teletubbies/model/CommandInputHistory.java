@@ -2,6 +2,7 @@ package teletubbies.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
 import java.util.List;
 
 import teletubbies.commons.core.HistoryManager;
@@ -23,9 +24,20 @@ public class CommandInputHistory {
      * Returns the full history of inputs given to CommandInputHistory.
      * @return full list of inputs given to CommandInputHistory.
      */
-    public List<String> getFullInputHistory() {
+    public List<String> getChronologicallyAscendingHistory() {
         inputHistory.resetFullHistory();
         return inputHistory.historyList();
+    }
+
+    /**
+     * Returns the full history of inputs given to CommandInputHistory.
+     * @return full list of inputs given to CommandInputHistory.
+     */
+    public List<String> getChronologicallyDescendingHistory() {
+        inputHistory.resetFullHistory();
+        List<String> result = inputHistory.historyList();
+        Collections.reverse(result);
+        return result;
     }
 
     /**
