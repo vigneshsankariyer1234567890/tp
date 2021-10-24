@@ -8,15 +8,11 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import teletubbies.logic.commands.exceptions.CommandException;
-import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
 import teletubbies.model.tag.Tag;
-import teletubbies.testutil.Assert;
 import teletubbies.testutil.TypicalPersons;
-
 
 public class ExportCommandTest {
 
