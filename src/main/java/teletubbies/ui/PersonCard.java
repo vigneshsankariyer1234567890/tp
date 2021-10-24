@@ -90,7 +90,7 @@ public class PersonCard extends UiPart<Region> {
         content.putString(person.getPhone().value);
         clipboard.setContent(content);
     }
-    
+
     @Override
     public boolean equals(Object other) {
         // short circuit if same object
