@@ -7,6 +7,7 @@ import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.AddCommand;
 import teletubbies.logic.commands.ClearCommand;
 import teletubbies.logic.commands.Command;
+import teletubbies.logic.commands.ConfirmExportCommand;
 import teletubbies.logic.commands.DeleteCommand;
 import teletubbies.logic.commands.DoneCommand;
 import teletubbies.logic.commands.EditCommand;
@@ -22,7 +23,7 @@ import teletubbies.logic.parser.exceptions.ParseException;
 /**
  * Parses user input.
  */
-public class InputParser {
+public class  InputParser {
 
     /**
      * Used for initial separation of command word and args.
@@ -81,6 +82,10 @@ public class InputParser {
 
         case ExportCommand.COMMAND_WORD:
             return new ExportCommandParser().parse(arguments);
+            
+        case ConfirmExportCommand
+                    .COMMAND_WORD:
+            return new ConfirmExportCommand();
 
         default:
             throw new ParseException(Messages.MESSAGE_UNKNOWN_COMMAND);

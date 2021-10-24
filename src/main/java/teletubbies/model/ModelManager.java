@@ -3,6 +3,7 @@ package teletubbies.model;
 import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -23,6 +24,8 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private boolean isAwaitingExportConfirmation;
+    private AddressBook addressBookCopy;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -122,6 +125,31 @@ public class ModelManager implements Model {
         CollectionUtil.requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public void updateExportList(List<Person> filteredPersonList) {
+        addressBookCopy = new AddressBook(addressBook);
+        this.addressBook.setPersons(filteredPersonList);
+        isAwaitingExportConfirmation = true;
+    }
+
+    @Override
+    public AddressBook getExportAddressBook() {
+        AddressBook toExport = new AddressBook(addressBook);
+        this.addressBook.resetData(addressBookCopy);
+        addressBookCopy = null;
+        isAwaitingExportConfirmation = false;
+        return toExport;
+    }
+
+    @Override
+    public void cancelPendingExport() {
+        if (isAwaitingExportConfirmation) {
+            this.addressBook.resetData(addressBookCopy);
+            addressBookCopy = null;
+            isAwaitingExportConfirmation = false;
+        }
     }
 
     //=========== Filtered Person List Accessors =============================================================

@@ -51,6 +51,7 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.cancelPendingExport();
 
         if (isPhonePrefix) {
             List<Person> list = model.getAddressBook().getPersonList();
