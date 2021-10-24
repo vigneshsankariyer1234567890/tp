@@ -80,7 +80,7 @@ public class ConfirmExportCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ExportCommand)) {
+        if (!(other instanceof ConfirmExportCommand)) {
             return false;
         }
         return true;

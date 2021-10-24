@@ -3,17 +3,17 @@ package teletubbies.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static teletubbies.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
+
 import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
-import teletubbies.testutil.Assert;
 import teletubbies.testutil.TypicalPersons;
-
 
 class ConfirmExportCommandTest {
     private Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
@@ -27,7 +27,7 @@ class ConfirmExportCommandTest {
     @Test
     public void saveAddressBookToPath_emptyPath_throwsException() {
         AddressBook original = TypicalPersons.getTypicalAddressBook();
-        Assert.assertThrows(CommandException.class, () -> confirmExportCommand.saveAddressBookToPath(original, ""));
+        assertThrows(CommandException.class, () -> confirmExportCommand.saveAddressBookToPath(original, ""));
     }
 
     @Test

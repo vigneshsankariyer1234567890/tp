@@ -166,9 +166,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void cancelPendingExport() {
-            throw new AssertionError("This method should not be called.");
-        }
+        public void cancelPendingExport() { }
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
