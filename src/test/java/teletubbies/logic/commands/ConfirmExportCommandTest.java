@@ -1,24 +1,20 @@
 package teletubbies.logic.commands;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
-import teletubbies.model.tag.Tag;
 import teletubbies.testutil.Assert;
 import teletubbies.testutil.TypicalPersons;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class ConfirmExportCommandTest {
     private Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
-    ConfirmExportCommand confirmExportCommand = new ConfirmExportCommand();
+    private ConfirmExportCommand confirmExportCommand = new ConfirmExportCommand();
 
     @Test
     public void execute_noPendingExport_throwsException() {
@@ -34,13 +30,13 @@ class ConfirmExportCommandTest {
     @Test
     public void includeDotWithJson_addJson_true() {
         String s = "hello";
-        assertEquals(confirmExportCommand.includeDotJson(s), s + ".json");
+        Assertions.assertEquals(confirmExportCommand.includeDotJson(s), s + ".json");
     }
 
     @Test
     public void includeDotWithJson_addJson_false() {
         String s = "hello.json";
-        assertEquals(confirmExportCommand.includeDotJson(s), s);
+        Assertions.assertEquals(confirmExportCommand.includeDotJson(s), s);
     }
 
     @Test
@@ -49,15 +45,15 @@ class ConfirmExportCommandTest {
         final ConfirmExportCommand confirmExportSecondCommand = new ConfirmExportCommand();
 
         // same object -> returns true
-        assertTrue(confirmExportFirstCommand.equals(confirmExportFirstCommand));
+        Assertions.assertTrue(confirmExportFirstCommand.equals(confirmExportFirstCommand));
 
         // same values -> returns true
-        assertTrue(confirmExportFirstCommand.equals(confirmExportSecondCommand));
+        Assertions.assertTrue(confirmExportFirstCommand.equals(confirmExportSecondCommand));
 
         // different types -> returns false
-        assertFalse(confirmExportFirstCommand.equals(1));
+        Assertions.assertFalse(confirmExportFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(confirmExportFirstCommand.equals(null));
+        Assertions.assertFalse(confirmExportFirstCommand.equals(null));
     }
 }

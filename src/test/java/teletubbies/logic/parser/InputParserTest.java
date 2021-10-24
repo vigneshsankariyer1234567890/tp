@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.AddCommand;
 import teletubbies.logic.commands.ClearCommand;
@@ -29,7 +28,6 @@ import teletubbies.logic.commands.HelpCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.ProfileCommand;
-import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.NameContainsKeywordsPredicate;
 import teletubbies.model.person.Person;
