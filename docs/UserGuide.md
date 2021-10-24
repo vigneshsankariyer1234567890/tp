@@ -16,7 +16,7 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `teletubbies.jar` from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `teletubbies.jar` from [here](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your Teletubbies app.
 
@@ -31,6 +31,8 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
    * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to Teletubbies.
 
    * **`delete`**`3` : Deletes the 3rd contact shown in the current list.
+   
+   * **`done`**`3` : Marks the 3rd contact shown in the current list as done.
 
    * **`clear`** : Deletes all contacts.
 
@@ -52,7 +54,7 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
-* Items with `…`​ after them can be used multiple times including zero times.<br>
+* Items with `…`​ after them can be used multiple times or left blank.<br>
   e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 
 * Parameters can be in any order.<br>
@@ -68,9 +70,9 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Displays the User Guide in a pop-up window.
 
-![help message](images/userGuide/helpMessage.png)
+![helpPage](images/userGuide/helpPage.jpg)
 
 Format: `help`
 
@@ -101,14 +103,14 @@ Adds a customer to the application.
 The customer’s name and phone number are mandatory. Address and email are optional fields.
 
 
-Format: `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]`
+Format: `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL] [t/TAG]…​`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+<div markdown="span" class="alert alert-primary">:bulb: Tip:
+A person can have any number of tags (including none)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 a/John street, block 123, #01-01 e/johnd@example.com `
+* `add n/John Doe p/98765432 a/John street, block 123, #01-01 e/johnd@example.com t/friends t/owesMoney`
 * `add n/Betsy Crowe a/Newgate Prison p/1234567 e/betsycrowe@example.com`
 
 ### Delete Contacts : `delete`
@@ -183,7 +185,7 @@ Examples:
 Exports customer data from the application to a JSON file in desired specified
 folder selected from the file selector window.
 
-Format: `export [t/ tag ...]`
+Format: `export [t/TAGS ...]`
 
 Examples:
 `export t/ friends family` will export all contacts containing BOTH the
@@ -217,16 +219,27 @@ For importing a separate JSON file into the application, refer to [Importing con
 
 Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubbies-ddmmyyyy-hhmm.json`. Advanced users are welcome to update data directly by editing that data file.
 
-<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+<div markdown="span" class="alert alert-warning">:exclamation: Caution:
 If your changes to the data file makes its format invalid, Teletubbies will discard all data and start with an empty data file at the next run!
 </div>
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Glossary
+
+**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
+
+**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
+
+**_Parameter_**: Input to a command's field.
+
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the Teletubbies app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Teletubbies home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -235,7 +248,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 Action | Format & Usage Examples
 --------|------------------
 **export** | `export [t/TAGS...]` <br> e.g, `export t/friends family`
-**add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​` <br> e.g., `add n/david wong p/81234567`
+**add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​ [t/TAGS...]` <br> e.g., `add n/david wong p/81234567`
 **delete** | `delete PHONE_NUMBER`<br> `delete INDEX`<br> e.g., `delete p/81234567, delete i/1`
 **profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
 
