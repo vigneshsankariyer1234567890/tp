@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.util.Pair;
@@ -76,7 +77,8 @@ public class ExportCommand extends Command {
         requireNonNull(tags);
 
         ObservableList<Person> personObservableList = model.getFilteredPersonList();
-        List<Person> personList = TagUtils.filterPersonsByTag(personObservableList, tags);
+        List<Person> personList = personObservableList.stream()
+                .filter(TagUtils.personHasTagPredicate(tags)).collect(Collectors.toList());
         AddressBook ab = new AddressBook();
         ab.setPersons(personList);
         return ab;

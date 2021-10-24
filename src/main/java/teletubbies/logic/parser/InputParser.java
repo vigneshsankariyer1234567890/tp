@@ -12,6 +12,7 @@ import teletubbies.logic.commands.DoneCommand;
 import teletubbies.logic.commands.EditCommand;
 import teletubbies.logic.commands.ExitCommand;
 import teletubbies.logic.commands.ExportCommand;
+import teletubbies.logic.commands.FilterCommand;
 import teletubbies.logic.commands.FindCommand;
 import teletubbies.logic.commands.HelpCommand;
 import teletubbies.logic.commands.ImportCommand;
@@ -89,6 +90,9 @@ public class InputParser {
 
         case TagRemoveCommand.COMMAND_WORD:
             return new TagRemoveCommandParser().parse(arguments);
+
+        case FilterCommand.COMMAND_WORD:
+            return new FilterCommandParser().parse(arguments);
 
         default:
             throw new ParseException(Messages.MESSAGE_UNKNOWN_COMMAND);
