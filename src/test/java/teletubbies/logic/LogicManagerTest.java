@@ -93,6 +93,7 @@ public class LogicManagerTest {
         Model expectedModel = trackedModel;
         expectedModel.addPerson(expectedPerson);
         expectedModel.addCommandInput(addCommand);
+        expectedModel.commitAddressBook();
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }

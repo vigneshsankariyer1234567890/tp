@@ -26,6 +26,7 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final teletubbies.logic.parser.InputParser inputParser;
+    private boolean isModified;
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -34,6 +35,7 @@ public class LogicManager implements Logic {
         this.model = model;
         this.storage = storage;
         inputParser = new teletubbies.logic.parser.InputParser();
+        model.getAddressBook().addListener(observable -> isModified = true);
     }
 
     @Override
@@ -48,10 +50,13 @@ public class LogicManager implements Logic {
             model.addCommandInput(commandText);
         }
 
-        try {
-            storage.saveAddressBook(model.getAddressBook());
-        } catch (IOException ioe) {
-            throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
+        if (isModified) {
+            logger.info("AddressBook was modified; saving to file.");
+            try {
+                storage.saveAddressBook(model.getAddressBook());
+            } catch (IOException ioe) {
+                throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
+            }
         }
 
         return commandResult;

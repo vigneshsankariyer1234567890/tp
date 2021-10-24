@@ -19,7 +19,7 @@ public class VersionedAddressBook extends AddressBook {
      */
     public VersionedAddressBook(ReadOnlyAddressBook initialState) {
         super(initialState);
-        addressBookHistoryManager = new HistoryManager<>(List.of(initialState));
+        addressBookHistoryManager = new HistoryManager<>(List.of(new AddressBook(initialState)));
     }
 
     /**

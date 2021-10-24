@@ -7,6 +7,8 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.exceptions.EarliestVersionException;
+import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.model.person.Person;
 
 /**
@@ -108,4 +110,30 @@ public interface Model {
      * @return list of previous inputs entered by user.
      */
     List<String> getInputHistory();
+
+    /**
+     * Returns true if the model has previous address book states to restore.
+     */
+    boolean canUndoAddressBook();
+
+    /**
+     * Returns true if the model has undone address book states to restore.
+     */
+    boolean canRedoAddressBook();
+
+    /**
+     * Restores the model's address book to its previous state.
+     */
+    void undoAddressBook() throws EarliestVersionException;
+
+    /**
+     * Restores the model's address book to its previously undone state.
+     */
+    void redoAddressBook() throws LatestVersionException;
+
+    /**
+     * Saves the current address book state for undo/redo.
+     */
+    void commitAddressBook();
+
 }

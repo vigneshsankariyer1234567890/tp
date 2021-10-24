@@ -63,6 +63,7 @@ public class DeleteCommand extends Command {
             Person personToDelete = list.stream().filter(p -> p.getPhone().equals(targetPhone))
                     .findFirst().get();
             model.deletePerson(personToDelete);
+            model.commitAddressBook();
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         }
 
@@ -73,6 +74,7 @@ public class DeleteCommand extends Command {
         }
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
         model.deletePerson(personToDelete);
+        model.commitAddressBook();
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
