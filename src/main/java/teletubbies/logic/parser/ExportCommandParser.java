@@ -3,17 +3,12 @@ package teletubbies.logic.parser;
 import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javafx.util.Pair;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
-import teletubbies.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new ExportCommand object
@@ -32,7 +27,7 @@ public class ExportCommandParser implements Parser<ExportCommand> {
 
         FlagValue tagString = argMultimap.getAllValues(CliSyntax.PREFIX_TAG);
         Set<Pair<String, Optional<String>>> tagSet = new HashSet<>();
-        for (String v: tagString.values) {
+        for (String v: tagString.getValues()) {
             String[] nameValuePair = v.trim().split(":");
             Optional<String> value = nameValuePair.length < 2
                     ? Optional.empty()

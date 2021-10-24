@@ -9,13 +9,16 @@ import static teletubbies.testutil.Assert.assertThrows;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
+import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
@@ -147,6 +150,11 @@ public class AddCommandTest {
         @Override
         public void setPerson(Person target, Person editedPerson) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Person> getPersonsFromRange(Range range) throws IllegalValueException {
+            return null;
         }
 
         @Override

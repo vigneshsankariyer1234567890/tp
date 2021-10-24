@@ -20,11 +20,11 @@ import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.person.Address;
-import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.Tag;
 
 /**

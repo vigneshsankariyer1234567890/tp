@@ -6,8 +6,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.Arrays;
 import java.util.function.Function;
 
-import teletubbies.commons.util.AppUtil;
 import teletubbies.commons.core.UserProfile.Role;
+import teletubbies.commons.util.AppUtil;
 
 /**
  * Represents a Tag in the address book.
@@ -16,15 +16,15 @@ import teletubbies.commons.core.UserProfile.Role;
 public class Tag {
 
     public static final String[] RESERVED_TAG_NAMES = new String[] { "CompletionStatus" };
-    public static final Function<String, String> RESERVED_NAME_CONSTRAINTS =
-            (name) -> name + " is a reserved tag name. Please choose another name";
+    public static final Function<String, String> RESERVED_NAME_CONSTRAINTS = (name) ->
+        name + " is a reserved tag name. Please choose another name";
     public static final String ALPHANUMERIC_NAME_CONSTRAINTS = "Tag names should be alphanumeric";
     public static final String MESSAGE_CONSTRAINTS = "Tag names should be alphanumeric and cannot be reserved";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
 
-    public String tagValue;
     public final String tagName;
     public final Role[] editAccessRoles;
+    private String tagValue;
 
     /**
      * Constructs a {@code Tag}
@@ -102,14 +102,15 @@ public class Tag {
         this.tagValue = value;
     }
 
+    public String getTagValue() {
+        return this.tagValue;
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof Tag // instanceof handles nulls
                 && tagName.equals(((Tag) other).tagName));
-//                && tagValue.equals(((Tag) other).tagValue));
-//                && Arrays.equals(editAccessRoles, ((Tag) other).editAccessRoles)
-//                && Arrays.equals(deleteAccessRoles, ((Tag) other).deleteAccessRoles)); // state check
     }
 
     @Override
@@ -122,7 +123,7 @@ public class Tag {
      */
     public String toString() {
         boolean valueEmpty = isNull(tagValue) || tagValue.equals("");
-        return tagName + (valueEmpty ? "" :  ": " + tagValue);
+        return tagName + (valueEmpty ? "" : ": " + tagValue);
     }
 
 }

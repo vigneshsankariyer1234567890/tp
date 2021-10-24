@@ -1,16 +1,16 @@
 package teletubbies.logic.parser;
 
-import teletubbies.commons.core.Messages;
-import teletubbies.commons.core.Range;
-import teletubbies.logic.commands.TagCommand;
-import teletubbies.logic.parser.exceptions.ParseException;
-
-import java.util.Optional;
-
 import static java.util.Objects.requireNonNull;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_SUPERVISOR_FLAG;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_VALUE;
+
+import java.util.Optional;
+
+import teletubbies.commons.core.Messages;
+import teletubbies.commons.core.Range;
+import teletubbies.logic.commands.TagCommand;
+import teletubbies.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments and creates a new {@code TagCommand} object

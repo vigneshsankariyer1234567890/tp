@@ -56,13 +56,13 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandPhoneExecutionError_throwsCommandException() {
-        String deleteCommand = "delete p/000";
+        String deleteCommand = "delete --p000";
         assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_PHONE_NUMBER);
     }
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "delete i/20";
+        String deleteCommand = "delete --i20";
         assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 

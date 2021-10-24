@@ -29,6 +29,6 @@ class ExportCommandParserTest {
 
     @Test
     void parse_differentArgs_notEqual() throws ParseException {
-        Assertions.assertNotEquals(parser.parse(" t/ 1 1 1"), parser.parse("13"));
+        Assertions.assertNotEquals(parser.parse(" --t 1 1 1"), parser.parse("13"));
     }
 }

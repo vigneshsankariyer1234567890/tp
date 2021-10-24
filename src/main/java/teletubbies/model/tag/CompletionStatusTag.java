@@ -14,6 +14,11 @@ public class CompletionStatusTag extends Tag {
 
     public final CompletionStatus status;
 
+    /**
+     * Special tag for CompletionStatus
+     *
+     * @param status completion status
+     */
     public CompletionStatusTag(CompletionStatus status) {
         super("CompletionStatus", new Role[]{});
 
@@ -21,6 +26,9 @@ public class CompletionStatusTag extends Tag {
         this.setTagValue(status.toString());
     }
 
+    /**
+     * Completion status with default INCOMPLETE status
+     */
     public CompletionStatusTag() {
         super("CompletionStatus", new Role[]{});
 

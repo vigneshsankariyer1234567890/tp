@@ -31,8 +31,10 @@ public class DoneCommandParser implements Parser<DoneCommand> {
             Index index = ParserUtil.parseIndex(argumentMultimap.getPreamble());
 
             boolean incomplete = argumentMultimap.getAllValues(PREFIX_INCOMPLETE).isPresent();
-            boolean ongoing  = argumentMultimap.getAllValues(PREFIX_ONGOING).isPresent();
-            if (incomplete && ongoing) throw new ParseException(INVALID_FLAG);
+            boolean ongoing = argumentMultimap.getAllValues(PREFIX_ONGOING).isPresent();
+            if (incomplete && ongoing) {
+                throw new ParseException(INVALID_FLAG);
+            }
             CompletionStatus completionStatus = incomplete
                     ? CompletionStatus.INCOMPLETE
                     : ongoing

@@ -43,14 +43,9 @@ class JsonAdaptedTag {
      */
     public JsonAdaptedTag(Tag source) {
         tagName = source.tagName;
-        tagValue = source.tagValue;
+        tagValue = source.getTagValue();
         editAccessRoles = source.editAccessRoles;
     }
-
-//    @JsonValue
-//    public String getTagName() {
-//        return tagName;
-//    }
 
     /**
      * Converts this Jackson-friendly adapted tag object into the model's {@code Tag} object.

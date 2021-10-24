@@ -1,9 +1,9 @@
 package teletubbies.commons.core;
 
-import teletubbies.commons.core.index.Index;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import teletubbies.commons.core.index.Index;
 
 public class Range {
 

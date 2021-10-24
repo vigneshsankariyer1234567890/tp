@@ -75,7 +75,7 @@ public class TagCommand extends Command {
 
             if (tagValue == null) {
                 tagValue = matchingTag.isPresent()
-                    ? matchingTag.get().tagValue
+                    ? matchingTag.get().getTagValue()
                     : "";
             }
 
@@ -100,8 +100,9 @@ public class TagCommand extends Command {
             model.setPerson(p, editedPerson);
         });
 
-        if (!feedbackMessages.isEmpty())
+        if (!feedbackMessages.isEmpty()) {
             throw new CommandException(String.join("\n", feedbackMessages));
+        }
 
         return new CommandResult(MESSAGE_COMPLETED_SUCCESS);
     }

@@ -37,7 +37,7 @@ public class ArgumentMultimap {
      */
     public Optional<String> getValue(Prefix prefix) {
         FlagValue value = getAllValues(prefix);
-        List<String> values = value.values;
+        List<String> values = value.getValues();
         return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
 

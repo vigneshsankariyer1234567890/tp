@@ -1,14 +1,14 @@
 package teletubbies.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
+
+import java.util.Optional;
+
 import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.Range;
 import teletubbies.logic.commands.TagRemoveCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
-
-import java.util.Optional;
-
-import static java.util.Objects.requireNonNull;
-import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
 
 /**
  * Parses input arguments and creates a new {@code TagRemoveCommand} object

@@ -7,11 +7,11 @@ import java.util.stream.Collectors;
 import teletubbies.model.AddressBook;
 import teletubbies.model.ReadOnlyAddressBook;
 import teletubbies.model.person.Address;
-import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.Tag;
 
 /**

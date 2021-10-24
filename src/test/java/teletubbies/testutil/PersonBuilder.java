@@ -8,9 +8,9 @@ import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
-import teletubbies.model.tag.Tag;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
+import teletubbies.model.tag.Tag;
 import teletubbies.model.util.SampleDataUtil;
 
 /**

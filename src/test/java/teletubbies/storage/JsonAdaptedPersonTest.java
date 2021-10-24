@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import teletubbies.commons.core.UserProfile;
 import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.model.person.Address;
 import teletubbies.model.person.Email;

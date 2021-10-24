@@ -1,5 +1,10 @@
 package teletubbies.logic.commands;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile.Role;
 import teletubbies.commons.exceptions.IllegalValueException;
@@ -9,12 +14,6 @@ import teletubbies.logic.parser.CliSyntax;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.tag.Tag;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 public class TagRemoveCommand extends Command {
 
@@ -52,11 +51,11 @@ public class TagRemoveCommand extends Command {
         try {
             rangePersons = model.getPersonsFromRange(range);
             tempTagToRm = new Tag(tagName);
-        } catch(IllegalValueException ive) {
+        } catch (IllegalValueException ive) {
             rangePersons = new ArrayList<>();
             tempTagToRm = null;
             feedbackMessages.add(COMMAND_WORD + ": Range of persons out of bounds");
-        } catch(IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             rangePersons = new ArrayList<>();
             tempTagToRm = null;
             feedbackMessages.add(COMMAND_WORD + ": Invalid tag name");
@@ -83,8 +82,9 @@ public class TagRemoveCommand extends Command {
             model.setPerson(p, editedPerson);
         });
 
-        if (!feedbackMessages.isEmpty())
+        if (!feedbackMessages.isEmpty()) {
             throw new CommandException(String.join("\n", feedbackMessages));
+        }
 
         return new CommandResult(MESSAGE_COMPLETED_SUCCESS);
     }

@@ -112,7 +112,7 @@ class JsonAdaptedPerson {
         CompletionStatus completionStatus;
         try {
             completionStatus = CompletionStatus.valueOf(completionStat);
-        } catch(IllegalArgumentException iae) {
+        } catch (IllegalArgumentException | NullPointerException e) {
             completionStatus = CompletionStatus.INCOMPLETE;
         }
         final CompletionStatusTag completionStatusTag = new CompletionStatusTag(completionStatus);
