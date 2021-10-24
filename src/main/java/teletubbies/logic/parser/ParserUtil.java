@@ -2,10 +2,15 @@ package teletubbies.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import teletubbies.commons.core.Range;
 import teletubbies.commons.core.index.Index;
 import teletubbies.commons.util.StringUtil;
 import teletubbies.logic.parser.exceptions.ParseException;
@@ -21,6 +26,10 @@ import teletubbies.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_RANGE_LENGTH = "Range must be in the format 'startIndex - endIndex'"
+            + " or 'index1, index2,..., indexN'.";
+    public static final String MESSAGE_INVALID_RANGE = "Range limits are not valid. startIndex should be less than"
+            + "endIndex";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -33,6 +42,45 @@ public class ParserUtil {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+    }
+
+    /**
+     * Parses a range String into a {@code Range} and returns it.
+     *
+     * @param range range values separated by a '-'
+     * @return Range object
+     * @throws ParseException If range is not 2 values separated by
+     * a hyphen with the left value smaller than the right
+     */
+    public static Range parseRange(String range) throws ParseException {
+        String[] rangeVals = range.split("-");
+        if (rangeVals.length != 2) {
+            throw new ParseException(MESSAGE_INVALID_RANGE_LENGTH);
+        } else if (!StringUtil.isNonZeroUnsignedInteger(rangeVals[0].trim())
+                || !StringUtil.isNonZeroUnsignedInteger(rangeVals[1].trim())
+                || Integer.parseInt(rangeVals[0].trim()) > Integer.parseInt(rangeVals[1].trim())) {
+            throw new ParseException(MESSAGE_INVALID_RANGE);
+        }
+        int start = Integer.parseInt(rangeVals[0].trim());
+        int end = Integer.parseInt(rangeVals[1].trim());
+        return new Range(IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList()));
+    }
+
+    /**
+     * Parses a range (separated by commas) into a {@code Range} and returns it.
+     *
+     * @param range Index values separated by commas
+     * @return Range object
+     * @throws ParseException If range values are not integers
+     */
+    public static Range parseRangeSeparatedByCommas(String range) throws ParseException {
+        String[] rangeVals = range.split(",");
+        if (!Arrays.stream(rangeVals).map(String::trim).allMatch(StringUtil::isNonZeroUnsignedInteger)) {
+            throw new ParseException(MESSAGE_INVALID_RANGE);
+        }
+        List<Integer> rangeIntegers = Arrays.stream(rangeVals).map(String::trim)
+                .map(Integer::parseInt).collect(Collectors.toList());
+        return new Range(rangeIntegers);
     }
 
     /**

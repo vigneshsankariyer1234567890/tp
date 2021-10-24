@@ -5,10 +5,13 @@ import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+
 import teletubbies.model.person.Person;
+import teletubbies.model.tag.Tag;
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -49,7 +52,9 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
-    private Label completionStatus;
+    private ProgressBar completionStatusTag;
+    @FXML
+    private Label completionStatusLabel;
     @FXML
     private FlowPane tags;
 
@@ -75,10 +80,20 @@ public class PersonCard extends UiPart<Region> {
             email.setManaged(false);
         }
 
-        completionStatus.setText(person.getCompletionStatus().status ? COMPLETED_EMOJI : UNCOMPLETED_EMOJI);
-        person.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        switch (person.getCompletionStatus().status) {
+        case COMPLETE:
+            completionStatusTag.setProgress(1.0);
+            break;
+        case ONGOING:
+            completionStatusTag.setProgress(0.5);
+            break;
+        default:
+            completionStatusTag.setProgress(0.0);
+        }
+
+        person.getAllTags().stream()
+                .sorted(Comparator.comparing(Tag::toString))
+                .forEach(tag -> tags.getChildren().add(new Label(tag.toString())));
     }
 
     @Override

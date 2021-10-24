@@ -20,7 +20,7 @@ import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.person.Address;
-import teletubbies.model.person.CompletionStatus;
+import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
@@ -98,10 +98,10 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        CompletionStatus completionStatus = personToEdit.getCompletionStatus();
+        CompletionStatusTag completionStatusTag = personToEdit.getCompletionStatus();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, completionStatus, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, completionStatusTag, updatedTags);
     }
 
     @Override

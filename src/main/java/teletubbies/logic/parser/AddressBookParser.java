@@ -17,6 +17,8 @@ import teletubbies.logic.commands.HelpCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.ProfileCommand;
+import teletubbies.logic.commands.TagCommand;
+import teletubbies.logic.commands.TagRemoveCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 
 /**
@@ -81,6 +83,12 @@ public class AddressBookParser {
 
         case ExportCommand.COMMAND_WORD:
             return new ExportCommandParser().parse(arguments);
+
+        case TagCommand.COMMAND_WORD:
+            return new TagCommandParser().parse(arguments);
+
+        case TagRemoveCommand.COMMAND_WORD:
+            return new TagRemoveCommandParser().parse(arguments);
 
         default:
             throw new ParseException(Messages.MESSAGE_UNKNOWN_COMMAND);

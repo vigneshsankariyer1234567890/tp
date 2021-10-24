@@ -1,11 +1,14 @@
 package teletubbies.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
+import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.model.person.Person;
 
 /**
@@ -86,6 +89,9 @@ public interface Model {
      * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
      */
     void setPerson(Person target, Person editedPerson);
+
+    /** Returns a list of persons from indices in a filtered person list */
+    List<Person> getPersonsFromRange(Range range) throws IllegalValueException;
 
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();

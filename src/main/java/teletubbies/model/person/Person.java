@@ -1,11 +1,15 @@
 package teletubbies.model.person;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import teletubbies.commons.util.CollectionUtil;
+import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.Tag;
 
 /**
@@ -21,20 +25,20 @@ public class Person {
 
     // Data fields
     private final Address address;
-    private final CompletionStatus completionStatus;
+    private final CompletionStatusTag completionStatusTag;
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, CompletionStatus completionStatus,
+    public Person(Name name, Phone phone, Email email, Address address, CompletionStatusTag completionStatusTag,
                   Set<Tag> tags) {
         CollectionUtil.requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.completionStatus = completionStatus;
+        this.completionStatusTag = completionStatusTag;
         this.tags.addAll(tags);
     }
 
@@ -58,8 +62,8 @@ public class Person {
      * Returns an immutable CompletionStatus
      * @return CompletionStatus
      */
-    public CompletionStatus getCompletionStatus() {
-        return completionStatus;
+    public CompletionStatusTag getCompletionStatus() {
+        return completionStatusTag;
     }
 
     /**
@@ -68,6 +72,17 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns an immutable tag set, which
+     *
+     * @return
+     */
+    public Set<Tag> getAllTags() {
+        HashSet<Tag> allTags = new HashSet<>(Set.copyOf(tags));
+        allTags.add(completionStatusTag);
+        return Collections.unmodifiableSet(allTags);
     }
 
     /**
@@ -128,13 +143,15 @@ public class Person {
             builder.append("; Address: ")
                     .append(getAddress());
         }
-        builder.append(" Completed: ")
+        builder.append("; Completed: ")
                .append(getCompletionStatus());
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {
             builder.append("; Tags: ");
-            tags.forEach(builder::append);
+            builder.append(tags.stream()
+                    .map(Tag::toString)
+                    .collect(Collectors.joining(", ")));
         }
         return builder.toString();
     }

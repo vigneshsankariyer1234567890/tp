@@ -4,10 +4,13 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javafx.util.Pair;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.tag.Tag;
@@ -27,12 +30,15 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 CliSyntax.PREFIX_TAG);
 
-        String tagString = argMultimap.getValue(CliSyntax.PREFIX_TAG).orElse("");
-        List<String> tagList = Stream.of(tagString.split(" ")).map(String::trim)
-                .filter(trim -> !trim.equals("")).collect(Collectors.toList());
-        Set<Tag> tagSet = tagList.size() == 1 && tagList.get(0).equals("")
-                ? new HashSet<>()
-                : ParserUtil.parseTags(tagList);
+        FlagValue tagString = argMultimap.getAllValues(CliSyntax.PREFIX_TAG);
+        Set<Pair<String, Optional<String>>> tagSet = new HashSet<>();
+        for (String v: tagString.values) {
+            String[] nameValuePair = v.trim().split(":");
+            Optional<String> value = nameValuePair.length < 2
+                    ? Optional.empty()
+                    : Optional.of(nameValuePair[1].trim());
+            tagSet.add(new Pair<>(nameValuePair[0].trim(), value));
+        }
 
         return new ExportCommand(tagSet);
     }

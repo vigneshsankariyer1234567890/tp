@@ -6,11 +6,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import javafx.util.Pair;
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.util.StringUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
@@ -18,6 +21,7 @@ import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.tag.Tag;
+import teletubbies.model.tag.TagUtils;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.ui.MainWindow;
 
@@ -26,10 +30,10 @@ public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
     public static final String MESSAGE_SUCCESS = "Contacts exported successfully.";
 
-    private final Set<Tag> tags;
+    private final Set<Pair<String, Optional<String>>> tags;
     private final Logger logger = LogsCenter.getLogger(getClass()); // TODO make a singleton logger or something
 
-    public ExportCommand(Set<Tag> tags) {
+    public ExportCommand(Set<Pair<String, Optional<String>>> tags) {
         this.tags = tags;
     }
 
@@ -75,9 +79,7 @@ public class ExportCommand extends Command {
         requireNonNull(tags);
 
         ObservableList<Person> personObservableList = model.getFilteredPersonList();
-        List<Person> personList = personObservableList.stream()
-                .filter(person -> person.getTags().containsAll(tags))
-                .collect(Collectors.toList());
+        List<Person> personList = TagUtils.filterPersonsByTag(personObservableList, tags);
         AddressBook ab = new AddressBook();
         ab.setPersons(personList);
         return ab;

@@ -4,8 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
+import javafx.util.Pair;
 import org.junit.jupiter.api.Test;
 
 import teletubbies.logic.commands.exceptions.CommandException;
@@ -21,11 +23,12 @@ import teletubbies.testutil.TypicalPersons;
 public class ExportCommandTest {
 
     private Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
+    private final Optional<String> NONE = Optional.empty();
 
     @Test
     public void filteredAddress_noTags_equalsOriginal() {
         // Set-up
-        Set<Tag> tags = new HashSet<>();
+        Set<Pair<String, Optional<String>>> tags = new HashSet<>();
         ExportCommand exportCommand = new ExportCommand(tags);
 
         assertEquals(exportCommand.filteredAddressBook(model), TypicalPersons.getTypicalAddressBook());
@@ -34,8 +37,8 @@ public class ExportCommandTest {
     @Test
     public void filteredAddress_friendsTag_lengthEqualsTwo() {
         // Set-up
-        Set<Tag> tags = new HashSet<>();
-        tags.add(new Tag("friends"));
+        Set<Pair<String, Optional<String>>> tags = new HashSet<>();
+        tags.add(new Pair<>("friends", NONE));
         ExportCommand exportCommand = new ExportCommand(tags);
 
         assertEquals(exportCommand.filteredAddressBook(model).getPersonList().size(), 3);
@@ -44,9 +47,9 @@ public class ExportCommandTest {
     @Test
     public void filteredAddress_friendsAndOwesMoneyTag_lengthEqualsOne() {
         // Set-up
-        Set<Tag> tags = new HashSet<>();
-        tags.add(new Tag("friends"));
-        tags.add(new Tag("owesMoney"));
+        Set<Pair<String, Optional<String>>> tags = new HashSet<>();
+        tags.add(new Pair<>("friends", NONE));
+        tags.add(new Pair<>("owesMoney", NONE));
         ExportCommand exportCommand = new ExportCommand(tags);
 
         assertEquals(exportCommand.filteredAddressBook(model).getPersonList().size(), 1);
@@ -55,7 +58,7 @@ public class ExportCommandTest {
     @Test
     public void saveAddressBookToPath_emptyPath_throwsException() {
         // Set-up
-        Set<Tag> tags = new HashSet<>();
+        Set<Pair<String, Optional<String>>> tags = new HashSet<>();
         ExportCommand exportCommand = new ExportCommand(tags);
 
         AddressBook original = TypicalPersons.getTypicalAddressBook();
@@ -65,7 +68,7 @@ public class ExportCommandTest {
     @Test
     public void includeDotWithJson_addJson_true() {
         // Set-up
-        Set<Tag> tags = new HashSet<>();
+        Set<Pair<String, Optional<String>>> tags = new HashSet<>();
         ExportCommand exportCommand = new ExportCommand(tags);
 
         String s = "hello";
@@ -75,7 +78,7 @@ public class ExportCommandTest {
     @Test
     public void includeDotWithJson_addJson_false() {
         // Set-up
-        Set<Tag> tags = new HashSet<>();
+        Set<Pair<String, Optional<String>>> tags = new HashSet<>();
         ExportCommand exportCommand = new ExportCommand(tags);
 
         String s = "hello.json";
@@ -84,9 +87,9 @@ public class ExportCommandTest {
 
     @Test
     public void equals() {
-        final Set<Tag> tags = new HashSet<>();
-        tags.add(new Tag("tag1"));
-        tags.add(new Tag("tag2"));
+        final Set<Pair<String, Optional<String>>> tags = new HashSet<>();
+        tags.add(new Pair<>("tag1", NONE));
+        tags.add(new Pair<>("tag2", NONE));
         final ExportCommand standardCommand = new ExportCommand(tags);
 
         // same object -> returns true
@@ -98,16 +101,16 @@ public class ExportCommandTest {
         // different types -> returns false
         assertEquals(standardCommand.equals(new ClearCommand()), false);
 
-        final Set<Tag> testTags1 = new HashSet<>();
-        testTags1.add(new Tag("tag2"));
-        testTags1.add(new Tag("tag1"));
+        final Set<Pair<String, Optional<String>>> testTags1 = new HashSet<>();
+        testTags1.add(new Pair<>("tag2", NONE));
+        testTags1.add(new Pair<>("tag1", NONE));
 
         // same set -> returns true
         assertEquals(standardCommand.equals(new ExportCommand(testTags1)), true);
 
-        final Set<Tag> testTags2 = new HashSet<>();
-        testTags2.add(new Tag("tag3"));
-        testTags2.add(new Tag("tag4"));
+        final Set<Pair<String, Optional<String>>> testTags2 = new HashSet<>();
+        testTags2.add(new Pair<>("tag3", NONE));
+        testTags2.add(new Pair<>("tag4", NONE));
 
         // different descriptor -> returns false
         assertEquals(standardCommand.equals(new ExportCommand(testTags2)), false);

@@ -11,11 +11,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.model.person.Address;
-import teletubbies.model.person.CompletionStatus;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.tag.CompletionStatusTag;
+import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
 import teletubbies.model.tag.Tag;
 
 /**
@@ -29,7 +30,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final boolean completionStat;
+    private final String completionStat;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
@@ -38,7 +39,7 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("completionStatus") boolean completionStat,
+            @JsonProperty("completionStatus") String completionStat,
             @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
@@ -58,7 +59,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        completionStat = source.getCompletionStatus().status;
+        completionStat = source.getCompletionStatus().status.toString();
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -107,10 +108,17 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
-        final CompletionStatus completionStatus = new CompletionStatus(completionStat);
+
+        CompletionStatus completionStatus;
+        try {
+            completionStatus = CompletionStatus.valueOf(completionStat);
+        } catch(IllegalArgumentException iae) {
+            completionStatus = CompletionStatus.INCOMPLETE;
+        }
+        final CompletionStatusTag completionStatusTag = new CompletionStatusTag(completionStatus);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, completionStatus, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, completionStatusTag, modelTags);
     }
 
 }
