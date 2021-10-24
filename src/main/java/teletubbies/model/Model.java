@@ -96,6 +96,12 @@ public interface Model {
     void updateExportList(List<Person> filteredPersonList);
 
     /**
+     * Returns true if there is a pending export.
+     * @return state of export confirmation.
+     */
+    boolean getIsAwaitingExportConfirmation();
+
+    /**
      * Returns address book upon confirmation of export.
      * @return Address book containing contacts to export.
      */

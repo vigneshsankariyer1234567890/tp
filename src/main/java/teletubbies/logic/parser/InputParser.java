@@ -23,7 +23,7 @@ import teletubbies.logic.parser.exceptions.ParseException;
 /**
  * Parses user input.
  */
-public class  InputParser {
+public class InputParser {
 
     /**
      * Used for initial separation of command word and args.
@@ -82,9 +82,8 @@ public class  InputParser {
 
         case ExportCommand.COMMAND_WORD:
             return new ExportCommandParser().parse(arguments);
-            
-        case ConfirmExportCommand
-                    .COMMAND_WORD:
+
+        case ConfirmExportCommand.COMMAND_WORD:
             return new ConfirmExportCommand();
 
         default:

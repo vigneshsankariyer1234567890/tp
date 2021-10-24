@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import teletubbies.commons.core.LogsCenter;
+import teletubbies.commons.core.Messages;
 import teletubbies.commons.util.StringUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.AddressBook;
@@ -21,12 +22,15 @@ import teletubbies.ui.MainWindow;
 public class ConfirmExportCommand extends Command {
     public static final String COMMAND_WORD = "y";
     public static final String MESSAGE_SUCCESS = "Contacts exported successfully.";
-    public static final String MESSAGE_CANCELLED = "Export has been cancelled.";
 
     private final Logger logger = LogsCenter.getLogger(getClass()); // TODO make a singleton logger or something
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        if (!model.getIsAwaitingExportConfirmation()) {
+            throw new CommandException(Messages.MESSAGE_UNKNOWN_COMMAND);
+        }
+
         return new CommandResult(MESSAGE_SUCCESS, CommandResult.UiEffect.EXPORT, mainWindow -> {
             File fileToSave = mainWindow.handleFileChooser("Export Contacts File",
                     MainWindow.FileSelectType.SAVE);

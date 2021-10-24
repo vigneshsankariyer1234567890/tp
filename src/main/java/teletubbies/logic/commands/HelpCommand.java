@@ -1,9 +1,9 @@
 package teletubbies.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import teletubbies.model.Model;
 import teletubbies.ui.MainWindow;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Format full help instructions for every command for display.

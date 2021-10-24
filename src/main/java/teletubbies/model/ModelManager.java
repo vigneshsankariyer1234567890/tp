@@ -129,9 +129,14 @@ public class ModelManager implements Model {
 
     @Override
     public void updateExportList(List<Person> filteredPersonList) {
+        isAwaitingExportConfirmation = true;
         addressBookCopy = new AddressBook(addressBook);
         this.addressBook.setPersons(filteredPersonList);
-        isAwaitingExportConfirmation = true;
+    }
+
+    @Override
+    public boolean getIsAwaitingExportConfirmation() {
+        return isAwaitingExportConfirmation;
     }
 
     @Override

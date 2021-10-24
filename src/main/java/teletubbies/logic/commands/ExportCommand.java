@@ -31,7 +31,7 @@ public class ExportCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.cancelPendingExport();
-        
+
         List<Person> filteredPersonList = filteredPersonList(model);
         model.updateExportList(filteredPersonList);
 

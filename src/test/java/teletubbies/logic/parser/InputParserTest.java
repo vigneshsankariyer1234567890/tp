@@ -13,9 +13,11 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.AddCommand;
 import teletubbies.logic.commands.ClearCommand;
+import teletubbies.logic.commands.ConfirmExportCommand;
 import teletubbies.logic.commands.DeleteCommand;
 import teletubbies.logic.commands.DoneCommand;
 import teletubbies.logic.commands.EditCommand;
@@ -27,6 +29,7 @@ import teletubbies.logic.commands.HelpCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.ProfileCommand;
+import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.NameContainsKeywordsPredicate;
 import teletubbies.model.person.Person;
@@ -112,6 +115,14 @@ public class InputParserTest {
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD) instanceof ExportCommand);
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD + " \t hi") instanceof ExportCommand);
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD + " ignore") instanceof ExportCommand);
+
+    }
+
+    @Test
+    public void parseCommand_confirmExport() throws Exception {
+        assertTrue(parser.parseCommand(ConfirmExportCommand.COMMAND_WORD) instanceof ConfirmExportCommand);
+        assertTrue(parser.parseCommand(ConfirmExportCommand.COMMAND_WORD + " \t hi") instanceof ConfirmExportCommand);
+        assertTrue(parser.parseCommand(ConfirmExportCommand.COMMAND_WORD + " ignore") instanceof ConfirmExportCommand);
 
     }
 
