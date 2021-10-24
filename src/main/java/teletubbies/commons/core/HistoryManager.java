@@ -72,12 +72,11 @@ public class HistoryManager<T> {
 
     /**
      * Returns the current item in the stack that is referred to by {@code stackPointer}.
-     * @return the current item referred to by {@code stackPointer}
-     * @throws EmptyHistoryManagerException if HistoryManager is empty.
+     * @return the current item referred to by {@code stackPointer} or null if empty.
      */
-    public T peek() throws EmptyHistoryManagerException {
+    public T peek() {
         if (isEmpty()) {
-            throw new EmptyHistoryManagerException();
+            return null;
         }
         assert stackPointer >= 0;
         assert stackPointer < historyStack.size();

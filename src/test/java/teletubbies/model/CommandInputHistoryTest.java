@@ -1,8 +1,10 @@
 package teletubbies.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import teletubbies.commons.exceptions.EarliestVersionException;
-import teletubbies.commons.exceptions.EmptyHistoryManagerException;
 import teletubbies.commons.exceptions.LatestVersionException;
 
 public class CommandInputHistoryTest {
@@ -40,7 +41,7 @@ public class CommandInputHistoryTest {
     }
 
     @Test
-    public void undoAddAndCheck_success() throws EarliestVersionException, EmptyHistoryManagerException {
+    public void undoAddAndCheck_success() throws EarliestVersionException {
         CommandInputHistory inputHistory = new CommandInputHistory();
         List<String> targetList = new ArrayList<>(inputs);
         targetList.add(inputs.get(0));
@@ -64,7 +65,7 @@ public class CommandInputHistoryTest {
 
     @Test
     public void getEarliestVersionRevertBackAndAddTest_success() throws EarliestVersionException,
-            LatestVersionException, EmptyHistoryManagerException {
+            LatestVersionException {
         CommandInputHistory inputHistory = new CommandInputHistory();
         List<String> targetList = new ArrayList<>(inputs);
         int randomPosition = (int) (Math.random() * inputs.size());
@@ -94,7 +95,7 @@ public class CommandInputHistoryTest {
 
     @Test
     public void undoRedoAndCheckPeekTest_success() throws EarliestVersionException,
-            LatestVersionException, EmptyHistoryManagerException {
+            LatestVersionException {
         CommandInputHistory inputHistory = new CommandInputHistory();
         for (String s: inputs) {
             inputHistory.addCommandInput(s);
@@ -107,6 +108,14 @@ public class CommandInputHistoryTest {
         }
         String latest = inputHistory.peek();
         assertEquals(inputs.get(inputs.size() - 1), latest);
+    }
+
+    @Test
+    public void isEmpty_success() {
+        CommandInputHistory inputHistory = new CommandInputHistory();
+        assertTrue(inputHistory.isEmpty());
+        inputHistory.addCommandInput("");
+        assertFalse(inputHistory.isEmpty());
     }
 
     @Test
