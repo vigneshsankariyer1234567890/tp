@@ -1,8 +1,10 @@
 package teletubbies.logic.commands;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Test;
 import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.AddressBook;
@@ -11,6 +13,7 @@ import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
 import teletubbies.testutil.Assert;
 import teletubbies.testutil.TypicalPersons;
+
 
 class ConfirmExportCommandTest {
     private Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
@@ -30,13 +33,13 @@ class ConfirmExportCommandTest {
     @Test
     public void includeDotWithJson_addJson_true() {
         String s = "hello";
-        Assertions.assertEquals(confirmExportCommand.includeDotJson(s), s + ".json");
+        assertEquals(confirmExportCommand.includeDotJson(s), s + ".json");
     }
 
     @Test
     public void includeDotWithJson_addJson_false() {
         String s = "hello.json";
-        Assertions.assertEquals(confirmExportCommand.includeDotJson(s), s);
+        assertEquals(confirmExportCommand.includeDotJson(s), s);
     }
 
     @Test
@@ -45,15 +48,15 @@ class ConfirmExportCommandTest {
         final ConfirmExportCommand confirmExportSecondCommand = new ConfirmExportCommand();
 
         // same object -> returns true
-        Assertions.assertTrue(confirmExportFirstCommand.equals(confirmExportFirstCommand));
+        assertTrue(confirmExportFirstCommand.equals(confirmExportFirstCommand));
 
         // same values -> returns true
-        Assertions.assertTrue(confirmExportFirstCommand.equals(confirmExportSecondCommand));
+        assertTrue(confirmExportFirstCommand.equals(confirmExportSecondCommand));
 
         // different types -> returns false
-        Assertions.assertFalse(confirmExportFirstCommand.equals(1));
+        assertFalse(confirmExportFirstCommand.equals(1));
 
         // null -> returns false
-        Assertions.assertFalse(confirmExportFirstCommand.equals(null));
+        assertFalse(confirmExportFirstCommand.equals(null));
     }
 }
