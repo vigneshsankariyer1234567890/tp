@@ -1,0 +1,40 @@
+@startuml
+
+skinparam ActivityBorderColor black
+skinparam ArrowColor black
+
+skinparam ActivityDiamondBorderColor black
+skinparam activityDiamondBackgroundColor pink-mistyrose
+
+skinparam activityBackgroundColor powderblue-lightcyan
+
+skinparam TitleFontColor grey
+
+title Activity: Delete a Contact
+
+start
+:User executes a
+Delete command;
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+switch ()
+case ( [valid index input] )
+    :Contact at given index is
+    deleted;
+case ( [valid phone \n number input] )
+    :Contact at given phone
+    number is deleted;
+case ( [invalid delete \n parameter input] )
+    :Invalid delete command
+    error message shown;
+    stop
+
+endswitch
+:Teletubbies updates
+and saves the user's
+contact list;
+
+stop
+@enduml
