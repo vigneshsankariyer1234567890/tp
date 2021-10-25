@@ -11,8 +11,8 @@ import teletubbies.model.person.Person;
 public class TagUtils {
 
     /**
-     * Predicate for whether a person contains
-     * all provided tags
+     * Predicate for whether a person contains all
+     * provided tags
      *
      * @param tagStringSet tags that persons must contain
      * @return person has tag predicate
