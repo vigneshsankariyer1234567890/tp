@@ -21,7 +21,6 @@ import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.ReadOnlyAddressBook;
-import teletubbies.model.UserPrefs;
 import teletubbies.model.person.Person;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.storage.JsonUserPrefsStorage;
@@ -32,11 +31,16 @@ import teletubbies.testutil.TypicalPersons;
 
 public class LogicManagerTest {
     private static final IOException DUMMY_IO_EXCEPTION = new IOException("dummy exception");
+    private static final String INVALID_COMMAND = "uicfhmowqewca";
+    private static final String DELETE_COMMAND_WITH_INVALID_PHONE = "delete p/000";
+    private static final String DELETE_COMMAND_WITH_INVALID_INDEX = "delete i/20";
+    private static final String VALID_COMMAND = ListCommand.COMMAND_WORD;
 
     @TempDir
     public Path temporaryFolder;
 
     private Model model = new ModelManager();
+    private Model trackedModel = new ModelManager();
     private Logic logic;
 
     @BeforeEach
@@ -50,28 +54,26 @@ public class LogicManagerTest {
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
-        String invalidCommand = "uicfhmowqewca";
-        assertParseException(invalidCommand, MESSAGE_UNKNOWN_COMMAND);
+        trackedModel.addCommandInput(INVALID_COMMAND);
+        assertParseException(INVALID_COMMAND, MESSAGE_UNKNOWN_COMMAND);
     }
 
     @Test
     public void execute_commandPhoneExecutionError_throwsCommandException() {
-        String deleteCommand = "delete p/000";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_PHONE_NUMBER);
+        trackedModel.addCommandInput(DELETE_COMMAND_WITH_INVALID_PHONE);
+        assertCommandException(DELETE_COMMAND_WITH_INVALID_PHONE, MESSAGE_INVALID_PERSON_DISPLAYED_PHONE_NUMBER);
     }
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "delete i/20";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        trackedModel.addCommandInput(DELETE_COMMAND_WITH_INVALID_INDEX);
+        assertCommandException(DELETE_COMMAND_WITH_INVALID_INDEX, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
-
-
 
     @Test
     public void execute_validCommand_success() throws Exception {
-        String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
+        trackedModel.addCommandInput(VALID_COMMAND);
+        assertCommandSuccess(VALID_COMMAND, ListCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
@@ -88,8 +90,9 @@ public class LogicManagerTest {
         String addCommand = AddCommand.COMMAND_WORD + CommandTestUtil.NAME_DESC_AMY + CommandTestUtil.PHONE_DESC_AMY
                 + CommandTestUtil.EMAIL_DESC_AMY + CommandTestUtil.ADDRESS_DESC_AMY;
         Person expectedPerson = new PersonBuilder(TypicalPersons.AMY).withTags().build();
-        ModelManager expectedModel = new ModelManager();
+        Model expectedModel = trackedModel;
         expectedModel.addPerson(expectedPerson);
+        expectedModel.addCommandInput(addCommand);
         String expectedMessage = LogicManager.FILE_OPS_ERROR_MESSAGE + DUMMY_IO_EXCEPTION;
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
@@ -118,7 +121,7 @@ public class LogicManagerTest {
      * @see #assertCommandFailure(String, Class, String, Model)
      */
     private void assertParseException(String inputCommand, String expectedMessage) {
-        assertCommandFailure(inputCommand, ParseException.class, expectedMessage);
+        assertCommandFailure(inputCommand, ParseException.class, expectedMessage, trackedModel);
     }
 
     /**
@@ -126,17 +129,7 @@ public class LogicManagerTest {
      * @see #assertCommandFailure(String, Class, String, Model)
      */
     private void assertCommandException(String inputCommand, String expectedMessage) {
-        assertCommandFailure(inputCommand, CommandException.class, expectedMessage);
-    }
-
-    /**
-     * Executes the command, confirms that the exception is thrown and that the result message is correct.
-     * @see #assertCommandFailure(String, Class, String, Model)
-     */
-    private void assertCommandFailure(String inputCommand, Class<? extends Throwable> expectedException,
-            String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        assertCommandFailure(inputCommand, expectedException, expectedMessage, expectedModel);
+        assertCommandFailure(inputCommand, CommandException.class, expectedMessage, trackedModel);
     }
 
     /**

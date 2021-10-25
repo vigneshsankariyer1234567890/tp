@@ -1,6 +1,7 @@
 package teletubbies.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -95,4 +96,22 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Adds the recent text input to the history as stored by {@code CommandInputHistory}.
+     * @param textInput to be added to the {@code CommandInputHistory}
+     */
+    void addCommandInput(String textInput);
+
+    /**
+     * Returns the full list of previous inputs entered by user in ascending order.
+     * @return list of previous inputs entered by user in ascending order.
+     */
+    List<String> getChronologicallyAscendingHistory();
+
+    /**
+     * Returns the full list of previous inputs entered by user in descending order.
+     * @return list of previous inputs entered by user in descending order.
+     */
+    List<String> getChronologicallyDescendingHistory();
 }
