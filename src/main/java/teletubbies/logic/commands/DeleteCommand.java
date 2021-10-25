@@ -55,20 +55,21 @@ public class DeleteCommand extends Command {
 
         if (isPhonePrefix) {
             List<Person> list = model.getAddressBook().getPersonList();
-            int matches = (int) list.stream().filter(p -> p.getPhone().equals(targetPhone)).count();
 
-            if (matches == 0) {
+            if (list.stream().noneMatch(p -> p.getPhone().equals(targetPhone))) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_PHONE_NUMBER);
             }
 
             Person personToDelete = list.stream().filter(p -> p.getPhone().equals(targetPhone))
                     .findFirst().get();
+
             model.deletePerson(personToDelete);
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         }
 
         List<Person> lastShownList = model.getFilteredPersonList();
 
+        assert targetIndex != null;
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
