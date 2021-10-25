@@ -1,5 +1,6 @@
 package teletubbies.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static teletubbies.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.List;
@@ -37,6 +38,8 @@ public class DoneCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
+        model.cancelPendingExport();
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (index.getZeroBased() >= lastShownList.size()) {

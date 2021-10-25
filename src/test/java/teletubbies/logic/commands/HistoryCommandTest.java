@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
 import teletubbies.model.ReadOnlyAddressBook;
 import teletubbies.model.ReadOnlyUserPrefs;
@@ -125,6 +126,11 @@ public class HistoryCommandTest {
         }
 
         @Override
+        public boolean hasPhoneNumber(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void deletePerson(Person target) {
             throw new AssertionError("This method should not be called.");
         }
@@ -136,6 +142,26 @@ public class HistoryCommandTest {
 
         @Override
         public void setPerson(Person target, Person editedPerson) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateExportList(List<Person> filteredPersonList) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isAwaitingExportConfirmation() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public AddressBook getExportAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void cancelPendingExport() {
             throw new AssertionError("This method should not be called.");
         }
 
