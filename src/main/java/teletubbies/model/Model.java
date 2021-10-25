@@ -97,6 +97,8 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    void mergePerson(Person person);
+    
     /**
      * Adds the recent text input to the history as stored by {@code CommandInputHistory}.
      * @param textInput to be added to the {@code CommandInputHistory}

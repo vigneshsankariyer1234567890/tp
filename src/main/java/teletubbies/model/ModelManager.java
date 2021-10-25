@@ -126,6 +126,11 @@ public class ModelManager implements Model {
 
         addressBook.setPerson(target, editedPerson);
     }
+    
+    @Override
+    public void mergePerson(Person person) {
+        //TODO: implement
+    }
 
     //=========== Filtered Person List Accessors =============================================================
 
@@ -163,7 +168,7 @@ public class ModelManager implements Model {
                 && filteredPersons.equals(other.filteredPersons)
                 && inputHistory.equals(other.inputHistory);
     }
-
+    
     //=========== InputHistory accessors and modifiers ======================================================
 
     @Override
