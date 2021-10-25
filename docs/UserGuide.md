@@ -30,7 +30,7 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
    * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to Teletubbies.
 
-   * **`delete`**`3` : Deletes the 3rd contact shown in the current list.
+   * **`delete`**`i/3` : Deletes the 3rd contact shown in the current list.
    
    * **`done`**`3` : Marks the 3rd contact shown in the current list as done.
 
@@ -96,7 +96,7 @@ Examples:
 * `profile n/David Wong r/Telemarketer`
 * `profile n/Anne Goh r/Supervisor`
 
-### Add Contacts: `add`
+### Adding a contact: `add`
 
 Adds a customer to the application.
 
@@ -110,14 +110,14 @@ A person can have any number of tags (including none)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 a/John street, block 123, #01-01 e/johnd@example.com t/friends t/owesMoney`
-* `add n/Betsy Crowe a/Newgate Prison p/1234567 e/betsycrowe@example.com`
+* `add n/John Doe p/98765432 a/John Street, block 123, #01-01 e/johnd@example.com t/friends`
+* `add n/Betsy Crowe p/1234567`
 
-### Delete Contacts : `delete`
+### Deleting a contact : `delete`
 
 Deletes the specified customer from the application.
 
-Format: `delete p/PHONE_NUMBER or delete i/INDEX`
+Format: `delete p/PHONE_NUMBER` or `delete i/INDEX`
 
 
 * Deletes the person at the specified `PHONE_NUMBER` or `INDEX`.
@@ -125,13 +125,17 @@ Format: `delete p/PHONE_NUMBER or delete i/INDEX`
 * The index refers to the index number shown in the displayed person list.
 * The index must be a positive integer 1, 2, 3, …​
 
-### Listing all persons : `list`
+Examples:
+* `delete i/1`
+* `delete p/87654321`
 
-Shows a list of all persons in the application.
+### Listing all contacts : `list`
+
+Shows a list of all contacts in the application.
 
 Format: `list`
 
-### Editing a person : `edit`
+### Editing a contact : `edit`
 
 Edits an existing person in the application.
 
@@ -162,7 +166,7 @@ Examples:
 * `done 1`
 * `done 2`
 
-### Locating persons by name: `find`
+### Locating contacts by name: `find`
 
 Finds persons whose names contain any of the given keywords.
 
@@ -254,8 +258,9 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 Action | Format & Usage Examples
 --------|------------------
 **export** | `export [t/TAGS...]` <br> e.g, `export t/friends family`
-**add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL]​ [t/TAGS...]` <br> e.g., `add n/david wong p/81234567`
-**delete** | `delete PHONE_NUMBER`<br> `delete INDEX`<br> e.g., `delete p/81234567, delete i/1`
+**add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL] [t/TAG]...` <br> e.g., `add n/david wong p/81234567`
+**delete** | `delete p/PHONE_NUMBER`<br> `delete i/INDEX`<br> e.g., `delete p/81234567, delete i/1`
+**edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…` <br> e.g. `edit 2 n/Betsy Crower t/`
 **profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
 **history** | `history`<br> e.g., `history`
 
