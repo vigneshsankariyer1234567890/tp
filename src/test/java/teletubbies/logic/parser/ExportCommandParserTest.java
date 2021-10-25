@@ -19,16 +19,16 @@ class ExportCommandParserTest {
 
     @Test
     void parse_validArgs_returnsExportCommand() throws ParseException {
-        Assertions.assertEquals(parser.parse(" t/ 1     2 3"), parser.parse(" t/ 1 2 3"));
+        Assertions.assertEquals(parser.parse(" -t 1  -t 2 -t 3"), parser.parse(" -t 1 -t 2   -t3"));
     }
 
     @Test
     void parse_jumbledArg_equal() throws ParseException {
-        Assertions.assertEquals(parser.parse(" t/ 1 2 3"), parser.parse(" t/ 3 2 1"));
+        Assertions.assertEquals(parser.parse(" -t 1 -t 2 -t 3"), parser.parse(" -t 3 -t 2 -t 1"));
     }
 
     @Test
     void parse_differentArgs_notEqual() throws ParseException {
-        Assertions.assertNotEquals(parser.parse(" --t 1 1 1"), parser.parse("13"));
+        Assertions.assertNotEquals(parser.parse(" -t 1 -t 1 -t 1"), parser.parse("-t 13"));
     }
 }

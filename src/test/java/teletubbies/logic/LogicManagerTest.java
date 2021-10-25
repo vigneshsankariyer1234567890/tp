@@ -32,8 +32,8 @@ import teletubbies.testutil.TypicalPersons;
 public class LogicManagerTest {
     private static final IOException DUMMY_IO_EXCEPTION = new IOException("dummy exception");
     private static final String INVALID_COMMAND = "uicfhmowqewca";
-    private static final String DELETE_COMMAND_WITH_INVALID_PHONE = "delete --p 000";
-    private static final String DELETE_COMMAND_WITH_INVALID_INDEX = "delete --i 20";
+    private static final String DELETE_COMMAND_WITH_INVALID_PHONE = "delete -p 000";
+    private static final String DELETE_COMMAND_WITH_INVALID_INDEX = "delete -i 20";
     private static final String VALID_COMMAND = ListCommand.COMMAND_WORD;
 
     @TempDir
