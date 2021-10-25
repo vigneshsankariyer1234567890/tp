@@ -24,6 +24,8 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private boolean isAwaitingExportConfirmation;
+    private AddressBook addressBookCopy;
     private final CommandInputHistory inputHistory;
 
     /**
@@ -110,6 +112,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasPhoneNumber(Person person) {
+        requireNonNull(person);
+        return addressBook.hasPhoneNumber(person);
+    }
+
+    @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }
@@ -130,6 +138,36 @@ public class ModelManager implements Model {
     @Override
     public void mergePerson(Person person) {
         //TODO: implement
+    }
+
+    @Override
+    public void updateExportList(List<Person> filteredPersonList) {
+        isAwaitingExportConfirmation = true;
+        addressBookCopy = new AddressBook(addressBook);
+        this.addressBook.setPersons(filteredPersonList);
+    }
+
+    @Override
+    public boolean isAwaitingExportConfirmation() {
+        return isAwaitingExportConfirmation;
+    }
+
+    @Override
+    public AddressBook getExportAddressBook() {
+        AddressBook toExport = new AddressBook(addressBook);
+        this.addressBook.resetData(addressBookCopy);
+        addressBookCopy = null;
+        isAwaitingExportConfirmation = false;
+        return toExport;
+    }
+
+    @Override
+    public void cancelPendingExport() {
+        if (isAwaitingExportConfirmation) {
+            this.addressBook.resetData(addressBookCopy);
+            addressBookCopy = null;
+            isAwaitingExportConfirmation = false;
+        }
     }
 
     //=========== Filtered Person List Accessors =============================================================

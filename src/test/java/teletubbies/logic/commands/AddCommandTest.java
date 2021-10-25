@@ -44,12 +44,24 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person validPerson = new PersonBuilder().build();
-        AddCommand addCommand = new AddCommand(validPerson);
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+    public void execute_duplicateName_throwsCommandException() {
+        Person alice = new PersonBuilder().withPhone("88888888").build();
+        Person alice2 = new PersonBuilder().withPhone("99999999").build();
+        AddCommand addCommand = new AddCommand(alice);
+        ModelStub modelStub = new ModelStubWithPerson(alice2);
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_duplicatePhoneNumber_throwsCommandException() {
+        Person alice = new PersonBuilder().withName("Alice").build();
+        Person bob = new PersonBuilder().withName("Bob").build();
+        AddCommand addCommand = new AddCommand(alice);
+        ModelStub modelStub = new ModelStubWithPerson(bob);
+
+        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PHONE_NUMBER, () ->
+            addCommand.execute(modelStub));
     }
 
     @Test
@@ -141,6 +153,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasPhoneNumber(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void deletePerson(Person target) {
             throw new AssertionError("This method should not be called.");
         }
@@ -149,6 +166,24 @@ public class AddCommandTest {
         public void setPerson(Person target, Person editedPerson) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void updateExportList(List<Person> filteredPersonList) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isAwaitingExportConfirmation() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public AddressBook getExportAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void cancelPendingExport() { }
 
         @Override
         public ObservableList<Person> getFilteredPersonList() {
@@ -192,6 +227,12 @@ public class AddCommandTest {
             requireNonNull(person);
             return this.person.isSamePerson(person);
         }
+
+        @Override
+        public boolean hasPhoneNumber(Person person) {
+            requireNonNull(person);
+            return this.person.isSamePhoneNumber(person);
+        }
     }
 
     /**
@@ -204,6 +245,12 @@ public class AddCommandTest {
         public boolean hasPerson(Person person) {
             requireNonNull(person);
             return personsAdded.stream().anyMatch(person::isSamePerson);
+        }
+
+        @Override
+        public boolean hasPhoneNumber(Person person) {
+            requireNonNull(person);
+            return personsAdded.stream().anyMatch(person::isSamePhoneNumber);
         }
 
         @Override

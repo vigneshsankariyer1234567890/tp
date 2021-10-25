@@ -23,7 +23,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Documentation
 
-### Ming Ann
+### Tan Ming Ann
 
 <img src="images/skythefire.png" width="200px">
 
