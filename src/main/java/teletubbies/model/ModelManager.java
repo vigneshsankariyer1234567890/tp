@@ -28,6 +28,9 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private boolean isAwaitingExportConfirmation;
+    private AddressBook addressBookCopy;
+    private final CommandInputHistory inputHistory;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -41,6 +44,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.inputHistory = new CommandInputHistory();
     }
 
     public ModelManager() {
@@ -112,6 +116,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasPhoneNumber(Person person) {
+        requireNonNull(person);
+        return addressBook.hasPhoneNumber(person);
+    }
+
+    @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }
@@ -127,6 +137,36 @@ public class ModelManager implements Model {
         CollectionUtil.requireAllNonNull(target, editedPerson);
 
         addressBook.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public void updateExportList(List<Person> filteredPersonList) {
+        isAwaitingExportConfirmation = true;
+        addressBookCopy = new AddressBook(addressBook);
+        this.addressBook.setPersons(filteredPersonList);
+    }
+
+    @Override
+    public boolean isAwaitingExportConfirmation() {
+        return isAwaitingExportConfirmation;
+    }
+
+    @Override
+    public AddressBook getExportAddressBook() {
+        AddressBook toExport = new AddressBook(addressBook);
+        this.addressBook.resetData(addressBookCopy);
+        addressBookCopy = null;
+        isAwaitingExportConfirmation = false;
+        return toExport;
+    }
+
+    @Override
+    public void cancelPendingExport() {
+        if (isAwaitingExportConfirmation) {
+            this.addressBook.resetData(addressBookCopy);
+            addressBookCopy = null;
+            isAwaitingExportConfirmation = false;
+        }
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -174,7 +214,25 @@ public class ModelManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && userPrefs.equals(other.userPrefs)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && inputHistory.equals(other.inputHistory);
+    }
+
+    //=========== InputHistory accessors and modifiers ======================================================
+
+    @Override
+    public void addCommandInput(String textInput) {
+        inputHistory.addCommandInput(textInput);
+    }
+
+    @Override
+    public List<String> getChronologicallyAscendingHistory() {
+        return inputHistory.getChronologicallyAscendingHistory();
+    }
+
+    @Override
+    public List<String> getChronologicallyDescendingHistory() {
+        return inputHistory.getChronologicallyDescendingHistory();
     }
 
 }

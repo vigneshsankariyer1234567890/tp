@@ -72,6 +72,11 @@ public interface Model {
     boolean hasPerson(Person person);
 
     /**
+     * Returns true if a person with the same phone number as {@code person} exists in the address book.
+     */
+    boolean hasPhoneNumber(Person person);
+
+    /**
      * Deletes the given person.
      * The person must exist in the address book.
      */
@@ -93,6 +98,30 @@ public interface Model {
     /** Returns a list of persons from indices in a filtered person list */
     List<Person> getPersonsFromRange(Range range) throws IllegalValueException;
 
+    /**
+     * Replaces the address book displayed to users with the list of persons to be exported.
+     * Original address book is stored as a copy until export is complete.
+     * @param filteredPersonList Filtered list of persons containing user-specified tags.
+     */
+    void updateExportList(List<Person> filteredPersonList);
+
+    /**
+     * Returns true if there is a pending export.
+     * @return state of export confirmation.
+     */
+    boolean isAwaitingExportConfirmation();
+
+    /**
+     * Returns address book upon confirmation of export.
+     * @return Address book containing contacts to export.
+     */
+    AddressBook getExportAddressBook();
+
+    /**
+     * Resets the address book if export is cancelled.
+     */
+    void cancelPendingExport();
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -101,4 +130,22 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Adds the recent text input to the history as stored by {@code CommandInputHistory}.
+     * @param textInput to be added to the {@code CommandInputHistory}
+     */
+    void addCommandInput(String textInput);
+
+    /**
+     * Returns the full list of previous inputs entered by user in ascending order.
+     * @return list of previous inputs entered by user in ascending order.
+     */
+    List<String> getChronologicallyAscendingHistory();
+
+    /**
+     * Returns the full list of previous inputs entered by user in descending order.
+     * @return list of previous inputs entered by user in descending order.
+     */
+    List<String> getChronologicallyDescendingHistory();
 }

@@ -6,6 +6,8 @@ import java.util.Comparator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -93,6 +95,14 @@ public class PersonCard extends UiPart<Region> {
         person.getAllTags().stream()
                 .sorted(Comparator.comparing(Tag::toString))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.toString())));
+    }
+
+    @FXML
+    private void copyToClipboard() {
+        final Clipboard clipboard = Clipboard.getSystemClipboard();
+        final ClipboardContent content = new ClipboardContent();
+        content.putString(person.getPhone().value);
+        clipboard.setContent(content);
     }
 
     @Override
