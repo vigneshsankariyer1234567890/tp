@@ -26,6 +26,7 @@ public class ModelManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private boolean isAwaitingExportConfirmation;
     private AddressBook addressBookCopy;
+    private final CommandInputHistory inputHistory;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -39,6 +40,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.inputHistory = new CommandInputHistory();
     }
 
     public ModelManager() {
@@ -190,7 +192,25 @@ public class ModelManager implements Model {
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
                 && userPrefs.equals(other.userPrefs)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && inputHistory.equals(other.inputHistory);
+    }
+
+    //=========== InputHistory accessors and modifiers ======================================================
+
+    @Override
+    public void addCommandInput(String textInput) {
+        inputHistory.addCommandInput(textInput);
+    }
+
+    @Override
+    public List<String> getChronologicallyAscendingHistory() {
+        return inputHistory.getChronologicallyAscendingHistory();
+    }
+
+    @Override
+    public List<String> getChronologicallyDescendingHistory() {
+        return inputHistory.getChronologicallyDescendingHistory();
     }
 
 }

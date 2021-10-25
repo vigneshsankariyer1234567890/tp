@@ -15,6 +15,7 @@ import teletubbies.logic.commands.ExitCommand;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.commands.FindCommand;
 import teletubbies.logic.commands.HelpCommand;
+import teletubbies.logic.commands.HistoryCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.ProfileCommand;
@@ -85,6 +86,9 @@ public class InputParser {
 
         case ConfirmExportCommand.COMMAND_WORD:
             return new ConfirmExportCommand();
+
+        case HistoryCommand.COMMAND_WORD:
+            return new HistoryCommand();
 
         default:
             throw new ParseException(Messages.MESSAGE_UNKNOWN_COMMAND);
