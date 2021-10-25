@@ -201,6 +201,12 @@ Clears all entries from the application.
 
 Format: `clear`
 
+### Listing your previous commands : `history`
+
+Shows a list of previously typed commands from most recent to earliest.
+
+Format: `history`
+
 ### Exiting the program : `exit`
 
 Exits the program.
@@ -256,4 +262,5 @@ Action | Format & Usage Examples
 **delete** | `delete p/PHONE_NUMBER`<br> `delete i/INDEX`<br> e.g., `delete p/81234567, delete i/1`
 **edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…` <br> e.g. `edit 2 n/Betsy Crower t/`
 **profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
+**history** | `history`<br> e.g., `history`
 
