@@ -24,6 +24,7 @@ import teletubbies.logic.commands.ExitCommand;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.commands.FindCommand;
 import teletubbies.logic.commands.HelpCommand;
+import teletubbies.logic.commands.HistoryCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.ProfileCommand;
@@ -128,6 +129,12 @@ public class InputParserTest {
         ProfileCommand command = (ProfileCommand) parser.parseCommand(
                 ProfileCommand.COMMAND_WORD + " n/Name r/Telemarketer");
         assertEquals(new ProfileCommand(new UserProfile("Name", UserProfile.Role.TELEMARKETER)), command);
+    }
+
+    @Test
+    public void parseCommand_history() throws Exception {
+        HistoryCommand command = (HistoryCommand) parser.parseCommand(HistoryCommand.COMMAND_WORD);
+        assertEquals(new HistoryCommand(), command);
     }
 
     @Test

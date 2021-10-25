@@ -60,7 +60,7 @@ activate DoneCommand
 DoneCommand -> Model : getFilteredPersonList()
 activate Model
 
-Model -> DoneCommand : lastShownList
+Model --> DoneCommand : lastShownList
 deactivate Model
 
 create EditedPerson
@@ -70,7 +70,7 @@ activate EditedPerson
 EditedPerson --> DoneCommand
 deactivate EditedPerson
 
-DoneCommand --> Model : setPerson(editedPerson)
+DoneCommand -> Model : setPerson(editedPerson)
 activate Model
 
 Model --> DoneCommand
