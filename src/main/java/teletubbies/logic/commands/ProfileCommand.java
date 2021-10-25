@@ -39,6 +39,7 @@ public class ProfileCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.cancelPendingExport();
         model.setUserProfile(userProfile);
 
         return new CommandResult(String.format(MESSAGE_PROFILE_SUCCESS, userProfile));

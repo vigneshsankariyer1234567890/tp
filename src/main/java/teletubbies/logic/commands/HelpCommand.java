@@ -1,5 +1,7 @@
 package teletubbies.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import teletubbies.model.Model;
 import teletubbies.ui.MainWindow;
 
@@ -17,6 +19,9 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
+        requireNonNull(model);
+        model.cancelPendingExport();
+
         return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
     }
 }
