@@ -49,6 +49,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label remark;
+    @FXML
     private Label completionStatus;
     @FXML
     private FlowPane tags;
@@ -74,6 +76,8 @@ public class PersonCard extends UiPart<Region> {
         } else {
             email.setManaged(false);
         }
+
+        remark.setText(person.getRemark().value);
 
         completionStatus.setText(person.getCompletionStatus().status ? COMPLETED_EMOJI : UNCOMPLETED_EMOJI);
         person.getTags().stream()

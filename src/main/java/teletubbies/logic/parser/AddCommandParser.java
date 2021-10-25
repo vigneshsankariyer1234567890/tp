@@ -12,6 +12,7 @@ import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Remark;
 import teletubbies.model.tag.Tag;
 
 /**
@@ -47,9 +48,10 @@ public class AddCommandParser implements Parser<AddCommand> {
             address = ParserUtil.parseAddress(argMultimap.getValue(CliSyntax.PREFIX_ADDRESS).get());
         }
 
+        Remark remark = new Remark(""); // add command does not allow adding remarks straight away
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(CliSyntax.PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, new CompletionStatus(), tagList);
+        Person person = new Person(name, phone, email, address, new CompletionStatus(), remark, tagList);
 
         return new AddCommand(person);
     }

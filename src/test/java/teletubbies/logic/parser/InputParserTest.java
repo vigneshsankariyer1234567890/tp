@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static teletubbies.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static teletubbies.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_REMARK;
 import static teletubbies.testutil.Assert.assertThrows;
 import static teletubbies.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -28,10 +29,12 @@ import teletubbies.logic.commands.HistoryCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.ProfileCommand;
+import teletubbies.logic.commands.RemarkCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.NameContainsKeywordsPredicate;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Remark;
 import teletubbies.testutil.EditPersonDescriptorBuilder;
 import teletubbies.testutil.PersonBuilder;
 import teletubbies.testutil.PersonUtil;
@@ -88,6 +91,14 @@ public class InputParserTest {
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_remark() throws Exception {
+        final Remark remark = new Remark("Some remark.");
+        RemarkCommand command = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + remark.value);
+        assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
     }
 
     @Test
