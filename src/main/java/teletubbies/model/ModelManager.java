@@ -110,6 +110,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public boolean hasPhoneNumber(Person person) {
+        requireNonNull(person);
+        return addressBook.hasPhoneNumber(person);
+    }
+
+    @Override
     public void deletePerson(Person target) {
         addressBook.removePerson(target);
     }
