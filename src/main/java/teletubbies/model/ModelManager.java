@@ -135,7 +135,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean getIsAwaitingExportConfirmation() {
+    public boolean isAwaitingExportConfirmation() {
         return isAwaitingExportConfirmation;
     }
 

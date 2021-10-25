@@ -27,7 +27,7 @@ public class ConfirmExportCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        if (!model.getIsAwaitingExportConfirmation()) {
+        if (!model.isAwaitingExportConfirmation()) {
             throw new CommandException(Messages.MESSAGE_UNKNOWN_COMMAND);
         }
 

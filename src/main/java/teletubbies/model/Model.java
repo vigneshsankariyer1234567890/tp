@@ -99,7 +99,7 @@ public interface Model {
      * Returns true if there is a pending export.
      * @return state of export confirmation.
      */
-    boolean getIsAwaitingExportConfirmation();
+    boolean isAwaitingExportConfirmation();
 
     /**
      * Returns address book upon confirmation of export.

@@ -156,7 +156,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean getIsAwaitingExportConfirmation() {
+        public boolean isAwaitingExportConfirmation() {
             throw new AssertionError("This method should not be called.");
         }
 

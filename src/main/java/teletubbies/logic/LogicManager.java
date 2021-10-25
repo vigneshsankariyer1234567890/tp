@@ -45,7 +45,7 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            if (!model.getIsAwaitingExportConfirmation()) {
+            if (!model.isAwaitingExportConfirmation()) {
                 storage.saveAddressBook(model.getAddressBook());
             }
         } catch (IOException ioe) {
