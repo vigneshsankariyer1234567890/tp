@@ -93,6 +93,30 @@ public interface Model {
      */
     void setPerson(Person target, Person editedPerson);
 
+    /**
+     * Replaces the address book displayed to users with the list of persons to be exported.
+     * Original address book is stored as a copy until export is complete.
+     * @param filteredPersonList Filtered list of persons containing user-specified tags.
+     */
+    void updateExportList(List<Person> filteredPersonList);
+
+    /**
+     * Returns true if there is a pending export.
+     * @return state of export confirmation.
+     */
+    boolean isAwaitingExportConfirmation();
+
+    /**
+     * Returns address book upon confirmation of export.
+     * @return Address book containing contacts to export.
+     */
+    AddressBook getExportAddressBook();
+
+    /**
+     * Resets the address book if export is cancelled.
+     */
+    void cancelPendingExport();
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 

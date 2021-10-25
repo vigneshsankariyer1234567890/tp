@@ -7,6 +7,7 @@ import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.AddCommand;
 import teletubbies.logic.commands.ClearCommand;
 import teletubbies.logic.commands.Command;
+import teletubbies.logic.commands.ConfirmExportCommand;
 import teletubbies.logic.commands.DeleteCommand;
 import teletubbies.logic.commands.DoneCommand;
 import teletubbies.logic.commands.EditCommand;
@@ -82,6 +83,9 @@ public class InputParser {
 
         case ExportCommand.COMMAND_WORD:
             return new ExportCommandParser().parse(arguments);
+
+        case ConfirmExportCommand.COMMAND_WORD:
+            return new ConfirmExportCommand();
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();

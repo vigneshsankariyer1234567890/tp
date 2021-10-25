@@ -1,5 +1,7 @@
 package teletubbies.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import teletubbies.model.Model;
 import teletubbies.ui.MainWindow;
 
@@ -14,6 +16,8 @@ public class ExitCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
+        requireNonNull(model);
+        model.cancelPendingExport();
         return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT, CommandResult.UiEffect.EXIT, MainWindow::handleExit);
     }
 
