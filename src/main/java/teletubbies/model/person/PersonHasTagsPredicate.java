@@ -1,0 +1,35 @@
+package teletubbies.model.person;
+
+import java.util.Set;
+import java.util.function.Predicate;
+
+import teletubbies.model.tag.Tag;
+
+public class PersonHasTagsPredicate implements Predicate<Person> {
+
+    private final Set<Tag> tagTestSet;
+
+    public PersonHasTagsPredicate(Set<Tag> tagStringSet) {
+        this.tagTestSet = tagStringSet;
+    }
+
+    @Override
+    public boolean test (Person person) {
+        return tagTestSet.stream().allMatch(tp -> // For all test tags
+            person.getAllTags().stream().anyMatch(t -> { // Person has tags
+                if (tp.getTagValue().isEmpty()) {
+                    return t.equals(tp);
+                } else {
+                    return t.equalsNameAndValue(tp);
+                }
+            }
+        ));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PersonHasTagsPredicate // instanceof handles nulls
+                && tagTestSet.equals(((PersonHasTagsPredicate) other).tagTestSet)); // state check
+    }
+}

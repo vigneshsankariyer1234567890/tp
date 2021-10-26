@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
+import teletubbies.model.person.PersonHasTagsPredicate;
 import teletubbies.model.tag.Tag;
 
 /**
@@ -32,7 +33,8 @@ public class ExportCommand extends Command {
         requireNonNull(model);
         model.cancelPendingExport();
 
-        List<Person> filteredPersonList = filteredPersonList(model);
+        ObservableList<Person> personObservableList = model.getFilteredPersonList();
+        List<Person> filteredPersonList = filterPersonList(personObservableList);
         model.updateExportList(filteredPersonList);
 
         String feedbackMessage = (tags.isEmpty()
@@ -47,17 +49,15 @@ public class ExportCommand extends Command {
     /**
      * Filters persons to those with specified tags
      *
-     * @param model Model
+     * @param personList person list to filter
      * @return filtered list of persons
      */
-    public List<Person> filteredPersonList(Model model) {
+    public List<Person> filterPersonList(List<Person> personList) {
         requireNonNull(tags);
 
-        ObservableList<Person> personObservableList = model.getFilteredPersonList();
-        List<Person> personList = personObservableList.stream()
-                .filter(person -> person.getTags().containsAll(tags))
+        return personList.stream()
+                .filter(new PersonHasTagsPredicate(tags))
                 .collect(Collectors.toList());
-        return personList;
     }
 
     @Override

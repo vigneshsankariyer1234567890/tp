@@ -7,7 +7,11 @@
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111",
     "completionStatus": false,
-    "tagged" : [ "friends" ]
+    "tagged" : [ {
+      "tagName" : "friends",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    } ]
   }, {
     "uuid" : "5adca839-2825-49c2-82e2-78830d911aa4",
     "name" : "Benson Meier",
@@ -15,7 +19,15 @@
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
     "completionStatus": false,
-    "tagged" : [ "owesMoney", "friends" ]
+    "tagged" : [ {
+      "tagName" : "owesMoney",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    }, {
+      "tagName" : "friends",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    } ]
   }, {
     "uuid" : "5adca839-2825-49c2-82e2-78830d923aa4",
     "name" : "Carl Kurz",
@@ -31,7 +43,11 @@
     "email" : "cornelia@example.com",
     "address" : "10th street",
     "completionStatus": false,
-    "tagged" : [ "friends" ]
+    "tagged" : [ {
+      "tagName" : "friends",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    } ]
   }, {
     "uuid" : "5adca839-2825-49c2-82e4-78830d923aa4",
     "name" : "Elle Meyer",

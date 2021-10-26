@@ -13,6 +13,7 @@ import teletubbies.logic.commands.DoneCommand;
 import teletubbies.logic.commands.EditCommand;
 import teletubbies.logic.commands.ExitCommand;
 import teletubbies.logic.commands.ExportCommand;
+import teletubbies.logic.commands.FilterCommand;
 import teletubbies.logic.commands.FindCommand;
 import teletubbies.logic.commands.HelpCommand;
 import teletubbies.logic.commands.HistoryCommand;
@@ -20,6 +21,8 @@ import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.ProfileCommand;
+import teletubbies.logic.commands.RemoveTagCommand;
+import teletubbies.logic.commands.TagCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 
 /**
@@ -87,6 +90,15 @@ public class InputParser {
 
         case ExportCommand.COMMAND_WORD:
             return new ExportCommandParser().parse(arguments);
+
+        case TagCommand.COMMAND_WORD:
+            return new TagCommandParser().parse(arguments);
+
+        case RemoveTagCommand.COMMAND_WORD:
+            return new RemoveTagCommandParser().parse(arguments);
+
+        case FilterCommand.COMMAND_WORD:
+            return new FilterCommandParser().parse(arguments);
 
         case ConfirmExportCommand.COMMAND_WORD:
             return new ConfirmExportCommand();

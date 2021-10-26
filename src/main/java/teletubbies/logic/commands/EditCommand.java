@@ -10,22 +10,20 @@ import static teletubbies.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.index.Index;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.person.Address;
-import teletubbies.model.person.CompletionStatus;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
 import teletubbies.model.person.Uuid;
+import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.Tag;
 
 /**
@@ -72,13 +70,7 @@ public class EditCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.cancelPendingExport();
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = lastShownList.get(index.getZeroBased());
+        Person personToEdit = getPersonFromIndex(model, index);
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSameName(editedPerson) && model.hasName(editedPerson)) {
@@ -105,10 +97,11 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        CompletionStatus completionStatus = personToEdit.getCompletionStatus();
+        CompletionStatusTag completionStatusTag = personToEdit.getCompletionStatus();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(uuid, updatedName, updatedPhone, updatedEmail, updatedAddress, completionStatus, updatedTags);
+        return new Person(uuid, updatedName, updatedPhone, updatedEmail, updatedAddress, completionStatusTag,
+                updatedTags);
     }
 
     @Override

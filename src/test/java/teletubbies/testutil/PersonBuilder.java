@@ -4,12 +4,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 import teletubbies.model.person.Address;
-import teletubbies.model.person.CompletionStatus;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
 import teletubbies.model.person.Uuid;
+import teletubbies.model.tag.CompletionStatusTag;
+import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
 import teletubbies.model.tag.Tag;
 import teletubbies.model.util.SampleDataUtil;
 
@@ -28,7 +29,7 @@ public class PersonBuilder {
     private Phone phone;
     private Email email;
     private Address address;
-    private CompletionStatus completionStatus;
+    private CompletionStatusTag completionStatusTag;
     private Set<Tag> tags;
 
     /**
@@ -40,7 +41,7 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
-        completionStatus = new CompletionStatus();
+        completionStatusTag = new CompletionStatusTag();
         tags = new HashSet<>();
     }
 
@@ -53,7 +54,7 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
-        completionStatus = personToCopy.getCompletionStatus();
+        completionStatusTag = personToCopy.getCompletionStatus();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -108,13 +109,13 @@ public class PersonBuilder {
     /**
      * Sets the {@code CompletionStatus} of the {@code Person} that we are building.
      */
-    public PersonBuilder withCompletionStatus(boolean completionStatusBoolean) {
-        this.completionStatus = new CompletionStatus(completionStatusBoolean);
+    public PersonBuilder withCompletionStatus(CompletionStatus completionStatus) {
+        this.completionStatusTag = new CompletionStatusTag(completionStatus);
         return this;
     }
 
     public Person build() {
-        return new Person(uuid, name, phone, email, address, completionStatus, tags);
+        return new Person(uuid, name, phone, email, address, completionStatusTag, tags);
     }
 
 }
