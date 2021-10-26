@@ -20,8 +20,8 @@ import teletubbies.ui.MainWindow;
 public class MergeCommand extends Command {
     public static final String COMMAND_WORD = "merge";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Merges contacts from selected file with existing contacts.\n"
-            + "Example: " + COMMAND_WORD;
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Merges contacts from selected file with existing "
+            + "contacts.\nExample: " + COMMAND_WORD;
     public static final String MESSAGE_SUCCESS = "Contacts merged successfully.";
     public static final String MESSAGE_FILE_NOT_FOUND = "Data file not found. Please try again.";
     public static final String MESSAGE_INCORRECT_FORMAT = "Data file not in the correct format.";
