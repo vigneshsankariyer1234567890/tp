@@ -148,9 +148,12 @@ public class Person {
                     .append(getAddress());
         }
         builder.append(" Completed: ")
-               .append(getCompletionStatus())
-               .append(" Remark: ")
-                .append(getRemark());
+               .append(getCompletionStatus());
+
+        if (remark.isPresent()) {
+            builder.append(" Remark: ")
+                    .append(getRemark());
+        }
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {

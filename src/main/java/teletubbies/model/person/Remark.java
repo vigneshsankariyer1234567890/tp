@@ -20,6 +20,13 @@ public class Remark {
         value = remark;
     }
 
+    /**
+     * Returns if a remark is present.
+     */
+    public boolean isPresent() {
+        return !this.value.equals("");
+    }
+
     @Override
     public String toString() {
         return value;

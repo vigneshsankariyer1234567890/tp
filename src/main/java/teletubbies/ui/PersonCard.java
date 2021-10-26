@@ -79,7 +79,11 @@ public class PersonCard extends UiPart<Region> {
             email.setManaged(false);
         }
 
-        remark.setText(person.getRemark().value);
+        if (person.getRemark().isPresent()) {
+            remark.setText(person.getRemark().value);
+        } else {
+            remark.setManaged(false);
+        }
 
         completionStatus.setText(person.getCompletionStatus().status ? COMPLETED_EMOJI : UNCOMPLETED_EMOJI);
         person.getTags().stream()
