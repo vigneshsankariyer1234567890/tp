@@ -1,5 +1,7 @@
 package teletubbies.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.List;
 
 import teletubbies.logic.commands.exceptions.CommandException;
@@ -15,6 +17,9 @@ public class HistoryCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
+        model.cancelPendingExport();
+
         List<String> history = model.getChronologicallyDescendingHistory();
 
         if (history.isEmpty()) {

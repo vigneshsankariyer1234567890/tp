@@ -22,6 +22,7 @@ public class CommandResult {
         EXIT, // The application should exit.
         EXPORT, // The application should export data
         IMPORT, // The application should import data
+        MERGE, //The application should merge data
         NONE
     }
     private final ThrowingConsumer<MainWindow> uiConsumer;

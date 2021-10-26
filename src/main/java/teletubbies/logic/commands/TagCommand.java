@@ -73,7 +73,7 @@ public class TagCommand extends Command {
             newTags.remove(newTag);
             newTags.add(newTag);
 
-            Person editedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
+            Person editedPerson = new Person(p.getUuid(), p.getName(), p.getPhone(), p.getEmail(),
                     p.getAddress(), p.getCompletionStatus(), newTags);
 
             model.setPerson(p, editedPerson);
