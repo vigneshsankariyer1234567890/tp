@@ -17,6 +17,7 @@ import teletubbies.model.tag.Tag;
 public class Person {
 
     // Identity fields
+    private final Uuid uuid;
     private final Name name;
     private final Phone phone;
     private final Email email;
@@ -29,15 +30,20 @@ public class Person {
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, CompletionStatusTag completionStatusTag,
-                  Set<Tag> tags) {
+    public Person(Uuid uuid, Name name, Phone phone, Email email, Address address,
+                  CompletionStatusTag completionStatusTag, Set<Tag> tags) {
         CollectionUtil.requireAllNonNull(name, phone, email, address, tags);
+        this.uuid = uuid;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.completionStatusTag = completionStatusTag;
         this.tags.addAll(tags);
+    }
+
+    public Uuid getUuid() {
+        return uuid;
     }
 
     public Name getName() {
@@ -73,6 +79,19 @@ public class Person {
     }
 
     /**
+     * Returns true if both persons have the same uuid.
+     * This defines a stronger notion of equality between two persons.
+     */
+    public boolean isSameUuid(Person otherPerson) {
+        if (otherPerson == this) {
+            return true;
+        }
+
+        return otherPerson != null
+                && otherPerson.getUuid().equals(getUuid());
+    }
+
+    /**
      * Returns an immutable tag set, which
      *
      * @return
@@ -87,7 +106,7 @@ public class Person {
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */
-    public boolean isSamePerson(Person otherPerson) {
+    public boolean isSameName(Person otherPerson) {
         if (otherPerson == this) {
             return true;
         }
@@ -97,7 +116,7 @@ public class Person {
     }
 
     /**
-     * Returns true if both persons have the same name.
+     * Returns true if both persons have the same phone number.
      * This defines a weaker notion of equality between two persons.
      */
     public boolean isSamePhoneNumber(Person otherPerson) {
@@ -124,7 +143,8 @@ public class Person {
         }
 
         Person otherPerson = (Person) other;
-        return otherPerson.getName().equals(getName())
+        return otherPerson.getUuid().equals(getUuid())
+                && otherPerson.getName().equals(getName())
                 && otherPerson.getPhone().equals(getPhone())
                 && otherPerson.getEmail().equals(getEmail())
                 && otherPerson.getAddress().equals(getAddress())
@@ -135,7 +155,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(uuid, name, phone, email, address, tags);
     }
 
     @Override
