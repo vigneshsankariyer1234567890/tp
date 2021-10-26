@@ -18,6 +18,7 @@ import teletubbies.logic.Logic;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.commands.ImportCommand;
+import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.exceptions.ParseException;
 
@@ -213,6 +214,11 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExport() throws CommandException, ParseException {
         this.executeCommand(ExportCommand.COMMAND_WORD);
+    }
+
+    @FXML
+    private void handleMerge() throws CommandException, ParseException {
+        this.executeCommand(MergeCommand.COMMAND_WORD);
     }
 
     public PersonListPanel getPersonListPanel() {

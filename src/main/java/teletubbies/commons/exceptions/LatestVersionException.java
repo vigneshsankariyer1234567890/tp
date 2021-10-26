@@ -8,4 +8,8 @@ public class LatestVersionException extends Exception {
     public LatestVersionException() {
         super(EXCEPTION_MESSAGE);
     }
+
+    protected LatestVersionException(String message) {
+        super(message);
+    }
 }

@@ -7,23 +7,22 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableList;
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.exceptions.DataConversionException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.ReadOnlyAddressBook;
+import teletubbies.model.person.Person;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.ui.MainWindow;
 
-/**
- * Imports new file of contacts specified by user and replaces address book.
- */
-public class ImportCommand extends Command {
-    public static final String COMMAND_WORD = "import";
+public class MergeCommand extends Command {
+    public static final String COMMAND_WORD = "merge";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Imports contacts from selected file.\n"
-            + "Example: " + COMMAND_WORD;
-    public static final String MESSAGE_SUCCESS = "Contacts imported successfully.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Merges contacts from selected file with existing "
+            + "contacts.\nExample: " + COMMAND_WORD;
+    public static final String MESSAGE_SUCCESS = "Contacts merged successfully.";
     public static final String MESSAGE_FILE_NOT_FOUND = "Data file not found. Please try again.";
     public static final String MESSAGE_INCORRECT_FORMAT = "Data file not in the correct format.";
 
@@ -31,12 +30,9 @@ public class ImportCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        requireNonNull(model);
-        model.cancelPendingExport();
-
-        return new CommandResult(MESSAGE_SUCCESS, CommandResult.UiEffect.IMPORT, mainWindow -> {
+        return new CommandResult(MESSAGE_SUCCESS, CommandResult.UiEffect.MERGE, mainWindow -> {
             try {
-                File fileToImport = mainWindow.handleFileChooser("Import Contacts File",
+                File fileToImport = mainWindow.handleFileChooser("Merge Contacts File",
                         MainWindow.FileSelectType.OPEN);
                 requireNonNull(fileToImport);
 
@@ -47,10 +43,11 @@ public class ImportCommand extends Command {
                 if (addressBookOptional.isEmpty()) {
                     throw new CommandException(MESSAGE_FILE_NOT_FOUND);
                 }
-                ReadOnlyAddressBook newContacts = addressBookOptional.get();
-                model.setAddressBook(newContacts);
-                model.commitAddressBook();
-                logger.info("Imported contacts from " + filePath);
+                ReadOnlyAddressBook addressBookToMerge = addressBookOptional.get();
+                ObservableList<Person> personsToMerge = addressBookToMerge.getPersonList();
+                personsToMerge.stream().forEach(person -> model.mergePerson(person));
+
+                logger.info("Merged contacts from " + filePath);
             } catch (DataConversionException e) {
                 throw new CommandException(MESSAGE_INCORRECT_FORMAT);
             } catch (NullPointerException e) {
@@ -67,7 +64,7 @@ public class ImportCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ImportCommand)) {
+        if (!(other instanceof MergeCommand)) {
             return false;
         }
         return true;

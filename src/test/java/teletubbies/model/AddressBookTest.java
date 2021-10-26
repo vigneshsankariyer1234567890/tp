@@ -14,6 +14,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import teletubbies.model.person.Person;
@@ -21,7 +23,6 @@ import teletubbies.model.person.exceptions.DuplicatePersonException;
 import teletubbies.testutil.Assert;
 import teletubbies.testutil.PersonBuilder;
 import teletubbies.testutil.TypicalPersons;
-
 
 public class AddressBookTest {
 
@@ -57,18 +58,18 @@ public class AddressBookTest {
 
     @Test
     public void hasPerson_nullPerson_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> addressBook.hasPerson(null));
+        Assert.assertThrows(NullPointerException.class, () -> addressBook.hasName(null));
     }
 
     @Test
     public void hasPerson_personNotInAddressBook_returnsFalse() {
-        assertFalse(addressBook.hasPerson(ALICE));
+        assertFalse(addressBook.hasName(ALICE));
     }
 
     @Test
     public void hasPerson_personInAddressBook_returnsTrue() {
         addressBook.addPerson(ALICE);
-        assertTrue(addressBook.hasPerson(ALICE));
+        assertTrue(addressBook.hasName(ALICE));
     }
 
     @Test
@@ -76,12 +77,33 @@ public class AddressBookTest {
         addressBook.addPerson(ALICE);
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
-        assertTrue(addressBook.hasPerson(editedAlice));
+        assertTrue(addressBook.hasName(editedAlice));
     }
 
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         Assert.assertThrows(UnsupportedOperationException.class, () -> addressBook.getPersonList().remove(0));
+    }
+
+    @Test
+    public void addListener_withInvalidationListener_listenerAdded() {
+        SimpleBooleanProperty checker = new SimpleBooleanProperty();
+        checker.set(false);
+        InvalidationListener listener = observable -> checker.set(true);
+        addressBook.addListener(listener);
+        addressBook.addPerson(ALICE);
+        assertTrue(checker.getValue());
+    }
+
+    @Test
+    public void removeListener_withInvalidationListener_listenerRemoved() {
+        SimpleBooleanProperty checker = new SimpleBooleanProperty();
+        checker.set(false);
+        InvalidationListener listener = observable -> checker.set(true);
+        addressBook.addListener(listener);
+        addressBook.removeListener(listener);
+        addressBook.addPerson(ALICE);
+        assertFalse(checker.getValue());
     }
 
     /**
@@ -97,6 +119,16 @@ public class AddressBookTest {
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            throw new AssertionError("This method should not be called");
         }
     }
 

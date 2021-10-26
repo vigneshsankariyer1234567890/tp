@@ -64,12 +64,14 @@ public class DeleteCommand extends Command {
                     .findFirst().get();
 
             model.deletePerson(personToDelete);
+            model.commitAddressBook();
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         }
 
         assert targetIndex != null;
         Person personToDelete = getPersonFromIndex(model, targetIndex);
         model.deletePerson(personToDelete);
+        model.commitAddressBook();
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
     }
