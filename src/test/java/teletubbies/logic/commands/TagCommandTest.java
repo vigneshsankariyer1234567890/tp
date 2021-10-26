@@ -1,5 +1,6 @@
 package teletubbies.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static teletubbies.testutil.TypicalPersons.BENSON;
 
 import java.util.HashSet;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
-import teletubbies.model.AddressBook;
+import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
@@ -24,7 +25,7 @@ class TagCommandTest {
     private UserPrefs userPrefs = new UserPrefs();
 
     @Test
-    void execute_supervisor_success() {
+    void execute_supervisor_success() throws CommandException {
         userPrefs.setUserProfile(supervisorProfile);
         Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), userPrefs);
 
@@ -35,18 +36,16 @@ class TagCommandTest {
                 false
         );
 
+        command.execute(model);
+
         Set<Tag> newTags = new HashSet<>(BENSON.getTags());
         newTags.add(new Tag("important"));
-        Person newBenson = new Person(BENSON.getName(), BENSON.getPhone(), BENSON.getEmail(), BENSON.getAddress(),
+        Person correctBenson = new Person(BENSON.getName(), BENSON.getPhone(), BENSON.getEmail(), BENSON.getAddress(),
                 BENSON.getCompletionStatus(), newTags);
 
-        AddressBook ab = TypicalPersons.getTypicalAddressBook();
-        ab.setPerson(BENSON, newBenson);
+        Person newBenson = model.getFilteredPersonList().get(1);
 
-        Model testModel = new ModelManager(ab, userPrefs);
-
-        CommandTestUtil.assertCommandSuccess(command, model,
-                new CommandResult(TagCommand.MESSAGE_COMPLETED_SUCCESS), testModel);
+        assertEquals(newBenson, correctBenson);
     }
 
 }

@@ -1,5 +1,6 @@
 package teletubbies.logic.commands;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static teletubbies.testutil.TypicalPersons.BENSON;
 
 import java.util.HashSet;
@@ -10,7 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
-import teletubbies.model.AddressBook;
+import teletubbies.commons.exceptions.IllegalValueException;
+import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
@@ -24,7 +26,7 @@ class RemoveTagCommandTest {
     private UserPrefs userPrefs = new UserPrefs();
 
     @Test
-    void execute_supervisor_success() {
+    void execute_supervisor_success() throws IllegalValueException, CommandException {
         userPrefs.setUserProfile(supervisorProfile);
         Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), userPrefs);
 
@@ -32,17 +34,16 @@ class RemoveTagCommandTest {
                 new Range(new HashSet<>(List.of(1, 2, 3, 4, 5, 6, 7))),
                 "owesMoney"
         );
+        command.execute(model);
 
         Set<Tag> newTags = new HashSet<>(BENSON.getTags());
         newTags.remove(new Tag("owesMoney"));
-        Person newBenson = new Person(BENSON.getName(), BENSON.getPhone(), BENSON.getEmail(), BENSON.getAddress(),
-                BENSON.getCompletionStatus(), newTags);
-        AddressBook ab = TypicalPersons.getTypicalAddressBook();
-        ab.setPerson(BENSON, newBenson);
-        Model testModel = new ModelManager(ab, userPrefs);
 
-        CommandTestUtil.assertCommandSuccess(command, model,
-                new CommandResult(RemoveTagCommand.MESSAGE_COMPLETED_SUCCESS), testModel);
+        Person correctBenson = new Person(BENSON.getName(), BENSON.getPhone(), BENSON.getEmail(), BENSON.getAddress(),
+                BENSON.getCompletionStatus(), newTags);
+        Person newBenson = model.getFilteredPersonList().get(1);
+
+        assertEquals(newBenson, correctBenson);
     }
 
 }
