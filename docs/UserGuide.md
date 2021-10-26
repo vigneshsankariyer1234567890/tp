@@ -195,7 +195,7 @@ Examples:
 `export -t friends -t family` will export all contacts containing BOTH the
 tags friends and family to the desired file location.
 
-### Exporting contacts: `tag`
+### Tagging contacts: `tag`
 
 Tags users specified by the given range with a tag with values specified. If
 a tag with the same name already exists, modify the existing tag with the values
@@ -210,20 +210,20 @@ Examples:
 `tag 1-10 -n Assignee -v Mel -s` tags users at index from 1 to 10 with a tag named Assignee and value Mel. It
 can only be edited/removed by supervisors
 
-### Exporting contacts: `tagrm`
+### Removing tags from contacts: `tagrm`
 
 Removes the tags for users specified by the given range who have the given tag name. 
 `tagrm` does not remove the tag if the user doesn't have permissions to edit the tag.
 
-Format:`tag STARTINDEX - ENDINDEX -n TAGNAME` or `tag INDEX [,INDEX]…​ -n TAGNAME`
+Format:`tagrm STARTINDEX - ENDINDEX -n TAGNAME` or `tag INDEX [,INDEX]…​ -n TAGNAME`
 
 Examples:
 
 `tagrm 1,2,4 -n friends` Removes tags with name friends belonging to users indexed at 1, 2 and 4
 
-`tagrm 1-10 -n Assignee` Removed tag with name Assignee belonging to users indexed from 1 to 10
+`tagrm 1-10 -n Assignee` Removes tag with name Assignee belonging to users indexed from 1 to 10
 
-### Exporting contacts: `filter`
+### Filtering contact list: `filter`
 
 Filters the list of customers shown in the list, to only the customers who have the specified tag
 
