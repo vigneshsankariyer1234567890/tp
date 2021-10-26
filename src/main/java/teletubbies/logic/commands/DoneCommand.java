@@ -48,7 +48,7 @@ public class DoneCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
 
-        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
+        Person editedPerson = new Person(personToEdit.getUuid(), personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), completionStatus, personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);

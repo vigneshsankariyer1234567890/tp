@@ -137,7 +137,7 @@ public class ModelManager implements Model {
 
     @Override
     public void mergePerson(Person person) {
-        //TODO: implement
+        addressBook.mergePerson(person);
     }
 
     @Override

@@ -101,6 +101,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    /**
+     * Replaces the given person {@code personToMerge} in the address book.
+     * @param personToMerge Person from file being merged.
+     */
+    public void mergePerson(Person personToMerge) {
+        persons.mergePerson(personToMerge);
+    }
+
     //// util methods
 
     @Override

@@ -13,6 +13,7 @@ import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Uuid;
 import teletubbies.model.tag.Tag;
 
 /**
@@ -51,7 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(CliSyntax.PREFIX_TAG));
 
         String uuid = UUID.randomUUID().toString();
-        Person person = new Person(uuid, name, phone, email, address, new CompletionStatus(), tagList);
+        Person person = new Person(new Uuid(uuid), name, phone, email, address, new CompletionStatus(), tagList);
 
         return new AddCommand(person);
     }

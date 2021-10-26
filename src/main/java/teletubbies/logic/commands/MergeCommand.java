@@ -1,5 +1,12 @@
 package teletubbies.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Optional;
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.exceptions.DataConversionException;
@@ -9,13 +16,6 @@ import teletubbies.model.ReadOnlyAddressBook;
 import teletubbies.model.person.Person;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.ui.MainWindow;
-
-import java.io.File;
-import java.nio.file.Path;
-import java.util.Optional;
-import java.util.logging.Logger;
-
-import static java.util.Objects.requireNonNull;
 
 public class MergeCommand extends Command {
     public static final String COMMAND_WORD = "merge";
@@ -46,7 +46,7 @@ public class MergeCommand extends Command {
                 ReadOnlyAddressBook addressBookToMerge = addressBookOptional.get();
                 ObservableList<Person> personsToMerge = addressBookToMerge.getPersonList(); 
                 personsToMerge.stream().forEach(person -> model.mergePerson(person));
-                
+
                 logger.info("Merged contacts from " + filePath);
             } catch (DataConversionException e) {
                 throw new CommandException(MESSAGE_INCORRECT_FORMAT);

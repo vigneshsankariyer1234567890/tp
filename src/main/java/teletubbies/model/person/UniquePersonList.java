@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -111,6 +112,22 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.setAll(persons);
+    }
+
+    /**
+     * If there is a person with the same Uuid in the list, replace the person with the person being merged.
+     * If the Uuid is not found in the list, add the new person.
+     * @param personToMerge
+     */
+    public void mergePerson(Person personToMerge) {
+        if (!containsUuid(personToMerge)) {
+            add(personToMerge);
+        } else {
+            Person toReplace = internalList.stream()
+                    .filter(p -> p.getUuid().equals(personToMerge.getUuid()))
+                    .collect(Collectors.toList()).get(0);
+            setPerson(toReplace, personToMerge);
+        }
     }
 
     /**
