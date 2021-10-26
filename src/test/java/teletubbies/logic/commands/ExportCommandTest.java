@@ -8,15 +8,11 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import teletubbies.logic.commands.exceptions.CommandException;
-import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
 import teletubbies.model.tag.Tag;
-import teletubbies.testutil.Assert;
 import teletubbies.testutil.TypicalPersons;
-
 
 public class ExportCommandTest {
 
@@ -28,7 +24,7 @@ public class ExportCommandTest {
         Set<Tag> tags = new HashSet<>();
         ExportCommand exportCommand = new ExportCommand(tags);
 
-        assertEquals(exportCommand.filteredAddressBook(model), TypicalPersons.getTypicalAddressBook());
+        assertEquals(exportCommand.filteredPersonList(model), TypicalPersons.getTypicalPersons());
     }
 
     @Test
@@ -38,7 +34,7 @@ public class ExportCommandTest {
         tags.add(new Tag("friends"));
         ExportCommand exportCommand = new ExportCommand(tags);
 
-        assertEquals(exportCommand.filteredAddressBook(model).getPersonList().size(), 3);
+        assertEquals(exportCommand.filteredPersonList(model).size(), 3);
     }
 
     @Test
@@ -49,37 +45,7 @@ public class ExportCommandTest {
         tags.add(new Tag("owesMoney"));
         ExportCommand exportCommand = new ExportCommand(tags);
 
-        assertEquals(exportCommand.filteredAddressBook(model).getPersonList().size(), 1);
-    }
-
-    @Test
-    public void saveAddressBookToPath_emptyPath_throwsException() {
-        // Set-up
-        Set<Tag> tags = new HashSet<>();
-        ExportCommand exportCommand = new ExportCommand(tags);
-
-        AddressBook original = TypicalPersons.getTypicalAddressBook();
-        Assert.assertThrows(CommandException.class, () -> exportCommand.saveAddressBookToPath(original, ""));
-    }
-
-    @Test
-    public void includeDotWithJson_addJson_true() {
-        // Set-up
-        Set<Tag> tags = new HashSet<>();
-        ExportCommand exportCommand = new ExportCommand(tags);
-
-        String s = "hello";
-        assertEquals(exportCommand.includeDotJson(s), s + ".json");
-    }
-
-    @Test
-    public void includeDotWithJson_addJson_false() {
-        // Set-up
-        Set<Tag> tags = new HashSet<>();
-        ExportCommand exportCommand = new ExportCommand(tags);
-
-        String s = "hello.json";
-        assertEquals(exportCommand.includeDotJson(s), s);
+        assertEquals(exportCommand.filteredPersonList(model).size(), 1);
     }
 
     @Test

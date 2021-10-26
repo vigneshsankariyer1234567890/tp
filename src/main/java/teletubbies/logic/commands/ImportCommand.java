@@ -15,6 +15,9 @@ import teletubbies.model.ReadOnlyAddressBook;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.ui.MainWindow;
 
+/**
+ * Imports new file of contacts specified by user and replaces address book.
+ */
 public class ImportCommand extends Command {
     public static final String COMMAND_WORD = "import";
 
@@ -28,6 +31,9 @@ public class ImportCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
+        model.cancelPendingExport();
+
         return new CommandResult(MESSAGE_SUCCESS, CommandResult.UiEffect.IMPORT, mainWindow -> {
             try {
                 File fileToImport = mainWindow.handleFileChooser("Import Contacts File",

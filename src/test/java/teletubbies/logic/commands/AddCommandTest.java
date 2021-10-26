@@ -168,6 +168,24 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateExportList(List<Person> filteredPersonList) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean isAwaitingExportConfirmation() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public AddressBook getExportAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void cancelPendingExport() { }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }

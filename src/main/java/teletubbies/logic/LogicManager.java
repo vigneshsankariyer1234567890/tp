@@ -46,7 +46,7 @@ public class LogicManager implements Logic {
         Command command = inputParser.parseCommand(commandText);
         CommandResult commandResult = command.execute(model);
 
-        if (isModified) {
+        if (isModified && !model.isAwaitingExportConfirmation()) {
             logger.info("AddressBook was modified; saving to file.");
             try {
                 storage.saveAddressBook(model.getAddressBook());

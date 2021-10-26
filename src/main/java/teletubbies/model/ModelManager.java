@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -26,6 +27,7 @@ public class ModelManager implements Model {
     private final VersionedAddressBook versionedAddressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private boolean isAwaitingExportConfirmation;
     private final CommandInputHistory inputHistory;
 
     /**
@@ -132,6 +134,57 @@ public class ModelManager implements Model {
     public void setPerson(Person target, Person editedPerson) {
         CollectionUtil.requireAllNonNull(target, editedPerson);
         versionedAddressBook.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public void updateExportList(List<Person> filteredPersonList) {
+        // Since VersionedAddressBook stores all states, we can just store the new exportable list as a new state in
+        // the VersionedAddressBook.
+        isAwaitingExportConfirmation = true;
+        this.versionedAddressBook.setPersons(filteredPersonList);
+    }
+
+    @Override
+    public boolean isAwaitingExportConfirmation() {
+        return isAwaitingExportConfirmation;
+    }
+
+    @Override
+    public AddressBook getExportAddressBook() {
+        // Steps:
+        // 1. Obtain the filtered list which will be the most recent addressBook state.
+        // 2. Undo the VersionedAddressBook to its previous state before the export command.
+        // 3. Commit the VersionedAddressBook to remove the filtered list.
+        // 4. Return the AddressBook to be exported.
+        AddressBook toExport = new AddressBook(versionedAddressBook);
+        try {
+            this.versionedAddressBook.undo();
+            this.versionedAddressBook.commit();
+        } catch (EarliestVersionException e) {
+            // Undo will always work as VersionedAddressBook must store at least 2 states: the original AddressBook
+            // and the filtered addressBook.
+            logExportIssuesWithUndo(e);
+        }
+        isAwaitingExportConfirmation = false;
+        return toExport;
+    }
+
+    @Override
+    public void cancelPendingExport() {
+        if (isAwaitingExportConfirmation) {
+            try {
+                this.versionedAddressBook.undo();
+                versionedAddressBook.commit();
+            } catch (EarliestVersionException e) {
+                logExportIssuesWithUndo(e);
+            }
+            isAwaitingExportConfirmation = false;
+        }
+    }
+
+    private void logExportIssuesWithUndo(EarliestVersionException e) {
+        logger.log(Level.SEVERE, e, () -> "VersionedAddressBook should be undoable at point of export and have at "
+                + "least 2 states stored.");
     }
 
     //=========== Filtered Person List Accessors =============================================================

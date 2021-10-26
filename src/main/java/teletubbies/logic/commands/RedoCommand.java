@@ -19,6 +19,7 @@ public class RedoCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.cancelPendingExport();
 
         if (!model.canRedoAddressBook()) {
             throw new CommandException(MESSAGE_FAILURE);
