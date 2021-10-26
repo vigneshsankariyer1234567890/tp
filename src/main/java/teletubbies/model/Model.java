@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.core.UserProfile.Role;
 import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.model.person.Person;
 
@@ -37,6 +38,11 @@ public interface Model {
      * Returns the user profile.
      */
     UserProfile getUserProfile();
+
+    /**
+     * Returns user's role
+     */
+    Role getUserRole();
 
     /**
      * Returns the user prefs' GUI settings.

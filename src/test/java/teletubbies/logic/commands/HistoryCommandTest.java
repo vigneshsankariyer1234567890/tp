@@ -93,6 +93,11 @@ public class HistoryCommandTest {
         }
 
         @Override
+        public UserProfile.Role getUserRole() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public GuiSettings getGuiSettings() {
             throw new AssertionError("This method should not be called.");
         }

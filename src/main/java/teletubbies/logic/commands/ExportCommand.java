@@ -3,16 +3,15 @@ package teletubbies.logic.commands;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import javafx.util.Pair;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
-import teletubbies.model.tag.TagUtils;
+import teletubbies.model.person.PersonHasTagsPredicate;
+import teletubbies.model.tag.Tag;
 
 /**
  * Exports persons containing tags specified by user, pending user confirmation.
@@ -23,9 +22,9 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_REQUEST_CONFIRMATION = "\nEnter y to confirm export.\n"
             + "Entering other commands would cancel the export.";
 
-    private final Set<Pair<String, Optional<String>>> tags;
+    private final Set<Tag> tags;
 
-    public ExportCommand(Set<Pair<String, Optional<String>>> tags) {
+    public ExportCommand(Set<Tag> tags) {
         this.tags = tags;
     }
 
@@ -34,7 +33,8 @@ public class ExportCommand extends Command {
         requireNonNull(model);
         model.cancelPendingExport();
 
-        List<Person> filteredPersonList = filteredPersonList(model);
+        ObservableList<Person> personObservableList = model.getFilteredPersonList();
+        List<Person> filteredPersonList = filterPersonList(personObservableList);
         model.updateExportList(filteredPersonList);
 
         String feedbackMessage = (tags.isEmpty()
@@ -49,17 +49,15 @@ public class ExportCommand extends Command {
     /**
      * Filters persons to those with specified tags
      *
-     * @param model Model
+     * @param personList person list to filter
      * @return filtered list of persons
      */
-    public List<Person> filteredPersonList(Model model) {
+    public List<Person> filterPersonList(List<Person> personList) {
         requireNonNull(tags);
 
-        ObservableList<Person> personObservableList = model.getFilteredPersonList();
-        List<Person> personList = personObservableList.stream()
-                .filter(TagUtils.personHasTagPredicate(tags))
+        return personList.stream()
+                .filter(new PersonHasTagsPredicate(tags))
                 .collect(Collectors.toList());
-        return personList;
     }
 
     @Override

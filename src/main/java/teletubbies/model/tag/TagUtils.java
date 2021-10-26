@@ -1,30 +1,25 @@
 package teletubbies.model.tag;
 
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Predicate;
-
-import javafx.util.Pair;
-import teletubbies.model.person.Person;
 
 public class TagUtils {
 
+    public static final String INVALID_TAG_NAME = "Invalid tag name";
+    public static String noPermissionsMessage(String tagName) {
+        return "You don't have permission to modify this tag - " + tagName;
+    }
+
     /**
-     * Predicate for whether a person contains
-     * all provided tags
+     * Find tag in a set with given tagName
      *
-     * @param tagStringSet tags that persons must contain
-     * @return person has tag predicate
+     * @param tagSet tag set to search in
+     * @param tagName tag name to find
+     * @return tag found (potentially empty)
      */
-    public static Predicate<Person> personHasTagPredicate(Set<Pair<String, Optional<String>>> tagStringSet) {
-        return person -> tagStringSet.stream().allMatch(tp -> person.getAllTags().stream().anyMatch(t -> {
-            if (tp.getValue().isPresent()) {
-                return t.tagName.equals(tp.getKey()) && Objects.equals(t.getTagValue(), tp.getValue().get());
-            } else {
-                return t.tagName.equals(tp.getKey());
-            }
-        }));
+    public static Optional<Tag> findMatchingTag(Set<Tag> tagSet, String tagName) {
+        Tag tempTag = new Tag(tagName);
+        return tagSet.stream().filter(t -> t.equals(tempTag)).findFirst();
     }
 
 }

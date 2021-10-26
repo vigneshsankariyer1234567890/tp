@@ -1,5 +1,7 @@
 package teletubbies.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -8,13 +10,13 @@ import java.util.Set;
 
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile.Role;
-import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.CliSyntax;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.tag.Tag;
+import teletubbies.model.tag.TagUtils;
 
 public class TagCommand extends Command {
 
@@ -26,14 +28,17 @@ public class TagCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1-10 " + CliSyntax.PREFIX_NAME + " Assignee "
             + CliSyntax.PREFIX_VALUE + " John Doe " + CliSyntax.PREFIX_SUPERVISOR_FLAG;
 
+
     public static final String MESSAGE_COMPLETED_SUCCESS = "Tag added";
 
     private final Range range;
     private final String tagName;
-    private String tagValue;
+    private final String tagValue;
     private final boolean isSupervisorOnlyTag;
 
     /**
+     * Creates a TagCommand to add the specified {@code Tag}
+     *
      * @param range Range object for persons to tag
      * @param tagName Name of tag
      * @param tagValue Value of tag
@@ -50,61 +55,63 @@ public class TagCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
-        List<String> feedbackMessages = new ArrayList<>();
-        List<Person> rangePersons;
-
-        try {
-            rangePersons = model.getPersonsFromRange(range);
-            new Tag(tagName);
-        } catch (IllegalValueException ive) {
-            feedbackMessages.add(COMMAND_WORD + ": Range of persons out of bounds");
-            rangePersons = new ArrayList<>();
-        } catch (IllegalArgumentException iae) {
-            feedbackMessages.add(COMMAND_WORD + ": Invalid tag name");
-            rangePersons = new ArrayList<>();
+        requireNonNull(model);
+        if (!Tag.isValidTagName(tagName)) {
+            throw new CommandException(TagUtils.INVALID_TAG_NAME);
         }
 
-        Role userRole = model.getUserPrefs().getUserProfile().getRole(); // TODO don't get friend of friend
-        rangePersons.forEach(p -> {
-            Role[] accessRoles;
-            Tag tempNewTag = new Tag(tagName);
-            Set<Tag> newTags = new HashSet<>(p.getTags());
-            Optional<Tag> matchingTag = newTags.stream().filter(t -> t.equals(tempNewTag)).findFirst();
-            boolean editable = matchingTag.isEmpty()
-                    || List.of(matchingTag.get().editAccessRoles).contains(userRole);
+        List<String> feedbackMessages = new ArrayList<>();
+        List<Person> rangePersons = getPersonsFromRange(model, range);
+        Role userRole = model.getUserRole();
 
-            if (tagValue == null) {
-                tagValue = matchingTag.isPresent()
-                    ? matchingTag.get().getTagValue()
-                    : "";
-            }
+        for (Person p: rangePersons) {
+            Set<Tag> tags = p.getTags();
+            Optional<Tag> matchingTag = TagUtils.findMatchingTag(tags, tagName);
+            Tag newTag = generateNewTag(matchingTag, feedbackMessages, userRole);
 
-            accessRoles = isSupervisorOnlyTag
-                    ? new Role[]{ Role.SUPERVISOR }
-                    : matchingTag.isPresent()
-                        ? matchingTag.get().editAccessRoles
-                        : new Role[]{ Role.SUPERVISOR, Role.TELEMARKETER };
-
-            Tag newTag = new Tag(tagName, tagValue, accessRoles);
-            if (editable) {
-                newTags.remove(newTag);
-                newTags.add(newTag);
-            } else {
-                feedbackMessages.add("You don't have permission to modify this tag - "
-                        + "Person number:" + p.getPhone());
-            }
+            Set<Tag> newTags = new HashSet<>(tags);
+            newTags.remove(newTag);
+            newTags.add(newTag);
 
             Person editedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
                     p.getAddress(), p.getCompletionStatus(), newTags);
 
             model.setPerson(p, editedPerson);
-        });
-
-        if (!feedbackMessages.isEmpty()) {
-            throw new CommandException(String.join("\n", feedbackMessages));
         }
 
+        throwMessages(feedbackMessages);
         return new CommandResult(MESSAGE_COMPLETED_SUCCESS);
+    }
+
+    /**
+     * Generates a new tag based on matchingTag. Creates tag with
+     * given command's name and tag if matching tag is not present.
+     * If matching tag is present, copy the existing tag, and replace
+     * value/editable roles if they are specified by the command.
+     *
+     * @param matchingTag matching tag (possible empty)
+     * @param feedback feedback messages
+     * @param userRole user's role
+     * @return new generated tag
+     */
+    public Tag generateNewTag(Optional<Tag> matchingTag, List<String> feedback, Role userRole) {
+        if (matchingTag.isEmpty()) {
+            // No matching tag, so we create a new one
+            return new Tag(tagName, tagValue, isSupervisorOnlyTag);
+        } else if (matchingTag.get().isEditableByRole(userRole)) {
+            // Copy matching tag
+            String previousValue = matchingTag.get().getTagValue();
+            Tag newTag = new Tag(tagName, previousValue, isSupervisorOnlyTag);
+            if (tagValue != null) {
+                newTag.setTagValue(tagValue);
+            }
+            return newTag;
+        } else {
+            feedback.add(
+                TagUtils.noPermissionsMessage(matchingTag.get().tagName)
+            );
+            return null;
+        }
     }
 
     @Override

@@ -2,13 +2,13 @@ package teletubbies.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Optional;
+import java.util.Collection;
 import java.util.Set;
 
-import javafx.util.Pair;
 import teletubbies.logic.commands.FilterCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
-import teletubbies.model.tag.TagUtils;
+import teletubbies.model.person.PersonHasTagsPredicate;
+import teletubbies.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new ExportCommand object
@@ -24,9 +24,11 @@ public class FilterCommandParser implements Parser<FilterCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 CliSyntax.PREFIX_TAG);
-        Set<Pair<String, Optional<String>>> tagStrings = ParserUtil.getTagStringSet(argMultimap);
 
-        return new FilterCommand(TagUtils.personHasTagPredicate(tagStrings));
+        Collection<String> tagValues = argMultimap.getAllValues(CliSyntax.PREFIX_TAG).getValues();
+        Set<Tag> tagStrings = ParserUtil.parseTagsWithValue(tagValues);
+
+        return new FilterCommand(new PersonHasTagsPredicate(tagStrings));
     }
 
 }

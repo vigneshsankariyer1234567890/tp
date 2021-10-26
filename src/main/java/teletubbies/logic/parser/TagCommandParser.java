@@ -25,30 +25,25 @@ public class TagCommandParser implements Parser<TagCommand> {
     @Override
     public TagCommand parse(String args) throws ParseException {
         requireNonNull(args);
-
-        try {
-            ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME,
-                    PREFIX_VALUE, PREFIX_SUPERVISOR_FLAG);
-            String preambleString = argumentMultimap.getPreamble();
-            Range personRange = preambleString.contains("-")
-                    ? ParserUtil.parseRange(preambleString)
-                    : ParserUtil.parseRangeSeparatedByCommas(preambleString);
-            boolean supervisorFlag = argumentMultimap.getAllValues(PREFIX_SUPERVISOR_FLAG).isPresent();
-            Optional<String> optTagName = argumentMultimap.getValue(PREFIX_NAME);
-            if (optTagName.isEmpty()) {
-                throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                        TagCommand.MESSAGE_USAGE));
-            }
-            Optional<String> optTagValue = argumentMultimap.getValue(PREFIX_VALUE);
-            String tagValue = optTagValue.orElse("");
-
-            return new TagCommand(personRange, optTagName.get(), tagValue, supervisorFlag);
-        } catch (ParseException parseException) {
-            throw new ParseException(
-                    String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, TagCommand.MESSAGE_USAGE),
-                    parseException
-            );
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME,
+                PREFIX_VALUE, PREFIX_SUPERVISOR_FLAG);
+        String preambleString = argumentMultimap.getPreamble();
+        if (preambleString.isEmpty()) {
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    TagCommand.MESSAGE_USAGE));
         }
 
+        Range personRange = ParserUtil.parseRange(preambleString);
+
+        Optional<String> tagName = argumentMultimap.getValue(PREFIX_NAME);
+        if (tagName.isEmpty()) {
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    TagCommand.MESSAGE_USAGE));
+        }
+        String tagValue = argumentMultimap.getValue(PREFIX_VALUE).orElse("");
+
+        boolean supervisorFlag = argumentMultimap.getAllValues(PREFIX_SUPERVISOR_FLAG).isPresent();
+
+        return new TagCommand(personRange, tagName.get(), tagValue, supervisorFlag);
     }
 }

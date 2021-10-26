@@ -2,6 +2,8 @@ package teletubbies.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
+
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 
@@ -19,8 +21,9 @@ public class ExportCommandParser implements Parser<ExportCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args,
                 CliSyntax.PREFIX_TAG);
+        Collection<String> tagValues = argMultimap.getAllValues(CliSyntax.PREFIX_TAG).getValues();
 
-        return new ExportCommand(ParserUtil.getTagStringSet(argMultimap));
+        return new ExportCommand(ParserUtil.parseTagsWithValue(tagValues));
     }
 
 }

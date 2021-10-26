@@ -55,6 +55,21 @@ public class Tag {
     }
 
     /**
+     * Constructs a {@code Tag} based on whether tag is
+     * supervisor only
+     *
+     * @param tagName name of tag
+     * @param tagValue value of tag
+     * @param isSupervisorOnly true if tag is supervisor only
+     */
+    public Tag(String tagName, String tagValue, boolean isSupervisorOnly) {
+        requireNonNull(tagName);
+        this.tagName = tagName;
+        this.tagValue = tagValue;
+        this.editAccessRoles = getRolesForEditAccess(isSupervisorOnly);
+    }
+
+    /**
      * Constructs a {@code Tag} with no tag value and accessible by
      * all users.
      *
@@ -86,6 +101,20 @@ public class Tag {
     }
 
     /**
+     * Get array of roles that can edit the tag, based on
+     * whether tag is supervisor only
+     *
+     * @param isSupervisorOnly true if tag is supervisor-only
+     * @return array of roles
+     */
+    public static Role[] getRolesForEditAccess(boolean isSupervisorOnly) {
+        if (isSupervisorOnly) {
+            return new Role[]{ Role.SUPERVISOR };
+        }
+        return new Role[]{ Role.SUPERVISOR, Role.TELEMARKETER };
+    }
+
+    /**
      * Checks if the given role can edit the tag
      *
      * @param role User's role
@@ -102,8 +131,26 @@ public class Tag {
         this.tagValue = value;
     }
 
+    /**
+     * Get tag's value
+     *
+     * @return tag value
+     */
     public String getTagValue() {
         return this.tagValue;
+    }
+
+    /**
+     *
+     *
+     * @param other
+     * @return
+     */
+    public boolean equalsNameAndValue(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Tag // instanceof handles nulls
+                && tagName.equals(((Tag) other).tagName)
+                && tagValue.equals(((Tag) other).tagValue));
     }
 
     @Override

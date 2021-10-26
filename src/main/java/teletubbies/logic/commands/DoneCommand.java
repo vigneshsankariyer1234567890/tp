@@ -3,9 +3,6 @@ package teletubbies.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static teletubbies.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.List;
-
-import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.index.Index;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
@@ -52,13 +49,8 @@ public class DoneCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.cancelPendingExport();
-        List<Person> lastShownList = model.getFilteredPersonList();
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        Person personToEdit = lastShownList.get(index.getZeroBased());
+        Person personToEdit = getPersonFromIndex(model, index);
         Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), new CompletionStatusTag(completionStatus), personToEdit.getTags());
 

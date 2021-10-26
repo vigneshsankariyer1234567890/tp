@@ -1,12 +1,11 @@
 package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-
-import java.util.function.Predicate;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_TAG;
 
 import teletubbies.commons.core.Messages;
 import teletubbies.model.Model;
-import teletubbies.model.person.Person;
+import teletubbies.model.person.PersonHasTagsPredicate;
 
 
 /**
@@ -19,12 +18,12 @@ public class FilterCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters person to only those with the specified "
             + "tags and values (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: --t TAGNAME [MORE_TAGS]...\n"
-            + "Example: " + COMMAND_WORD + " --t CompletionStatus:COMPLETE";
+            + "Parameters: " + PREFIX_TAG + " TAGNAME [MORE_TAGS]...\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + " CompletionStatus:COMPLETE";
 
-    private final Predicate<Person> predicate;
+    private final PersonHasTagsPredicate predicate;
 
-    public FilterCommand(Predicate<Person> predicate) {
+    public FilterCommand(PersonHasTagsPredicate predicate) {
         this.predicate = predicate;
     }
 
