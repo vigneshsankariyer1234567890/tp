@@ -1,10 +1,12 @@
 {
   "persons": [ {
+    "uuid" : "1e53b8d3-0303-4177-bb88-3ff9f010922f",
     "name": "Valid Person",
     "phone": "9482424",
     "email": "hans@example.com",
     "address": "4th street"
   }, {
+    "uuid" : "1e53b8d3-0303-4177-bb99-3ff9f010922f",
     "name": "Person With Invalid Phone Field",
     "phone": "948asdf2424",
     "email": "hans@example.com",

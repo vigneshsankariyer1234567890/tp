@@ -118,9 +118,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasPerson(Person person) {
+    public boolean hasName(Person person) {
         requireNonNull(person);
-        return versionedAddressBook.hasPerson(person);
+        return versionedAddressBook.hasName(person);
     }
 
     @Override
@@ -144,6 +144,11 @@ public class ModelManager implements Model {
     public void setPerson(Person target, Person editedPerson) {
         CollectionUtil.requireAllNonNull(target, editedPerson);
         versionedAddressBook.setPerson(target, editedPerson);
+    }
+
+    @Override
+    public void mergePerson(Person person) {
+        versionedAddressBook.mergePerson(person);
     }
 
     @Override
@@ -253,7 +258,7 @@ public class ModelManager implements Model {
         versionedAddressBook.commit();
     }
 
-    //=========== InputHistory accessors and modifiers ======================================================
+    //=========== InputHistory Accessors and Modifiers ======================================================
 
     @Override
     public void addCommandInput(String textInput) {

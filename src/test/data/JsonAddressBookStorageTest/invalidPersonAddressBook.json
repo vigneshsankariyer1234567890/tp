@@ -1,5 +1,6 @@
 {
   "persons": [ {
+    "uuid" : "1e53b8d3-0303-4177-bb55-3ff9f010922f",
     "name": "Person with invalid name field: Ha!ns Mu@ster",
     "phone": "9482424",
     "email": "hans@example.com",
