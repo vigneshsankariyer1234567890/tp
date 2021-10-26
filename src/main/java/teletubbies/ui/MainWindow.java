@@ -37,6 +37,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
+    private ChartDisplay chartDisplay;
     private HelpWindow helpWindow;
 
     @FXML
@@ -53,6 +54,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane chartDisplayPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -119,6 +123,9 @@ public class MainWindow extends UiPart<Stage> {
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        chartDisplay = new ChartDisplay(logic.getFilteredPersonList());
+        chartDisplayPlaceholder.getChildren().add(chartDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -224,6 +231,8 @@ public class MainWindow extends UiPart<Stage> {
 
             commandResult.executeUiEffect(this);
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            chartDisplay.loadChart();
 
             return commandResult;
         } catch (CommandException | ParseException e) {
