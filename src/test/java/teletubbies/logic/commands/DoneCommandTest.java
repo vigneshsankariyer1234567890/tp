@@ -36,6 +36,7 @@ public class DoneCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.commitAddressBook();
 
         CommandTestUtil.assertCommandSuccess(doneCommand, model, expectedMessage, expectedModel);
     }
@@ -54,6 +55,7 @@ public class DoneCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.commitAddressBook();
 
         CommandTestUtil.assertCommandSuccess(doneCommand, model, expectedMessage, expectedModel);
     }

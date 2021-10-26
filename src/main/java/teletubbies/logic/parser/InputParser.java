@@ -21,8 +21,10 @@ import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.ProfileCommand;
+import teletubbies.logic.commands.RedoCommand;
 import teletubbies.logic.commands.RemoveTagCommand;
 import teletubbies.logic.commands.TagCommand;
+import teletubbies.logic.commands.UndoCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 
 /**
@@ -105,6 +107,12 @@ public class InputParser {
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
+
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommand();
+
+        case RedoCommand.COMMAND_WORD:
+            return new RedoCommand();
 
         default:
             throw new ParseException(Messages.MESSAGE_UNKNOWN_COMMAND);

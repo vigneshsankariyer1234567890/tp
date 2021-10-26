@@ -14,6 +14,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import teletubbies.model.person.Person;
@@ -21,7 +23,6 @@ import teletubbies.model.person.exceptions.DuplicatePersonException;
 import teletubbies.testutil.Assert;
 import teletubbies.testutil.PersonBuilder;
 import teletubbies.testutil.TypicalPersons;
-
 
 public class AddressBookTest {
 
@@ -84,6 +85,27 @@ public class AddressBookTest {
         Assert.assertThrows(UnsupportedOperationException.class, () -> addressBook.getPersonList().remove(0));
     }
 
+    @Test
+    public void addListener_withInvalidationListener_listenerAdded() {
+        SimpleBooleanProperty checker = new SimpleBooleanProperty();
+        checker.set(false);
+        InvalidationListener listener = observable -> checker.set(true);
+        addressBook.addListener(listener);
+        addressBook.addPerson(ALICE);
+        assertTrue(checker.getValue());
+    }
+
+    @Test
+    public void removeListener_withInvalidationListener_listenerRemoved() {
+        SimpleBooleanProperty checker = new SimpleBooleanProperty();
+        checker.set(false);
+        InvalidationListener listener = observable -> checker.set(true);
+        addressBook.addListener(listener);
+        addressBook.removeListener(listener);
+        addressBook.addPerson(ALICE);
+        assertFalse(checker.getValue());
+    }
+
     /**
      * A stub ReadOnlyAddressBook whose persons list can violate interface constraints.
      */
@@ -97,6 +119,16 @@ public class AddressBookTest {
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+            throw new AssertionError("This method should not be called");
+        }
+
+        @Override
+        public void removeListener(InvalidationListener listener) {
+            throw new AssertionError("This method should not be called");
         }
     }
 
