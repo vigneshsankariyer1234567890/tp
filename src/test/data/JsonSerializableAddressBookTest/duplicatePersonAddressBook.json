@@ -6,7 +6,11 @@
     "address": "123, Jurong West Ave 6, #08-111",
     "completionStatus": false,
     "remark" : "",
-    "tagged": [ "friends" ]
+    "tagged": [ {
+      "tagName" : "friends",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    } ]
   }, {
     "name": "Alice Pauline",
     "phone": "94351253",

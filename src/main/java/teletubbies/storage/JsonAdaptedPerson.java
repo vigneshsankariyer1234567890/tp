@@ -11,12 +11,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.model.person.Address;
-import teletubbies.model.person.CompletionStatus;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
 import teletubbies.model.person.Remark;
+import teletubbies.model.tag.CompletionStatusTag;
+import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
 import teletubbies.model.tag.Tag;
 
 /**
@@ -30,7 +31,7 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final boolean completionStat;
+    private final String completionStat;
     private final String remark;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
@@ -40,8 +41,9 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("completionStatus") boolean completionStat,
-            @JsonProperty("remark") String remark, @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+            @JsonProperty("completionStatus") String completionStat,
+            @JsonProperty("remark") String remark,
+            @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -61,7 +63,7 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        completionStat = source.getCompletionStatus().status;
+        completionStat = source.getCompletionStatus().status.toString();
         remark = source.getRemark().value;
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
@@ -116,10 +118,16 @@ class JsonAdaptedPerson {
         }
         final Remark modelRemark = new Remark(remark);
 
-        final CompletionStatus completionStatus = new CompletionStatus(completionStat);
+        CompletionStatus completionStatus;
+        try {
+            completionStatus = CompletionStatus.valueOf(completionStat);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            completionStatus = CompletionStatus.INCOMPLETE;
+        }
+        final CompletionStatusTag completionStatusTag = new CompletionStatusTag(completionStatus);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, completionStatus, modelRemark, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, completionStatusTag, modelRemark, modelTags);
     }
 
 }

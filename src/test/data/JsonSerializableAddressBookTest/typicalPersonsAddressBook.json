@@ -7,7 +7,11 @@
     "address" : "123, Jurong West Ave 6, #08-111",
     "completionStatus": false,
     "remark" : "",
-    "tagged" : [ "friends" ]
+    "tagged" : [ {
+      "tagName" : "friends",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    } ]
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
@@ -15,7 +19,15 @@
     "address" : "311, Clementi Ave 2, #02-25",
     "completionStatus": false,
     "remark" : "",
-    "tagged" : [ "owesMoney", "friends" ]
+    "tagged" : [ {
+      "tagName" : "owesMoney",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    }, {
+      "tagName" : "friends",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    } ]
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
@@ -31,7 +43,11 @@
     "address" : "10th street",
     "completionStatus": false,
     "remark" : "",
-    "tagged" : [ "friends" ]
+    "tagged" : [ {
+      "tagName" : "friends",
+      "tagValue" : "",
+      "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
+    } ]
   }, {
     "name" : "Elle Meyer",
     "phone" : "9482224",

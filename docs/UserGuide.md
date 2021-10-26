@@ -156,14 +156,14 @@ Examples:
 
 Adds a remark to a contact in the contact list. 
 
-Format: `remark INDEX r/REMARK`
+Format: `remark INDEX -rREMARK`
 
 * Adds a remark to the contact at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * If the contact has an existing remark, this command will replace the existing remark.
 
 Examples:
-* `remark 1 r/Bought a refrigerator`
-* `remark 2 r/Need to call back for confirmation`
+* `remark 1 -rBought a refrigerator`
+* `remark 2 -rNeed to call back for confirmation`
 
 ### Marking a contact as completed: `done`
 

@@ -23,12 +23,12 @@ public class DeleteCommandParserTest {
 
     @Test
     public void parse_validPhoneArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, " p/87654321", new DeleteCommand(new Phone("87654321")));
+        assertParseSuccess(parser, " -p87654321", new DeleteCommand(new Phone("87654321")));
     }
 
     @Test
     public void parse_validIndexArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, " i/1", new DeleteCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, " -i1", new DeleteCommand(INDEX_FIRST_PERSON));
     }
 
     @Test

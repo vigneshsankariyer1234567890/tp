@@ -60,14 +60,14 @@ public class InputParserTest {
     @Test
     public void parseCommand_deleteWithPhone() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " " + "p/87654321");
+                DeleteCommand.COMMAND_WORD + " " + "-p 87654321");
         assertEquals(new DeleteCommand(new Phone("87654321")), command);
     }
 
     @Test
     public void parseCommand_deleteWithIndex() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
-                DeleteCommand.COMMAND_WORD + " i/" + INDEX_FIRST_PERSON.getOneBased());
+                DeleteCommand.COMMAND_WORD + " -i" + INDEX_FIRST_PERSON.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
@@ -147,7 +147,7 @@ public class InputParserTest {
     @Test
     public void parseCommand_profile() throws Exception {
         ProfileCommand command = (ProfileCommand) parser.parseCommand(
-                ProfileCommand.COMMAND_WORD + " n/Name r/Telemarketer");
+                ProfileCommand.COMMAND_WORD + " -n Name -rol Telemarketer");
         assertEquals(new ProfileCommand(new UserProfile("Name", UserProfile.Role.TELEMARKETER)), command);
     }
 
