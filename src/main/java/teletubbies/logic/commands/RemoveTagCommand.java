@@ -48,6 +48,8 @@ public class RemoveTagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.cancelPendingExport();
+
         if (!Tag.isValidTagName(tagName)) {
             throw new CommandException(TagUtils.INVALID_TAG_NAME);
         }
