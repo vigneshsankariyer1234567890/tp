@@ -1,5 +1,6 @@
 package teletubbies.logic.commands;
 
+import static teletubbies.logic.commands.CommandTestUtil.VALID_UUID_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static teletubbies.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -26,7 +27,7 @@ public class AddCommandIntegrationTest {
 
     @Test
     public void execute_newPerson_success() {
-        Person validPerson = new PersonBuilder().build();
+        Person validPerson = new PersonBuilder().withUuid(VALID_UUID_BOB).build();
 
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
         expectedModel.addPerson(validPerson);

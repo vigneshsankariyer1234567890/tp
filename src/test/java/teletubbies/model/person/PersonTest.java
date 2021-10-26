@@ -7,6 +7,7 @@ import static teletubbies.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static teletubbies.logic.commands.CommandTestUtil.VALID_UUID_BOB;
 import static teletubbies.testutil.Assert.assertThrows;
 import static teletubbies.testutil.TypicalPersons.ALICE;
 import static teletubbies.testutil.TypicalPersons.BOB;
@@ -23,6 +24,28 @@ public class PersonTest {
         assertThrows(UnsupportedOperationException.class, () -> person.getTags().remove(0));
     }
 
+    @Test
+    public void isSameUuid() {
+        // same object -> returns true
+        assertTrue(ALICE.isSameUuid(ALICE));
+
+        // null -> returns false
+        assertFalse(ALICE.isSameUuid(null));
+
+        // same uuid, all other attributes different -> returns true
+        Person editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
+        assertTrue(ALICE.isSameUuid(editedAlice));
+
+        // different uuid, all other attributes same -> returns false
+        editedAlice = new PersonBuilder(ALICE).withUuid(VALID_UUID_BOB).build();
+        assertFalse(ALICE.isSameUuid(editedAlice));
+
+        // uuid has trailing spaces, all other attributes same -> returns false
+        String uuidWithTrailingSpaces = VALID_UUID_BOB + " ";
+        Person editedBob = new PersonBuilder(BOB).withUuid(uuidWithTrailingSpaces).build();
+        assertFalse(BOB.isSameUuid(editedBob));
+    }
     @Test
     public void isSamePerson() {
         // same object -> returns true

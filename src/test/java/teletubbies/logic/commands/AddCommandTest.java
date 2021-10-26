@@ -196,6 +196,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void mergePerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addCommandInput(String textInput) {
             throw new AssertionError("This method should not be called.");
         }

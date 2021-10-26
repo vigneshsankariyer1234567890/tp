@@ -44,7 +44,7 @@ public class MergeCommand extends Command {
                     throw new CommandException(MESSAGE_FILE_NOT_FOUND);
                 }
                 ReadOnlyAddressBook addressBookToMerge = addressBookOptional.get();
-                ObservableList<Person> personsToMerge = addressBookToMerge.getPersonList(); 
+                ObservableList<Person> personsToMerge = addressBookToMerge.getPersonList();
                 personsToMerge.stream().forEach(person -> model.mergePerson(person));
 
                 logger.info("Merged contacts from " + filePath);

@@ -9,6 +9,7 @@ import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Uuid;
 import teletubbies.model.tag.Tag;
 import teletubbies.model.util.SampleDataUtil;
 
@@ -16,12 +17,13 @@ import teletubbies.model.util.SampleDataUtil;
  * A utility class to help with building Person objects.
  */
 public class PersonBuilder {
-
+    public static final String DEFAULT_UUID = "5adca888-2825-49c2-82e2-78830d923aa4";
     public static final String DEFAULT_NAME = "Amy Bee";
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
 
+    private Uuid uuid;
     private Name name;
     private Phone phone;
     private Email email;
@@ -33,6 +35,7 @@ public class PersonBuilder {
      * Creates a {@code PersonBuilder} with the default details.
      */
     public PersonBuilder() {
+        uuid = new Uuid(DEFAULT_UUID);
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
@@ -45,12 +48,21 @@ public class PersonBuilder {
      * Initializes the PersonBuilder with the data of {@code personToCopy}.
      */
     public PersonBuilder(Person personToCopy) {
+        uuid = personToCopy.getUuid();
         name = personToCopy.getName();
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         completionStatus = personToCopy.getCompletionStatus();
         tags = new HashSet<>(personToCopy.getTags());
+    }
+
+    /**
+     * Sets the {@code Uuid} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withUuid(String uuid) {
+        this.uuid = new Uuid(uuid);
+        return this;
     }
 
     /**
@@ -102,7 +114,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, completionStatus, tags);
+        return new Person(uuid, name, phone, email, address, completionStatus, tags);
     }
 
 }
