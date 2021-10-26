@@ -12,7 +12,6 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import teletubbies.commons.exceptions.EarliestVersionException;
-import teletubbies.commons.exceptions.EmptyHistoryManagerException;
 import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.commands.CommandTestUtil;
 
@@ -46,7 +45,7 @@ public class HistoryManagerTest {
     }
 
     @Test
-    public void isRedoableTest_success() throws EmptyHistoryManagerException, EarliestVersionException {
+    public void isRedoableTest_success() throws EarliestVersionException {
         HistoryManager<String> historyManager = new HistoryManager<>(historyOfStrings);
         assertFalse(historyManager.isRedoable());
         String current = historyManager.peek();
@@ -58,22 +57,14 @@ public class HistoryManagerTest {
     }
 
     @Test
-    public void peekExceptionThrows_success() throws EmptyHistoryManagerException {
-        HistoryManager<String> historyManager = new HistoryManager<>();
-        assertThrows(EmptyHistoryManagerException.class, historyManager::peek);
-        historyManager = new HistoryManager<>(List.of(testString));
-        assertEquals(testString, historyManager.peek());
-    }
-
-    @Test
-    public void undoExceptionThrows_success() throws EmptyHistoryManagerException {
+    public void undoExceptionThrows_success() {
         HistoryManager<String> historyManager = new HistoryManager<>(List.of(testString));
         assertThrows(EarliestVersionException.class, historyManager::undo);
         assertEquals(historyManager.peek(), testString);
     }
 
     @Test
-    public void isUndoableCountTest() throws EarliestVersionException, EmptyHistoryManagerException {
+    public void isUndoableCountTest() throws EarliestVersionException {
         int count = 0;
         int secondLastIndex = historyOfStrings.size() - 2;
         HistoryManager<String> historyManager = new HistoryManager<>(historyOfStrings);
@@ -88,8 +79,7 @@ public class HistoryManagerTest {
     }
 
     @Test
-    public void isRedoableCountTest() throws LatestVersionException, EarliestVersionException,
-            EmptyHistoryManagerException {
+    public void isRedoableCountTest() throws LatestVersionException, EarliestVersionException {
         int undoCount = 0;
         int secondLastIndex = historyOfStrings.size() - 2;
         HistoryManager<String> historyManager = new HistoryManager<>(historyOfStrings);
@@ -151,7 +141,7 @@ public class HistoryManagerTest {
     }
 
     @Test
-    public void commitAndPushEmptyHistoryManager_success() throws EmptyHistoryManagerException {
+    public void commitAndPushEmptyHistoryManager_success() {
         HistoryManager<String> hm = new HistoryManager<>();
         hm = hm.commitAndPush(testString);
         assertEquals(hm.peek(), testString);
@@ -170,7 +160,7 @@ public class HistoryManagerTest {
     }
 
     @Test
-    public void equalsTest() throws EarliestVersionException, LatestVersionException, EmptyHistoryManagerException {
+    public void equalsTest() throws EarliestVersionException, LatestVersionException {
         HistoryManager<String> historyManager = new HistoryManager<>(historyOfStrings);
 
         // same HistoryManager -> returns true
