@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import teletubbies.testutil.TypicalPersons;
 public class ExportCommandTest {
 
     private Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
+    private final Optional<String> none = Optional.empty();
 
     @Test
     public void filteredAddress_noTags_equalsOriginal() {
@@ -24,7 +26,8 @@ public class ExportCommandTest {
         Set<Tag> tags = new HashSet<>();
         ExportCommand exportCommand = new ExportCommand(tags);
 
-        assertEquals(exportCommand.filteredPersonList(model), TypicalPersons.getTypicalPersons());
+        assertEquals(exportCommand.filterPersonList(model.getFilteredPersonList()),
+                TypicalPersons.getTypicalPersons());
     }
 
     @Test
@@ -34,7 +37,7 @@ public class ExportCommandTest {
         tags.add(new Tag("friends"));
         ExportCommand exportCommand = new ExportCommand(tags);
 
-        assertEquals(exportCommand.filteredPersonList(model).size(), 3);
+        assertEquals(exportCommand.filterPersonList(model.getFilteredPersonList()).size(), 3);
     }
 
     @Test
@@ -45,7 +48,7 @@ public class ExportCommandTest {
         tags.add(new Tag("owesMoney"));
         ExportCommand exportCommand = new ExportCommand(tags);
 
-        assertEquals(exportCommand.filteredPersonList(model).size(), 1);
+        assertEquals(exportCommand.filterPersonList(model.getFilteredPersonList()).size(), 1);
     }
 
     @Test
