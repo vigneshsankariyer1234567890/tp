@@ -270,7 +270,6 @@ public class ModelManager implements Model {
         return inputHistory.getChronologicallyDescendingHistory();
     }
 
-
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
