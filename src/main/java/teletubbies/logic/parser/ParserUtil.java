@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -76,7 +75,7 @@ public class ParserUtil {
         if (start > end) {
             throw new ParseException(MESSAGE_INVALID_RANGE_LIMITS);
         }
-        return new Range(IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList()));
+        return new Range(IntStream.rangeClosed(start, end).boxed().collect(Collectors.toSet()));
     }
 
     /**
@@ -93,8 +92,8 @@ public class ParserUtil {
         if (!trimmedValues.allMatch(StringUtil::isNonZeroUnsignedInteger)) {
             throw new ParseException(MESSAGE_INVALID_RANGE_INTEGERS);
         }
-        List<Integer> rangeIntegers = Arrays.stream(rangeValues).map(String::trim)
-                .map(Integer::parseInt).collect(Collectors.toList());
+        Set<Integer> rangeIntegers = Arrays.stream(rangeValues).map(String::trim)
+                .map(Integer::parseInt).collect(Collectors.toSet());
         return new Range(rangeIntegers);
     }
 
