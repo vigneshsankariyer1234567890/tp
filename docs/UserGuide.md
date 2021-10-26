@@ -152,6 +152,19 @@ Examples:
 * `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
+### Adding a remark to a contact : `remark`
+
+Adds a remark to a contact in the contact list. 
+
+Format: `remark INDEX r/REMARK`
+
+* Adds a remark to the contact at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* If the contact has an existing remark, this command will replace the existing remark.
+
+Examples:
+* `remark 1 r/Bought a refrigerator`
+* `remark 2 r/Need to call back for confirmation`
+
 ### Marking a contact as completed: `done`
 
 Edits and marks a person as 'Completed' in the application.
@@ -263,4 +276,5 @@ Action | Format & Usage Examples
 **edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…` <br> e.g. `edit 2 n/Betsy Crower t/`
 **profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
 **history** | `history`<br> e.g., `history`
+**remark** | `remark r/REMARK` <br> e.g., `remark 1 r/Bought a refrigerator`
 
