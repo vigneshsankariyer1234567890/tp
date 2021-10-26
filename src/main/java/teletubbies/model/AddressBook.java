@@ -63,9 +63,9 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// person-level operations
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same name {@code person} exists in the address book.
      */
-    public boolean hasPerson(Person person) {
+    public boolean hasName(Person person) {
         requireNonNull(person);
         return persons.containsName(person);
     }
@@ -123,6 +123,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     protected void indicateModified() {
         invalidationListenerManager.callListeners(this);
+    }
+
+    /**
+     * Replaces the given person {@code personToMerge} in the address book.
+     * @param personToMerge Person from file being merged.
+     */
+    public void mergePerson(Person personToMerge) {
+        persons.mergePerson(personToMerge);
     }
 
     //// util methods

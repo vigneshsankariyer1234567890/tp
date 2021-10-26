@@ -63,7 +63,7 @@ public class RemoveTagCommand extends Command {
             Optional<Tag> matchingTag = TagUtils.findMatchingTag(tags, tagName);
             Set<Tag> newTags = getRemovedTagSet(tags, matchingTag, userRole, feedbackMessages);
 
-            Person editedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
+            Person editedPerson = new Person(p.getUuid(), p.getName(), p.getPhone(), p.getEmail(),
                     p.getAddress(), p.getCompletionStatus(), newTags);
 
             model.setPerson(p, editedPerson);

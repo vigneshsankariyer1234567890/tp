@@ -19,6 +19,7 @@ import teletubbies.logic.commands.HelpCommand;
 import teletubbies.logic.commands.HistoryCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
+import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.ProfileCommand;
 import teletubbies.logic.commands.RedoCommand;
 import teletubbies.logic.commands.RemoveTagCommand;
@@ -85,6 +86,9 @@ public class InputParser {
 
         case ImportCommand.COMMAND_WORD:
             return new ImportCommand();
+
+        case MergeCommand.COMMAND_WORD:
+            return new MergeCommand();
 
         case ExportCommand.COMMAND_WORD:
             return new ExportCommandParser().parse(arguments);

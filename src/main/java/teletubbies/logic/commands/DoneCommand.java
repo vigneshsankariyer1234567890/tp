@@ -51,8 +51,9 @@ public class DoneCommand extends Command {
         model.cancelPendingExport();
 
         Person personToEdit = getPersonFromIndex(model, index);
-        Person editedPerson = new Person(personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
-                personToEdit.getAddress(), new CompletionStatusTag(completionStatus), personToEdit.getTags());
+        Person editedPerson = new Person(personToEdit.getUuid(), personToEdit.getName(), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getAddress(), new CompletionStatusTag(completionStatus),
+                personToEdit.getTags());
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);

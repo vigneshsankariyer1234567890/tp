@@ -22,6 +22,7 @@ import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Uuid;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.Tag;
 
@@ -72,7 +73,7 @@ public class EditCommand extends Command {
         Person personToEdit = getPersonFromIndex(model, index);
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        if (!personToEdit.isSameName(editedPerson) && model.hasName(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
@@ -93,7 +94,7 @@ public class EditCommand extends Command {
      */
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
-
+        Uuid uuid = personToEdit.getUuid();
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
@@ -101,7 +102,8 @@ public class EditCommand extends Command {
         CompletionStatusTag completionStatusTag = personToEdit.getCompletionStatus();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, completionStatusTag, updatedTags);
+        return new Person(uuid, updatedName, updatedPhone, updatedEmail, updatedAddress, completionStatusTag,
+                updatedTags);
     }
 
     @Override
