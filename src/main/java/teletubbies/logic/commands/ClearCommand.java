@@ -19,6 +19,7 @@ public class ClearCommand extends Command {
         requireNonNull(model);
         model.cancelPendingExport();
         model.setAddressBook(new AddressBook());
+        model.commitAddressBook();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

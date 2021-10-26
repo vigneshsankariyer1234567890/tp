@@ -174,7 +174,7 @@ public class HistoryCommandTest {
 
         @Override
         public void cancelPendingExport() {
-            throw new AssertionError("This method should not be called.");
+
         }
 
         @Override
@@ -202,6 +202,30 @@ public class HistoryCommandTest {
             List<String> result = new ArrayList<>(commandInputHistory);
             Collections.reverse(result);
             return result;
+        }
+
+        public boolean canUndoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitAddressBook() {
+            throw new AssertionError("This method should not be called.");
         }
     }
 }
