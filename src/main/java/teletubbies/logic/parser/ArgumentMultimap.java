@@ -16,7 +16,7 @@ import java.util.Optional;
 public class ArgumentMultimap {
 
     /** Prefixes mapped to their respective arguments**/
-    private final Map<Prefix, List<String>> argMultimap = new HashMap<>();
+    private final Map<Prefix, FlagValue> argMultimap = new HashMap<>();
 
     /**
      * Associates the specified argument value with {@code prefix} key in this map.
@@ -26,16 +26,18 @@ public class ArgumentMultimap {
      * @param argValue Argument value to be associated with the specified prefix key
      */
     public void put(Prefix prefix, String argValue) {
-        List<String> argValues = getAllValues(prefix);
-        argValues.add(argValue);
-        argMultimap.put(prefix, argValues);
+        FlagValue flagValue = getAllValues(prefix);
+        flagValue.add(argValue);
+        flagValue.setPresent();
+        argMultimap.put(prefix, flagValue);
     }
 
     /**
      * Returns the last value of {@code prefix}.
      */
     public Optional<String> getValue(Prefix prefix) {
-        List<String> values = getAllValues(prefix);
+        FlagValue value = getAllValues(prefix);
+        List<String> values = value.getValues();
         return values.isEmpty() ? Optional.empty() : Optional.of(values.get(values.size() - 1));
     }
 
@@ -44,11 +46,12 @@ public class ArgumentMultimap {
      * If the prefix does not exist or has no values, this will return an empty list.
      * Modifying the returned list will not affect the underlying data structure of the ArgumentMultimap.
      */
-    public List<String> getAllValues(Prefix prefix) {
+    public FlagValue getAllValues(Prefix prefix) {
         if (!argMultimap.containsKey(prefix)) {
-            return new ArrayList<>();
+            return new FlagValue(new ArrayList<>(), false, prefix);
         }
-        return new ArrayList<>(argMultimap.get(prefix));
+
+        return argMultimap.get(prefix);
     }
 
     /**

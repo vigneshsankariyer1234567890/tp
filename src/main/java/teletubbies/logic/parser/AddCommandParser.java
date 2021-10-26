@@ -7,11 +7,11 @@ import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.AddCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.Address;
-import teletubbies.model.person.CompletionStatus;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.Tag;
 
 /**
@@ -47,9 +47,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             address = ParserUtil.parseAddress(argMultimap.getValue(CliSyntax.PREFIX_ADDRESS).get());
         }
 
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(CliSyntax.PREFIX_TAG));
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(CliSyntax.PREFIX_TAG).getValues());
 
-        Person person = new Person(name, phone, email, address, new CompletionStatus(), tagList);
+        Person person = new Person(name, phone, email, address, new CompletionStatusTag(), tagList);
 
         return new AddCommand(person);
     }

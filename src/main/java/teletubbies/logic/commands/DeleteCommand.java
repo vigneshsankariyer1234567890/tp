@@ -68,13 +68,8 @@ public class DeleteCommand extends Command {
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
         }
 
-        List<Person> lastShownList = model.getFilteredPersonList();
-
         assert targetIndex != null;
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+        Person personToDelete = getPersonFromIndex(model, targetIndex);
         model.deletePerson(personToDelete);
         model.commitAddressBook();
 

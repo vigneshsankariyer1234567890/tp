@@ -13,6 +13,7 @@ import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
 import teletubbies.model.person.Person;
+import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
 import teletubbies.testutil.PersonBuilder;
 import teletubbies.testutil.TypicalIndexes;
 import teletubbies.testutil.TypicalPersons;
@@ -27,7 +28,7 @@ public class DoneCommandTest {
     @Test
     public void execute_completedUnfilteredList_success() {
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withCompletionStatus(true).build();
+        Person editedPerson = new PersonBuilder(firstPerson).withCompletionStatus(CompletionStatus.COMPLETE).build();
 
         DoneCommand doneCommand = new DoneCommand(INDEX_FIRST_PERSON);
 
@@ -46,7 +47,7 @@ public class DoneCommandTest {
 
         Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
         Person editedPerson = new PersonBuilder(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()))
-                .withCompletionStatus(true).build();
+                .withCompletionStatus(CompletionStatus.COMPLETE).build();
 
         DoneCommand doneCommand = new DoneCommand(INDEX_FIRST_PERSON);
 

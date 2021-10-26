@@ -7,13 +7,18 @@ import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.LogsCenter;
+import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.core.UserProfile.Role;
+import teletubbies.commons.core.index.Index;
 import teletubbies.commons.exceptions.EarliestVersionException;
+import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.model.person.Person;
@@ -71,6 +76,11 @@ public class ModelManager implements Model {
     @Override
     public UserProfile getUserProfile() {
         return userPrefs.getUserProfile();
+    }
+
+    @Override
+    public Role getUserRole() {
+        return userPrefs.getUserRole();
     }
 
     @Override
@@ -203,6 +213,19 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    public List<Person> getPersonsFromRange(Range range) throws IllegalValueException {
+        requireNonNull(range);
+        List<Index> rangeValues = range.getRangeValues();
+        if (rangeValues.stream().anyMatch(i -> i.getZeroBased() >= filteredPersons.size())) {
+            throw new IllegalArgumentException(Range.MESSAGE_ILLEGAL_RANGE);
+        }
+        return rangeValues.stream()
+                .map(i -> filteredPersons.get(i.getZeroBased()))
+                .collect(Collectors.toList());
+    }
+
+
     //=========== Undo/Redo =============================================================
 
     @Override

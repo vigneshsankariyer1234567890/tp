@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.core.UserProfile.Role;
 
 /**
  * Represents User's preferences.
@@ -67,6 +68,10 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     public void setAddressBookFilePath(Path addressBookFilePath) {
         requireNonNull(addressBookFilePath);
         this.addressBookFilePath = addressBookFilePath;
+    }
+
+    public Role getUserRole() {
+        return userProfile.getRole();
     }
 
     @Override
