@@ -187,6 +187,36 @@ public class ModelManager implements Model {
                 + "least 2 states stored.");
     }
 
+    @Override
+    public void updateExportList(List<Person> filteredPersonList) {
+        isAwaitingExportConfirmation = true;
+        addressBookCopy = new AddressBook(addressBook);
+        this.addressBook.setPersons(filteredPersonList);
+    }
+
+    @Override
+    public boolean isAwaitingExportConfirmation() {
+        return isAwaitingExportConfirmation;
+    }
+
+    @Override
+    public AddressBook getExportAddressBook() {
+        AddressBook toExport = new AddressBook(addressBook);
+        this.addressBook.resetData(addressBookCopy);
+        addressBookCopy = null;
+        isAwaitingExportConfirmation = false;
+        return toExport;
+    }
+
+    @Override
+    public void cancelPendingExport() {
+        if (isAwaitingExportConfirmation) {
+            this.addressBook.resetData(addressBookCopy);
+            addressBookCopy = null;
+            isAwaitingExportConfirmation = false;
+        }
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
