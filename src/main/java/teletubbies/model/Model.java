@@ -65,9 +65,9 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same name {@code person} exists in the address book.
      */
-    boolean hasPerson(Person person);
+    boolean hasName(Person person);
 
     /**
      * Returns true if a person with the same phone number as {@code person} exists in the address book.
@@ -126,8 +126,12 @@ public interface Model {
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
 
+    /**
+     * Replaces the given person in the address book.
+     * @param person
+     */
     void mergePerson(Person person);
-    
+
     /**
      * Adds the recent text input to the history as stored by {@code CommandInputHistory}.
      * @param textInput to be added to the {@code CommandInputHistory}

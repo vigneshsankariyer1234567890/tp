@@ -1,6 +1,7 @@
 package teletubbies.logic.parser;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 import teletubbies.commons.core.Messages;
@@ -49,7 +50,8 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(CliSyntax.PREFIX_TAG));
 
-        Person person = new Person(name, phone, email, address, new CompletionStatus(), tagList);
+        String uuid = UUID.randomUUID().toString();
+        Person person = new Person(uuid, name, phone, email, address, new CompletionStatus(), tagList);
 
         return new AddCommand(person);
     }

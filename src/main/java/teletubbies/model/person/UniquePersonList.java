@@ -20,7 +20,7 @@ import teletubbies.model.person.exceptions.PersonNotFoundException;
  *
  * Supports a minimal set of list operations.
  *
- * @see Person#isSamePerson(Person)
+ * @see Person#isSameName(Person)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -31,9 +31,17 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Returns true if the list contains an equivalent person with the same name as the given argument.
      */
+    public boolean containsUuid(Person toCheck) {
+        requireNonNull(toCheck);
+        return internalList.stream().anyMatch(toCheck::isSameUuid);
+    }
+
+    /**
+     * Returns true if the list contains an equivalent person with the same name as the given argument.
+     */
     public boolean containsName(Person toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::isSamePerson);
+        return internalList.stream().anyMatch(toCheck::isSameName);
     }
 
     /**
@@ -50,7 +58,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void add(Person toAdd) {
         requireNonNull(toAdd);
-        if (containsName(toAdd)) {
+        if (containsUuid(toAdd) || containsName(toAdd)) {
             throw new DuplicatePersonException();
         }
         internalList.add(toAdd);
@@ -69,7 +77,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
 
-        if (!target.isSamePerson(editedPerson) && containsName(editedPerson)) {
+        if (!target.isSameName(editedPerson) && containsName(editedPerson)) {
             throw new DuplicatePersonException();
         }
 
@@ -135,7 +143,8 @@ public class UniquePersonList implements Iterable<Person> {
     private boolean personsAreUnique(List<Person> persons) {
         for (int i = 0; i < persons.size() - 1; i++) {
             for (int j = i + 1; j < persons.size(); j++) {
-                if (persons.get(i).isSamePerson(persons.get(j))) {
+                if (persons.get(i).isSameUuid(persons.get(j))
+                    || persons.get(i).isSameName(persons.get(j))) {
                     return false;
                 }
             }
