@@ -28,7 +28,7 @@ public class JsonAdaptedPersonTest {
     private static final String VALID_PHONE = TypicalPersons.BENSON.getPhone().toString();
     private static final String VALID_EMAIL = TypicalPersons.BENSON.getEmail().toString();
     private static final String VALID_ADDRESS = TypicalPersons.BENSON.getAddress().toString();
-    private static final boolean VALID_COMPLETION_STATUS = TypicalPersons.BENSON.getCompletionStatus().status;
+    private static final String VALID_COMPLETION_STATUS = TypicalPersons.BENSON.getCompletionStatus().status.toString();
     private static final List<JsonAdaptedTag> VALID_TAGS = TypicalPersons.BENSON.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
