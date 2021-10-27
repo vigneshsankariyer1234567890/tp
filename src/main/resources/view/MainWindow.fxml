@@ -3,10 +3,13 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -26,17 +29,21 @@
       </stylesheets>
 
       <VBox>
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-          <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleImport" text="Import" />
-            <MenuItem mnemonicParsing="false" onAction="#handleExport" text="Export" />
-            <MenuItem mnemonicParsing="false" onAction="#handleMerge" text="Merge" />
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-          </Menu>
-        </MenuBar>
+        <AnchorPane xmlns:fx="http://javafx.com/fxml/1" styleClass="menu-bar">
+          <MenuBar fx:id="menuBar" VBox.vgrow="ALWAYS">
+            <Menu mnemonicParsing="false" text="File">
+              <MenuItem mnemonicParsing="false" onAction="#handleImport" text="Import" />
+              <MenuItem mnemonicParsing="false" onAction="#handleExport" text="Export" />
+              <MenuItem mnemonicParsing="false" onAction="#handleMerge" text="Merge" />
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+            </Menu>
+          </MenuBar>
+        <Label fx:id="profileDisplay" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+               styleClass="menu-role"></Label>
+        </AnchorPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
 

@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -17,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.LogsCenter;
+import teletubbies.commons.core.UserProfile;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.Logic;
@@ -69,6 +71,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane chartDisplayPlaceholder;
+
+    @FXML
+    private Label profileDisplay;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -184,6 +189,10 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        UserProfile userProfile = logic.getUserProfile();
+        profileDisplay.setText(userProfile.getRoleString());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -304,6 +313,9 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
             chartDisplay.loadChart();
+
+            UserProfile userProfile = logic.getUserProfile();
+            profileDisplay.setText(userProfile.getRoleString());
 
             return commandResult;
         } catch (CommandException | ParseException e) {
