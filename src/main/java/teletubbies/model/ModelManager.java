@@ -34,6 +34,7 @@ public class ModelManager implements Model {
     private final FilteredList<Person> filteredPersons;
     private boolean isAwaitingExportConfirmation;
     private final CommandInputHistory inputHistory;
+    private boolean firstUpArrowClicked = false;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -262,6 +263,7 @@ public class ModelManager implements Model {
 
     @Override
     public void addCommandInput(String textInput) {
+        firstUpArrowClicked = false;
         inputHistory.addCommandInput(textInput);
     }
 
@@ -273,6 +275,22 @@ public class ModelManager implements Model {
     @Override
     public List<String> getChronologicallyDescendingHistory() {
         return inputHistory.getChronologicallyDescendingHistory();
+    }
+
+    @Override
+    public String getNextCommand() throws LatestVersionException {
+        inputHistory.next();
+        return inputHistory.peek();
+    }
+
+    @Override
+    public String getPreviousCommand() throws EarliestVersionException {
+        if (!firstUpArrowClicked) {
+            firstUpArrowClicked = true;
+        } else {
+            inputHistory.previous();
+        }
+        return inputHistory.peek();
     }
 
     @Override

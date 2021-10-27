@@ -164,6 +164,24 @@ public interface Model {
     List<String> getChronologicallyDescendingHistory();
 
     /**
+     * Get the next command entered if it exists
+     *
+     * @return next command entered
+     * @throws LatestVersionException if already looking at the
+     * latest command
+     */
+    String getNextCommand() throws LatestVersionException;
+
+    /**
+     * Get the previous command entered if it exists
+     *
+     * @return previous command entered
+     * @throws EarliestVersionException if already looking at
+     * the earliest command
+     */
+    String getPreviousCommand() throws EarliestVersionException;
+
+    /**
      * Returns true if the model has previous address book states to restore.
      */
     boolean canUndoAddressBook();
