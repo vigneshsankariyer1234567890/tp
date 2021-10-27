@@ -1,7 +1,9 @@
 package teletubbies.ui;
 
 import java.io.File;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -20,11 +22,14 @@ import teletubbies.commons.core.UserProfile;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.Logic;
+import teletubbies.logic.commands.Command;
+import teletubbies.logic.commands.CommandMap;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.Model;
 
@@ -89,7 +94,7 @@ public class MainWindow extends UiPart<Stage> {
                     handleDownPress();
                     break;
                 case TAB:
-                    /* TODO */
+                    handleTab();
                     break;
                 default: /**/
                 }
@@ -155,6 +160,25 @@ public class MainWindow extends UiPart<Stage> {
             commandBox.setText(model.getNextCommand());
         } catch (LatestVersionException lve) {
             logger.info("Info: No next command");
+        }
+    }
+
+    // REQUIRED_FIElDS must always be a List<Prefix>
+    @SuppressWarnings("unchecked")
+    private void handleTab() {
+        String commandText = commandBox.getText().trim();
+        Class<? extends Command> commandClass = CommandMap.getClass(commandText);
+        if (commandClass == null) {
+            logger.info("No such command");
+            return;
+        }
+        try {
+            List<String> requiredTags = ((List<Prefix>) commandClass.getDeclaredField("REQUIRED_FLAGS")
+                    .get(null))
+                    .stream().map(Prefix::toString).collect(Collectors.toList());
+            commandBox.setText(commandText + " " + String.join(" ", requiredTags));
+        } catch (Exception e) {
+            logger.info("No compulsory fields: " + e.getMessage());
         }
     }
 
