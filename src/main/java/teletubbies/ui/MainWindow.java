@@ -4,7 +4,9 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -14,6 +16,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.LogsCenter;
+import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.exceptions.EarliestVersionException;
+import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.Logic;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.ExportCommand;
@@ -21,6 +26,7 @@ import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.exceptions.ParseException;
+import teletubbies.model.Model;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -34,11 +40,13 @@ public class MainWindow extends UiPart<Stage> {
 
     private Stage primaryStage;
     private Logic logic;
+    private Model model;
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private ChartDisplay chartDisplay;
+    private CommandBox commandBox;
     private HelpWindow helpWindow;
 
     @FXML
@@ -59,15 +67,37 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane chartDisplayPlaceholder;
 
+    @FXML
+    private Label profileDisplay;
+
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
-    public MainWindow(Stage primaryStage, Logic logic) {
+    public MainWindow(Stage primaryStage, Logic logic, Model model) {
         super(FXML, primaryStage);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.model = model;
+
+        this.primaryStage.addEventHandler(KeyEvent.ANY, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()) {
+                case UP:
+                    handleUpPress();
+                    break;
+                case DOWN:
+                    handleDownPress();
+                    break;
+                case TAB:
+                    /* TODO */
+                    break;
+                default: /**/
+                }
+            }
+        });
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -115,10 +145,30 @@ public class MainWindow extends UiPart<Stage> {
         });
     }
 
+    private void handleUpPress() {
+        try {
+            commandBox.setText(model.getPreviousCommand());
+        } catch (EarliestVersionException eve) {
+            logger.info("Info: No previous command");
+        }
+    }
+
+    private void handleDownPress() {
+        try {
+            commandBox.setText(model.getNextCommand());
+        } catch (LatestVersionException lve) {
+            logger.info("Info: No next command");
+        }
+    }
+
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        UserProfile userProfile = logic.getUserProfile();
+        profileDisplay.setText(userProfile.getRoleString());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -131,7 +181,7 @@ public class MainWindow extends UiPart<Stage> {
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(this::executeCommand);
+        commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
@@ -239,6 +289,9 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
             chartDisplay.loadChart();
+
+            UserProfile userProfile = logic.getUserProfile();
+            profileDisplay.setText(userProfile.getRoleString());
 
             return commandResult;
         } catch (CommandException | ParseException e) {

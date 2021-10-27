@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.LogsCenter;
+import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.Command;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.exceptions.CommandException;
@@ -66,6 +67,11 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public UserProfile getUserProfile() {
+        return model.getUserProfile();
     }
 
     @Override
