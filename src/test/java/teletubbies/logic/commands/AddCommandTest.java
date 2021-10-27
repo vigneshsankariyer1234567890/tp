@@ -155,7 +155,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean hasPerson(Person person) {
+        public boolean hasName(Person person) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -208,6 +208,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void mergePerson(Person person) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addCommandInput(String textInput) {
             throw new AssertionError("This method should not be called.");
         }
@@ -219,6 +224,31 @@ public class AddCommandTest {
 
         @Override
         public List<String> getChronologicallyDescendingHistory() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canUndoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitAddressBook() {
             throw new AssertionError("This method should not be called.");
         }
     }
@@ -235,9 +265,9 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean hasPerson(Person person) {
+        public boolean hasName(Person person) {
             requireNonNull(person);
-            return this.person.isSamePerson(person);
+            return this.person.isSameName(person);
         }
 
         @Override
@@ -254,9 +284,9 @@ public class AddCommandTest {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Person person) {
+        public boolean hasName(Person person) {
             requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
+            return personsAdded.stream().anyMatch(person::isSameName);
         }
 
         @Override
@@ -269,6 +299,11 @@ public class AddCommandTest {
         public void addPerson(Person person) {
             requireNonNull(person);
             personsAdded.add(person);
+        }
+
+        @Override
+        public void commitAddressBook() {
+            // called by {@code AddCommand#execute()}
         }
 
         @Override

@@ -52,7 +52,7 @@ public class AddCommand extends Command {
         requireNonNull(model);
         model.cancelPendingExport();
 
-        if (model.hasPerson(toAdd)) {
+        if (model.hasName(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
@@ -61,6 +61,7 @@ public class AddCommand extends Command {
         }
 
         model.addPerson(toAdd);
+        model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
     }
 

@@ -18,6 +18,7 @@ import teletubbies.logic.Logic;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.commands.ImportCommand;
+import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.exceptions.ParseException;
 
@@ -37,6 +38,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
+    private ChartDisplay chartDisplay;
     private HelpWindow helpWindow;
 
     @FXML
@@ -53,6 +55,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane chartDisplayPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -119,6 +124,9 @@ public class MainWindow extends UiPart<Stage> {
 
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        chartDisplay = new ChartDisplay(logic.getFilteredPersonList());
+        chartDisplayPlaceholder.getChildren().add(chartDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -208,6 +216,11 @@ public class MainWindow extends UiPart<Stage> {
         this.executeCommand(ExportCommand.COMMAND_WORD);
     }
 
+    @FXML
+    private void handleMerge() throws CommandException, ParseException {
+        this.executeCommand(MergeCommand.COMMAND_WORD);
+    }
+
     public PersonListPanel getPersonListPanel() {
         return personListPanel;
     }
@@ -224,6 +237,8 @@ public class MainWindow extends UiPart<Stage> {
 
             commandResult.executeUiEffect(this);
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            chartDisplay.loadChart();
 
             return commandResult;
         } catch (CommandException | ParseException e) {

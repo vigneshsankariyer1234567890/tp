@@ -128,7 +128,7 @@ public class HistoryCommandTest {
         }
 
         @Override
-        public boolean hasPerson(Person person) {
+        public boolean hasName(Person person) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -174,7 +174,7 @@ public class HistoryCommandTest {
 
         @Override
         public void cancelPendingExport() {
-            throw new AssertionError("This method should not be called.");
+
         }
 
         @Override
@@ -184,6 +184,11 @@ public class HistoryCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void mergePerson(Person person) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -202,6 +207,30 @@ public class HistoryCommandTest {
             List<String> result = new ArrayList<>(commandInputHistory);
             Collections.reverse(result);
             return result;
+        }
+
+        public boolean canUndoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoAddressBook() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitAddressBook() {
+            throw new AssertionError("This method should not be called.");
         }
     }
 }

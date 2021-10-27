@@ -1,5 +1,6 @@
 {
   "persons": [ {
+    "uuid" : "5adca839-2925-49c2-8555-78830d923aa4",
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "alice@example.com",
@@ -12,6 +13,7 @@
       "editAccessRoles" : [ "SUPERVISOR", "TELEMARKETER" ]
     } ]
   }, {
+    "uuid" : "5adca839-2925-49c2-8555-78830d923aa4",
     "name": "Alice Pauline",
     "phone": "94351253",
     "email": "pauline@example.com",

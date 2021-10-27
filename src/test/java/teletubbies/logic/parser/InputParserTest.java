@@ -1,6 +1,7 @@
 package teletubbies.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static teletubbies.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static teletubbies.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -29,6 +30,7 @@ import teletubbies.logic.commands.HelpCommand;
 import teletubbies.logic.commands.HistoryCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
+import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.ProfileCommand;
 import teletubbies.logic.commands.RemarkCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
@@ -48,7 +50,7 @@ public class InputParserTest {
     public void parseCommand_add() throws Exception {
         Person person = new PersonBuilder().build();
         AddCommand command = (AddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
-        assertEquals(new AddCommand(person), command);
+        assertNotEquals(new AddCommand(person), command); //No longer equal because of UUID generation
     }
 
     @Test
@@ -125,7 +127,6 @@ public class InputParserTest {
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD) instanceof ExportCommand);
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD + " \t hi") instanceof ExportCommand);
         assertTrue(parser.parseCommand(ExportCommand.COMMAND_WORD + " ignore") instanceof ExportCommand);
-
     }
 
     @Test
@@ -133,7 +134,12 @@ public class InputParserTest {
         assertTrue(parser.parseCommand(ConfirmExportCommand.COMMAND_WORD) instanceof ConfirmExportCommand);
         assertTrue(parser.parseCommand(ConfirmExportCommand.COMMAND_WORD + " \t hi") instanceof ConfirmExportCommand);
         assertTrue(parser.parseCommand(ConfirmExportCommand.COMMAND_WORD + " ignore") instanceof ConfirmExportCommand);
+    }
 
+    @Test
+    public void parseCommand_merge() throws Exception {
+        assertTrue(parser.parseCommand(MergeCommand.COMMAND_WORD) instanceof MergeCommand);
+        assertTrue(parser.parseCommand(MergeCommand.COMMAND_WORD + " 3") instanceof MergeCommand);
     }
 
     @Test

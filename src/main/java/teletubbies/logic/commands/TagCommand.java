@@ -56,6 +56,8 @@ public class TagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.cancelPendingExport();
+
         if (!Tag.isValidTagName(tagName)) {
             throw new CommandException(TagUtils.INVALID_TAG_NAME);
         }
@@ -73,7 +75,7 @@ public class TagCommand extends Command {
             newTags.remove(newTag);
             newTags.add(newTag);
 
-            Person editedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
+            Person editedPerson = new Person(p.getUuid(), p.getName(), p.getPhone(), p.getEmail(),
                     p.getAddress(), p.getCompletionStatus(), p.getRemark(), newTags);
 
             model.setPerson(p, editedPerson);

@@ -51,7 +51,8 @@ public class DoneCommand extends Command {
         model.cancelPendingExport();
 
         Person personToEdit = getPersonFromIndex(model, index);
-        Person editedPerson = new Person(personToEdit.getName(),
+        Person editedPerson = new Person(personToEdit.getUuid(),
+                personToEdit.getName(),
                 personToEdit.getPhone(),
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
@@ -59,9 +60,9 @@ public class DoneCommand extends Command {
                 personToEdit.getRemark(),
                 personToEdit.getTags());
 
-
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.commitAddressBook();
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }

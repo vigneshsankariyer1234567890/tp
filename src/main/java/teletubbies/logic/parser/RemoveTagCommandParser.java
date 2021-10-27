@@ -8,7 +8,6 @@ import java.util.Optional;
 import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.Range;
 import teletubbies.logic.commands.RemoveTagCommand;
-import teletubbies.logic.commands.TagCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 
 /**
@@ -28,7 +27,7 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
         String preambleString = argumentMultimap.getPreamble();
         if (preambleString.isEmpty()) {
             throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                    TagCommand.MESSAGE_USAGE));
+                    RemoveTagCommand.MESSAGE_USAGE));
         }
 
         Range personRange = ParserUtil.parseRange(preambleString);

@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.input.Clipboard;
@@ -28,7 +29,6 @@ public class PersonCard extends UiPart<Region> {
     private static final String UNCOMPLETED_EMOJI = new String(
             new byte[]{(byte) 0xE2, (byte) 0x9D, (byte) 0x8C}, StandardCharsets.UTF_8
     );
-
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -59,6 +59,8 @@ public class PersonCard extends UiPart<Region> {
     private Label completionStatusLabel;
     @FXML
     private FlowPane tags;
+    @FXML
+    private Button copyButton;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.

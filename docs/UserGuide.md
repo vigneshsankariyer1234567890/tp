@@ -28,9 +28,9 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
    * **`list`** : Lists all contacts.
 
-   * **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to Teletubbies.
+   * **`add`**`-n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` : Adds a contact named `John Doe` to Teletubbies.
 
-   * **`delete`**`i/3` : Deletes the 3rd contact shown in the current list.
+   * **`delete`**`-i 3` : Deletes the 3rd contact shown in the current list.
    
    * **`done`**`3` : Marks the 3rd contact shown in the current list as done.
 
@@ -49,19 +49,19 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 **:information_source: Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+  e.g. in `add -n NAME`, `NAME` is a parameter which can be used as `add -n John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+  e.g `-n NAME [-t TAG]` can be used as `-n John Doe -t friend` or as `-n John Doe`.
 
 * Items with `…`​ after them can be used multiple times or left blank.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+  e.g. `[-t TAG]…​` can be used as ` ` (i.e. 0 times), `-t friend`, `-t friend -t family` etc.
 
 * Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+  e.g. if the command specifies `-n NAME -p PHONE_NUMBER`, `-p PHONE_NUMBER -n NAME` is also acceptable.
 
 * If a parameter is expected only once in the command but you specified it multiple times, only the last occurrence of the parameter will be taken.<br>
-  e.g. if you specify `p/12341234 p/56785678`, only `p/56785678` will be taken.
+  e.g. if you specify `-p 12341234 -p 56785678`, only `-p 56785678` will be taken.
 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
@@ -90,11 +90,11 @@ Sets the name and role of the application user.
 
 Both fields are mandatory, and the role can only be either "Telemarketer" or "Supervisor".
 
-Format: `profile n/NAME r/ROLE`
+Format: `profile -n NAME -rol ROLE`
 
 Examples:
-* `profile n/David Wong r/Telemarketer`
-* `profile n/Anne Goh r/Supervisor`
+* `profile -n David Wong -rol Telemarketer`
+* `profile -n Anne Goh -rol Supervisor`
 
 ### Adding a contact: `add`
 
@@ -103,21 +103,21 @@ Adds a customer to the application.
 The customer’s name and phone number are mandatory. Address and email are optional fields.
 
 
-Format: `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL] [t/TAG]…​`
+Format: `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL] [-t TAG]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: Tip:
 A person can have any number of tags (including none)
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 a/John Street, block 123, #01-01 e/johnd@example.com t/friends`
-* `add n/Betsy Crowe p/1234567`
+* `add -n John Doe -p 98765432 -a John Street, block 123, #01-01 -e johnd@example.com -t friends`
+* `add -n Betsy Crowe -p 1234567`
 
 ### Deleting a contact : `delete`
 
 Deletes the specified customer from the application.
 
-Format: `delete p/PHONE_NUMBER` or `delete i/INDEX`
+Format: `delete -p PHONE_NUMBER` or `delete -i INDEX`
 
 
 * Deletes the person at the specified `PHONE_NUMBER` or `INDEX`.
@@ -126,8 +126,8 @@ Format: `delete p/PHONE_NUMBER` or `delete i/INDEX`
 * The index must be a positive integer 1, 2, 3, …​
 
 Examples:
-* `delete i/1`
-* `delete p/87654321`
+* `delete -i 1`
+* `delete -p 87654321`
 
 ### Listing all contacts : `list`
 
@@ -139,18 +139,18 @@ Format: `list`
 
 Edits an existing person in the application.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`
 
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
+* You can remove all the person’s tags by typing `-t` without
     specifying any tags after it.
 
 Examples:
-* `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 -p 91234567 -e johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 -n Betsy Crower -t` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 ### Adding a remark to a contact : `remark`
 
@@ -202,11 +202,53 @@ Examples:
 Exports customer data from the application to a JSON file in desired specified
 folder selected from the file selector window.
 
-Format: `export [t/TAGS ...]`
+Format: `export [-t TAGS]…​`
 
 Examples:
-`export t/ friends family` will export all contacts containing BOTH the
+`export -t friends -t family` will export all contacts containing BOTH the
 tags friends and family to the desired file location.
+
+### Tagging contacts: `tag`
+
+Tags users specified by the given range with a tag with values specified. If
+a tag with the same name already exists, modify the existing tag with the values
+specified if the user has permissions to edit the tag.
+
+Format:`tag STARTINDEX - ENDINDEX -n TAGNAME -v VALUE [-s]` or `tag INDEX [,INDEX]…​ -n TAGNAME -v VALUE [-s]`
+
+Examples:
+
+`tag 1,2,4 -n friends -v CLOSE` tags users at index 1, 2, and 4 with a tag named friends and value CLOSE
+
+`tag 1-10 -n Assignee -v Mel -s` tags users at index from 1 to 10 with a tag named Assignee and value Mel. It
+can only be edited/removed by supervisors
+
+### Removing tags from contacts: `tagrm`
+
+Removes the tags for users specified by the given range who have the given tag name. 
+`tagrm` does not remove the tag if the user doesn't have permissions to edit the tag.
+
+Format:`tagrm STARTINDEX - ENDINDEX -n TAGNAME` or `tag INDEX [,INDEX]…​ -n TAGNAME`
+
+Examples:
+
+`tagrm 1,2,4 -n friends` Removes tags with name friends belonging to users indexed at 1, 2 and 4
+
+`tagrm 1-10 -n Assignee` Removes tag with name Assignee belonging to users indexed from 1 to 10
+
+### Filtering contact list: `filter`
+
+Filters the list of customers shown in the list, to only the customers who have the specified tag
+
+Format: `filter -t TAGNAME[:TAGVALUE] [-t TAGNAME[:TAGVALUE]]…​ `
+
+Examples:
+
+`filter -t friends` Filters displayed list to only users who have the friends tag 
+
+`filter -t Assignee:Ben` Filters displayed list to only uses who have the tag named Assignee
+with value Ben
+
 
 ### Clearing all entries : `clear`
 
@@ -270,11 +312,11 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 Action | Format & Usage Examples
 --------|------------------
-**export** | `export [t/TAGS...]` <br> e.g, `export t/friends family`
-**add** | `add n/NAME p/PHONE_NUMBER [a/ADDRESS] [e/EMAIL] [t/TAG]...` <br> e.g., `add n/david wong p/81234567`
-**delete** | `delete p/PHONE_NUMBER`<br> `delete i/INDEX`<br> e.g., `delete p/81234567, delete i/1`
-**edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…` <br> e.g. `edit 2 n/Betsy Crower t/`
-**profile** | `profile n/NAME r/ROLE`<br> e.g., `profile n/David Wong r/Telemarketer`
+**export** | `export [-t TAGS...]` <br> e.g, `export -t friends family`
+**add** | `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL] [-t TAG]...` <br> e.g., `add n/david wong p/81234567`
+**delete** | `delete -p PHONE_NUMBER`<br> `delete -i INDEX`<br> e.g., `delete -p 81234567, delete -i 1`
+**edit** | `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS] [-t TAG]…` <br> e.g. `edit 2 -t Betsy Crower -t`
+**profile** | `profile -n NAME -rol ROLE`<br> e.g., `profile -n David Wong -r Telemarketer`
 **history** | `history`<br> e.g., `history`
-**remark** | `remark r/REMARK` <br> e.g., `remark 1 r/Bought a refrigerator`
+**remark** | `remark -r REMARK` <br> e.g., `remark 1 r/Bought a refrigerator`
 

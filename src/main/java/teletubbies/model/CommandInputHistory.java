@@ -7,7 +7,6 @@ import java.util.List;
 
 import teletubbies.commons.core.HistoryManager;
 import teletubbies.commons.exceptions.EarliestVersionException;
-import teletubbies.commons.exceptions.EmptyHistoryManagerException;
 import teletubbies.commons.exceptions.LatestVersionException;
 
 /**
@@ -68,9 +67,8 @@ public class CommandInputHistory {
 
     /**
      * Returns current version that {@code HistoryManager} currently has a reference to.
-     * @throws EmptyHistoryManagerException if inputHistory is empty.
      */
-    public String peek() throws EmptyHistoryManagerException {
+    public String peek() {
         return inputHistory.peek();
     }
 
@@ -86,6 +84,10 @@ public class CommandInputHistory {
      */
     public boolean isLatest() {
         return !inputHistory.isRedoable();
+    }
+
+    public boolean isEmpty() {
+        return inputHistory.isEmpty();
     }
 
     @Override

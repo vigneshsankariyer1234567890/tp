@@ -8,4 +8,8 @@ public class EarliestVersionException extends Exception {
     public EarliestVersionException() {
         super(EXCEPTION_MESSAGE);
     }
+
+    protected EarliestVersionException(String message) {
+        super(message);
+    }
 }

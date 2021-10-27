@@ -29,8 +29,8 @@ public class RemoveTagCommand extends Command {
 
     public static final String MESSAGE_COMPLETED_SUCCESS = " Tag removed";
 
-    private final Range range;
-    private final String tagName;
+    public final Range range;
+    public final String tagName;
 
     /**
      * Creates a TagCommand to remove the specified {@code Tag}
@@ -48,6 +48,8 @@ public class RemoveTagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.cancelPendingExport();
+
         if (!Tag.isValidTagName(tagName)) {
             throw new CommandException(TagUtils.INVALID_TAG_NAME);
         }
@@ -61,7 +63,7 @@ public class RemoveTagCommand extends Command {
             Optional<Tag> matchingTag = TagUtils.findMatchingTag(tags, tagName);
             Set<Tag> newTags = getRemovedTagSet(tags, matchingTag, userRole, feedbackMessages);
 
-            Person editedPerson = new Person(p.getName(), p.getPhone(), p.getEmail(),
+            Person editedPerson = new Person(p.getUuid(), p.getName(), p.getPhone(), p.getEmail(),
                     p.getAddress(), p.getCompletionStatus(), p.getRemark(), newTags);
 
             model.setPerson(p, editedPerson);

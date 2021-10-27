@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -16,7 +18,9 @@ import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
 import teletubbies.commons.core.UserProfile.Role;
 import teletubbies.commons.core.index.Index;
+import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.IllegalValueException;
+import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.model.person.Person;
 
@@ -26,11 +30,10 @@ import teletubbies.model.person.Person;
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final VersionedAddressBook versionedAddressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private boolean isAwaitingExportConfirmation;
-    private AddressBook addressBookCopy;
     private final CommandInputHistory inputHistory;
 
     /**
@@ -42,9 +45,9 @@ public class ModelManager implements Model {
 
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.versionedAddressBook = new VersionedAddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredPersons = new FilteredList<>(this.versionedAddressBook.getPersonList());
         this.inputHistory = new CommandInputHistory();
     }
 
@@ -107,49 +110,54 @@ public class ModelManager implements Model {
 
     @Override
     public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
+        this.versionedAddressBook.resetData(addressBook);
     }
 
     @Override
     public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+        return versionedAddressBook;
     }
 
     @Override
-    public boolean hasPerson(Person person) {
+    public boolean hasName(Person person) {
         requireNonNull(person);
-        return addressBook.hasPerson(person);
+        return versionedAddressBook.hasName(person);
     }
 
     @Override
     public boolean hasPhoneNumber(Person person) {
         requireNonNull(person);
-        return addressBook.hasPhoneNumber(person);
+        return versionedAddressBook.hasPhoneNumber(person);
     }
 
     @Override
     public void deletePerson(Person target) {
-        addressBook.removePerson(target);
+        versionedAddressBook.removePerson(target);
     }
 
     @Override
     public void addPerson(Person person) {
-        addressBook.addPerson(person);
+        versionedAddressBook.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
     }
 
     @Override
     public void setPerson(Person target, Person editedPerson) {
         CollectionUtil.requireAllNonNull(target, editedPerson);
+        versionedAddressBook.setPerson(target, editedPerson);
+    }
 
-        addressBook.setPerson(target, editedPerson);
+    @Override
+    public void mergePerson(Person person) {
+        versionedAddressBook.mergePerson(person);
     }
 
     @Override
     public void updateExportList(List<Person> filteredPersonList) {
+        // Since VersionedAddressBook stores all states, we can just store the new exportable list as a new state in
+        // the VersionedAddressBook.
         isAwaitingExportConfirmation = true;
-        addressBookCopy = new AddressBook(addressBook);
-        this.addressBook.setPersons(filteredPersonList);
+        this.versionedAddressBook.setPersons(filteredPersonList);
     }
 
     @Override
@@ -159,9 +167,20 @@ public class ModelManager implements Model {
 
     @Override
     public AddressBook getExportAddressBook() {
-        AddressBook toExport = new AddressBook(addressBook);
-        this.addressBook.resetData(addressBookCopy);
-        addressBookCopy = null;
+        // Steps:
+        // 1. Obtain the filtered list which will be the most recent addressBook state.
+        // 2. Undo the VersionedAddressBook to its previous state before the export command.
+        // 3. Commit the VersionedAddressBook to remove the filtered list.
+        // 4. Return the AddressBook to be exported.
+        AddressBook toExport = new AddressBook(versionedAddressBook);
+        try {
+            this.versionedAddressBook.undo();
+            this.versionedAddressBook.commit();
+        } catch (EarliestVersionException e) {
+            // Undo will always work as VersionedAddressBook must store at least 2 states: the original AddressBook
+            // and the filtered addressBook.
+            logExportIssuesWithUndo(e);
+        }
         isAwaitingExportConfirmation = false;
         return toExport;
     }
@@ -169,10 +188,19 @@ public class ModelManager implements Model {
     @Override
     public void cancelPendingExport() {
         if (isAwaitingExportConfirmation) {
-            this.addressBook.resetData(addressBookCopy);
-            addressBookCopy = null;
+            try {
+                this.versionedAddressBook.undo();
+                versionedAddressBook.commit();
+            } catch (EarliestVersionException e) {
+                logExportIssuesWithUndo(e);
+            }
             isAwaitingExportConfirmation = false;
         }
+    }
+
+    private void logExportIssuesWithUndo(EarliestVersionException e) {
+        logger.log(Level.SEVERE, e, () -> "VersionedAddressBook should be undoable at point of export and have at "
+                + "least 2 states stored.");
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -192,10 +220,9 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
-    @Override
     public List<Person> getPersonsFromRange(Range range) throws IllegalValueException {
         requireNonNull(range);
-        List<Index> rangeValues = range.getRangeValues();
+        Set<Index> rangeValues = range.getRangeValues();
         if (rangeValues.stream().anyMatch(i -> i.getZeroBased() >= filteredPersons.size())) {
             throw new IllegalArgumentException(Range.MESSAGE_ILLEGAL_RANGE);
         }
@@ -204,27 +231,35 @@ public class ModelManager implements Model {
                 .collect(Collectors.toList());
     }
 
+
+    //=========== Undo/Redo =============================================================
+
     @Override
-    public boolean equals(Object obj) {
-        // short circuit if same object
-        if (obj == this) {
-            return true;
-        }
-
-        // instanceof handles nulls
-        if (!(obj instanceof ModelManager)) {
-            return false;
-        }
-
-        // state check
-        ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && userPrefs.equals(other.userPrefs)
-                && filteredPersons.equals(other.filteredPersons)
-                && inputHistory.equals(other.inputHistory);
+    public boolean canUndoAddressBook() {
+        return versionedAddressBook.canUndo();
     }
 
-    //=========== InputHistory accessors and modifiers ======================================================
+    @Override
+    public boolean canRedoAddressBook() {
+        return versionedAddressBook.canRedo();
+    }
+
+    @Override
+    public void undoAddressBook() throws EarliestVersionException {
+        versionedAddressBook.undo();
+    }
+
+    @Override
+    public void redoAddressBook() throws LatestVersionException {
+        versionedAddressBook.redo();
+    }
+
+    @Override
+    public void commitAddressBook() {
+        versionedAddressBook.commit();
+    }
+
+    //=========== InputHistory Accessors and Modifiers ======================================================
 
     @Override
     public void addCommandInput(String textInput) {
@@ -241,4 +276,23 @@ public class ModelManager implements Model {
         return inputHistory.getChronologicallyDescendingHistory();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        // short circuit if same object
+        if (obj == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(obj instanceof ModelManager)) {
+            return false;
+        }
+
+        // state check
+        ModelManager other = (ModelManager) obj;
+        return versionedAddressBook.equals(other.versionedAddressBook)
+                && userPrefs.equals(other.userPrefs)
+                && filteredPersons.equals(other.filteredPersons)
+                && inputHistory.equals(other.inputHistory);
+    }
 }

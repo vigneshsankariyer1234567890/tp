@@ -49,6 +49,7 @@ public class ImportCommand extends Command {
                 }
                 ReadOnlyAddressBook newContacts = addressBookOptional.get();
                 model.setAddressBook(newContacts);
+                model.commitAddressBook();
                 logger.info("Imported contacts from " + filePath);
             } catch (DataConversionException e) {
                 throw new CommandException(MESSAGE_INCORRECT_FORMAT);
