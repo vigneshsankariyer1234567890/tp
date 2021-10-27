@@ -4,6 +4,7 @@ import java.nio.file.Path;
 
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
+import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.exceptions.ParseException;
@@ -33,6 +34,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns the current user profile stored in preferences.json. */
+    UserProfile getUserProfile();
 
     /**
      * Returns the user prefs' address book file path.
