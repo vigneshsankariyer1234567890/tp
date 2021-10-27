@@ -17,7 +17,7 @@ public class UserProfile {
      */
     public UserProfile() {
         this.name = "";
-        this.role = null;
+        this.role = Role.TELEMARKETER;
     }
 
     /**
