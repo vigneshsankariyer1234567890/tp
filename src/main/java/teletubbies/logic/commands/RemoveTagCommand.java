@@ -32,8 +32,8 @@ public class RemoveTagCommand extends Command {
 
     public static final String MESSAGE_COMPLETED_SUCCESS = " Tag removed";
 
-    private final Range range;
-    private final String tagName;
+    public final Range range;
+    public final String tagName;
 
     /**
      * Creates a TagCommand to remove the specified {@code Tag}
@@ -51,6 +51,8 @@ public class RemoveTagCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        model.cancelPendingExport();
+
         if (!Tag.isValidTagName(tagName)) {
             throw new CommandException(TagUtils.INVALID_TAG_NAME);
         }
