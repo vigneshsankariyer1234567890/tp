@@ -33,14 +33,16 @@
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
       <FlowPane fx:id="tags" />
-      <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
-      <Button fx:id="copyButton" onAction="#copyToClipboard">
-        <graphic>
-          <ImageView>
-            <Image url="/images/copy_icon.png" />
-          </ImageView>
-        </graphic>
-      </Button>
+      <HBox style="-fx-padding: 10 0 10 0">
+        <Label fx:id="phone" style="-fx-padding: 5 10 5 0" styleClass="cell_small_label" text="\$phone" />
+        <Button fx:id="copyButton" onAction="#copyToClipboard">
+          <graphic>
+            <ImageView>
+              <Image url="/images/copy_icon.png" />
+            </ImageView>
+          </graphic>
+        </Button>
+      </HBox>
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
 
