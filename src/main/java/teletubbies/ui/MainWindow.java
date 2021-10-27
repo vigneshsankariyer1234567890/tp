@@ -278,7 +278,6 @@ public class MainWindow extends UiPart<Stage> {
 
             commandResult.executeUiEffect(this);
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-            logger.info(String.join(",", model.getChronologicallyAscendingHistory()));
 
             chartDisplay.loadChart();
 
