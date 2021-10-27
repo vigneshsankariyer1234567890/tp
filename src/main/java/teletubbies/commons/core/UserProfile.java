@@ -36,6 +36,10 @@ public class UserProfile {
         return role;
     }
 
+    public String getRoleString() {
+        return role.toString();
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -59,8 +63,8 @@ public class UserProfile {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("name : ").append(name).append("\n");
-        sb.append("role : ").append(role).append("\n");
+        sb.append("Name : ").append(name).append("\n");
+        sb.append("Role : ").append(role).append("\n");
         return sb.toString();
     }
 }
