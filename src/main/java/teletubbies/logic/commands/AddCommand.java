@@ -8,8 +8,11 @@ import static teletubbies.logic.parser.CliSyntax.PREFIX_PHONE;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_TAG;
 
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
+
+import java.util.List;
 
 /**
  * Adds a person to the address book.
@@ -17,6 +20,8 @@ import teletubbies.model.person.Person;
 public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
+
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_PHONE);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
             + "Parameters: "

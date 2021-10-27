@@ -7,10 +7,13 @@ import teletubbies.commons.core.index.Index;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.CliSyntax;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
+
+import java.util.List;
 
 
 public class DoneCommand extends Command {
