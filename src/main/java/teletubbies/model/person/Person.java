@@ -186,7 +186,7 @@ public class Person {
 
         if (remark.isPresent()) {
             builder.append(" Remark: ")
-                    .append(getRemark());
+                   .append(getRemark());
         }
 
         Set<Tag> tags = getTags();

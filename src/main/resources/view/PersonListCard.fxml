@@ -43,16 +43,11 @@
       </Button>
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
-<<<<<<< HEAD
       <Label fx:id="remark" styleClass="cell_small_label" text="\$remark" />
-      <Label fx:id="completionStatus" styleClass="cell_small_label" text="\$completionStatus" />
-=======
-
       <HBox style="-fx-padding: 5 0 5 0;">
         <Label styleClass="cell_small_label_bold" text="Progress: " />
         <ProgressBar fx:id="completionStatusTag" />
       </HBox>
->>>>>>> af69dcd5b657155c682ea450fbfa06adf6e12727
     </VBox>
   </GridPane>
 </HBox>
