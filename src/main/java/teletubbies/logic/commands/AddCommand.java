@@ -7,12 +7,12 @@ import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_PHONE;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.List;
+
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
-
-import java.util.List;
 
 /**
  * Adds a person to the address book.

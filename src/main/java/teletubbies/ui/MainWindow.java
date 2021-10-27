@@ -23,7 +23,6 @@ import teletubbies.logic.Logic;
 import teletubbies.logic.commands.Command;
 import teletubbies.logic.commands.CommandMap;
 import teletubbies.logic.commands.CommandResult;
-import teletubbies.logic.commands.DeleteCommand;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.MergeCommand;
@@ -31,7 +30,6 @@ import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.Prefix;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.Model;
-import teletubbies.model.tag.Tag;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -177,9 +175,8 @@ public class MainWindow extends UiPart<Stage> {
                     .get(null))
                     .stream().map(Prefix::toString).collect(Collectors.toList());
             commandBox.setText(commandText + " " + String.join(" ", requiredTags));
-        } catch(Exception e) {
-            logger.info("No compulsory fields" + e.getMessage());
-            return;
+        } catch (Exception e) {
+            logger.info("No compulsory fields: " + e.getMessage());
         }
     }
 

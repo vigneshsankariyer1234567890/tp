@@ -2,11 +2,8 @@ package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import teletubbies.logic.parser.Prefix;
 import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
-
-import java.util.List;
 
 /**
  * Clears the address book.
