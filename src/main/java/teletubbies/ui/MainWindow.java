@@ -67,9 +67,6 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
-
-    @FXML
     private StackPane chartDisplayPlaceholder;
 
     @FXML
@@ -201,9 +198,6 @@ public class MainWindow extends UiPart<Stage> {
 
         chartDisplay = new ChartDisplay(logic.getFilteredPersonList());
         chartDisplayPlaceholder.getChildren().add(chartDisplay.getRoot());
-
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
