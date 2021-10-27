@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         title="Teletubbies" minWidth="960" maxWidth="960" minHeight="900" maxHeight="900" onCloseRequest="#handleExit">
+         title="Teletubbies" minWidth="960" maxWidth="960" minHeight="870" maxHeight="870" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -45,8 +45,6 @@
                styleClass="menu-role"></Label>
         </AnchorPane>
 
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
-
         <HBox HBox.hgrow="ALWAYS">
           <children>
             <VBox fx:id="personList" styleClass="pane-with-border" minWidth="480" prefWidth="480" minHeight="600"
@@ -65,6 +63,12 @@
           </children>
         </HBox>
 
+        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+          <padding>
+            <Insets top="5" right="10" bottom="5" left="10" />
+          </padding>
+        </StackPane>
+
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
                    minHeight="150" prefHeight="150" maxHeight="150">
           <padding>
@@ -72,11 +76,6 @@
           </padding>
         </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
       </VBox>
     </Scene>
   </scene>
