@@ -18,7 +18,9 @@ import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.IllegalValueException;
+import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
@@ -224,6 +226,16 @@ public class AddCommandTest {
 
         @Override
         public List<String> getChronologicallyDescendingHistory() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public String getNextCommand() throws LatestVersionException {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public String getPreviousCommand() throws EarliestVersionException {
             throw new AssertionError("This method should not be called.");
         }
 

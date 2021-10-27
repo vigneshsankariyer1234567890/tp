@@ -15,7 +15,9 @@ import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.IllegalValueException;
+import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
@@ -207,6 +209,18 @@ public class HistoryCommandTest {
             List<String> result = new ArrayList<>(commandInputHistory);
             Collections.reverse(result);
             return result;
+        }
+
+        @Override
+        public String getNextCommand() throws LatestVersionException {
+            // TODO
+            return "";
+        }
+
+        @Override
+        public String getPreviousCommand() throws EarliestVersionException {
+            // TODO
+            return "";
         }
 
         public boolean canUndoAddressBook() {

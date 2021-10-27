@@ -11,6 +11,7 @@ import teletubbies.MainApp;
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.util.StringUtil;
 import teletubbies.logic.Logic;
+import teletubbies.model.Model;
 
 /**
  * The manager of the UI component.
@@ -23,14 +24,16 @@ public class UiManager implements Ui {
     private static final String ICON_APPLICATION = "/images/address_book_32.png";
 
     private Logic logic;
+    private Model model;
     private MainWindow mainWindow;
 
     /**
      * Creates a {@code UiManager} with the given {@code Logic}.
      */
-    public UiManager(Logic logic) {
+    public UiManager(Logic logic, Model model) {
         super();
         this.logic = logic;
+        this.model = model;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class UiManager implements Ui {
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
 
         try {
-            mainWindow = new MainWindow(primaryStage, logic);
+            mainWindow = new MainWindow(primaryStage, logic, model);
             mainWindow.show(); //This should be called before creating other UI parts
             mainWindow.fillInnerParts();
 
