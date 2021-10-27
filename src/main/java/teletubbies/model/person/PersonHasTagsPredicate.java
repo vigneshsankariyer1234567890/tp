@@ -7,15 +7,15 @@ import teletubbies.model.tag.Tag;
 
 public class PersonHasTagsPredicate implements Predicate<Person> {
 
-    private final Set<Tag> tagTestSet;
+    private final Set<Tag> tagSet;
 
-    public PersonHasTagsPredicate(Set<Tag> tagStringSet) {
-        this.tagTestSet = tagStringSet;
+    public PersonHasTagsPredicate(Set<Tag> tagSet) {
+        this.tagSet = tagSet;
     }
 
     @Override
     public boolean test (Person person) {
-        return tagTestSet.stream().allMatch(tp -> // For all test tags
+        return tagSet.stream().allMatch(tp -> // For all test tags
             person.getAllTags().stream().anyMatch(t -> { // Person has tags
                 if (tp.getTagValue().isEmpty()) {
                     return t.equals(tp);
@@ -30,6 +30,6 @@ public class PersonHasTagsPredicate implements Predicate<Person> {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof PersonHasTagsPredicate // instanceof handles nulls
-                && tagTestSet.equals(((PersonHasTagsPredicate) other).tagTestSet)); // state check
+                && tagSet.equals(((PersonHasTagsPredicate) other).tagSet)); // state check
     }
 }

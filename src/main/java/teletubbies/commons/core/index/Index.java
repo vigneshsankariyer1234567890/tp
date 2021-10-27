@@ -51,4 +51,14 @@ public class Index {
                 || (other instanceof Index // instanceof handles nulls
                 && zeroBasedIndex == ((Index) other).zeroBasedIndex); // state check
     }
+
+    @Override
+    public int hashCode() {
+        return zeroBasedIndex;
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(zeroBasedIndex);
+    }
 }
