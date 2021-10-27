@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -221,7 +222,7 @@ public class ModelManager implements Model {
 
     public List<Person> getPersonsFromRange(Range range) throws IllegalValueException {
         requireNonNull(range);
-        List<Index> rangeValues = range.getRangeValues();
+        Set<Index> rangeValues = range.getRangeValues();
         if (rangeValues.stream().anyMatch(i -> i.getZeroBased() >= filteredPersons.size())) {
             throw new IllegalArgumentException(Range.MESSAGE_ILLEGAL_RANGE);
         }
