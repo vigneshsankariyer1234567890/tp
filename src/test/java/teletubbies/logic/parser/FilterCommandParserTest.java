@@ -42,7 +42,7 @@ class FilterCommandParserTest {
     }
 
     @Test
-    void parse_reservedTagName_failure() {
+    void parse_reservedTagName_success() {
         FilterCommandParser parser = new FilterCommandParser();
         String userInput = " -t CompletionStatus";
 
