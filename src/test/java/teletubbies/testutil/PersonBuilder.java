@@ -8,6 +8,7 @@ import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Remark;
 import teletubbies.model.person.Uuid;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
@@ -23,6 +24,7 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_REMARK = "She likes aardvarks.";
 
     private Uuid uuid;
     private Name name;
@@ -30,6 +32,7 @@ public class PersonBuilder {
     private Email email;
     private Address address;
     private CompletionStatusTag completionStatusTag;
+    private Remark remark;
     private Set<Tag> tags;
 
     /**
@@ -42,6 +45,7 @@ public class PersonBuilder {
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         completionStatusTag = new CompletionStatusTag();
+        remark = new Remark(DEFAULT_REMARK);
         tags = new HashSet<>();
     }
 
@@ -55,6 +59,7 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         completionStatusTag = personToCopy.getCompletionStatus();
+        remark = personToCopy.getRemark();
         tags = new HashSet<>(personToCopy.getTags());
     }
 
@@ -114,8 +119,16 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Remark} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRemark(String remark) {
+        this.remark = new Remark(remark);
+        return this;
+    }
+
     public Person build() {
-        return new Person(uuid, name, phone, email, address, completionStatusTag, tags);
+        return new Person(uuid, name, phone, email, address, completionStatusTag, remark, tags);
     }
 
 }

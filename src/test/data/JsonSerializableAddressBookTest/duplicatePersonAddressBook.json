@@ -6,6 +6,7 @@
     "email": "alice@example.com",
     "address": "123, Jurong West Ave 6, #08-111",
     "completionStatus": false,
+    "remark" : "",
     "tagged": [ {
       "tagName" : "friends",
       "tagValue" : "",
@@ -17,6 +18,7 @@
     "phone": "94351253",
     "email": "pauline@example.com",
     "address": "4th street",
-    "completionStatus": false
+    "completionStatus": false,
+    "remark" : ""
   } ]
 }

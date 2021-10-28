@@ -41,7 +41,7 @@ class TagCommandTest {
         Set<Tag> newTags = new HashSet<>(BENSON.getTags());
         newTags.add(new Tag("important"));
         Person correctBenson = new Person(BENSON.getUuid(), BENSON.getName(), BENSON.getPhone(), BENSON.getEmail(),
-                BENSON.getAddress(), BENSON.getCompletionStatus(), newTags);
+                BENSON.getAddress(), BENSON.getCompletionStatus(), BENSON.getRemark(), newTags);
 
         Person newBenson = model.getFilteredPersonList().get(1);
 

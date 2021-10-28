@@ -40,7 +40,7 @@ class RemoveTagCommandTest {
         newTags.remove(new Tag("owesMoney"));
 
         Person correctBenson = new Person(BENSON.getUuid(), BENSON.getName(), BENSON.getPhone(), BENSON.getEmail(),
-                BENSON.getAddress(), BENSON.getCompletionStatus(), newTags);
+                BENSON.getAddress(), BENSON.getCompletionStatus(), BENSON.getRemark(), newTags);
         Person newBenson = model.getFilteredPersonList().get(1);
 
         assertEquals(newBenson, correctBenson);

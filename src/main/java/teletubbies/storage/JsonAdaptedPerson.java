@@ -15,6 +15,7 @@ import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Remark;
 import teletubbies.model.person.Uuid;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
@@ -33,15 +34,20 @@ class JsonAdaptedPerson {
     private final String email;
     private final String address;
     private final String completionStat;
+    private final String remark;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedPerson(@JsonProperty("uuid") String uuid, @JsonProperty("name") String name,
-            @JsonProperty("phone") String phone, @JsonProperty("email") String email,
-            @JsonProperty("address") String address, @JsonProperty("completionStatus") String completionStat,
+    public JsonAdaptedPerson(@JsonProperty("uuid") String uuid,
+            @JsonProperty("name") String name,
+            @JsonProperty("phone") String phone,
+            @JsonProperty("email") String email,
+            @JsonProperty("address") String address,
+            @JsonProperty("completionStatus") String completionStat,
+            @JsonProperty("remark") String remark,
             @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.uuid = uuid;
         this.name = name;
@@ -49,6 +55,7 @@ class JsonAdaptedPerson {
         this.email = email;
         this.address = address;
         this.completionStat = completionStat;
+        this.remark = remark;
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
@@ -64,6 +71,7 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         address = source.getAddress().value;
         completionStat = source.getCompletionStatus().status.toString();
+        remark = source.getRemark().value;
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -117,6 +125,10 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        if (remark == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Remark.class.getSimpleName()));
+        }
+        final Remark modelRemark = new Remark(remark);
 
         CompletionStatus completionStatus;
         try {
@@ -127,7 +139,8 @@ class JsonAdaptedPerson {
         final CompletionStatusTag completionStatusTag = new CompletionStatusTag(completionStatus);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelUuid, modelName, modelPhone, modelEmail, modelAddress, completionStatusTag, modelTags);
+        return new Person(modelUuid, modelName, modelPhone, modelEmail, modelAddress,
+                completionStatusTag, modelRemark, modelTags);
     }
 
 }
