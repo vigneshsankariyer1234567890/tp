@@ -33,10 +33,12 @@ public class Tag {
      * @param tagValue A tag value string
      * @param editRoles Roles that can edit the tag
      */
-    public Tag(String tagName, String tagValue, Role[] editRoles) {
+    public Tag(String tagName, String tagValue, Role[] editRoles, boolean isTestTag) {
         requireNonNull(tagName);
         AppUtil.checkArgument(isAlphanumericTagName(tagName), ALPHANUMERIC_NAME_CONSTRAINTS);
-        AppUtil.checkArgument(isNonReservedTagName(tagName), RESERVED_NAME_CONSTRAINTS.apply(tagName));
+        if (!isTestTag) {
+            AppUtil.checkArgument(isNonReservedTagName(tagName), RESERVED_NAME_CONSTRAINTS.apply(tagName));
+        }
         this.tagName = tagName;
         this.tagValue = tagValue;
         this.editAccessRoles = editRoles;
@@ -49,9 +51,7 @@ public class Tag {
      * @param editRoles
      */
     protected Tag(String tagName, Role[] editRoles) {
-        requireNonNull(tagName);
-        this.tagName = tagName;
-        this.editAccessRoles = editRoles;
+        this(tagName, null, editRoles, true);
     }
 
     /**
@@ -63,10 +63,7 @@ public class Tag {
      * @param isSupervisorOnly true if tag is supervisor only
      */
     public Tag(String tagName, String tagValue, boolean isSupervisorOnly) {
-        requireNonNull(tagName);
-        this.tagName = tagName;
-        this.tagValue = tagValue;
-        this.editAccessRoles = getRolesForEditAccess(isSupervisorOnly);
+        this(tagName, tagValue, getRolesForEditAccess(isSupervisorOnly), false);
     }
 
     /**
@@ -76,7 +73,7 @@ public class Tag {
      * @param tagName A valid tag name.
      */
     public Tag(String tagName) {
-        this(tagName, "", Role.values());
+        this(tagName, "", Role.values(), false);
     }
 
     /**

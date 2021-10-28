@@ -8,6 +8,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
+import teletubbies.logic.commands.Command;
 import teletubbies.logic.commands.FilterCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.PersonHasTagsPredicate;
@@ -41,11 +42,18 @@ class FilterCommandParserTest {
     }
 
     @Test
-    void parse_reservedTagName_failure() {
+    void parse_reservedTagName_success() {
         FilterCommandParser parser = new FilterCommandParser();
         String userInput = " -t CompletionStatus";
 
-        CommandParserTestUtil.assertParseFailure(parser, userInput, Tag.MESSAGE_CONSTRAINTS);
+        Command correctCommand = new FilterCommand(
+                new PersonHasTagsPredicate(Set.of(new Tag(
+                    "CompletionStatus", "", Tag.getRolesForEditAccess(false),
+                        true
+                )))
+        );
+
+        CommandParserTestUtil.assertParseSuccess(parser, userInput, correctCommand);
     }
 
 }
