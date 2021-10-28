@@ -7,6 +7,7 @@
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111",
     "completionStatus": false,
+    "remark" : "",
     "tagged" : [ {
       "tagName" : "friends",
       "tagValue" : "",
@@ -19,6 +20,7 @@
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
     "completionStatus": false,
+    "remark" : "",
     "tagged" : [ {
       "tagName" : "owesMoney",
       "tagValue" : "",
@@ -35,6 +37,7 @@
     "email" : "heinz@example.com",
     "address" : "wall street",
     "completionStatus": false,
+    "remark" : "",
     "tagged" : [ ]
   }, {
     "uuid" : "5adca839-2825-49c2-81e2-78830d923aa4",
@@ -43,6 +46,7 @@
     "email" : "cornelia@example.com",
     "address" : "10th street",
     "completionStatus": false,
+    "remark" : "",
     "tagged" : [ {
       "tagName" : "friends",
       "tagValue" : "",
@@ -55,6 +59,7 @@
     "email" : "werner@example.com",
     "address" : "michegan ave",
     "completionStatus": false,
+    "remark" : "",
     "tagged" : [ ]
   }, {
     "uuid" : "5adca819-2825-49c2-82e2-78830d923aa4",
@@ -63,6 +68,7 @@
     "email" : "lydia@example.com",
     "address" : "little tokyo",
     "completionStatus": false,
+    "remark" : "",
     "tagged" : [ ]
   }, {
     "uuid" : "5adca839-2925-49c2-82e2-78830d923aa4",
@@ -71,6 +77,7 @@
     "email" : "anna@example.com",
     "address" : "4th street",
     "completionStatus": false,
+    "remark" : "",
     "tagged" : [ ]
   } ]
 }

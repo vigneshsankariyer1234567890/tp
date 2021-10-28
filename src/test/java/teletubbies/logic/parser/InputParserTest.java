@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static teletubbies.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static teletubbies.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_REMARK;
 import static teletubbies.testutil.Assert.assertThrows;
 import static teletubbies.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -31,10 +32,12 @@ import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.ListCommand;
 import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.ProfileCommand;
+import teletubbies.logic.commands.RemarkCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.NameContainsKeywordsPredicate;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Remark;
 import teletubbies.testutil.EditPersonDescriptorBuilder;
 import teletubbies.testutil.PersonBuilder;
 import teletubbies.testutil.PersonUtil;
@@ -94,6 +97,14 @@ public class InputParserTest {
     }
 
     @Test
+    public void parseCommand_remark() throws Exception {
+        final Remark remark = new Remark("Some remark.");
+        RemarkCommand command = (RemarkCommand) parser.parseCommand(RemarkCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " " + PREFIX_REMARK + remark.value);
+        assertEquals(new RemarkCommand(INDEX_FIRST_PERSON, remark), command);
+    }
+
+    @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD) instanceof HelpCommand);
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
@@ -142,7 +153,7 @@ public class InputParserTest {
     @Test
     public void parseCommand_profile() throws Exception {
         ProfileCommand command = (ProfileCommand) parser.parseCommand(
-                ProfileCommand.COMMAND_WORD + " -n Name -r Telemarketer");
+                ProfileCommand.COMMAND_WORD + " -n Name -rol Telemarketer");
         assertEquals(new ProfileCommand(new UserProfile("Name", UserProfile.Role.TELEMARKETER)), command);
     }
 

@@ -22,6 +22,7 @@ import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Remark;
 import teletubbies.model.person.Uuid;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.Tag;
@@ -99,11 +100,12 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Remark updatedRemark = personToEdit.getRemark(); // edit command does not allow editing remarks
         CompletionStatusTag completionStatusTag = personToEdit.getCompletionStatus();
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
         return new Person(uuid, updatedName, updatedPhone, updatedEmail, updatedAddress, completionStatusTag,
-                updatedTags);
+                updatedRemark, updatedTags);
     }
 
     @Override
