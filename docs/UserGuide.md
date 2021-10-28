@@ -156,14 +156,14 @@ Examples:
 
 Adds a remark to a contact in the contact list. 
 
-Format: `remark INDEX -rREMARK`
+Format: `remark INDEX -r REMARK`
 
 * Adds a remark to the contact at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * If the contact has an existing remark, this command will replace the existing remark.
 
 Examples:
-* `remark 1 -rBought a refrigerator`
-* `remark 2 -rNeed to call back for confirmation`
+* `remark 1 -r Bought a refrigerator`
+* `remark 2 -r Need to call back for confirmation`
 
 ### Marking a contact as completed: `done`
 
@@ -316,7 +316,7 @@ Action | Format & Usage Examples
 **add** | `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL] [-t TAG]...` <br> e.g., `add n/david wong p/81234567`
 **delete** | `delete -p PHONE_NUMBER`<br> `delete -i INDEX`<br> e.g., `delete -p 81234567, delete -i 1`
 **edit** | `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS] [-t TAG]…` <br> e.g. `edit 2 -t Betsy Crower -t`
-**profile** | `profile -n NAME -rol ROLE`<br> e.g., `profile -n David Wong -r Telemarketer`
+**profile** | `profile -n NAME -rol ROLE`<br> e.g., `profile -n David Wong -rol Telemarketer`
 **history** | `history`<br> e.g., `history`
-**remark** | `remark -r REMARK` <br> e.g., `remark 1 r/Bought a refrigerator`
+**remark** | `remark -r REMARK` <br> e.g., `remark 1 -r Bought a refrigerator`
 

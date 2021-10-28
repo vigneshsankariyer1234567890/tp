@@ -185,7 +185,7 @@ public class Person {
                .append(getCompletionStatus());
 
         if (remark.isPresent()) {
-            builder.append(" Remark: ")
+            builder.append("; Remark: ")
                    .append(getRemark());
         }
 

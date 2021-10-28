@@ -1,6 +1,7 @@
 package teletubbies.model.person;
 
 import static java.util.Objects.requireNonNull;
+import static teletubbies.logic.parser.CliSyntax.EMPTY_REMARK;
 
 /**
  * Represents a Person's remark in the address book.
@@ -24,7 +25,7 @@ public class Remark {
      * Returns if a remark is present.
      */
     public boolean isPresent() {
-        return !this.value.equals("");
+        return !this.value.equals(EMPTY_REMARK);
     }
 
     @Override

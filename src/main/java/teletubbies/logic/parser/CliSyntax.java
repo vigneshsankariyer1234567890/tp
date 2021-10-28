@@ -21,5 +21,6 @@ public class CliSyntax {
 
     public static final String DEFAULT_EMAIL = "hello@tp.com";
     public static final String DEFAULT_ADDRESS = "NUS";
+    public static final String EMPTY_REMARK = "";
 
 }
