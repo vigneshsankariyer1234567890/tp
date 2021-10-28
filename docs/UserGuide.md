@@ -90,11 +90,11 @@ Sets the name and role of the application user.
 
 Both fields are mandatory, and the role can only be either "Telemarketer" or "Supervisor".
 
-Format: `profile -n NAME -r ROLE`
+Format: `profile -n NAME -rol ROLE`
 
 Examples:
-* `profile -n David Wong -r Telemarketer`
-* `profile -n Anne Goh -r Supervisor`
+* `profile -n David Wong -rol Telemarketer`
+* `profile -n Anne Goh -rol Supervisor`
 
 ### Adding a contact: `add`
 
@@ -151,6 +151,19 @@ Format: `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`
 Examples:
 * `edit 1 -p 91234567 -e johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 -n Betsy Crower -t` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+
+### Adding a remark to a contact : `remark`
+
+Adds a remark to a contact in the contact list. 
+
+Format: `remark INDEX -r REMARK`
+
+* Adds a remark to the contact at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* If the contact has an existing remark, this command will replace the existing remark.
+
+Examples:
+* `remark 1 -r Bought a refrigerator`
+* `remark 2 -r Need to call back for confirmation`
 
 ### Marking a contact as completed: `done`
 
@@ -303,6 +316,7 @@ Action | Format & Usage Examples
 **add** | `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL] [-t TAG]...` <br> e.g., `add n/david wong p/81234567`
 **delete** | `delete -p PHONE_NUMBER`<br> `delete -i INDEX`<br> e.g., `delete -p 81234567, delete -i 1`
 **edit** | `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS] [-t TAG]…` <br> e.g. `edit 2 -t Betsy Crower -t`
-**profile** | `profile -n NAME -r ROLE`<br> e.g., `profile -n David Wong -r Telemarketer`
+**profile** | `profile -n NAME -rol ROLE`<br> e.g., `profile -n David Wong -rol Telemarketer`
 **history** | `history`<br> e.g., `history`
+**remark** | `remark -r REMARK` <br> e.g., `remark 1 -r Bought a refrigerator`
 

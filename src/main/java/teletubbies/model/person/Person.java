@@ -26,18 +26,21 @@ public class Person {
     private final Address address;
     private final CompletionStatusTag completionStatusTag;
     private final Set<Tag> tags = new HashSet<>();
+    private final Remark remark;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Uuid uuid, Name name, Phone phone, Email email, Address address,
-                  CompletionStatusTag completionStatusTag, Set<Tag> tags) {
+                  CompletionStatusTag completionStatusTag,
+                  Remark remark, Set<Tag> tags) {
         CollectionUtil.requireAllNonNull(name, phone, email, address, tags);
         this.uuid = uuid;
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         this.completionStatusTag = completionStatusTag;
         this.tags.addAll(tags);
     }
@@ -60,6 +63,10 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Remark getRemark() {
+        return remark;
     }
 
     /**
@@ -176,6 +183,11 @@ public class Person {
         }
         builder.append("; Completed: ")
                .append(getCompletionStatus());
+
+        if (remark.isPresent()) {
+            builder.append("; Remark: ")
+                   .append(getRemark());
+        }
 
         Set<Tag> tags = getTags();
         if (!tags.isEmpty()) {

@@ -53,6 +53,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label remark;
+    @FXML
     private ProgressBar completionStatusTag;
     @FXML
     private Label completionStatusLabel;
@@ -81,6 +83,12 @@ public class PersonCard extends UiPart<Region> {
             email.setText("Email: " + person.getEmail().value);
         } else {
             email.setManaged(false);
+        }
+
+        if (person.getRemark().isPresent()) {
+            remark.setText("Remark: " + person.getRemark().value);
+        } else {
+            remark.setManaged(false);
         }
 
         switch (person.getCompletionStatus().status) {
