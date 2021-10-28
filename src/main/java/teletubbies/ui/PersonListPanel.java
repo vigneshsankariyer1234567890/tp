@@ -38,9 +38,11 @@ public class PersonListPanel extends UiPart<Region> {
             super.updateItem(person, empty);
 
             if (empty || person == null) {
+                setDisable(false);
                 setGraphic(null);
                 setText(null);
             } else {
+                setDisable(true);
                 setGraphic(new PersonCard(person, getIndex() + 1).getRoot());
             }
         }
