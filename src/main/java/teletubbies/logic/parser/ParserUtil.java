@@ -213,10 +213,10 @@ public class ParserUtil {
         String value = nameValuePair.length < 2
                 ? ""
                 : nameValuePair[1].trim();
-        if (!Tag.isValidTagName(name)) {
+        if (!Tag.isAlphanumericTagName(name)) {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
-        return new Tag(name, value, Tag.getRolesForEditAccess(false));
+        return new Tag(name, value, Tag.getRolesForEditAccess(false), true);
     }
 
     /**
