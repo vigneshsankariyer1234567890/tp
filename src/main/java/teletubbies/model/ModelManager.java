@@ -225,7 +225,7 @@ public class ModelManager implements Model {
         requireNonNull(range);
         Set<Index> rangeValues = range.getRangeValues();
         if (rangeValues.stream().anyMatch(i -> i.getZeroBased() >= filteredPersons.size())) {
-            throw new IllegalArgumentException(Range.MESSAGE_ILLEGAL_RANGE);
+            throw new IllegalValueException(Range.MESSAGE_ILLEGAL_RANGE);
         }
         return rangeValues.stream()
                 .map(i -> filteredPersons.get(i.getZeroBased()))

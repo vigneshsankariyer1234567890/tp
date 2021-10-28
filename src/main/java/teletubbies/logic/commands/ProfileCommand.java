@@ -2,9 +2,12 @@ package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
+
 import teletubbies.commons.core.UserProfile;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.CliSyntax;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 
 /**
@@ -13,6 +16,8 @@ import teletubbies.model.Model;
 public class ProfileCommand extends Command {
 
     public static final String COMMAND_WORD = "profile";
+
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_ROLE);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the name and role of the address book user. "
             + "Parameters: "

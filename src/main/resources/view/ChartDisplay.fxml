@@ -4,7 +4,7 @@
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8"
+<StackPane fx:id="placeHolder" style="-fx-padding: 20" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8"
            xmlns:fx="http://javafx.com/fxml/1">
     <PieChart fx:id="chartDisplay" layoutX="10" layoutY="110" />
 </StackPane>
