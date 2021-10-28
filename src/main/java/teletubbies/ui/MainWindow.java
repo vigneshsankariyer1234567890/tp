@@ -1,11 +1,14 @@
 package teletubbies.ui;
 
 import java.io.File;
+import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -15,14 +18,18 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.LogsCenter;
+import teletubbies.commons.core.UserProfile;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.Logic;
+import teletubbies.logic.commands.Command;
+import teletubbies.logic.commands.CommandMap;
 import teletubbies.logic.commands.CommandResult;
 import teletubbies.logic.commands.ExportCommand;
 import teletubbies.logic.commands.ImportCommand;
 import teletubbies.logic.commands.MergeCommand;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.Model;
 
@@ -60,10 +67,10 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
-    private StackPane statusbarPlaceholder;
+    private StackPane chartDisplayPlaceholder;
 
     @FXML
-    private StackPane chartDisplayPlaceholder;
+    private Label profileDisplay;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -87,7 +94,7 @@ public class MainWindow extends UiPart<Stage> {
                     handleDownPress();
                     break;
                 case TAB:
-                    /* TODO */
+                    handleTab();
                     break;
                 default: /**/
                 }
@@ -156,10 +163,33 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    // REQUIRED_FIElDS must always be a List<Prefix>
+    @SuppressWarnings("unchecked")
+    private void handleTab() {
+        String commandText = commandBox.getText().trim();
+        Class<? extends Command> commandClass = CommandMap.getClass(commandText);
+        if (commandClass == null) {
+            logger.info("No such command");
+            return;
+        }
+        try {
+            List<String> requiredTags = ((List<Prefix>) commandClass.getDeclaredField("REQUIRED_FLAGS")
+                    .get(null))
+                    .stream().map(Prefix::toString).collect(Collectors.toList());
+            commandBox.setText(commandText + " " + String.join(" ", requiredTags));
+        } catch (Exception e) {
+            logger.info("No compulsory fields: " + e.getMessage());
+        }
+    }
+
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+
+        UserProfile userProfile = logic.getUserProfile();
+        profileDisplay.setText(userProfile.getRoleString());
+
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
@@ -168,9 +198,6 @@ public class MainWindow extends UiPart<Stage> {
 
         chartDisplay = new ChartDisplay(logic.getFilteredPersonList());
         chartDisplayPlaceholder.getChildren().add(chartDisplay.getRoot());
-
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
-        statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
@@ -280,6 +307,9 @@ public class MainWindow extends UiPart<Stage> {
             resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
 
             chartDisplay.loadChart();
+
+            UserProfile userProfile = logic.getUserProfile();
+            profileDisplay.setText(userProfile.getRoleString());
 
             return commandResult;
         } catch (CommandException | ParseException e) {

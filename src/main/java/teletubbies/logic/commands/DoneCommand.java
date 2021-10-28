@@ -12,7 +12,6 @@ import teletubbies.model.person.Person;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
 
-
 public class DoneCommand extends Command {
 
     public static final String COMMAND_WORD = "done";

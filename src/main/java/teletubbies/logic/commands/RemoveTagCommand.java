@@ -13,6 +13,7 @@ import teletubbies.commons.core.UserProfile.Role;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.CliSyntax;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.tag.Tag;
@@ -21,6 +22,8 @@ import teletubbies.model.tag.TagUtils;
 public class RemoveTagCommand extends Command {
 
     public static final String COMMAND_WORD = "tagrm";
+
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(CliSyntax.PREFIX_NAME);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes tag from "
             + "persons specified by the indices.\n"

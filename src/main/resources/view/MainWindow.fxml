@@ -3,16 +3,19 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         title="Teletubbies" minWidth="840" maxWidth="840" minHeight="780" maxHeight="780" onCloseRequest="#handleExit">
+         title="Teletubbies" minWidth="960" maxWidth="960" minHeight="870" maxHeight="870" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -26,23 +29,25 @@
       </stylesheets>
 
       <VBox>
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-          <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleImport" text="Import" />
-            <MenuItem mnemonicParsing="false" onAction="#handleExport" text="Export" />
-            <MenuItem mnemonicParsing="false" onAction="#handleMerge" text="Merge" />
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-          </Menu>
-        </MenuBar>
-
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+        <AnchorPane xmlns:fx="http://javafx.com/fxml/1" styleClass="menu-bar">
+          <MenuBar fx:id="menuBar" VBox.vgrow="ALWAYS">
+            <Menu mnemonicParsing="false" text="File">
+              <MenuItem mnemonicParsing="false" onAction="#handleImport" text="Import" />
+              <MenuItem mnemonicParsing="false" onAction="#handleExport" text="Export" />
+              <MenuItem mnemonicParsing="false" onAction="#handleMerge" text="Merge" />
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+            </Menu>
+          </MenuBar>
+        <Label fx:id="profileDisplay" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0"
+               styleClass="menu-role"></Label>
+        </AnchorPane>
 
         <HBox HBox.hgrow="ALWAYS">
           <children>
-            <VBox fx:id="personList" styleClass="pane-with-border" minWidth="360" prefWidth="360" minHeight="480"
+            <VBox fx:id="personList" styleClass="pane-with-border" minWidth="480" prefWidth="480" minHeight="600"
                   VBox.vgrow="ALWAYS">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
@@ -58,6 +63,12 @@
           </children>
         </HBox>
 
+        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+          <padding>
+            <Insets top="5" right="10" bottom="5" left="10" />
+          </padding>
+        </StackPane>
+
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
                    minHeight="150" prefHeight="150" maxHeight="150">
           <padding>
@@ -65,11 +76,6 @@
           </padding>
         </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
       </VBox>
     </Scene>
   </scene>

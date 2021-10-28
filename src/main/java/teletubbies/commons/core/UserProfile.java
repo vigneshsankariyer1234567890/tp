@@ -17,7 +17,7 @@ public class UserProfile {
      */
     public UserProfile() {
         this.name = "";
-        this.role = null;
+        this.role = Role.TELEMARKETER;
     }
 
     /**
@@ -34,6 +34,10 @@ public class UserProfile {
 
     public Role getRole() {
         return role;
+    }
+
+    public String getRoleString() {
+        return role.toString();
     }
 
     @Override
@@ -59,8 +63,8 @@ public class UserProfile {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("name : ").append(name).append("\n");
-        sb.append("role : ").append(role).append("\n");
+        sb.append("Name : ").append(name).append("\n");
+        sb.append("Role : ").append(role).append("\n");
         return sb.toString();
     }
 }

@@ -3,10 +3,12 @@ package teletubbies.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.List;
+
 import teletubbies.commons.core.Messages;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.PersonHasTagsPredicate;
-
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
@@ -15,6 +17,8 @@ import teletubbies.model.person.PersonHasTagsPredicate;
 public class FilterCommand extends Command {
 
     public static final String COMMAND_WORD = "filter";
+
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_TAG);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters person to only those with the specified "
             + "tags and values (case-insensitive) and displays them as a list with index numbers.\n"

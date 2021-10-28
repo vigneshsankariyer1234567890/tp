@@ -70,16 +70,16 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
+        phone.setText("Phone Number: " + person.getPhone().value);
 
         if (person.getAddress().isPresent()) {
-            address.setText(person.getAddress().value);
+            address.setText("Address: " + person.getAddress().value);
         } else {
             address.setManaged(false);
         }
 
         if (person.getEmail().isPresent()) {
-            email.setText(person.getEmail().value);
+            email.setText("Email: " + person.getEmail().value);
         } else {
             email.setManaged(false);
         }
