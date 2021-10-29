@@ -288,6 +288,10 @@ Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubb
 If your changes to the data file makes its format invalid, Teletubbies will discard all data and start with an empty data file at the next run!
 </div>
 
+### Convenience features
+
+You can use [UP] and [DOWN] arrows to navigate the command history, and the [TAB] command to autocomplete after a command word, if the command has compulsory flags.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Glossary
