@@ -281,6 +281,17 @@ find what number the contact is associated with in the contact list.
 The index
 will always be a positive integer, i.e. 1, 2, 3, 4, ...
 
+#### Copying phone numbers
+
+We understand that as telemarketers, you may be using a desktop application to call a customer instead of using
+your phone. 
+
+Hence, Teletubbies tries to help out in this area as well! Next to the phone number in each contact, there is a small 
+clipboard icon that looks like this: ![](images/icon_clipboard.png)
+
+When you click on the icon, it will copy the phone number to your clipboard, so that you can paste it onto
+your desktop calling app!
+
 
 #### Adding a contact: `add`
 
@@ -352,6 +363,7 @@ we will leave it up to your company to decide exactly what each of the levels of
 
 Regardless, Teletubbies provide three different levels of completion status: Incomplete, Ongoing, and Complete. Take note that
 a contact can only be marked with at most one out of the three. You can't have a contact be complete and ongoing at the same time!
+**The status is indicated in each of the contact details using a tag and a progress bar.**
 
 You can mark a contact with any of the three levels using the index of the contact. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
@@ -373,6 +385,10 @@ Examples:
 The `tag` command will help you to **tag** certain contacts with a tag of your choice. In Teletubbies,
 our tags are very flexible: They can be single words, or a category. So for example, you can tag a contact
 with "friend", or tag a contact with the category "status: not answering", etc. It's up to you!
+
+Before we talk about tagging, do note that there is a special category of tag, which is the **completion status**. 
+This tag cannot be added, edited or removed by the `tag` command or the `tagrm` command, and is only changeable using
+the `done` command. Please refer to [Marking a contact as completed](#marking-a-contact-as-completed-done).
 
 When tagging a contact, you can specify the **name** and **value** of the tag. The **name** is manadatory, but
 the **value** is optional. To specify which contact to be tagged, use the index of the contact. 
