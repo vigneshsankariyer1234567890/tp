@@ -94,6 +94,7 @@ Command | Format
 --------|------------------
 **[help](#viewing-help--help)** | `help`
 **[import](#importing-contacts--import)** | `import`
+**[merge](#merging-contacts-merge)** | `merge`
 **[export](#exporting-contacts-export)** | `export [-t TAGS]…​`
 **[profile](#setting-your-profile-profile)** | `profile -n NAME -rol ROLE`
 **[history](#listing-your-previous-commands--history)** | `history`
@@ -178,6 +179,23 @@ The data to be imported must be a JSON file, with the file extension `.json`.
 ![import_file](images/userGuide/importFile.jpg)
 
 Format: `import`
+
+#### Merging contacts : `merge`
+
+The `merge` command is a special kind of importing, and it will help you to merge a set of customer data 
+with the current data inside the application. 
+
+**This command should only be used if you are sure that you want to combine the new data to be imported with 
+the current data in the application. The new data will overwrite the current data, so be careful!**
+
+You can issue this command by either typing it into the CLI (`merge`), or going to the menu bar at the top and
+selecting `File -> Merge`. Once the command is issued, Teletubbies will open a file selector window as shown below.
+
+The data to be imported and merged must be a JSON file, with the file extension `.json`.
+
+![import_file](images/userGuide/importFile.jpg)
+
+Format: `merge`
 
 #### Exporting contacts: `export`
 
