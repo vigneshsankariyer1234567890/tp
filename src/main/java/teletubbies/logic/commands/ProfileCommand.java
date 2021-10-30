@@ -19,13 +19,13 @@ public class ProfileCommand extends Command {
 
     public static final List<Prefix> REQUIRED_FLAGS = List.of(CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_ROLE);
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the name and role of the address book user. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the name and role of the address book user.\n"
             + "Parameters: "
-            + "[" + CliSyntax.PREFIX_NAME + "NAME] "
-            + "[" + CliSyntax.PREFIX_ROLE + "ROLE (must be either Telemarketer or Supervisor)]\n"
+            + CliSyntax.PREFIX_NAME + " NAME "
+            + CliSyntax.PREFIX_ROLE + " ROLE (must be either Telemarketer or Supervisor)\n"
             + "Example: " + COMMAND_WORD + " "
-            + CliSyntax.PREFIX_NAME + "John Doe "
-            + CliSyntax.PREFIX_ROLE + "Telemarketer";
+            + CliSyntax.PREFIX_NAME + " John Doe "
+            + CliSyntax.PREFIX_ROLE + " Telemarketer";
 
     public static final String MESSAGE_PROFILE_SUCCESS = "User profile set: %1$s";
     public static final String MESSAGE_INVALID_ROLE = "Please indicate either \"Telemarketer\" or \"Supervisor\""

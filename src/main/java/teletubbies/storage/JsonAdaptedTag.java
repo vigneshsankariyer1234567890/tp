@@ -56,7 +56,7 @@ class JsonAdaptedTag {
         if (!Tag.isValidTagName(tagName)) {
             throw new IllegalValueException(Tag.MESSAGE_CONSTRAINTS);
         }
-        return new Tag(tagName, tagValue, editAccessRoles);
+        return new Tag(tagName, tagValue, editAccessRoles, false);
     }
 
 }
