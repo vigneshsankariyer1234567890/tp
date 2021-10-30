@@ -3,46 +3,114 @@ layout: page
 title: User Guide
 ---
 
-Teletubbies is a **desktop app for telemarketers and their supervisors to manage their customer contacts**, optimized for 
-use via a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can
-type fast, Teletubbies can get your contact management tasks done faster than traditional GUI apps.
+## Product Overview
+
+*Teletubbies* is a **desktop app developed and designed for telemarketers and telemarketing supervisors to help manage their 
+customer contacts**. *Teletubbies* allow users to create a checklist based on a set of customer contact data, with additional
+features such as tagging and viewing statistics to help improve their workflow. It is optimized for use via a 
+Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, 
+Teletubbies can get your contact management tasks done faster than traditional GUI apps.
 
 * Table of Contents
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Quick start
+## How to navigate through the User Guide
 
-1. Ensure you have Java `11` or above installed in your Computer.
+This User Guide for *Teletubbies* is written with chronological navigation in mind. Users can scroll through
+the document to navigate from section to section. If you are new to *Teletubbies*, we recommend that you take this
+approach.
 
-1. Download the latest `teletubbies.jar` from [here](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases).
+For more experienced users who know what they are looking for and want to quickly jump to a specific section, you can
+move to your section of choice using the Table of Contents, or from the [Command Summary](#command-summary) section
+if you are interested in learning about the usage of a specific command. 
 
-1. Copy the file to the folder you want to use as the _home folder_ for your Teletubbies app.
+Alternatively, you may use the windows shortcut **CTRL + F** to find specific keywords.
 
-1. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br><br>
-   ![Ui](images/Ui.png)<br><br>
+### Glossary of definitions
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
 
-   * **`list`** : Lists all contacts.
+**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
 
-   * **`add`**`-n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` : Adds a contact named `John Doe` to Teletubbies.
+**_Parameter_**: Input to a command's field.
 
-   * **`delete`**`-i 3` : Deletes the 3rd contact shown in the current list.
-   
-   * **`done`**`3` : Marks the 3rd contact shown in the current list as done.
+### Glossary of icons and symbols
+:information_source: : Additional information <br/>
+:bulb: : Tip <br/>
+:exclamation: : Important <br/>
+:x: : Error / Avoid <br/>
 
-   * **`clear`** : Deletes all contacts.
+<div markdown="block" class="alert alert-info">
+:information_source: Information block
+* We use these blocks to enhance the readability of this guide!
+</div>
 
-   * **`exit`** : Exits the app.
-
-1. Refer to the [Features](#features) below for details of each command.
+> Quotes are used to explain examples for commands.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## Quick start
+
+1. Ensure you have Java `11` or above installed in your Computer. Please refer to [this article](https://www.codejava.net/java-se/download-and-install-java-11-openjdk-and-oracle-jdk)
+for more information on how to install Java `11`.
+
+2. Download the latest `teletubbies.jar` from [here](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases).
+
+3. Copy the file to the folder you want to use as the _home folder_ for your Teletubbies app.
+
+4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
+
+![Ui](images/Ui.png)
+
+6. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+   Some example commands you can try:
+
+   * `list`: Lists all contacts.
+
+   * `add -n John Doe -p 98765432`: Adds a contact named `John Doe` to Teletubbies.
+
+   * `delete -i 3`: Deletes the 3rd contact shown in the current list.
+   
+   * `done 3`: Marks the 3rd contact shown in the current list as done.
+
+   * `clear`: Deletes all contacts.
+
+   * `exit`: Exits the app.
+
+7. Refer to the [Features](#features) below for details of each command.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Command summary
+
+This is the full list of all available commands in Teletubbies.
+
+To move to the section for each command, click on the highlighted commands in the left column. 
+The sections outline the detailed usage and examples for each of the command.
+
+Command | Format
+--------|------------------
+**[help](#viewing-help--help)** | `help`
+**[import](#importing-contacts--import)** | `import`
+**[export](#exporting-contacts-export)** | `export [-t TAGS]…​`
+**[profile](#setting-your-profile-profile)** | `profile -n NAME -rol ROLE`
+**[history](#listing-your-previous-commands--history)** | `history`
+**[exit](#exiting-the-program--exit)** | `exit`
+**[add](#adding-a-contact-add)** | `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL]`
+**[delete](#deleting-a-contact--delete)** | `delete -p PHONE_NUMBER` or `delete -i INDEX`
+**[edit](#editing-a-contact--edit)** | `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS]`
+**[done](#marking-a-contact-as-completed-done)** | `done INDEX [STATUS]`
+**[tag](#tagging-contacts-tag)** | `tag INDEX -n TAGNAME [-v VALUE] [-s]`
+**[tagrm](#removing-tags-from-contacts-tagrm)** | `tagrm INDEX -n TAGNAME [-v VALUE]`
+**[tag <br>(multiple contacts)](#tagging-and-removing-tags-from-multiple-contacts)** | `tag INDEX [,INDEX]…​ -n TAGNAME [-v VALUE] [-s]` <br> `tag START-END -n TAGNAME [-v VALUE] [-s]`
+**[tagrm <br>(multiple contacts)](#tagging-and-removing-tags-from-multiple-contacts)** | `tagrm INDEX [,INDEX]…​ -n TAGNAME [-v VALUE]` <br> `tagrm START-END -n TAGNAME [-v VALUE]`
+**[remark](#adding-a-remark-to-a-contact--remark)** | `remark INDEX -r REMARK`
+**[list](#listing-all-contacts--list)** | `list`
+**[find](#locating-contacts-by-name-find)** | `find KEYWORD [KEYWORD]…​`
+**[filter](#filtering-contact-list-filter)** | `filter -t TAGNAME[:TAGVALUE] [-t TAGNAME[:TAGVALUE]]…​ `
+**[clear](#clearing-all-entries--clear)** | `clear`
 
 <div markdown="block" class="alert alert-info">
 
@@ -68,221 +136,441 @@ type fast, Teletubbies can get your contact management tasks done faster than tr
 
 </div>
 
-### Viewing help : `help`
+--------------------------------------------------------------------------------------------------------------------
 
-Displays the User Guide in a pop-up window.
+## Features
+
+Features and corresponding commands have been categorised based on:
+
+1. [System commands](#system-commands)
+2. [Contact commands](#contact-commands)
+3. [List commands](#list-commands)
+4. [Other features](#other-features)
+
+### System commands
+
+These commands are related to the Teletubbies application as a whole. The commands available are:
+* `help`
+* `import`
+* `export`
+* `profile`
+* `history`
+* `exit`
+
+#### Viewing help : `help`
+
+The `help` command will display our comprehensive user guide (that you are reading right now), 
+as shown below!
 
 ![helpPage](images/userGuide/helpPage.jpg)
 
 Format: `help`
 
-### Importing contacts : `import`
+#### Importing contacts : `import`
 
 The `import` command will help you to import a set of customer data into the application.
 
-You can issue this command by either typing it into the CLI, or going to the menu bar at the top and
-selecting `File -> Import`. Once the command is issued, it will open a file selector window as shown below.
-
-![import_file](images/userGuide/importFile.jpg)
+You can issue this command by either typing it into the CLI (`import`), or going to the menu bar at the top and
+selecting `File -> Import`. Once the command is issued, Teletubbies will open a file selector window as shown below.
 
 The data to be imported must be a JSON file, with the file extension `.json`.
 
-### Setting profile details: `profile`
-Sets the name and role of the application user.
+![import_file](images/userGuide/importFile.jpg)
 
-Both fields are mandatory, and the role can only be either "Telemarketer" or "Supervisor".
+Format: `import`
+
+#### Exporting contacts: `export`
+
+The `export` command will help you to export the current set of customer data in the application.
+
+You can issue this command by either typing it into the CLI (`export`), or going to the menu bar at the top and
+selecting `File -> Export`. Note that there is a crucial difference here:
+
+* If you choose to type it into the CLI (`export`), you will be able to specify which contacts you want 
+to export, based on the tags.
+* If you select `File -> Export` through the GUI, Teletubbies will automatically export ALL contacts, regardless of
+tags.
+
+Once the command is issued, it will ask you to confirm the export. Type `y` to confirm the export. 
+
+If you decide to cancel the export, you can type in any other command. Teletubbies will automatically cancel the export
+for you as long as the next command received is NOT `y`.
+
+After export has been confirmed, Teletubbies will open a file selector window as shown below. Using
+the file selector, you can choose where the exported file will be saved.
+
+<<< IMAGE REQUIRED >>>
+
+Format: `export [-t TAGS]…​`
+
+Examples:
+* `export`
+> This command will export all contacts.
+* `export -t friends`
+> This command will export all contacts containing the "friends" tag.
+* `export -t friends -t family`
+> This command will export all contacts containing BOTH the "friends" tag and the "family" tag.
+
+#### Setting your profile: `profile`
+
+The `profile` command will help you to set your user profile for Teletubbies.
+
+In Teletubbies, your user profile consists of your **name** and **role**. 
+
+Your **name** should be the name that you use in the workplace, so that 
+you can be identifiable by your co-workers and supervisors.
+
+Your **role** should be according to your job scope:
+
+* If your job is a telemarketing job, and you want to be able to view your customers
+in an organised list and keep track of your progress, then your role is `Telemarketer`.
+* If your job involves keeping track of progress for telemarketers under you, then
+your role is `Supervisor`.
+
+The reason we specify your **role** is so that Teletubbies can better accommodate your needs
+by providing you with the suitable features tailored to your needs.
+
+Once you set your profile up with the `profile` command, you should be good to go!
 
 Format: `profile -n NAME -rol ROLE`
 
 Examples:
 * `profile -n David Wong -rol Telemarketer`
+> This command will set your name as "David Wong" and your role as "Telemarketer".
 * `profile -n Anne Goh -rol Supervisor`
+> This command will set your name as "Anne Goh" and your role as "Supervisor".
 
-### Adding a contact: `add`
+#### Listing your previous commands : `history`
 
-Adds a customer to the application.
+The `history` command will help you to view all the commands that have been issued by you in the current session.
 
-The customer’s name and phone number are mandatory. Address and email are optional fields.
+Here, when we say "in the current session", it refers to the duration from the time you start up Teletubbies to the time
+you close / exit Teletubbies. Once you close or exit Teletubbies, your session will end, and the command history will be
+reset. The next time you start up Teletubbies, you will not be able to access the command history from your
+previous session.
+
+The commands will be displayed in order from the most recently issued command to the earliest issued command.
+
+Format: `history`
+
+#### Exiting the program : `exit`
+
+The `exit` command will help you gracefully exit Teletubbies.
+
+Format: `exit`
+
+### Contact commands
+
+These commands are related to the contacts stored in Teletubbies. The commands available are:
+* `add`
+* `delete`
+* `edit`
+* `done`
+* `tag`
+* `tagrm`
+* `remark`
+
+#### Finding the index
+
+When dealing with contacts in Teletubbies, you will often have to use something called the **index**
+of the contact. 
+
+To find out what the contact's index is, use the [List](#listing-all-contacts-list) feature to
+find what number the contact is associated with in the contact list. 
+
+The index
+will always be a positive integer, i.e. 1, 2, 3, 4, ...
 
 
-Format: `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL] [-t TAG]…​`
+#### Adding a contact: `add`
 
-<div markdown="span" class="alert alert-primary">:bulb: Tip:
-A person can have any number of tags (including none)
-</div>
+The `add` command will help you to add a customer's contact details into Teletubbies. Once added,
+you should be able to view their contact details on the contact list.
+
+Note that the customer's **name** and **phone number** are mandatory. Otherwise, Teletubbies
+(and you) will find it difficult to identify the customer!
+
+Other than the **name** and the **phone number**, you can also indicate **address** and
+**email address**. Both **address** and **email address** are optional.
+
+Format: `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL]`
 
 Examples:
-* `add -n John Doe -p 98765432 -a John Street, block 123, #01-01 -e johnd@example.com -t friends`
-* `add -n Betsy Crowe -p 1234567`
+* `add -n Betsy Crowe -p 12345678`
+> This command will add the contact details for "Betsy Crowe", with their phone number as "12345678".
+* `add -n John Doe -p 87654321 -a John Street, Block 123, #01-01`
+> This command will add the contact details for "John Doe", with their phone number as "87654321". It will
+> also add their address as "John Street, block 123, #01-01".
+* `add -n John Snoe -p 98765432 -a Wall Street, Block 234, #08-06 -e johns@example.com`
+> This command will add the contact details for "John Snoe", with their phone number as "98765432". It will 
+> also add their address as "Wall Street, block 234, #08-06", and their email address as "johns@example.com".
 
-### Deleting a contact : `delete`
+#### Deleting a contact : `delete`
 
-Deletes the specified customer from the application.
+The `delete` command will help you to delete a customer's contact details from Teletubbies. Once 
+the contact has been deleted, you should no longer see their contact details on the contact list.
+
+You can choose to delete the contact using either the index, or the phone number. When deleting the contact using the phone number, make sure that the specified
+phone number is associated with a contact in the contact list.
+
+If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
 Format: `delete -p PHONE_NUMBER` or `delete -i INDEX`
 
-
-* Deletes the person at the specified `PHONE_NUMBER` or `INDEX`.
-* The phone number must be associated with a customer in the application.  
-* The index refers to the index number shown in the displayed person list.
-* The index must be a positive integer 1, 2, 3, …​
-
 Examples:
 * `delete -i 1`
+> This command will delete the contact details for the contact with the index 1.
 * `delete -p 87654321`
+> This command will delete the contact details for the contact with the phone number "87654321".
 
-### Listing all contacts : `list`
+#### Editing a contact : `edit`
 
-Shows a list of all contacts in the application.
+The `edit` command will help you to edit / update a customer's contact details in Teletubbies. Note that
+you can only edit the details for a contact that is already in Teletubbies' contact list. 
 
-Format: `list`
+You can choose which contact to edit by using the contact's index. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
-### Editing a contact : `edit`
+When editing the contact, you will be able to change four fields in total: the **name**,
+the **phone number**, the **address**, and the **email address** of the customer. 
 
-Edits an existing person in the application.
+Each field is treated as
+separate, and all four fields are optional, meaning that you can choose to edit only one or two out of the four fields. 
+However, at least one field should be provided (otherwise, you won't be editing anything).
 
-Format: `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS] [-t TAG]…​`
-
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `-t` without
-    specifying any tags after it.
+Format: `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS]`
 
 Examples:
-* `edit 1 -p 91234567 -e johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 -n Betsy Crower -t` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 -n Betsy Crower`
+> This command will edit the name of the first person in the list to be "Betsy Crower".
+* `edit 2 -p 91234567 -e johndoe@example.com`
+> This command will edit the phone number of the second person in the list to be "91234567", and the email address to be "johndoe@example.com".
 
-### Adding a remark to a contact : `remark`
+#### Marking a contact as completed: `done`
 
-Adds a remark to a contact in the contact list. 
+The `done` command will help you to mark a contact's completion status in Teletubbies. Here, when we say "completion status",
+we will leave it up to your company to decide exactly what each of the levels of completion status mean.
 
-Format: `remark INDEX -r REMARK`
+Regardless, Teletubbies provide three different levels of completion status: Incomplete, Ongoing, and Complete. Take note that
+a contact can only be marked with at most one out of the three. You can't have a contact be complete and ongoing at the same time!
 
-* Adds a remark to the contact at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* If the contact has an existing remark, this command will replace the existing remark.
+You can mark a contact with any of the three levels using the index of the contact. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
-Examples:
-* `remark 1 -r Bought a refrigerator`
-* `remark 2 -r Need to call back for confirmation`
+You will also be able to see the total level of completion status for a list of customers using the "Your Progress" tab, which displays
+the information using a chart. Refer to [Progress Chart](#progress-chart) for more details.
 
-### Marking a contact as completed: `done`
-
-Edits and marks a person as 'Completed' in the application.
-
-Format: `done INDEX`
-
-* Marks the person at the specified `INDEX` as completed. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
+Format: `done INDEX [STATUS]`
 
 Examples:
 * `done 1`
-* `done 2`
+> This command will mark the first contact in the list as "Complete".
+* `done 2 -ong`
+> This command will mark the second contact in the list as "Ongoing".
+* `done 3 -inc`
+> This command will mark the third contact in the list as "Incomplete".
 
-### Locating contacts by name: `find`
+#### Tagging contacts: `tag`
 
-Finds persons whose names contain any of the given keywords.
+The `tag` command will help you to **tag** certain contacts with a tag of your choice. In Teletubbies,
+our tags are very flexible: They can be single words, or a category. So for example, you can tag a contact
+with "friend", or tag a contact with the category "status: not answering", etc. It's up to you!
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+When tagging a contact, you can specify the **name** and **value** of the tag. The **name** is manadatory, but
+the **value** is optional. To specify which contact to be tagged, use the index of the contact. 
+If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+Take note that when you have a contact that is already tagged, and you decide to tag it again with the same **name**
+but different **value**, the new **value** will replace the old one! For example, if I had a contact tagged with
+`Friend: good`, and I tagged that same contact using another tag with the **name** "Friend" and the **value** "close",
+the pre-existing `Friend: good` tag will be replaced by the `Friend: close` tag.
 
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
-  ![result for 'find alex david'](images/userGuide/findAlexDavidResult.png)
+Finally, there is an additional parameter that is only available to supervisors. When you add a `-s` at the end 
+of your tagging command, it will make sure that only supervisors are able to edit or remove that tag!
 
-### Exporting contacts: `export`
-
-Exports customer data from the application to a JSON file in desired specified
-folder selected from the file selector window.
-
-Format: `export [-t TAGS]…​`
-
-Examples:
-`export -t friends -t family` will export all contacts containing BOTH the
-tags friends and family to the desired file location.
-
-### Tagging contacts: `tag`
-
-Tags users specified by the given range with a tag with values specified. If
-a tag with the same name already exists, modify the existing tag with the values
-specified if the user has permissions to edit the tag.
-
-Format:`tag STARTINDEX - ENDINDEX -n TAGNAME -v VALUE [-s]` or `tag INDEX [,INDEX]…​ -n TAGNAME -v VALUE [-s]`
+Format:`tag INDEX -n TAGNAME [-v VALUE] [-s]`
 
 Examples:
 
-`tag 1,2,4 -n friends -v CLOSE` tags users at index 1, 2, and 4 with a tag named friends and value CLOSE
+* `tag 1 -n Friend`
+> This command will tag the first contact in the list with the tag `Friend`.
+* `tag 2 -n Friend -v close`
+> This command will tag the second contact in the list with the tag `Friend: close`.
+* `tag 4 -n Assignee -v Mel -s`
+> This command will tag the fourth contact in the list with the tag `Assignee: Mel`. Because of the `-s`, this tag will only be editable / removable by 
+> users whose roles are set as "Supervisor" For more information on roles, refer to [Setting your profile](#setting-your-profile-profile).
 
-`tag 1-10 -n Assignee -v Mel -s` tags users at index from 1 to 10 with a tag named Assignee and value Mel. It
-can only be edited/removed by supervisors
+#### Removing tags from contacts: `tagrm`
 
-### Removing tags from contacts: `tagrm`
+The `tagrm` command will help you to **remove** a tag from a contact. Note that the tag to be removed
+must already be a tag on the contact, otherwise it will fail!
 
-Removes the tags for users specified by the given range who have the given tag name. 
-`tagrm` does not remove the tag if the user doesn't have permissions to edit the tag.
+When removing a tag from a contact, you can specify the **name** and **value** of the tag. Similar to the `tag` command, 
+the **name** is manadatory, but the **value** is optional. To specify which contact to be tagged, use the index of the 
+contact. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
-Format:`tagrm STARTINDEX - ENDINDEX -n TAGNAME` or `tag INDEX [,INDEX]…​ -n TAGNAME`
+Also, if the tag was created using the `-s` parameter, only supervisors will be able to remove the tag.
+
+Format:`tagrm INDEX -n TAGNAME [-v VALUE]`
 
 Examples:
 
-`tagrm 1,2,4 -n friends` Removes tags with name friends belonging to users indexed at 1, 2 and 4
+* `tagrm 1 -n Friend`
+> This command will remove the tag `Friend` from the first contact in the list.
+* `tagrm 2 -n Friend -v close`
+> This command will remove the tag `Friend: close` from the second contact in the list.
 
-`tagrm 1-10 -n Assignee` Removes tag with name Assignee belonging to users indexed from 1 to 10
+#### Tagging and Removing tags from multiple contacts
 
-### Filtering contact list: `filter`
+Sometimes, you may need to assign the same tag to more than just one contact, or remove the same tag from more than just one contact.
 
-Filters the list of customers shown in the list, to only the customers who have the specified tag
+Well, you can use the `tag` and the `tagrm` commands to do so! Just specify a **range of numbers** as the index rather than a single number.
+
+Format (`tag`): `tag INDEX [,INDEX]…​ -n TAGNAME [-v VALUE] [-s]`
+
+Format (`tagrm`): `tagrm INDEX [,INDEX]…​ -n TAGNAME [-v VALUE]`
+
+OR
+
+Format (`tag`):`tag START-END -n TAGNAME [-v VALUE] [-s]`
+
+Format (`tagrm`):`tagrm START-END -n TAGNAME [-v VALUE]`
+
+Examples (`tag`):
+
+* `tag 1,2,4 -n Friend -v close`
+> This command will tag the first, second, and fourth contact in the list with the tag `Friend: close`.
+* `tag 1-5 -n Friend -v close`
+> This command will tag the first five contacts in the list, with the tag `Friend: close`.
+* `tag 1-10 -n Assignee -v Mel -s`
+> This command will tag the first ten contacts in the list with the tag `Assignee: Mel`. Because of the `-s`, this tag will only be editable / removable by
+> users whose roles are set as "Supervisor" For more information on roles, refer to [Setting your profile](#setting-your-profile-profile).
+
+Examples (`tagrm`):
+
+* `tagrm 1,2,4 -n Friend`
+> This command will remove the tag `Friend` from the first, second, and fourth contact in the list.
+* `tagrm 1-5 -n Friend `
+> This command will remove the tag `Friend` from the first five contacts in the list.
+
+#### Adding a remark to a contact : `remark`
+
+The `remark` command will help you to add a remark to a chosen contact in the list. Remarks are a more general version
+of the tags - the feature is for you to add extra information to a contact that you cannot add using tags.
+
+To specify which contact to add a remark to, use the index of the contact. If you don't know what the index is, 
+refer to [Finding the index](#finding-the-index).
+
+Note that a contact can only have a maximum of **one** remark. If a contact already has a remark, any new remark added 
+will replace the pre-existing remark.
+
+Format: `remark INDEX -r REMARK`
+
+Examples:
+* `remark 1 -r Not answering any calls`
+> This command will add the remark `Not answering any calls` to the first contact in the list.
+* `remark 2 -r Not answering any calls`
+* `remark 2 -r Need to call back for confirmation`
+> The first command will add the remark `Not answering any calls` to the second contact in the list. The second command 
+> will then add the new remark `Need to call back for confirmation` to the second contact in the list, which will replace the
+> old remark `Not answering any calls`.
+
+### List commands
+
+These commands are related to the contact list stored in Teletubbies. The commands available are:
+* `list`
+* `find`
+* `filter`
+* `clear`
+
+#### Listing all contacts : `list`
+
+The `list` command will help you to view the entire contact list currently in Teletubbies.
+
+By listing all contacts, you will be able to find the number associated with a specific contact that you want to interact with.
+This number is known as the `index` of the contact.
+
+Format: `list`
+
+#### Locating contacts by name: `find`
+
+The `find` command will help you find the relevant contacts using the given keyword(s), and will change the contact list
+display to show only the contacts whose **names** contain the given keyword(s).
+
+When Teletubbies searches the contacts using the given keyword(s), it will only look at the **names**
+of the contacts, not the **addresses** or the **email addresses**. The search process is case-insensitive,
+meaning that if a keyword `hans` is given, a contact with the name `Hans` may be returned.
+
+The order of the keywords given does not matter, and any contact whose **name** contains any one of the
+keywords will be returned. However, Teletubbies will consider the keywords as full words, meaning that
+if a keyword `Han` is given, even if there is a contact with the name `Hans`, it will not be returned. It
+will only be returned if the keyword given is `Hans`.
+
+For instance, `find alex david` may return something like:
+
+![result for 'find alex david'](images/userGuide/findAlexDavidResult.png)
+
+Format: `find KEYWORD [KEYWORD]…​`
+
+Examples:
+* `find John`
+> This command will return all contacts whose names contain "John", such as `John`, `john`, or `John Doe`. As mentioned above, it is case-insensitive.
+* `find alex david`
+> This command will return all contacts whose names contain "alex" or "david" in no particular order, such as `Alex Yeoh`, `david li`, or `David alex`.
+
+#### Filtering contact list: `filter`
+
+The `filter` command will help you filter the current contact list using the given tag(s), and will change the contact list
+display to show only the contacts that are tagged with the given tag(s).
+
+When issuing the `filter` command, you should specify at least one **tag name**. Tag values are optional, but can help to further narrow
+your filter if necessary.
 
 Format: `filter -t TAGNAME[:TAGVALUE] [-t TAGNAME[:TAGVALUE]]…​ `
 
 Examples:
+* `filter -t Friend` 
+> This command will filter the displayed list to only users who have the tag `Friend`.
+* `filter -t Assignee:Ben`
+> This command will filter the displayed list to only users who have the tag `Assignee: Ben`.
+* `filter -t Friend -t Assignee:Ben`
+> This command will filter the displayed list to only users who have the tag `Friend` AND `Assignee: Ben`. Contacts 
+> that have only one of the given tags will NOT be included.
 
-`filter -t friends` Filters displayed list to only users who have the friends tag 
+#### Clearing all entries : `clear`
 
-`filter -t Assignee:Ben` Filters displayed list to only uses who have the tag named Assignee
-with value Ben
+The `clear` command will help you clear all contacts from the Teletubbies application. 
 
-
-### Clearing all entries : `clear`
-
-Clears all entries from the application.
+Do NOT issue this command unless you are absolutely sure that you want to clear the list.
 
 Format: `clear`
 
-### Listing your previous commands : `history`
+### Other features
 
-Shows a list of previously typed commands from most recent to earliest.
+#### Progress Chart
 
-Format: `history`
+Since each contact has a completion status tied to it with the levels of completion status 
+`Complete`, `Ongoing`, or `Incomplete`, Teletubbies will automatically collate the data and 
+create a nice pie chart to display the aggregate completion status of the current list.
 
-### Exiting the program : `exit`
+Whenever the list that you are viewing changes (usually when issuing [list commands](#list-commands)),
+the chart will update automatically!
 
-Exits the program.
+#### Convenience features
 
-Format: `exit`
+You can use the **[UP]** and **[DOWN]** arrows to navigate the command history, and the **[TAB]** command to autocomplete after a command word if the command has compulsory flags.
 
-### Saving the data
+##### Saving the data
 
 Teletubbies automatically saves the data in the hard disk after any command that changes the data. There is no need to save manually.
 
 For exporting the current data as a separate JSON file, refer to [Exporting contacts](#exporting-contacts-export).
 
-### Loading the data
+#### Loading the data
 
 Teletubbies will automatically load up the data from your previous session, allowing you to pick up right where you left off. There is no need to load manually.
 
 For importing a separate JSON file into the application, refer to [Importing contacts](#importing-contacts-import).
 
-### Editing the data
+#### Editing the data
 
 Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubbies-ddmmyyyy-hhmm.json`. Advanced users are welcome to update data directly by editing that data file.
 
@@ -290,39 +578,14 @@ Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubb
 If your changes to the data file makes its format invalid, Teletubbies will discard all data and start with an empty data file at the next run!
 </div>
 
-### Convenience features
-
-You can use [UP] and [DOWN] arrows to navigate the command history, and the [TAB] command to autocomplete after a command word, if the command has compulsory flags.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Glossary
-
-**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
-
-**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
-
-**_Parameter_**: Input to a command's field.
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the Teletubbies app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Teletubbies home folder.
+**A**:
+1. Install the Teletubbies app in the other computer.
+2. Transfer the data file of your current Teletubbies folder to the other computer.
+3. Overwrite the empty data file that Teletubbies creates in the other computer with the data file that you transferred over.
 
 --------------------------------------------------------------------------------------------------------------------
-
-## Command summary
-
-Action | Format & Usage Examples
---------|------------------
-**export** | `export [-t TAGS...]` <br> e.g, `export -t friends family`
-**add** | `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL] [-t TAG]...` <br> e.g., `add n/david wong p/81234567`
-**delete** | `delete -p PHONE_NUMBER`<br> `delete -i INDEX`<br> e.g., `delete -p 81234567, delete -i 1`
-**edit** | `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS] [-t TAG]…` <br> e.g. `edit 2 -t Betsy Crower -t`
-**profile** | `profile -n NAME -rol ROLE`<br> e.g., `profile -n David Wong -rol Telemarketer`
-**history** | `history`<br> e.g., `history`
-**remark** | `remark -r REMARK` <br> e.g., `remark 1 -r Bought a refrigerator`
-
