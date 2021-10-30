@@ -153,7 +153,7 @@ public class InputParserTest {
     @Test
     public void parseCommand_profile() throws Exception {
         ProfileCommand command = (ProfileCommand) parser.parseCommand(
-                ProfileCommand.COMMAND_WORD + " -n Name -rol Telemarketer");
+                ProfileCommand.COMMAND_WORD + " -n Name -role Telemarketer");
         assertEquals(new ProfileCommand(new UserProfile("Name", UserProfile.Role.TELEMARKETER)), command);
     }
 
