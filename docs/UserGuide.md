@@ -77,13 +77,15 @@ Displays the User Guide in a pop-up window.
 Format: `help`
 
 ### Importing contacts : `import`
-Imports customer data into the application from a JSON file selected from the file selector window.
 
-Format: `import`
+The `import` command will help you to import a set of customer data into the application.
 
-Alternatively, click `File -> Import` in the top menu bar to open the file selector window. 
+You can issue this command by either typing it into the CLI, or going to the menu bar at the top and
+selecting `File -> Import`. Once the command is issued, it will open a file selector window as shown below.
 
 ![import_file](images/userGuide/importFile.jpg)
+
+The data to be imported must be a JSON file, with the file extension `.json`.
 
 ### Setting profile details: `profile`
 Sets the name and role of the application user.
