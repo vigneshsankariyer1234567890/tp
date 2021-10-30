@@ -1,5 +1,6 @@
 package teletubbies.logic.parser;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -30,7 +31,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_PHONE, CliSyntax.PREFIX_EMAIL,
-                        CliSyntax.PREFIX_ADDRESS, CliSyntax.PREFIX_TAG);
+                        CliSyntax.PREFIX_ADDRESS);
 
         if (!arePrefixesPresent(argMultimap, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_PHONE)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -50,8 +51,9 @@ public class AddCommandParser implements Parser<AddCommand> {
             address = ParserUtil.parseAddress(argMultimap.getValue(CliSyntax.PREFIX_ADDRESS).get());
         }
 
-        Remark remark = new Remark(""); // add command does not allow adding remarks straight away
-        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(CliSyntax.PREFIX_TAG).getValues());
+        Remark remark = new Remark("");
+
+        Set<Tag> tagList = new HashSet<>();
 
         String uuid = UUID.randomUUID().toString();
         Person person = new Person(new Uuid(uuid), name, phone, email, address,
