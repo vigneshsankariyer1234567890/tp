@@ -96,7 +96,7 @@ Command | Format
 **[import](#importing-contacts--import)** | `import`
 **[merge](#merging-contacts-merge)** | `merge`
 **[export](#exporting-contacts-export)** | `export [-t TAGS]…​`
-**[profile](#setting-your-profile-profile)** | `profile -n NAME -rol ROLE`
+**[profile](#setting-your-profile-profile)** | `profile -n NAME -role ROLE`
 **[history](#listing-your-previous-commands--history)** | `history`
 **[undo](#undoing-your-previous-commands--undo)** | `undo`
 **[redo](#redoing-your-previous-commands--redo)** | `redo`
@@ -255,12 +255,12 @@ by providing you with the suitable features tailored to your needs.
 
 Once you set your profile up with the `profile` command, you should be good to go!
 
-Format: `profile -n NAME -rol ROLE`
+Format: `profile -n NAME -role ROLE`
 
 Examples:
-* `profile -n David Wong -rol Telemarketer`
+* `profile -n David Wong -role Telemarketer`
 > This command will set your name as "David Wong" and your role as "Telemarketer".
-* `profile -n Anne Goh -rol Supervisor`
+* `profile -n Anne Goh -role Supervisor`
 > This command will set your name as "Anne Goh" and your role as "Supervisor".
 
 #### Listing your previous commands : `history`
