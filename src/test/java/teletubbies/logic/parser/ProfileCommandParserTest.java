@@ -11,7 +11,7 @@ class ProfileCommandParserTest {
 
     @Test
     public void parse_validTelemarketerRole_success() {
-        String userInput = " -n Telemarketer Name -rol Telemarketer";
+        String userInput = " -n Telemarketer Name -role Telemarketer";
         UserProfile userProfile = new UserProfile("Telemarketer Name", UserProfile.Role.TELEMARKETER);
         ProfileCommand expectedCommand = new ProfileCommand(userProfile);
         CommandParserTestUtil.assertParseSuccess(parser, userInput, expectedCommand);
@@ -19,7 +19,7 @@ class ProfileCommandParserTest {
 
     @Test
     public void parse_validSupervisorRole_success() {
-        String userInput = " -n Supervisor Name -rol Supervisor";
+        String userInput = " -n Supervisor Name -role Supervisor";
         UserProfile userProfile = new UserProfile("Supervisor Name", UserProfile.Role.SUPERVISOR);
         ProfileCommand expectedCommand = new ProfileCommand(userProfile);
         CommandParserTestUtil.assertParseSuccess(parser, userInput, expectedCommand);
@@ -27,7 +27,7 @@ class ProfileCommandParserTest {
 
     @Test
     public void parse_invalidRole_failure() {
-        String userInput = " -n Name -rol Invalid";
+        String userInput = " -n Name -role Invalid";
         CommandParserTestUtil.assertParseFailure(parser, userInput, ProfileCommand.MESSAGE_INVALID_ROLE);
     }
 
@@ -40,7 +40,7 @@ class ProfileCommandParserTest {
 
     @Test
     public void parse_noRole_failure() {
-        String userInput = " -rol Invalid";
+        String userInput = " -role Invalid";
         CommandParserTestUtil.assertParseFailure(parser, userInput,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, ProfileCommand.MESSAGE_USAGE));
     }
