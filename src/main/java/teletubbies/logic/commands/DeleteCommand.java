@@ -25,7 +25,9 @@ public class DeleteCommand extends Command {
             + "Parameters: "
             + PREFIX_PHONE + " PHONE_NUMBER (must be a valid phone number) or "
             + PREFIX_INDEX + " INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_PHONE + " 81234567, " + COMMAND_WORD + " " + PREFIX_INDEX + " 1";
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PHONE + " 81234567, " + COMMAND_WORD + " "
+            + PREFIX_INDEX + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
