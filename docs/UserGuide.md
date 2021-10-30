@@ -98,6 +98,8 @@ Command | Format
 **[export](#exporting-contacts-export)** | `export [-t TAGS]…​`
 **[profile](#setting-your-profile-profile)** | `profile -n NAME -rol ROLE`
 **[history](#listing-your-previous-commands--history)** | `history`
+**[undo](#undoing-your-previous-commands--undo)** | `undo`
+**[redo](#redoing-your-previous-commands--redo)** | `redo`
 **[exit](#exiting-the-program--exit)** | `exit`
 **[add](#adding-a-contact-add)** | `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL]`
 **[delete](#deleting-a-contact--delete)** | `delete -p PHONE_NUMBER` or `delete -i INDEX`
@@ -153,9 +155,12 @@ Features and corresponding commands have been categorised based on:
 These commands are related to the Teletubbies application as a whole. The commands available are:
 * `help`
 * `import`
+* `merge`
 * `export`
 * `profile`
 * `history`
+* `undo`
+* `redo`
 * `exit`
 
 #### Viewing help : `help`
@@ -270,6 +275,31 @@ previous session.
 The commands will be displayed in order from the most recently issued command to the earliest issued command.
 
 Format: `history`
+
+#### Undoing your previous commands : `undo`
+
+The `undo` command will help you to undo any changes you have made with your previous command. 
+
+Suppose that you entered a command, but realised that you made a mistake! Well, you can simply issue the 
+`undo` command to undo your mistake.
+
+If there are no commands that have previously been issued in the current session, Teletubbies will let you know.
+Otherwise, any changes you may have made with your previous command will be undone, so be careful when using this command!
+
+Format: `undo`
+
+#### Redoing your previous commands : `redo`
+
+The `redo` command will help you to redo any `undo` command you have issued previously.
+
+Suppose that you through you made a mistake, so you issued an `undo` command, only to realise later that 
+it was actually the correct command! Well, you can simply issue the `redo` command to "undo" your `undo`, or
+simply put, redo a command that you thought was a mistake.
+
+If there are no commands that have previously been issued in the current session, Teletubbies will let you know.
+Otherwise, any changes you may have made with your previous `undo` command will be undone, so be careful when using this command!
+
+Format: `redo`
 
 #### Exiting the program : `exit`
 
