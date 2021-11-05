@@ -5,6 +5,7 @@ import static teletubbies.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_PHONE;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.List;
 
@@ -20,7 +21,8 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_PHONE);
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+            PREFIX_ADDRESS, PREFIX_TAG);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the contact list. "
             + "Parameters: "

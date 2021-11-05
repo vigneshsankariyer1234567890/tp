@@ -26,12 +26,12 @@ import teletubbies.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INVALID_RANGE_LENGTH = "Range must be in the format 'startIndex - endIndex'"
+    public static final String MESSAGE_RANGE_FORMAT = "Range must be in the format 'startIndex - endIndex'"
             + " or 'index1, index2,..., indexN'.";
-    public static final String MESSAGE_INVALID_RANGE_INTEGERS = "Range limits are not integers.\n"
-            + MESSAGE_INVALID_RANGE_LENGTH;
-    public static final String MESSAGE_INVALID_RANGE_LIMITS = "Range limits are invalid.\n"
-            + MESSAGE_INVALID_RANGE_LENGTH;
+    public static final String MESSAGE_INVALID_RANGE_FORMAT = "Range limits are in incorrect format!\n"
+            + MESSAGE_RANGE_FORMAT;
+    public static final String MESSAGE_INVALID_RANGE_INTEGERS = "Range values must be positive integers!\n";
+    public static final String MESSAGE_INVALID_RANGE_LIMITS = "Left range limit must be smaller than right limit!\n";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -58,7 +58,7 @@ public class ParserUtil {
         requireNonNull(range);
         String[] rangeValues = range.split("-");
         if (rangeValues.length != 2) {
-            throw new ParseException(MESSAGE_INVALID_RANGE_LENGTH);
+            throw new ParseException(MESSAGE_INVALID_RANGE_FORMAT);
         }
         String rangeValueLeft = rangeValues[0].trim();
         String rangeValueRight = rangeValues[1].trim();

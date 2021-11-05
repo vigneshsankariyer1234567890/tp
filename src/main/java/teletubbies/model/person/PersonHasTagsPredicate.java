@@ -26,6 +26,16 @@ public class PersonHasTagsPredicate implements Predicate<Person> {
         ));
     }
 
+    /**
+     * Number of tags that the person should
+     * have
+     *
+     * @return number of tags matched
+     */
+    public int numberOfTags() {
+        return tagSet.size();
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

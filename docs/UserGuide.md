@@ -629,7 +629,7 @@ the chart will update automatically!
 
 #### Convenience features
 
-You can use the **[UP]** and **[DOWN]** arrows on your keyboard to navigate the command history, and the **[TAB]** key to autocomplete after a command word if the command has compulsory fields.
+You can use the **[UP]** and **[DOWN]** arrows on your keyboard to navigate the command history, and the **[TAB]** key to autocomplete after a command word for recommended command fields.
 
 ##### Saving the data
 
@@ -659,5 +659,12 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 1. Install the *Teletubbies* app in the other computer.
 2. Use the [`export`](#exporting-contacts-export) command to export your contacts as a JSON file. Transfer the contacts file to the other computer.
 3. On the other computer, launch the *Teletubbies* app and use the [`import`](#importing-contacts--import) command to import the contacts file that you transferred over.
+
+**Q** How do I change my role after setting it once?<br>
+**A**:
+1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
+2. Delete `preferences.json`, and start Teletubbies again.
+3. Now, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
+
 
 --------------------------------------------------------------------------------------------------------------------
