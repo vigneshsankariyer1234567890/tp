@@ -9,6 +9,7 @@ import java.util.List;
 import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.index.Index;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Remark;
@@ -19,6 +20,8 @@ import teletubbies.model.person.Remark;
 public class RemarkCommand extends Command {
 
     public static final String COMMAND_WORD = "remark";
+
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_REMARK);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the person identified "
             + "by the index number used in the current contact list. "

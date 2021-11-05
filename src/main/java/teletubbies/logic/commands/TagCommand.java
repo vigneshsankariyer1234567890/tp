@@ -1,6 +1,8 @@
 package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_VALUE;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +24,8 @@ import teletubbies.model.tag.TagUtils;
 public class TagCommand extends Command {
 
     public static final String COMMAND_WORD = "tag";
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(CliSyntax.PREFIX_NAME);
+
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_VALUE);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds specified tag to the "
             + "persons specified by the indices.\n"

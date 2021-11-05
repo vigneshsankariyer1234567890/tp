@@ -89,12 +89,15 @@ public class MainWindow extends UiPart<Stage> {
                 switch (event.getCode()) {
                 case UP:
                     handleUpPress();
+                    commandBox.setCaretPosition(commandBox.getText().length());
                     break;
                 case DOWN:
                     handleDownPress();
+                    commandBox.setCaretPosition(commandBox.getText().length());
                     break;
                 case TAB:
                     handleTab();
+                    commandBox.setCaretPosition(commandBox.getText().length());
                     break;
                 default: /**/
                 }

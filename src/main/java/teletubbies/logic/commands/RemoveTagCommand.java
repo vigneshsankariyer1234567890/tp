@@ -1,6 +1,8 @@
 package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_VALUE;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -12,7 +14,6 @@ import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile.Role;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
-import teletubbies.logic.parser.CliSyntax;
 import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
@@ -23,14 +24,14 @@ public class RemoveTagCommand extends Command {
 
     public static final String COMMAND_WORD = "tagrm";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(CliSyntax.PREFIX_NAME);
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_VALUE);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes tag from "
             + "persons specified by the indices.\n"
             + "Parameters: RANGE (can be hyphen separated or comma separated integers), -n TAGNAME, "
             + "[-v TAGVALUE]\n"
-            + "Example: " + COMMAND_WORD + " 1-10 " + CliSyntax.PREFIX_NAME + " Assignee "
-            + "[" + CliSyntax.PREFIX_VALUE + " John Doe]\n"
+            + "Example: " + COMMAND_WORD + " 1-10 " + PREFIX_NAME + " Assignee "
+            + "[" + PREFIX_VALUE + " John Doe]\n"
             + "Note: Tags listed are in the format TAGNAME[: TAGVALUE]";
 
     public static final String MESSAGE_COMPLETED_SUCCESS = "Tag removed from %d entries";

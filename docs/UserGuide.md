@@ -629,7 +629,7 @@ the chart will update automatically!
 
 #### Convenience features
 
-You can use the **[UP]** and **[DOWN]** arrows on your keyboard to navigate the command history, and the **[TAB]** key to autocomplete after a command word if the command has compulsory fields.
+You can use the **[UP]** and **[DOWN]** arrows on your keyboard to navigate the command history, and the **[TAB]** key to autocomplete after a command word for recommended command fields.
 
 ##### Saving the data
 
