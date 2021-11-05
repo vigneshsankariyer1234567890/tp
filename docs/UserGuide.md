@@ -156,16 +156,16 @@ Features and corresponding commands have been categorised into:
 
 ### System commands
 
-These commands are related to the *Teletubbies* app as a whole. The commands available are:
-* `help`
-* `import`
-* `merge`
-* `export`
-* `profile`
-* `history`
-* `undo`
-* `redo`
-* `exit`
+These commands are related to the *Teletubbies* application as a whole. The commands available are:
+* [`help`](#viewing-help--help)
+* [`import`](#importing-contacts--import)
+* [`merge`](#merging-contacts--merge)
+* [`export`](#exporting-contacts-export)
+* [`profile`](#setting-your-profile-profile)
+* [`history`](#listing-your-previous-commands--history)
+* [`undo`](#undoing-your-previous-commands--undo)
+* [`redo`](#redoing-your-previous-commands--redo)
+* [`exit`](#exiting-the-program--exit)
 
 #### Viewing help : `help`
 
@@ -319,13 +319,14 @@ Format: `exit`
 ### Contact commands
 
 These commands are related to the contacts stored in *Teletubbies*. The commands available are:
-* `add`
-* `delete`
-* `edit`
-* `done`
-* `tag`
-* `tagrm`
-* `remark`
+* [`add`](#adding-a-contact-add)
+* [`delete`](#deleting-a-contact--delete)
+* [`edit`](#editing-a-contact--edit)
+* [`done`](#marking-a-contact-as-completed-done)
+* [`tag`](#tagging-contacts-tag)
+* [`tagrm`](#removing-tags-from-contacts-tagrm)
+* [`remark`](#adding-a-remark-to-a-contact--remark)
+
 
 #### Finding the index
 
@@ -552,10 +553,11 @@ Examples:
 ### List commands
 
 These commands are related to the contact list stored in *Teletubbies*. The commands available are:
-* `list`
-* `find`
-* `filter`
-* `clear`
+* [`list`](#listing-all-contacts--list)
+* [`find`](#locating-contacts-by-name-find)
+* [`filter`](#filtering-contact-list-filter)
+* [`clear`](#clearing-all-entries--clear)
+
 
 #### Listing all contacts : `list`
 
