@@ -7,7 +7,6 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         title="Teletubbies" minWidth="960" maxWidth="960" minHeight="870" maxHeight="870" onCloseRequest="#handleExit">
+         title="Teletubbies" minWidth="840" minHeight="600" maxWidth="960" maxHeight="840" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -45,20 +44,20 @@
                styleClass="menu-role"></Label>
         </AnchorPane>
 
-        <HBox HBox.hgrow="ALWAYS">
+        <HBox HBox.hgrow="NEVER">
           <children>
-            <VBox fx:id="personList" styleClass="pane-with-border" minWidth="480" prefWidth="480" minHeight="600"
-                  VBox.vgrow="ALWAYS">
+            <VBox VBox.vgrow="ALWAYS" fx:id="personList" styleClass="pane-with-border" minWidth="420"
+                  maxWidth="Infinity">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-              <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+              <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
             </VBox>
-            <VBox styleClass="pane-with-border" minWidth="480" prefWidth="480" VBox.vgrow="ALWAYS">
+            <VBox VBox.vgrow="ALWAYS" styleClass="pane-with-border" minWidth="420" maxWidth="Infinity">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-              <StackPane fx:id="chartDisplayPlaceholder" VBox.vgrow="ALWAYS"/>
+              <StackPane fx:id="chartDisplayPlaceholder" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
             </VBox>
           </children>
         </HBox>
@@ -70,7 +69,7 @@
         </StackPane>
 
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="150" prefHeight="150" maxHeight="150">
+                   maxHeight="Infinity">
           <padding>
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>

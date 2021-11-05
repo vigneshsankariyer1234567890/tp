@@ -5,28 +5,27 @@ title: User Guide
 
 ## Product Overview
 
-*Teletubbies* is a **desktop app developed and designed for telemarketers and telemarketing supervisors to help manage their 
-customer contacts**. *Teletubbies* allow users to create a checklist based on a set of customer contact data, with additional
+*Teletubbies* is a **desktop app developed and designed for telemarketers and telemarketing supervisors to manage their 
+customer contacts**. *Teletubbies* allows users to create a checklist based on a set of customer contact data, with additional
 features such as tagging and viewing statistics to help improve their workflow. It is optimized for use via a 
 Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, 
 Teletubbies can get your contact management tasks done faster than traditional GUI apps.
 
+## Table of Contents
 * Table of Contents
 {:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
-## How to navigate through the User Guide
+## How to navigate through this User Guide
 
 This User Guide for *Teletubbies* is written with chronological navigation in mind. Users can scroll through
 the document to navigate from section to section. If you are new to *Teletubbies*, we recommend that you take this
-approach.
+approach for an introduction to the features.
 
-For more experienced users who know what they are looking for and want to quickly jump to a specific section, you can
-move to your section of choice using the Table of Contents, or from the [Command Summary](#command-summary) section
-if you are interested in learning about the usage of a specific command. 
+For more experienced users who know what they are looking for and want to quickly jump to a specific section, you can move to your section of choice using the [Table of Contents](#table-of-contents), or from the [Command Summary](#command-summary) section if you are interested in learning about the usage of a specific command. 
 
-Alternatively, you may use the windows shortcut **CTRL + F** to find specific keywords.
+Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut **Command + F** to find specific keywords.
 
 ### Glossary of definitions
 
@@ -35,6 +34,8 @@ Alternatively, you may use the windows shortcut **CTRL + F** to find specific ke
 **_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
 
 **_Parameter_**: Input to a command's field.
+
+**_JavaScript Object Notation (JSON)_**: A text-based representation of structured data that is used to save contacts as files in *Teletubbies*.
 
 ### Glossary of icons and symbols
 :information_source: : Additional information <br/>
@@ -49,27 +50,30 @@ Alternatively, you may use the windows shortcut **CTRL + F** to find specific ke
 
 > Quotes are used to explain examples for commands.
 
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Quick start
 
-1. Ensure you have Java `11` or above installed in your Computer. Please refer to [this article](https://www.codejava.net/java-se/download-and-install-java-11-openjdk-and-oracle-jdk)
+1. Ensure you have Java `11` or above installed on your Computer. Please refer to [this article](https://www.codejava.net/java-se/download-and-install-java-11-openjdk-and-oracle-jdk)
 for more information on how to install Java `11`.
 
 2. Download the latest `teletubbies.jar` from [here](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases).
 
-3. Copy the file to the folder you want to use as the _home folder_ for your Teletubbies app.
+3. Copy the file to the folder you want to use as the _home folder_ for your *Teletubbies* app.
 
 4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
 
 ![Ui](images/Ui.png)
 
-6. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
-   Some example commands you can try:
+5. Type the command in the command box and press Enter to execute it. 
+> E.g. typing **`help`** and pressing Enter will open the help window.<br>
+   
+Some example commands you can try:
 
    * `list`: Lists all contacts.
 
-   * `add -n John Doe -p 98765432`: Adds a contact named `John Doe` to Teletubbies.
+   * `add -n John Doe -p 98765432`: Adds a contact named `John Doe` to *Teletubbies*.
 
    * `delete -i 3`: Deletes the 3rd contact shown in the current list.
    
@@ -79,15 +83,15 @@ for more information on how to install Java `11`.
 
    * `exit`: Exits the app.
 
-7. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) section for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
 
-This is the full list of all available commands in Teletubbies.
+These are all the available commands in *Teletubbies*.
 
-To move to the section for each command, click on the highlighted commands in the left column. 
+To navigate to the section for each command, click on the hyperlinked commands in the left column. 
 The sections outline the detailed usage and examples for each of the command.
 
 Command | Format
@@ -143,7 +147,7 @@ Command | Format
 
 ## Features
 
-Features and corresponding commands have been categorised based on:
+Features and corresponding commands have been categorised into:
 
 1. [System commands](#system-commands)
 2. [Contact commands](#contact-commands)
@@ -152,7 +156,7 @@ Features and corresponding commands have been categorised based on:
 
 ### System commands
 
-These commands are related to the Teletubbies application as a whole. The commands available are:
+These commands are related to the *Teletubbies* app as a whole. The commands available are:
 * `help`
 * `import`
 * `merge`
@@ -174,27 +178,32 @@ Format: `help`
 
 #### Importing contacts : `import`
 
-The `import` command will help you to import a set of customer data into the application.
+The `import` command will help you to import a set of customer contact data into the application.
 
 You can issue this command by either typing it into the CLI (`import`), or going to the menu bar at the top and
-selecting `File -> Import`. Once the command is issued, Teletubbies will open a file selector window as shown below.
+selecting `File -> Import`. Once the command is issued, *Teletubbies* will open a file selector window as shown below.
 
 The data to be imported must be a JSON file, with the file extension `.json`.
+
 
 ![import_file](images/userGuide/importFile.jpg)
 
 Format: `import`
 
+<div markdown="span" class="alert alert-warning">:exclamation: Caution:
+If the format of the selected data file is invalid, Teletubbies will start with an empty contact list!
+</div>
+
 #### Merging contacts : `merge`
 
-The `merge` command is a special kind of importing, and it will help you to merge a set of customer data 
+The `merge` command is a special kind of importing, and it will help you to merge a set of customer contact data 
 with the current data inside the application. 
 
 **This command should only be used if you are sure that you want to combine the new data to be imported with 
 the current data in the application. The new data will overwrite the current data, so be careful!**
 
 You can issue this command by either typing it into the CLI (`merge`), or going to the menu bar at the top and
-selecting `File -> Merge`. Once the command is issued, Teletubbies will open a file selector window as shown below.
+selecting `File -> Merge`. Once the command is issued, *Teletubbies* will open a file selector window as shown below.
 
 The data to be imported and merged must be a JSON file, with the file extension `.json`.
 
@@ -204,22 +213,22 @@ Format: `merge`
 
 #### Exporting contacts: `export`
 
-The `export` command will help you to export the current set of customer data in the application.
+The `export` command will help you to export the current set of customer contact data in the application.
 
 You can issue this command by either typing it into the CLI (`export`), or going to the menu bar at the top and
 selecting `File -> Export`. Note that there is a crucial difference here:
 
 * If you choose to type it into the CLI (`export`), you will be able to specify which contacts you want 
 to export, based on the tags.
-* If you select `File -> Export` through the GUI, Teletubbies will automatically export ALL contacts, regardless of
+* If you select `File -> Export` through the GUI, *Teletubbies* will automatically export ALL contacts, regardless of
 tags.
 
 Once the command is issued, it will ask you to confirm the export. Type `y` to confirm the export. 
 
-If you decide to cancel the export, you can type in any other command. Teletubbies will automatically cancel the export
+If you decide to cancel the export, you can type in any other command. *Teletubbies* will automatically cancel the export
 for you as long as the next command received is NOT `y`.
 
-After export has been confirmed, Teletubbies will open a file selector window as shown below. Using
+After export has been confirmed, *Teletubbies* will open a file selector window as shown below. Using
 the file selector, you can choose where the exported file will be saved.
 
 <<< IMAGE REQUIRED >>>
@@ -236,9 +245,9 @@ Examples:
 
 #### Setting your profile: `profile`
 
-The `profile` command will help you to set your user profile for Teletubbies.
+The `profile` command will help you to set your user profile for *Teletubbies*.
 
-In Teletubbies, your user profile consists of your **name** and **role**. 
+In *Teletubbies*, your user profile consists of your **name** and **role**. 
 
 Your **name** should be the name that you use in the workplace, so that 
 you can be identifiable by your co-workers and supervisors.
@@ -250,7 +259,7 @@ in an organised list and keep track of your progress, then your role is `Telemar
 * If your job involves keeping track of progress for telemarketers under you, then
 your role is `Supervisor`.
 
-The reason we specify your **role** is so that Teletubbies can better accommodate your needs
+The reason we specify your **role** is so that *Teletubbies* can better accommodate your needs
 by providing you with the suitable features tailored to your needs.
 
 Once you set your profile up with the `profile` command, you should be good to go!
@@ -267,9 +276,9 @@ Examples:
 
 The `history` command will help you to view all the commands that have been issued by you in the current session.
 
-Here, when we say "in the current session", it refers to the duration from the time you start up Teletubbies to the time
-you close / exit Teletubbies. Once you close or exit Teletubbies, your session will end, and the command history will be
-reset. The next time you start up Teletubbies, you will not be able to access the command history from your
+Here, when we say "in the current session", it refers to the duration from the time you start up *Teletubbies* to the time
+you close / exit *Teletubbies*. Once you close or exit *Teletubbies*, your session will end, and the command history will be
+reset. The next time you start up *Teletubbies*, you will not be able to access the command history from your
 previous session.
 
 The commands will be displayed in order from the most recently issued command to the earliest issued command.
@@ -283,7 +292,7 @@ The `undo` command will help you to undo any changes you have made with your pre
 Suppose that you entered a command, but realised that you made a mistake! Well, you can simply issue the 
 `undo` command to undo your mistake.
 
-If there are no commands that have previously been issued in the current session, Teletubbies will let you know.
+If there are no commands that have previously been issued in the current session, *Teletubbies* will let you know.
 Otherwise, any changes you may have made with your previous command will be undone, so be careful when using this command!
 
 Format: `undo`
@@ -296,20 +305,20 @@ Suppose that you through you made a mistake, so you issued an `undo` command, on
 it was actually the correct command! Well, you can simply issue the `redo` command to "undo" your `undo`, or
 simply put, redo a command that you thought was a mistake.
 
-If there are no commands that have previously been issued in the current session, Teletubbies will let you know.
+If there are no commands that have previously been issued in the current session, *Teletubbies* will let you know.
 Otherwise, any changes you may have made with your previous `undo` command will be undone, so be careful when using this command!
 
 Format: `redo`
 
 #### Exiting the program : `exit`
 
-The `exit` command will help you gracefully exit Teletubbies.
+The `exit` command will help you gracefully exit *Teletubbies*.
 
 Format: `exit`
 
 ### Contact commands
 
-These commands are related to the contacts stored in Teletubbies. The commands available are:
+These commands are related to the contacts stored in *Teletubbies*. The commands available are:
 * `add`
 * `delete`
 * `edit`
@@ -320,7 +329,7 @@ These commands are related to the contacts stored in Teletubbies. The commands a
 
 #### Finding the index
 
-When dealing with contacts in Teletubbies, you will often have to use something called the **index**
+When dealing with contacts in *Teletubbies*, you will often have to use something called the **index**
 of the contact. 
 
 To find out what the contact's index is, use the [List](#listing-all-contacts-list) feature to
@@ -334,7 +343,7 @@ will always be a positive integer, i.e. 1, 2, 3, 4, ...
 We understand that as telemarketers, you may be using a desktop application to call a customer instead of using
 your phone. 
 
-Hence, Teletubbies tries to help out in this area as well! Next to the phone number in each contact, there is a small 
+Hence, *Teletubbies* tries to help out in this area as well! Next to the phone number in each contact, there is a small 
 clipboard icon that looks like this: ![](images/icon_clipboard.png)
 
 When you click on the icon, it will copy the phone number to your clipboard, so that you can paste it onto
@@ -343,10 +352,10 @@ your desktop calling app!
 
 #### Adding a contact: `add`
 
-The `add` command will help you to add a customer's contact details into Teletubbies. Once added,
+The `add` command will help you to add a customer's contact details into *Teletubbies*. Once added,
 you should be able to view their contact details on the contact list.
 
-Note that the customer's **name** and **phone number** are mandatory. Otherwise, Teletubbies
+Note that the customer's **name** and **phone number** are mandatory. Otherwise, *Teletubbies*
 (and you) will find it difficult to identify the customer!
 
 Other than the **name** and the **phone number**, you can also indicate **address** and
@@ -366,7 +375,7 @@ Examples:
 
 #### Deleting a contact : `delete`
 
-The `delete` command will help you to delete a customer's contact details from Teletubbies. Once 
+The `delete` command will help you to delete a customer's contact details from *Teletubbies*. Once 
 the contact has been deleted, you should no longer see their contact details on the contact list.
 
 You can choose to delete the contact using either the index, or the phone number. When deleting the contact using the phone number, make sure that the specified
@@ -384,8 +393,8 @@ Examples:
 
 #### Editing a contact : `edit`
 
-The `edit` command will help you to edit / update a customer's contact details in Teletubbies. Note that
-you can only edit the details for a contact that is already in Teletubbies' contact list. 
+The `edit` command will help you to edit / update a customer's contact details in *Teletubbies*. Note that
+you can only edit the details for a contact that is already in *Teletubbies*' contact list. 
 
 You can choose which contact to edit by using the contact's index. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
@@ -406,10 +415,10 @@ Examples:
 
 #### Marking a contact as completed: `done`
 
-The `done` command will help you to mark a contact's completion status in Teletubbies. Here, when we say "completion status",
+The `done` command will help you to mark a contact's completion status in *Teletubbies*. Here, when we say "completion status",
 we will leave it up to your company to decide exactly what each of the levels of completion status mean.
 
-Regardless, Teletubbies provide three different levels of completion status: Incomplete, Ongoing, and Complete. Take note that
+Regardless, *Teletubbies* provide three different levels of completion status: Incomplete, Ongoing, and Complete. Take note that
 a contact can only be marked with at most one out of the three. You can't have a contact be complete and ongoing at the same time!
 **The status is indicated in each of the contact details using a tag and a progress bar.**
 
@@ -430,7 +439,7 @@ Examples:
 
 #### Tagging contacts: `tag`
 
-The `tag` command will help you to **tag** certain contacts with a tag of your choice. In Teletubbies,
+The `tag` command will help you to **tag** certain contacts with a tag of your choice. In *Teletubbies*,
 our tags are very flexible: They can be single words, or a category. So for example, you can tag a contact
 with "friend", or tag a contact with the category "status: not answering", etc. It's up to you!
 
@@ -539,7 +548,7 @@ Examples:
 
 ### List commands
 
-These commands are related to the contact list stored in Teletubbies. The commands available are:
+These commands are related to the contact list stored in *Teletubbies*. The commands available are:
 * `list`
 * `find`
 * `filter`
@@ -547,7 +556,7 @@ These commands are related to the contact list stored in Teletubbies. The comman
 
 #### Listing all contacts : `list`
 
-The `list` command will help you to view the entire contact list currently in Teletubbies.
+The `list` command will help you to view the entire contact list currently in *Teletubbies*.
 
 By listing all contacts, you will be able to find the number associated with a specific contact that you want to interact with.
 This number is known as the `index` of the contact.
@@ -559,12 +568,12 @@ Format: `list`
 The `find` command will help you find the relevant contacts using the given keyword(s), and will change the contact list
 display to show only the contacts whose **names** contain the given keyword(s).
 
-When Teletubbies searches the contacts using the given keyword(s), it will only look at the **names**
+When *Teletubbies* searches the contacts using the given keyword(s), it will only look at the **names**
 of the contacts, not the **addresses** or the **email addresses**. The search process is case-insensitive,
 meaning that if a keyword `hans` is given, a contact with the name `Hans` may be returned.
 
 The order of the keywords given does not matter, and any contact whose **name** contains any one of the
-keywords will be returned. However, Teletubbies will consider the keywords as full words, meaning that
+keywords will be returned. However, *Teletubbies* will consider the keywords as full words, meaning that
 if a keyword `Han` is given, even if there is a contact with the name `Hans`, it will not be returned. It
 will only be returned if the keyword given is `Hans`.
 
@@ -620,23 +629,23 @@ the chart will update automatically!
 
 #### Convenience features
 
-You can use the **[UP]** and **[DOWN]** arrows to navigate the command history, and the **[TAB]** command to autocomplete after a command word for recommended command flags.
+You can use the **[UP]** and **[DOWN]** arrows on your keyboard to navigate the command history, and the **[TAB]** key to autocomplete after a command word for recommended command fields.
 
 ##### Saving the data
 
-Teletubbies automatically saves the data in the hard disk after any command that changes the data. There is no need to save manually.
+*Teletubbies* automatically saves the data in the hard disk after any command that changes the data. There is no need to save manually.
 
 For exporting the current data as a separate JSON file, refer to [Exporting contacts](#exporting-contacts-export).
 
 #### Loading the data
 
-Teletubbies will automatically load up the data from your previous session, allowing you to pick up right where you left off. There is no need to load manually.
+*Teletubbies* will automatically load up the data from your previous session, allowing you to pick up right where you left off. There is no need to load manually.
 
 For importing a separate JSON file into the application, refer to [Importing contacts](#importing-contacts-import).
 
 #### Editing the data
 
-Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubbies-ddmmyyyy-hhmm.json`. Advanced users are welcome to update data directly by editing that data file.
+*Teletubbies* will save the data as a JSON file `[JAR file location]/data/teletubbies.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: Caution:
 If your changes to the data file makes its format invalid, Teletubbies will discard all data and start with an empty data file at the next run!
@@ -647,9 +656,8 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**:
-1. Install the Teletubbies app in the other computer.
-2. Transfer the data file of your current Teletubbies folder to the other computer.
-3. Overwrite the empty data file that Teletubbies creates in the other computer with the data file that you transferred over.
+1. Install the *Teletubbies* app in the other computer.
+2. Use the [`export`](#exporting-contacts-export) command to export your contacts as a JSON file. Transfer the contacts file to the other computer.
+3. On the other computer, launch the *Teletubbies* app and use the [`import`](#importing-contacts--import) command to import the contacts file that you transferred over.
 
 --------------------------------------------------------------------------------------------------------------------

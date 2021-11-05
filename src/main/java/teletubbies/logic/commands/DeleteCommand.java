@@ -2,6 +2,7 @@ package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_INDEX;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a person identified using it's displayed index from the contact list.
  */
 public class DeleteCommand extends Command {
 
@@ -23,9 +24,13 @@ public class DeleteCommand extends Command {
     public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_INDEX);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person with the given phone number or the index used in the displayed person list.\n"
-            + "Parameters: -p PHONE_NUMBER (must be a valid phone number) or -i INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " -p 81234567, " + COMMAND_WORD + " -i 1";
+            + ": Deletes the person with the given phone number or the index used in the contact list.\n"
+            + "Parameters: "
+            + PREFIX_PHONE + " PHONE_NUMBER (must be a valid phone number) or "
+            + PREFIX_INDEX + " INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " "
+            + PREFIX_PHONE + " 81234567, " + COMMAND_WORD + " "
+            + PREFIX_INDEX + " 1";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
