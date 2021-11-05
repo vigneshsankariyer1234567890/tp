@@ -18,8 +18,8 @@ public class StringUtil {
      *   <br>examples:<pre>
      *       containsWordIgnoreCase("ABc def", "abc") == true
      *       containsWordIgnoreCase("ABc def", "DEF") == true
-     *       containsWordIgnoreCase("ABc def", "AB") == true 
-     *       containsWordIgnoreCase("ABc def", "ABCD") == false 
+     *       containsWordIgnoreCase("ABc def", "AB") == true
+     *       containsWordIgnoreCase("ABc def", "ABCD") == false
      *       </pre>
      * @param sentence cannot be null
      * @param word cannot be null, cannot be empty, must be a single word
