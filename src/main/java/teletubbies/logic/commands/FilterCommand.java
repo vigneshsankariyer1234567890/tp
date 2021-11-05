@@ -11,8 +11,8 @@ import teletubbies.model.Model;
 import teletubbies.model.person.PersonHasTagsPredicate;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case-insensitive.
+ * Filters and lists all persons in person list whose who contain the specified tags.
+ * Tag matching is case-sensitive.
  */
 public class FilterCommand extends Command {
 
