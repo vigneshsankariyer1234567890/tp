@@ -63,8 +63,8 @@ public class UserProfile {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name : ").append(name).append("\n");
-        sb.append("Role : ").append(role).append("\n");
+        sb.append("Name: ").append(name).append("\n");
+        sb.append("Role: ").append(role).append("\n");
         return sb.toString();
     }
 }

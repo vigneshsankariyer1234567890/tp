@@ -12,18 +12,20 @@ import teletubbies.model.person.Person;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
 
+import java.util.Locale;
+
 public class DoneCommand extends Command {
 
     public static final String COMMAND_WORD = "done";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Marks the completion status of the "
-            + "person identified by the index number used in the last person listing.\n"
+            + "person identified by the index number used in the current contact list.\n"
             + "Sets completed by default. Only one of " + CliSyntax.PREFIX_ONGOING + " or "
             + CliSyntax.PREFIX_INCOMPLETE + " can be used.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1 " + CliSyntax.PREFIX_ONGOING;
 
-    public static final String MESSAGE_COMPLETED_SUCCESS = "Marked Person as completed: %1$s";
+    public static final String MESSAGE_COMPLETED_SUCCESS = "Marked person as %1$s: %2$s";
 
     private final Index index;
     private final CompletionStatus completionStatus;
@@ -71,7 +73,7 @@ public class DoneCommand extends Command {
      * {@code personToEdit}.
      */
     private String generateSuccessMessage(Person personToEdit) {
-        return String.format(MESSAGE_COMPLETED_SUCCESS, personToEdit);
+        return String.format(MESSAGE_COMPLETED_SUCCESS, completionStatus.toString().toLowerCase(), personToEdit);
     }
 
     @Override
