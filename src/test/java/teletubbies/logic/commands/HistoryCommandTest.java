@@ -11,13 +11,11 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
-import teletubbies.commons.exceptions.EarliestVersionException;
-import teletubbies.commons.exceptions.IllegalValueException;
-import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
@@ -110,6 +108,11 @@ public class HistoryCommandTest {
         }
 
         @Override
+        public void addListener(InvalidationListener listener) {
+
+        }
+
+        @Override
         public Path getAddressBookFilePath() {
             throw new AssertionError("This method should not be called.");
         }
@@ -155,7 +158,7 @@ public class HistoryCommandTest {
         }
 
         @Override
-        public List<Person> getPersonsFromRange(Range range) throws IllegalValueException {
+        public List<Person> getPersonsFromRange(Range range) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -212,13 +215,13 @@ public class HistoryCommandTest {
         }
 
         @Override
-        public String getNextCommand() throws LatestVersionException {
+        public String getNextCommand() {
             // TODO
             return "";
         }
 
         @Override
-        public String getPreviousCommand() throws EarliestVersionException {
+        public String getPreviousCommand() {
             // TODO
             return "";
         }

@@ -12,45 +12,67 @@ Class AddressBook
 Class ReadOnlyAddressBook
 Class Model
 Class ModelManager
+Class CommandInputHistory
 Class UserPrefs
 Class ReadOnlyUserPrefs
+Class VersionedAddressBook
 
-
+Package Person {
 Class UniquePersonList
 Class Person
 Class Address
 Class Email
 Class Name
 Class Phone
-Class CompletionStatus
 Class Tag
+Class Remark
+Class Uuid
+}
+
+Package Tag {
+Class Tag
+Class CompletionStatusTag
+}
 
 }
 
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 
-AddressBook .up.|> ReadOnlyAddressBook
+Class HiddenOutside1 #FFFFFF
+HiddenOutside1 ..> ReadOnlyAddressBook
+
+
 
 ModelManager .up.|> Model
-Model .right.> ReadOnlyUserPrefs
-Model .left.> ReadOnlyAddressBook
-ModelManager -left-> "1" AddressBook
-ModelManager -right-> "1" UserPrefs
+Model .right.> ReadOnlyAddressBook
+ModelManager *-down-> "1" VersionedAddressBook
+ModelManager *-right-> "1" CommandInputHistory
+'ModelManager *-right-> "1" CommandInputHistory
+ModelManager -left-> "1" UserPrefs
 UserPrefs .up.|> ReadOnlyUserPrefs
+'
+AddressBook .up.|> ReadOnlyAddressBook
+VersionedAddressBook -right-|> AddressBook
+'
 
+'
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
-Person *--> Name
-Person *--> Phone
-Person *--> Email
-Person *--> Address
-Person *--> CompletionStatus
-Person *--> "*" Tag
+Person *--> CompletionStatusTag
+Person "1" -- "*" Tag
+Person *--> "1" Name
+Person *--> "1" Phone
+Person *--> "1" Email
+Person *--> "1" Address
+Person *--> "1" Uuid
+Person *--> "1" Remark
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+'
+'Name -[hidden]right-> Phone
+'Phone -[hidden]right-> Address
+'Address -[hidden]right-> Email
+'
+'ModelManager -down->"~* filtered" Person
 
-ModelManager -->"~* filtered" Person
 @enduml

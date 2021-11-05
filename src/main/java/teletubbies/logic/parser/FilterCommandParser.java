@@ -5,6 +5,7 @@ import static java.util.Objects.requireNonNull;
 import java.util.Collection;
 import java.util.Set;
 
+import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.FilterCommand;
 import teletubbies.logic.parser.exceptions.ParseException;
 import teletubbies.model.person.PersonHasTagsPredicate;
@@ -26,6 +27,12 @@ public class FilterCommandParser implements Parser<FilterCommand> {
                 CliSyntax.PREFIX_TAG);
 
         Collection<String> tagValues = argMultimap.getAllValues(CliSyntax.PREFIX_TAG).getValues();
+
+        if (tagValues.size() <= 0) {
+            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
+                    FilterCommand.MESSAGE_USAGE));
+        }
+
         Set<Tag> tagStrings = ParserUtil.parseTagsWithValue(tagValues);
 
         return new FilterCommand(new PersonHasTagsPredicate(tagStrings));

@@ -32,7 +32,8 @@ public class DoneCommandTest {
 
         DoneCommand doneCommand = new DoneCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DoneCommand.MESSAGE_COMPLETED_SUCCESS, editedPerson);
+        String expectedMessage = String.format(DoneCommand.MESSAGE_COMPLETED_SUCCESS,
+                CompletionStatus.COMPLETE.toString().toLowerCase(), editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
@@ -51,7 +52,8 @@ public class DoneCommandTest {
 
         DoneCommand doneCommand = new DoneCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DoneCommand.MESSAGE_COMPLETED_SUCCESS, editedPerson);
+        String expectedMessage = String.format(DoneCommand.MESSAGE_COMPLETED_SUCCESS,
+                CompletionStatus.COMPLETE.toString().toLowerCase(), editedPerson);
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
