@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.Range;
@@ -12,6 +13,7 @@ import teletubbies.commons.core.UserProfile.Role;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.commons.exceptions.LatestVersionException;
+import teletubbies.commons.exceptions.UserRoleSetException;
 import teletubbies.model.person.Person;
 
 /**
@@ -34,7 +36,7 @@ public interface Model {
     /**
      * Replaces user profile data with the data in {@code userProfile}.
      */
-    void setUserProfile(UserProfile userProfile);
+    void setUserProfile(UserProfile userProfile) throws UserRoleSetException;
 
     /**
      * Returns the user profile.
@@ -55,6 +57,11 @@ public interface Model {
      * Sets the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Adds a listener.
+     */
+    void addListener(InvalidationListener listener);
 
     /**
      * Returns the user prefs' address book file path.

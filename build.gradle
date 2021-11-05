@@ -80,7 +80,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = 'addressbook.jar'
+    archiveName = 'teletubbies.jar'
 }
 
 run {

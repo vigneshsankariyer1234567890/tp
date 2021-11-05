@@ -43,7 +43,7 @@ public class ConfirmExportCommand extends Command {
     }
 
     /**
-     * Saves given addressbook to given path
+     * Saves given address book to given path
      *
      * @param ab AddressBook to save
      * @param pathString Path string for saving

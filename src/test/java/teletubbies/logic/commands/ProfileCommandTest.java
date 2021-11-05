@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.exceptions.UserRoleSetException;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
@@ -16,7 +17,7 @@ class ProfileCommandTest {
     private Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
 
     @Test
-    public void execute_validTelemarketerRole_success() {
+    public void execute_validTelemarketerRole_success() throws UserRoleSetException {
         UserProfile userProfile = new UserProfile("Telemarketer Name", UserProfile.Role.TELEMARKETER);
         ProfileCommand profileCommand = new ProfileCommand(userProfile);
 
@@ -31,7 +32,7 @@ class ProfileCommandTest {
     }
 
     @Test
-    public void execute_validSupervisorRole_success() {
+    public void execute_validSupervisorRole_success() throws UserRoleSetException {
         UserProfile userProfile = new UserProfile("Supervisor Name", UserProfile.Role.SUPERVISOR);
         ProfileCommand profileCommand = new ProfileCommand(userProfile);
 
