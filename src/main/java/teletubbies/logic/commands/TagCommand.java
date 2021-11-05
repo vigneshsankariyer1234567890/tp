@@ -29,9 +29,11 @@ public class TagCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds specified tag to the "
             + "persons specified by the indices.\n"
-            + "Parameters: RANGE (can be hyphen separated or comma separated integers)\n"
+            + "Parameters: RANGE (can be hyphen separated or comma separated integers), -n NAME, "
+            + "[-v VALUE], [-s]\n"
             + "Example: " + COMMAND_WORD + " 1-10 " + CliSyntax.PREFIX_NAME + " Assignee "
-            + CliSyntax.PREFIX_VALUE + " John Doe " + CliSyntax.PREFIX_SUPERVISOR_FLAG;
+            + "[" + CliSyntax.PREFIX_VALUE + " John Doe] "
+            + "[" + CliSyntax.PREFIX_SUPERVISOR_FLAG + "]";
 
 
     public static final String MESSAGE_COMPLETED_SUCCESS = "Tag added";
@@ -85,7 +87,7 @@ public class TagCommand extends Command {
 
             model.setPerson(p, editedPerson);
         }
-
+        // Throw messages if present
         throwMessages(feedbackMessages);
         return new CommandResult(MESSAGE_COMPLETED_SUCCESS);
     }

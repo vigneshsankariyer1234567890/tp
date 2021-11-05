@@ -28,10 +28,13 @@ public class RemoveTagCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes tag from "
             + "persons specified by the indices.\n"
-            + "Parameters: RANGE (can be hyphen separated or comma separated integers)\n"
-            + "Example: " + COMMAND_WORD + " 1-10 " + PREFIX_NAME + " Assignee";
+            + "Parameters: RANGE (can be hyphen separated or comma separated integers), -n TAGNAME, "
+            + "[-v TAGVALUE]\n"
+            + "Example: " + COMMAND_WORD + " 1-10 " + PREFIX_NAME + " Assignee "
+            + "[" + CliSyntax.PREFIX_VALUE + " John Doe]\n"
+            + "Note: Tags listed are in the format TAGNAME[: TAGVALUE]";
 
-    public static final String MESSAGE_COMPLETED_SUCCESS = " Tag removed";
+    public static final String MESSAGE_COMPLETED_SUCCESS = "Tag removed from %d entries";
 
     public final Range range;
     public final String tagName;
@@ -61,20 +64,24 @@ public class RemoveTagCommand extends Command {
         List<String> feedbackMessages = new ArrayList<>();
         List<Person> rangePersons = getPersonsFromRange(model, range);
         Role userRole = model.getUserRole();
+        int entryCount = 0;
 
         for (Person p: rangePersons) {
             Set<Tag> tags = new HashSet<>(p.getTags());
             Optional<Tag> matchingTag = TagUtils.findMatchingTag(tags, tagName);
             Set<Tag> newTags = getRemovedTagSet(tags, matchingTag, userRole, feedbackMessages);
+            if (tags.size() > newTags.size()) {
+                entryCount++;
+            }
 
             Person editedPerson = new Person(p.getUuid(), p.getName(), p.getPhone(), p.getEmail(),
                     p.getAddress(), p.getCompletionStatus(), p.getRemark(), newTags);
 
             model.setPerson(p, editedPerson);
         }
-
+        // Throw messages if present
         throwMessages(feedbackMessages);
-        return new CommandResult(MESSAGE_COMPLETED_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, entryCount));
     }
 
     /**
