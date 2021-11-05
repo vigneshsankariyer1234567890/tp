@@ -12,8 +12,6 @@ import teletubbies.model.person.Person;
 import teletubbies.model.tag.CompletionStatusTag;
 import teletubbies.model.tag.CompletionStatusTag.CompletionStatus;
 
-import java.util.Locale;
-
 public class DoneCommand extends Command {
 
     public static final String COMMAND_WORD = "done";

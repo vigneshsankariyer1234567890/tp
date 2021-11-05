@@ -57,10 +57,6 @@ public class AddCommand extends Command {
         requireNonNull(model);
         model.cancelPendingExport();
 
-        if (model.hasName(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
-
         if (model.hasPhoneNumber(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PHONE_NUMBER);
         }

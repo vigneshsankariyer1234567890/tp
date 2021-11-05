@@ -48,13 +48,16 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_duplicateName_throwsCommandException() {
+    public void execute_duplicateName_successful() throws CommandException {
         Person alice = new PersonBuilder().withPhone("88888888").build();
         Person alice2 = new PersonBuilder().withPhone("99999999").build();
         AddCommand addCommand = new AddCommand(alice);
-        ModelStub modelStub = new ModelStubWithPerson(alice2);
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded(alice2);
+        
+        CommandResult commandResult = addCommand.execute(modelStub);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, alice), commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(alice2, alice), modelStub.personsAdded);
     }
 
     @Test
@@ -294,6 +297,15 @@ public class AddCommandTest {
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
+
+        ModelStubAcceptingPersonAdded(Person person) {
+            requireNonNull(person);
+            personsAdded.add(person);
+        }
+
+        public ModelStubAcceptingPersonAdded() {
+            
+        }
 
         @Override
         public boolean hasName(Person person) {
