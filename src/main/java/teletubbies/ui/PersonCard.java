@@ -102,7 +102,8 @@ public class PersonCard extends UiPart<Region> {
             completionStatusTag.setProgress(0.0);
         }
 
-        person.getAllTags().stream()
+        completionStatusLabel.setText(person.getCompletionStatus().status.name());
+        person.getTags().stream()
                 .sorted(Comparator.comparing(Tag::toString))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.toString())));
     }
