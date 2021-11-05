@@ -23,7 +23,6 @@ import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.commons.exceptions.UserRoleSetException;
 import teletubbies.commons.util.CollectionUtil;
-import teletubbies.logic.commands.Command;
 import teletubbies.model.person.Person;
 
 /**
