@@ -451,10 +451,10 @@ When tagging a contact, you can specify the **name** and **value** of the tag. T
 the **value** is optional. To specify which contact to be tagged, use the index of the contact. 
 If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
-Take note that when you have a contact that is already tagged, and you decide to tag it again with the same **name**
-but different **value**, the new **value** will replace the old one! For example, if I had a contact tagged with
-`Friend: good`, and I tagged that same contact using another tag with the **name** "Friend" and the **value** "close",
-the pre-existing `Friend: good` tag will be replaced by the `Friend: close` tag.
+Take note that contacts cannot have tags with duplicate names. So, if you have a contact that is already tagged,
+and you decide to tag it again with the same **name** but different **value**, the new **value** will replace the old
+one! For example, if I had a contact tagged with `Friend: good`, and I tagged that same contact using another tag with
+the **name** "Friend" and the **value** "close", the pre-existing tag will be updated from `Friend: good` to `Friend: close`.
 
 Finally, there is an additional parameter that is only available to supervisors. When you add a `-s` at the end 
 of your tagging command, it will make sure that only supervisors are able to edit or remove that tag!
@@ -474,11 +474,14 @@ Examples:
 #### Removing tags from contacts: `tagrm`
 
 The `tagrm` command will help you to **remove** a tag from a contact. Note that the tag to be removed
-must already be a tag on the contact, otherwise it will fail!
+must already be a tag on the contact, otherwise no tags will be removed!
 
 When removing a tag from a contact, you can specify the **name** and **value** of the tag. Similar to the `tag` command, 
 the **name** is manadatory, but the **value** is optional. To specify which contact to be tagged, use the index of the 
 contact. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
+
+Note that tag name and tag value are case-sensitive. So, a command specifying tag name 'assignee' and tag value 'john'
+will not remove the tag `Assignee:John` or `Assignee:john`.
 
 Also, if the tag was created using the `-s` parameter, only supervisors will be able to remove the tag.
 
@@ -595,18 +598,24 @@ The `filter` command will help you filter the current contact list using the giv
 display to show only the contacts that are tagged with the given tag(s).
 
 When issuing the `filter` command, you should specify at least one **tag name**. Tag values are optional, but can help to further narrow
-your filter if necessary.
+your filter if necessary. Tag name and tag value are case-sensitive. This means that the following tags are different:
+
+- `assignee: john`
+- `assignee: John`
+- `Assignee: John`
 
 Format: `filter -t TAGNAME[:TAGVALUE] [-t TAGNAME[:TAGVALUE]]…​ `
 
 Examples:
 * `filter -t Friend` 
-> This command will filter the displayed list to only users who have the tag `Friend`.
+> This command will filter the displayed list to only users who have the tag `Friend`, regardless of tag value. This
+> means that persons with the tags `Friend: Close`, AND `Friend: VeryClose` will both be listed.
 * `filter -t Assignee:Ben`
-> This command will filter the displayed list to only users who have the tag `Assignee: Ben`.
+> This command will filter the displayed list to only users who have the tag `Assignee: Ben`. Persons with the 
+> `Assignee: Sid` tag will NOT be listed.
 * `filter -t Friend -t Assignee:Ben`
 > This command will filter the displayed list to only users who have the tag `Friend` AND `Assignee: Ben`. Contacts 
-> that have only one of the given tags will NOT be included.
+> that have only one of the given tags will NOT be listed.
 
 #### Clearing all entries : `clear`
 
