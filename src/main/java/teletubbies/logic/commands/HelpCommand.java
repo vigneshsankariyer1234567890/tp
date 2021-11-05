@@ -14,7 +14,6 @@ public class HelpCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows user guide.\n"
             + "Example: " + COMMAND_WORD;
-
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
 
     @Override

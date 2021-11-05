@@ -21,6 +21,7 @@ import teletubbies.commons.core.index.Index;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.commons.exceptions.LatestVersionException;
+import teletubbies.commons.exceptions.UserRoleSetException;
 import teletubbies.commons.util.CollectionUtil;
 import teletubbies.model.person.Person;
 
@@ -71,7 +72,7 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void setUserProfile(UserProfile userProfile) {
+    public void setUserProfile(UserProfile userProfile) throws UserRoleSetException {
         requireNonNull(userProfile);
         this.userPrefs.setUserProfile(userProfile);
     }
@@ -247,7 +248,9 @@ public class ModelManager implements Model {
         requireNonNull(range);
         Set<Index> rangeValues = range.getRangeValues();
         if (rangeValues.stream().anyMatch(i -> i.getZeroBased() >= filteredPersons.size())) {
-            throw new IllegalValueException(Range.MESSAGE_ILLEGAL_RANGE);
+            throw new IllegalValueException(
+                    String.format(Range.MESSAGE_ILLEGAL_RANGE, filteredPersons.size())
+            );
         }
         return rangeValues.stream()
                 .map(i -> filteredPersons.get(i.getZeroBased()))

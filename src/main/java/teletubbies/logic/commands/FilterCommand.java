@@ -21,9 +21,9 @@ public class FilterCommand extends Command {
     public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_TAG);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters person to only those with the specified "
-            + "tags and values (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: " + PREFIX_TAG + " TAGNAME [MORE_TAGS]...\n"
-            + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + " CompletionStatus:COMPLETE";
+            + "tag names and values (case-sensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: " + PREFIX_TAG + " TAGNAME[: TAGVALUE] [-t TAGNAME[: TAGVALUE]]...\n"
+            + "Example: " + COMMAND_WORD + " " + PREFIX_TAG + " CompletionStatus: COMPLETE";
 
     private final PersonHasTagsPredicate predicate;
 

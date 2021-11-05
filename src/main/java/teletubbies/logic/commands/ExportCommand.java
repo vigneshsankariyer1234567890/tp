@@ -1,6 +1,7 @@
 package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.List;
 import java.util.Set;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.PersonHasTagsPredicate;
@@ -21,6 +23,8 @@ public class ExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
     public static final String MESSAGE_REQUEST_CONFIRMATION = "\nEnter y to confirm export.\n"
             + "Entering other commands would cancel the export.";
+
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_TAG);
 
     private final Set<Tag> tags;
 

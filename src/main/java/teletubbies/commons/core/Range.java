@@ -7,7 +7,8 @@ import teletubbies.commons.core.index.Index;
 
 public class Range {
 
-    public static final String MESSAGE_ILLEGAL_RANGE = "Range contains values outside of the list";
+    public static final String MESSAGE_ILLEGAL_RANGE = "Range contains values outside of the list!\n"
+        + "Range values must be no greater than %d";
 
     private final Set<Index> values;
 

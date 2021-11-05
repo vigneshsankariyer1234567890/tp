@@ -5,7 +5,9 @@ import java.util.Set;
 
 public class TagUtils {
 
-    public static final String INVALID_TAG_NAME = "Invalid tag name";
+    public static final String INVALID_TAG_NAME = "Invalid tag name.\n"
+            + Tag.MESSAGE_CONSTRAINTS + "\nReserved tag name(s): "
+            + String.join(", ", Tag.RESERVED_TAG_NAMES);
     public static String noPermissionsMessage(String tagName) {
         return "You don't have permission to modify this tag - " + tagName;
     }
