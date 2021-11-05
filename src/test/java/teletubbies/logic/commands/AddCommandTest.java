@@ -53,7 +53,7 @@ public class AddCommandTest {
         Person alice2 = new PersonBuilder().withPhone("99999999").build();
         AddCommand addCommand = new AddCommand(alice);
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded(alice2);
-        
+
         CommandResult commandResult = addCommand.execute(modelStub);
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, alice), commandResult.getFeedbackToUser());
@@ -303,9 +303,7 @@ public class AddCommandTest {
             personsAdded.add(person);
         }
 
-        public ModelStubAcceptingPersonAdded() {
-            
-        }
+        public ModelStubAcceptingPersonAdded() { }
 
         @Override
         public boolean hasName(Person person) {
