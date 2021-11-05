@@ -7,6 +7,7 @@ import static teletubbies.logic.parser.CliSyntax.PREFIX_ROLE;
 import java.util.List;
 
 import teletubbies.commons.core.UserProfile;
+import teletubbies.commons.exceptions.UserRoleSetException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
@@ -46,7 +47,11 @@ public class ProfileCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.cancelPendingExport();
-        model.setUserProfile(userProfile);
+        try {
+            model.setUserProfile(userProfile);
+        } catch (UserRoleSetException urse) {
+            throw new CommandException(urse.getMessage());
+        }
 
         return new CommandResult(String.format(MESSAGE_PROFILE_SUCCESS, userProfile));
     }
