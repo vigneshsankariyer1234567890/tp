@@ -40,7 +40,7 @@ public abstract class Command {
         try {
             return model.getPersonsFromRange(range);
         } catch (IllegalValueException ive) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_RANGE);
+            throw new CommandException(ive.getMessage());
         }
     }
 
