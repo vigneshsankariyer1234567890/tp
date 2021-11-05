@@ -19,7 +19,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     private GuiSettings guiSettings = new GuiSettings();
     private UserProfile userProfile = new UserProfile();
     private boolean isProfileSet = false;
-    private Path addressBookFilePath = Paths.get("data" , "addressbook.json");
+    private Path addressBookFilePath = Paths.get("data" , "teletubbies.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -68,7 +68,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     public void setUserProfile(UserProfile userProfile) throws UserRoleSetException {
         requireNonNull(userProfile);
-        System.out.println(isProfileSet);
         if (this.isProfileSet) {
             throw new UserRoleSetException();
         }
