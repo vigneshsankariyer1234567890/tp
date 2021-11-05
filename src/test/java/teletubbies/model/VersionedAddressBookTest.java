@@ -41,7 +41,7 @@ public class VersionedAddressBookTest {
     public void commit_oneAddressBook_noStatesRemoved()
             throws LatestVersionException, EarliestVersionException, EmptyAddressBookStateListException {
         VersionedAddressBook versionedAddressBook = prepareVersionedAddressBook(emptyAddressBook);
-        versionedAddressBook.commit();
+        versionedAddressBook.commitCurrentStateAndSave();
         assertAddressBookListStatus(versionedAddressBook,
                 Collections.singletonList(emptyAddressBook),
                 emptyAddressBook,
@@ -54,7 +54,7 @@ public class VersionedAddressBookTest {
         VersionedAddressBook versionedAddressBook = prepareVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
 
-        versionedAddressBook.commit();
+        versionedAddressBook.commitCurrentStateAndSave();
         assertAddressBookListStatus(versionedAddressBook,
                 List.of(emptyAddressBook, addressBookWithAmy, addressBookWithBob),
                 addressBookWithBob,
@@ -83,7 +83,7 @@ public class VersionedAddressBookTest {
         List<ReadOnlyAddressBook> fullList =
                 List.copyOf(fullStateList);
         undoVersionedAddressBookNTimes(versionedAddressBook, random);
-        versionedAddressBook.commit();
+        versionedAddressBook.commitCurrentStateAndSave();
         assertAddressBookListStatus(versionedAddressBook,
                 fullList.subList(0, fullStateList.size() - random),
                 fullList.get(fullStateList.size() - 1 - random),

@@ -35,6 +35,7 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private boolean isAwaitingExportConfirmation;
+    private boolean isExportListModified;
     private final CommandInputHistory inputHistory;
     private boolean firstUpArrowClicked = false;
 
@@ -160,6 +161,16 @@ public class ModelManager implements Model {
         // the VersionedAddressBook.
         isAwaitingExportConfirmation = true;
         this.versionedAddressBook.setPersons(filteredPersonList);
+        ReadOnlyAddressBook copy = new AddressBook(versionedAddressBook);
+        ReadOnlyAddressBook mostRecentState = versionedAddressBook.getMostRecentReadOnlyAddressBook();
+        if (!checkEqualityOfAddressBooks(copy, mostRecentState)) {
+            this.versionedAddressBook.commitCurrentStateAndSave();
+            isExportListModified = true;
+        }
+    }
+
+    private boolean checkEqualityOfAddressBooks(ReadOnlyAddressBook addressBook1, ReadOnlyAddressBook addressBook2) {
+        return addressBook1.equals(addressBook2);
     }
 
     @Override
@@ -175,28 +186,39 @@ public class ModelManager implements Model {
         // 3. Commit the VersionedAddressBook to remove the filtered list.
         // 4. Return the AddressBook to be exported.
         AddressBook toExport = new AddressBook(versionedAddressBook);
-        try {
-            this.versionedAddressBook.undo();
-            this.versionedAddressBook.commit();
-        } catch (EarliestVersionException e) {
-            // Undo will always work as VersionedAddressBook must store at least 2 states: the original AddressBook
-            // and the filtered addressBook.
-            logExportIssuesWithUndo(e);
+        if (isExportListModified) {
+            undoVersionedAddressBookAndCommit();
         }
-        isAwaitingExportConfirmation = false;
+        resetExportConfirmation();
+        resetExportListModified();
         return toExport;
     }
 
     @Override
     public void cancelPendingExport() {
-        if (isAwaitingExportConfirmation) {
-            try {
-                this.versionedAddressBook.undo();
-                versionedAddressBook.commit();
-            } catch (EarliestVersionException e) {
-                logExportIssuesWithUndo(e);
-            }
-            isAwaitingExportConfirmation = false;
+        if (isAwaitingExportConfirmation && isExportListModified) {
+            undoVersionedAddressBookAndCommit();
+        }
+        resetExportConfirmation();
+        resetExportListModified();
+    }
+
+    private void resetExportListModified() {
+        isExportListModified = false;
+    }
+
+    private void resetExportConfirmation() {
+        isAwaitingExportConfirmation = false;
+    }
+
+    private void undoVersionedAddressBookAndCommit() {
+        try {
+            this.versionedAddressBook.undo();
+            this.versionedAddressBook.commitWithoutSavingCurrentState();
+        } catch (EarliestVersionException e) {
+            // Undo will always work as VersionedAddressBook must store at least 2 states: the original AddressBook
+            // and the filtered addressBook.
+            logExportIssuesWithUndo(e);
         }
     }
 
@@ -258,7 +280,7 @@ public class ModelManager implements Model {
 
     @Override
     public void commitAddressBook() {
-        versionedAddressBook.commit();
+        versionedAddressBook.commitCurrentStateAndSave();
     }
 
     //=========== InputHistory Accessors and Modifiers ======================================================

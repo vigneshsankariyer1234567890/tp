@@ -33,7 +33,7 @@ public class VersionedAddressBook extends AddressBook {
         VersionedAddressBook result = new VersionedAddressBook(addressBookStates[0]);
         for (int i = 1; i < addressBookStates.length; i++) {
             result.resetData(addressBookStates[i]);
-            result.commit();
+            result.commitCurrentStateAndSave();
         }
         return result;
     }
@@ -49,7 +49,7 @@ public class VersionedAddressBook extends AddressBook {
         VersionedAddressBook result = new VersionedAddressBook(addressBookStates.get(0));
         for (int i = 1; i < addressBookStates.size(); i++) {
             result.resetData(addressBookStates.get(i));
-            result.commit();
+            result.commitCurrentStateAndSave();
         }
         return result;
     }
@@ -57,9 +57,17 @@ public class VersionedAddressBook extends AddressBook {
     /**
      * Copies over state and persists state to {@code HistoryManager} using {@code HistoryManager#commitAndPush}.
      */
-    public void commit() {
+    public void commitCurrentStateAndSave() {
         AddressBook copyOfAddressBook = new AddressBook(this);
         setAddressBookHistoryManager(addressBookHistoryManager.commitAndPush(copyOfAddressBook));
+        indicateModified();
+    }
+
+    /**
+     * Clears the {@code HistoryManager} after pointer.
+     */
+    public void commitWithoutSavingCurrentState() {
+        setAddressBookHistoryManager(HistoryManager.clearedCopy(addressBookHistoryManager));
         indicateModified();
     }
 
@@ -103,6 +111,10 @@ public class VersionedAddressBook extends AddressBook {
      */
     public boolean canRedo() {
         return addressBookHistoryManager.isRedoable();
+    }
+
+    ReadOnlyAddressBook getMostRecentReadOnlyAddressBook() {
+        return addressBookHistoryManager.peek();
     }
 
     @Override
