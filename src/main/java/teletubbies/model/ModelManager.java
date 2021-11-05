@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import teletubbies.commons.core.GuiSettings;
@@ -96,6 +97,11 @@ public class ModelManager implements Model {
     public void setGuiSettings(GuiSettings guiSettings) {
         requireNonNull(guiSettings);
         userPrefs.setGuiSettings(guiSettings);
+    }
+
+    @Override
+    public void addListener(InvalidationListener listener) {
+        versionedAddressBook.addListener(listener);
     }
 
     @Override
