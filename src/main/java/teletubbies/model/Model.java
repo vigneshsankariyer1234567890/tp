@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.function.Predicate;
 
+import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.Range;
@@ -55,6 +56,11 @@ public interface Model {
      * Sets the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
+
+    /**
+     * Adds a listener.
+     */
+    void addListener(InvalidationListener listener);
 
     /**
      * Returns the user prefs' address book file path.

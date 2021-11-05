@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.Range;
@@ -129,6 +130,11 @@ public class AddCommandTest {
         @Override
         public void setGuiSettings(GuiSettings guiSettings) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+
         }
 
         @Override
