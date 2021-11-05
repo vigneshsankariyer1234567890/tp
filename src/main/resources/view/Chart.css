@@ -11,7 +11,7 @@
 /* Pie Chart background colors and strokes. */
 .chart-title { -fx-text-fill: #fcfcfc !important; -fx-font-size: 1.6em; }
 .chart-pie-label { -fx-fill: #cccccc; -fx-font-size: 1em; -fx-font-weight: bold; }
-.chart-legend { -fx-background-color: #666666; }
+.chart-legend { -fx-background-color: derive(#16305c, 50%); }
 .chart-legend-item { -fx-text-fill: #fcfcfc !important; }
 
 

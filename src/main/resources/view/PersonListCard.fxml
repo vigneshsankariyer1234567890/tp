@@ -32,7 +32,9 @@
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
       </HBox>
-      <Label fx:id="completionStatusLabel" styleClass="tag_status" />
+      <HBox style="-fx-padding: 5 0 0 0">
+        <Label fx:id="completionStatusLabel" styleClass="tag_status" />
+      </HBox>
       <Separator style="-fx-padding: 10 0 0 0" />
       <HBox style="-fx-padding: 10 0 10 0">
         <Label fx:id="phone" style="-fx-padding: 5 10 5 0" styleClass="cell_small_label" text="\$phone" />
