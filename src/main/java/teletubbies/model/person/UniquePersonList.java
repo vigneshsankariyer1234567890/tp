@@ -56,10 +56,11 @@ public class UniquePersonList implements Iterable<Person> {
     /**
      * Adds a person to the list.
      * The person must not already exist in the list.
+     * Phone numbers must also be unique.
      */
     public void add(Person toAdd) {
         requireNonNull(toAdd);
-        if (containsUuid(toAdd) || containsName(toAdd)) {
+        if (containsUuid(toAdd) || containsPhoneNumber(toAdd)) {
             throw new DuplicatePersonException();
         }
         internalList.add(toAdd);
@@ -78,7 +79,7 @@ public class UniquePersonList implements Iterable<Person> {
             throw new PersonNotFoundException();
         }
 
-        if (!target.isSameName(editedPerson) && containsName(editedPerson)) {
+        if (!target.isSamePhoneNumber(editedPerson) && containsPhoneNumber(editedPerson)) {
             throw new DuplicatePersonException();
         }
 
@@ -161,7 +162,7 @@ public class UniquePersonList implements Iterable<Person> {
         for (int i = 0; i < persons.size() - 1; i++) {
             for (int j = i + 1; j < persons.size(); j++) {
                 if (persons.get(i).isSameUuid(persons.get(j))
-                    || persons.get(i).isSameName(persons.get(j))) {
+                    || persons.get(i).isSamePhoneNumber(persons.get(j))) {
                     return false;
                 }
             }
