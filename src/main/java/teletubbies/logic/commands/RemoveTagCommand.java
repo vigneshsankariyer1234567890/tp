@@ -31,7 +31,7 @@ public class RemoveTagCommand extends Command {
             + "Parameters: RANGE (can be hyphen separated or comma separated integers), -n TAGNAME, "
             + "[-v TAGVALUE]\n"
             + "Example: " + COMMAND_WORD + " 1-10 " + PREFIX_NAME + " Assignee "
-            + "[" + CliSyntax.PREFIX_VALUE + " John Doe]\n"
+            + "[" + PREFIX_VALUE + " John Doe]\n"
             + "Note: Tags listed are in the format TAGNAME[: TAGVALUE]";
 
     public static final String MESSAGE_COMPLETED_SUCCESS = "Tag removed from %d entries";
