@@ -13,12 +13,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/gok99.png" width="200px">
 
+[[github]](https://github.com/gok99) [portfolio]
+
 * Role: Developer
 * Responsibilities: Code Quality, Integration
 
 ### Lee Hyung Woon
 
 <img src="images/lhw-1.png" width="200px">
+
+[[github]](https://github.com/lhw-1) [portfolio]
 
 * Role: Developer
 * Responsibilities: Documentation
@@ -27,6 +31,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/skythefire.png" width="200px">
 
+[[github]](https://github.com/skythefire) [[portfolio]](team/skythefire.md)
+
 * Role: Developer
 * Responsibilities: Testing
 
@@ -34,12 +40,16 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/tanqiya.png" width="200px">
 
+[[github]](https://github.com/tanqiya) [portfolio]
+
 * Role: Developer
 * Responsibilities: Deliverables, Deadlines, Scheduling, Tracking
 
 ### Vignesh Sankar Iyer
 
 <img src="images/vigneshsankariyer1234567890.png" width="200px">
+
+[[github]](https://github.com/vigneshsankariyer1234567890) [portfolio]
 
 * Role: Developer
 * Responsibilities: Testing

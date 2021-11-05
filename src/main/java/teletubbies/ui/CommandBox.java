@@ -100,4 +100,14 @@ public class CommandBox extends UiPart<Region> {
         this.commandTextField.setText(text);
     }
 
+    /**
+     * Set caret position of CommandBox
+     *
+     * @param position position of caret
+     */
+    public void setCaretPosition(int position) {
+        this.commandTextField.requestFocus();
+        this.commandTextField.positionCaret(position);
+    }
+
 }

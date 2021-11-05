@@ -14,6 +14,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.Range;
@@ -48,13 +49,16 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_duplicateName_throwsCommandException() {
+    public void execute_duplicateName_successful() throws CommandException {
         Person alice = new PersonBuilder().withPhone("88888888").build();
         Person alice2 = new PersonBuilder().withPhone("99999999").build();
         AddCommand addCommand = new AddCommand(alice);
-        ModelStub modelStub = new ModelStubWithPerson(alice2);
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded(alice2);
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+        CommandResult commandResult = addCommand.execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, alice), commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(alice2, alice), modelStub.personsAdded);
     }
 
     @Test
@@ -129,6 +133,11 @@ public class AddCommandTest {
         @Override
         public void setGuiSettings(GuiSettings guiSettings) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addListener(InvalidationListener listener) {
+
         }
 
         @Override
@@ -294,6 +303,13 @@ public class AddCommandTest {
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
+
+        ModelStubAcceptingPersonAdded(Person person) {
+            requireNonNull(person);
+            personsAdded.add(person);
+        }
+
+        public ModelStubAcceptingPersonAdded() { }
 
         @Override
         public boolean hasName(Person person) {

@@ -9,6 +9,7 @@ import java.util.List;
 import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.index.Index;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Remark;
@@ -20,8 +21,10 @@ public class RemarkCommand extends Command {
 
     public static final String COMMAND_WORD = "remark";
 
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_REMARK);
+
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the person identified "
-            + "by the index number used in the last person listing. "
+            + "by the index number used in the current contact list. "
             + "Existing remark will be overwritten by the input.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_REMARK + " REMARK\n"
@@ -29,8 +32,8 @@ public class RemarkCommand extends Command {
             + PREFIX_REMARK + " Likes to swim.";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
-    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to Person: %1$s";
-    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from Person: %1$s";
+    public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to person: %1$s";
+    public static final String MESSAGE_DELETE_REMARK_SUCCESS = "Removed remark from person: %1$s";
 
     private final Index index;
     private final Remark remark;
