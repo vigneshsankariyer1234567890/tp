@@ -98,6 +98,7 @@ public class MainWindow extends UiPart<Stage> {
                     break;
                 default: /**/
                 }
+                commandBox.setCaretPosition(commandBox.getText().length());
             }
         });
 

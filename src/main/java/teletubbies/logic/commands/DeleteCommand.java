@@ -1,12 +1,14 @@
 package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_INDEX;
 
 import java.util.List;
 
 import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.index.Index;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.parser.Prefix;
 import teletubbies.model.Model;
 import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
@@ -17,6 +19,8 @@ import teletubbies.model.person.Phone;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
+
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_INDEX);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person with the given phone number or the index used in the displayed person list.\n"
