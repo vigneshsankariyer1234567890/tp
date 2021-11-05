@@ -68,7 +68,6 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     public void setUserProfile(UserProfile userProfile) throws UserRoleSetException {
         requireNonNull(userProfile);
-        System.out.println(isProfileSet);
         if (this.isProfileSet) {
             throw new UserRoleSetException();
         }
