@@ -652,4 +652,11 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 2. Transfer the data file of your current Teletubbies folder to the other computer.
 3. Overwrite the empty data file that Teletubbies creates in the other computer with the data file that you transferred over.
 
+**Q** How do I change my role after setting it once?<br>
+**A**:
+1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
+2. Delete `preferences.json`, and start Teletubbies again.
+3. Now, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
+
+
 --------------------------------------------------------------------------------------------------------------------
