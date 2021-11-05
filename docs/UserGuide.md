@@ -636,7 +636,7 @@ For importing a separate JSON file into the application, refer to [Importing con
 
 #### Editing the data
 
-Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubbies-ddmmyyyy-hhmm.json`. Advanced users are welcome to update data directly by editing that data file.
+Teletubbies will save the data as a JSON file `[JAR file location]/data/teletubbies.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: Caution:
 If your changes to the data file makes its format invalid, Teletubbies will discard all data and start with an empty data file at the next run!
