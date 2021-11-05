@@ -620,7 +620,7 @@ the chart will update automatically!
 
 #### Convenience features
 
-You can use the **[UP]** and **[DOWN]** arrows to navigate the command history, and the **[TAB]** command to autocomplete after a command word if the command has compulsory flags.
+You can use the **[UP]** and **[DOWN]** arrows to navigate the command history, and the **[TAB]** command to autocomplete after a command word for recommended command flags.
 
 ##### Saving the data
 
