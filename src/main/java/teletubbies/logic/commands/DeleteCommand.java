@@ -14,14 +14,14 @@ import teletubbies.model.person.Person;
 import teletubbies.model.person.Phone;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a person identified using it's displayed index from the contact list.
  */
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person with the given phone number or the index used in the displayed person list.\n"
+            + ": Deletes the person with the given phone number or the index used in the contact list.\n"
             + "Parameters: "
             + PREFIX_PHONE + " PHONE_NUMBER (must be a valid phone number) or "
             + PREFIX_INDEX + " INDEX (must be a positive integer)\n"
