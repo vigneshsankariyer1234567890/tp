@@ -12,6 +12,7 @@ import teletubbies.commons.core.UserProfile.Role;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.IllegalValueException;
 import teletubbies.commons.exceptions.LatestVersionException;
+import teletubbies.commons.exceptions.UserRoleSetException;
 import teletubbies.model.person.Person;
 
 /**
@@ -34,7 +35,7 @@ public interface Model {
     /**
      * Replaces user profile data with the data in {@code userProfile}.
      */
-    void setUserProfile(UserProfile userProfile);
+    void setUserProfile(UserProfile userProfile) throws UserRoleSetException;
 
     /**
      * Returns the user profile.

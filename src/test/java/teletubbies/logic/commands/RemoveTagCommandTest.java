@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import teletubbies.commons.core.Range;
 import teletubbies.commons.core.UserProfile;
 import teletubbies.commons.exceptions.IllegalValueException;
+import teletubbies.commons.exceptions.UserRoleSetException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
@@ -26,8 +27,8 @@ class RemoveTagCommandTest {
     private UserPrefs userPrefs = new UserPrefs();
 
     @Test
-    void execute_supervisor_success() throws IllegalValueException, CommandException {
-        userPrefs.setUserProfile(supervisorProfile);
+    void execute_supervisor_success() throws CommandException {
+        // userPrefs.setUserProfile(supervisorProfile);
         Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), userPrefs);
 
         RemoveTagCommand command = new RemoveTagCommand(
