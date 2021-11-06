@@ -44,7 +44,9 @@ Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut
 :x: : Error / Avoid <br/>
 
 <div markdown="block" class="alert alert-info">
-:information_source: Information block
+
+**:information_source: Information block**<br>
+
 * We use these blocks to enhance the readability of this guide!
 </div>
 
@@ -94,7 +96,7 @@ These are all the available commands in *Teletubbies*.
 To navigate to the section for each command, click on the hyperlinked commands in the left column. 
 The sections outline the detailed usage and examples for each of the command.
 
-Command | Format
+System commands | Format
 --------|------------------
 **[help](#viewing-help--help)** | `help`
 **[import](#importing-contacts--import)** | `import`
@@ -105,6 +107,9 @@ Command | Format
 **[undo](#undoing-your-previous-commands--undo)** | `undo`
 **[redo](#redoing-your-previous-commands--redo)** | `redo`
 **[exit](#exiting-the-program--exit)** | `exit`
+
+Contact commands | Format
+--------|------------------
 **[add](#adding-a-contact-add)** | `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL]`
 **[delete](#deleting-a-contact--delete)** | `delete -p PHONE_NUMBER` or `delete -i INDEX`
 **[edit](#editing-a-contact--edit)** | `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS]`
@@ -114,6 +119,9 @@ Command | Format
 **[tag <br>(multiple contacts)](#tagging-and-removing-tags-from-multiple-contacts)** | `tag INDEX [,INDEX]…​ -n TAGNAME [-v VALUE] [-s]` <br> `tag START-END -n TAGNAME [-v VALUE] [-s]`
 **[tagrm <br>(multiple contacts)](#tagging-and-removing-tags-from-multiple-contacts)** | `tagrm INDEX [,INDEX]…​ -n TAGNAME [-v VALUE]` <br> `tagrm START-END -n TAGNAME [-v VALUE]`
 **[remark](#adding-a-remark-to-a-contact--remark)** | `remark INDEX -r REMARK`
+
+List commands | Format
+--------|------------------
 **[list](#listing-all-contacts--list)** | `list`
 **[find](#locating-contacts-by-name-find)** | `find KEYWORD [KEYWORD]…​`
 **[filter](#filtering-contact-list-filter)** | `filter -t TAGNAME[:TAGVALUE] [-t TAGNAME[:TAGVALUE]]…​ `
@@ -197,10 +205,7 @@ If the format of the selected data file is invalid, Teletubbies will start with 
 #### Merging contacts : `merge`
 
 The `merge` command is a special kind of importing, and it will help you to merge a set of customer contact data 
-with the current data inside the application. 
-
-**This command should only be used if you are sure that you want to combine the new data to be imported with 
-the current data in the application. The new data will overwrite the current data, so be careful!**
+with the current data inside the application.
 
 You can issue this command by either typing it into the CLI (`merge`), or going to the menu bar at the top and
 selecting `File -> Merge`. Once the command is issued, *Teletubbies* will open a file selector window as shown below.
@@ -210,6 +215,11 @@ The data to be imported and merged must be a JSON file, with the file extension 
 ![import_file](images/userGuide/importFile.jpg)
 
 Format: `merge`
+
+<div markdown="span" class="alert alert-warning">:exclamation: Caution:
+This command should only be used if you are sure that you want to combine the new data to be imported with 
+the current data in the application. The new data will overwrite the current data, so be careful!
+</div>
 
 #### Exporting contacts: `export`
 
@@ -241,7 +251,7 @@ Examples:
 * `export -t friends`
 > This command will export all contacts containing the "friends" tag.
 * `export -t friends -t family`
-> This command will export all contacts containing BOTH the "friends" tag and the "family" tag.
+> This command will export all contacts containing BOTH the "friends" tag, and the "family" tag.
 
 #### Setting your profile: `profile`
 
@@ -274,16 +284,22 @@ Examples:
 
 #### Listing your previous commands : `history`
 
-The `history` command will help you to view all the commands that have been issued by you in the current session.
-
-Here, when we say "in the current session", it refers to the duration from the time you start up *Teletubbies* to the time
-you close / exit *Teletubbies*. Once you close or exit *Teletubbies*, your session will end, and the command history will be
-reset. The next time you start up *Teletubbies*, you will not be able to access the command history from your
-previous session.
+The `history` command will help you to view all the commands that have been issued by you in the **current session**.
 
 The commands will be displayed in order from the most recently issued command to the earliest issued command.
 
 Format: `history`
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Commands that will be displayed:**<br>
+
+The **current session** refers to the duration from the time you start up *Teletubbies* to the time
+you close / exit *Teletubbies*. Once you close or exit *Teletubbies*, your session will end, and the command history will be
+reset. The next time you start up *Teletubbies*, you will not be able to access the command history from your
+previous session.
+
+</div>
 
 #### Undoing your previous commands : `undo`
 
@@ -333,7 +349,7 @@ These commands are related to the contacts stored in *Teletubbies*. The commands
 When dealing with contacts in *Teletubbies*, you will often have to use something called the **index**
 of the contact. 
 
-To find out what the contact's index is, use the [List](#listing-all-contacts-list) feature to
+To find out what the contact's index is, use the [List](#listing-all-contacts--list) feature to
 find what number the contact is associated with in the contact list. 
 
 The index
@@ -369,10 +385,10 @@ Examples:
 > This command will add the contact details for "Betsy Crowe", with their phone number as "12345678".
 * `add -n John Doe -p 87654321 -a John Street, Block 123, #01-01`
 > This command will add the contact details for "John Doe", with their phone number as "87654321". It will
-> also add their address as "John Street, block 123, #01-01".
+> also add their address as "John Street, Block 123, #01-01".
 * `add -n John Snoe -p 98765432 -a Wall Street, Block 234, #08-06 -e johns@example.com`
 > This command will add the contact details for "John Snoe", with their phone number as "98765432". It will 
-> also add their address as "Wall Street, block 234, #08-06", and their email address as "johns@example.com".
+> also add their address as "Wall Street, Block 234, #08-06", and their email address as "johns@example.com".
 
 #### Deleting a contact : `delete`
 
@@ -419,11 +435,11 @@ Examples:
 The `done` command will help you to mark a contact's completion status in *Teletubbies*. Here, when we say "completion status",
 we will leave it up to your company to decide exactly what each of the levels of completion status mean.
 
-Regardless, *Teletubbies* provide three different levels of completion status: Incomplete, Ongoing, and Complete. Take note that
+Regardless, *Teletubbies* provide three different levels of completion status: **Incomplete**, **Ongoing**, and **Complete**. Take note that
 a contact can only be marked with at most one out of the three. You can't have a contact be complete and ongoing at the same time!
 **The status is indicated in each of the contact details using a tag and a progress bar.**
 
-You can mark a contact with any of the three levels using the index of the contact. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
+You can mark a contact with any of the three levels using the **index** of the contact. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
 You will also be able to see the total level of completion status for a list of customers using the "Your Progress" tab, which displays
 the information using a chart. Refer to [Progress Chart](#progress-chart) for more details.
@@ -444,7 +460,7 @@ The `tag` command will help you to **tag** certain contacts with a tag of your c
 our tags are very flexible: They can be single words, or a category. So for example, you can tag a contact
 with "friend", or tag a contact with the category "status: not answering", etc. It's up to you!
 
-Before we talk about tagging, do note that there is a special category of tag, which is the **completion status**. 
+Do note that there is a special category of tag, which is the **completion status**. 
 This tag cannot be added, edited or removed by the `tag` command or the `tagrm` command, and is only changeable using
 the `done` command. Please refer to [Marking a contact as completed](#marking-a-contact-as-completed-done).
 
@@ -454,8 +470,8 @@ If you don't know what the index is, refer to [Finding the index](#finding-the-i
 
 Take note that contacts cannot have tags with duplicate names. So, if you have a contact that is already tagged,
 and you decide to tag it again with the same **name** but different **value**, the new **value** will replace the old
-one! For example, if I had a contact tagged with `Friend: good`, and I tagged that same contact using another tag with
-the **name** "Friend" and the **value** "close", the pre-existing tag will be updated from `Friend: good` to `Friend: close`.
+one! For example, if a contact tagged with `Friend: good`, and is tagged using another tag with the **name** "Friend" 
+and the **value** "close", the pre-existing tag will be updated from `Friend: good` to `Friend: close`.
 
 Finally, there is an additional parameter that is only available to supervisors. When you add a `-s` at the end 
 of your tagging command, it will make sure that only supervisors are able to edit or remove that tag!
@@ -499,7 +515,7 @@ Examples:
 
 Sometimes, you may need to assign the same tag to more than just one contact, or remove the same tag from more than just one contact.
 
-Well, you can use the `tag` and the `tagrm` commands to do so! Just specify a **range of numbers** as the index rather than a single number.
+You can use the `tag` and the `tagrm` commands to do so! Just specify a **range of numbers** as the index rather than a single number.
 
 Format (`tag`): `tag INDEX [,INDEX]…​ -n TAGNAME [-v VALUE] [-s]`
 
@@ -536,9 +552,6 @@ of the tags - the feature is for you to add extra information to a contact that 
 To specify which contact to add a remark to, use the index of the contact. If you don't know what the index is, 
 refer to [Finding the index](#finding-the-index).
 
-Note that a contact can only have a maximum of **one** remark. If a contact already has a remark, any new remark added 
-will replace the pre-existing remark.
-
 Format: `remark INDEX -r REMARK`
 
 Examples:
@@ -549,6 +562,13 @@ Examples:
 > The first command will add the remark `Not answering any calls` to the second contact in the list. The second command 
 > will then add the new remark `Need to call back for confirmation` to the second contact in the list, which will replace the
 > old remark `Not answering any calls`.
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Only one remark allowed per contact:**<br>
+A contact can only have a maximum of **one** remark. If a contact already has a remark, any new remark added
+will replace the existing remark.
+</div>
 
 ### List commands
 
@@ -574,8 +594,7 @@ The `find` command will help you find the relevant contacts using the given keyw
 display to show only the contacts whose **names** contain the given keyword(s).
 
 When *Teletubbies* searches the contacts using the given keyword(s), it will only look at the **names**
-of the contacts, not the **addresses** or the **email addresses**. The search process is case-insensitive,
-meaning that if a keyword `hans` is given, a contact with the name `Hans` may be returned.
+of the contacts, not the **addresses** or the **email addresses**. 
 
 The order of the keywords given does not matter, and any contact whose **name** contains any one of the
 keywords will be returned. However, *Teletubbies* will consider the keywords as full words, meaning that
@@ -590,9 +609,18 @@ Format: `find KEYWORD [KEYWORD]…​`
 
 Examples:
 * `find John`
-> This command will return all contacts whose names contain "John", such as `John`, `john`, or `John Doe`. As mentioned above, it is case-insensitive.
+> This command will return all contacts whose names contain "John", such as `John`, `john`, or `John Doe`. As mentioned below, it is case-insensitive.
 * `find alex david`
 > This command will return all contacts whose names contain "alex" or "david" in no particular order, such as `Alex Yeoh`, `david li`, or `David alex`.
+
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Keywords are case-insensitive:**<br>
+
+The search process is case-insensitive, meaning that if a keyword `hans` is given, a contact with the name `Hans` may 
+be returned.
+</div>
 
 #### Filtering contact list: `filter`
 
@@ -600,11 +628,17 @@ The `filter` command will help you filter the current contact list using the giv
 display to show only the contacts that are tagged with the given tag(s).
 
 When issuing the `filter` command, you should specify at least one **tag name**. Tag values are optional, but can help to further narrow
-your filter if necessary. Tag name and tag value are case-sensitive. This means that the following tags are different:
+your filter if necessary. 
 
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Tag name and tag value are case-sensitive:**<br>
+This means that the following tags are different:
 - `assignee: john`
 - `assignee: John`
 - `Assignee: John`
+
+</div>
 
 Format: `filter -t TAGNAME[:TAGVALUE] [-t TAGNAME[:TAGVALUE]]…​ `
 
@@ -621,11 +655,13 @@ Examples:
 
 #### Clearing all entries : `clear`
 
-The `clear` command will help you clear all contacts from the Teletubbies application. 
-
-Do NOT issue this command unless you are absolutely sure that you want to clear the list.
+The `clear` command will help you clear all contacts from the Teletubbies application.
 
 Format: `clear`
+
+<div markdown="span" class="alert alert-warning">:exclamation: Caution:
+Do NOT issue this command unless you are absolutely sure that you want to clear the list.
+</div>
 
 ### Other features
 
