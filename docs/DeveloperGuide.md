@@ -270,7 +270,7 @@ The following sequence diagram shows how the `import` operation works:
     * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
     * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags.
 
-### Profile feature
+### Profile Feature
 
 #### Implementation
 
@@ -296,7 +296,7 @@ The following sequence diagram shows how the `profile` operation works:
     * Pros: Allows users to change their name alone without having to enter role as well.
     * Cons: The cost of implementation is not heavily outweighed by the explicit need for the feature, as there should be infrequent changes in the user's name.
 
-### Mark contacts as done feature
+### Mark Contacts as Done Feature
 
 #### Implementation
 
@@ -307,7 +307,7 @@ The following sequence diagram shows how the `done` operation works:
 
 ![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
 
-### Delete contacts feature
+### Delete Contacts Feature
 
 The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
 The user can delete a contact via a `delete -i 1` or `delete -p 87654321` input.
@@ -318,7 +318,7 @@ The following activity diagram summarizes what happens when a user executes a de
 
 ![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
 
-#### Design considerations
+#### Design Considerations
 
 **Aspect: Parameters of the `delete` command**
 
