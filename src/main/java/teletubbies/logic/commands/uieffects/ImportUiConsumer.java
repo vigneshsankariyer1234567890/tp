@@ -1,4 +1,4 @@
-package teletubbies.logic.commands.uiEffects;
+package teletubbies.logic.commands.uieffects;
 
 import static java.util.Objects.requireNonNull;
 import static teletubbies.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;

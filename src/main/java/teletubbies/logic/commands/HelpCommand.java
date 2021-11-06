@@ -2,9 +2,8 @@ package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import teletubbies.logic.commands.uiEffects.HelpUiConsumer;
+import teletubbies.logic.commands.uieffects.HelpUiConsumer;
 import teletubbies.model.Model;
-import teletubbies.ui.MainWindow;
 
 /**
  * Format full help instructions for every command for display.

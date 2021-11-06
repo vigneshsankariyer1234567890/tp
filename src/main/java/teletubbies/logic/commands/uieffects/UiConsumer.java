@@ -1,4 +1,4 @@
-package teletubbies.logic.commands.uiEffects;
+package teletubbies.logic.commands.uieffects;
 
 import teletubbies.commons.exceptions.DataConversionException;
 import teletubbies.commons.util.ThrowingConsumer;

@@ -2,19 +2,12 @@ package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 import teletubbies.commons.core.LogsCenter;
-import teletubbies.commons.exceptions.DataConversionException;
 import teletubbies.logic.commands.exceptions.CommandException;
-import teletubbies.logic.commands.uiEffects.ImportUiConsumer;
+import teletubbies.logic.commands.uieffects.ImportUiConsumer;
 import teletubbies.model.Model;
-import teletubbies.model.ReadOnlyAddressBook;
-import teletubbies.storage.JsonAddressBookStorage;
-import teletubbies.ui.MainWindow;
 
 /**
  * Imports new file of contacts specified by user and replaces address book.

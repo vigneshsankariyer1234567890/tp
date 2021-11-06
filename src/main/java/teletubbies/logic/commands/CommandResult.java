@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import teletubbies.commons.exceptions.DataConversionException;
 import teletubbies.logic.commands.exceptions.CommandException;
-import teletubbies.logic.commands.uiEffects.UiConsumer;
+import teletubbies.logic.commands.uieffects.UiConsumer;
 import teletubbies.ui.MainWindow;
 
 /**
