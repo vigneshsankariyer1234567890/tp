@@ -95,11 +95,11 @@ public class PersonCard extends UiPart<Region> {
         switch (person.getCompletionStatus().status) {
         case COMPLETE:
             completionStatusTag.setProgress(1.0);
-            completionStatusLabel.setStyle("-fx-background-color: #36c42c;");
+            completionStatusLabel.setStyle("-fx-background-color: #237a1d;");
             break;
         case ONGOING:
             completionStatusTag.setProgress(0.5);
-            completionStatusLabel.setStyle("-fx-background-color: #ffb23c;");
+            completionStatusLabel.setStyle("-fx-background-color: #e0872d;");
             break;
         default:
             completionStatusTag.setProgress(0.0);
