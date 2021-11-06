@@ -13,6 +13,10 @@ import javafx.beans.Observable;
  * (located in commons/util).
  */
 public class InvalidationListenerManager {
+    //@@author pyokagan and Zhiyuan-Amos
+    // Reused from InvalidationListenerManager.java located in
+    // /src/main/java/seedu/address/commons/util/InvalidationListenerManager.java
+    // in https://github.com/se-edu/addressbook-level4 with minor modifications
     private final ArrayList<InvalidationListener> listeners = new ArrayList<>();
 
     /**
@@ -46,4 +50,5 @@ public class InvalidationListenerManager {
         requireNonNull(listener);
         listeners.remove(listener);
     }
+    //@@author pyokagan and Zhiyuan-Amos
 }
