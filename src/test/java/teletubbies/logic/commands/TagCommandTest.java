@@ -26,7 +26,7 @@ class TagCommandTest {
 
     @Test
     void execute_supervisor_success() throws CommandException {
-        userPrefs.setUserProfile(supervisorProfile);
+        // userPrefs.setUserProfile(supervisorProfile);
         Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), userPrefs);
 
         TagCommand command = new TagCommand(

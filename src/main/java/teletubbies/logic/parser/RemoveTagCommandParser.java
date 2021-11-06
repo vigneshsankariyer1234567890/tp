@@ -3,7 +3,7 @@ package teletubbies.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.Range;
@@ -25,19 +25,24 @@ public class RemoveTagCommandParser implements Parser<RemoveTagCommand> {
         requireNonNull(args);
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME);
         String preambleString = argumentMultimap.getPreamble();
-        if (preambleString.isEmpty()) {
+
+        if (!arePrefixesPresent(argumentMultimap, PREFIX_NAME) || preambleString.isEmpty()) {
             throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     RemoveTagCommand.MESSAGE_USAGE));
         }
 
+        String tagName = argumentMultimap.getValue(PREFIX_NAME).get();
         Range personRange = ParserUtil.parseRange(preambleString);
 
-        Optional<String> optTagName = argumentMultimap.getValue(PREFIX_NAME);
-        if (optTagName.isEmpty()) {
-            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                    RemoveTagCommand.MESSAGE_USAGE));
-        }
-
-        return new RemoveTagCommand(personRange, optTagName.get());
+        return new RemoveTagCommand(personRange, tagName);
     }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
 }

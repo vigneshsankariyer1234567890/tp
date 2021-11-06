@@ -9,6 +9,7 @@ import java.util.Objects;
 import teletubbies.commons.core.GuiSettings;
 import teletubbies.commons.core.UserProfile;
 import teletubbies.commons.core.UserProfile.Role;
+import teletubbies.commons.exceptions.UserRoleSetException;
 
 /**
  * Represents User's preferences.
@@ -17,7 +18,8 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
     private UserProfile userProfile = new UserProfile();
-    private Path addressBookFilePath = Paths.get("data" , "addressbook.json");
+    private boolean isProfileSet = false;
+    private Path addressBookFilePath = Paths.get("data" , "teletubbies.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -37,8 +39,11 @@ public class UserPrefs implements ReadOnlyUserPrefs {
      */
     public void resetData(ReadOnlyUserPrefs newUserPrefs) {
         requireNonNull(newUserPrefs);
+        // We bypass setUserProfile to bypass the side
+        // effects on isProfileSet of using it
+        this.isProfileSet = newUserPrefs.isProfileSet();
+        this.userProfile = newUserPrefs.getUserProfile();
         setGuiSettings(newUserPrefs.getGuiSettings());
-        setUserProfile(newUserPrefs.getUserProfile());
         setAddressBookFilePath(newUserPrefs.getAddressBookFilePath());
     }
 
@@ -56,8 +61,17 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         return userProfile;
     }
 
-    public void setUserProfile(UserProfile userProfile) {
+    @Override
+    public boolean isProfileSet() {
+        return this.isProfileSet;
+    }
+
+    public void setUserProfile(UserProfile userProfile) throws UserRoleSetException {
         requireNonNull(userProfile);
+        if (this.isProfileSet) {
+            throw new UserRoleSetException();
+        }
+        this.isProfileSet = true;
         this.userProfile = userProfile;
     }
 
@@ -99,6 +113,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings);
         sb.append("\nLocal data file location : " + addressBookFilePath);
+        sb.append("\nUser profile is set:" + isProfileSet);
         return sb.toString();
     }
 }

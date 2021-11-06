@@ -5,7 +5,6 @@ import static teletubbies.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_PHONE;
-import static teletubbies.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.List;
 
@@ -21,26 +20,23 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_PHONE);
+    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+            PREFIX_ADDRESS);
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the contact list. "
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + PREFIX_NAME + " NAME "
+            + PREFIX_PHONE + " PHONE "
+            + "[" + PREFIX_EMAIL + " EMAIL] "
+            + "[" + PREFIX_ADDRESS + " ADDRESS] \n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_NAME + "John Doe "
-            + PREFIX_PHONE + "98765432 "
-            + PREFIX_EMAIL + "johnd@example.com "
-            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_NAME + " John Doe "
+            + PREFIX_PHONE + " 98765432 "
+            + PREFIX_EMAIL + " johnd@example.com "
+            + PREFIX_ADDRESS + " 311, Clementi Ave 2, #02-25 ";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
-    public static final String MESSAGE_DUPLICATE_PHONE_NUMBER = "This phone number already exists in the address book";
+    public static final String MESSAGE_DUPLICATE_PHONE_NUMBER = "This phone number already exists in the contact list";
 
     private final Person toAdd;
 
@@ -56,10 +52,6 @@ public class AddCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         model.cancelPendingExport();
-
-        if (model.hasName(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
 
         if (model.hasPhoneNumber(toAdd)) {
             throw new CommandException(MESSAGE_DUPLICATE_PHONE_NUMBER);

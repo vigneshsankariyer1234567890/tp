@@ -5,7 +5,7 @@ import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_SUPERVISOR_FLAG;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_VALUE;
 
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import teletubbies.commons.core.Messages;
 import teletubbies.commons.core.Range;
@@ -28,22 +28,27 @@ public class TagCommandParser implements Parser<TagCommand> {
         ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME,
                 PREFIX_VALUE, PREFIX_SUPERVISOR_FLAG);
         String preambleString = argumentMultimap.getPreamble();
-        if (preambleString.isEmpty()) {
+
+        if (!arePrefixesPresent(argumentMultimap, PREFIX_NAME) || preambleString.isEmpty()) {
             throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
                     TagCommand.MESSAGE_USAGE));
         }
+
+        String tagName = argumentMultimap.getValue(PREFIX_NAME).get();
+        String tagValue = argumentMultimap.getValue(PREFIX_VALUE).orElse("");
+        boolean supervisorFlag = argumentMultimap.getAllValues(PREFIX_SUPERVISOR_FLAG).isPresent();
 
         Range personRange = ParserUtil.parseRange(preambleString);
 
-        Optional<String> tagName = argumentMultimap.getValue(PREFIX_NAME);
-        if (tagName.isEmpty()) {
-            throw new ParseException(String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT,
-                    TagCommand.MESSAGE_USAGE));
-        }
-        String tagValue = argumentMultimap.getValue(PREFIX_VALUE).orElse("");
-
-        boolean supervisorFlag = argumentMultimap.getAllValues(PREFIX_SUPERVISOR_FLAG).isPresent();
-
-        return new TagCommand(personRange, tagName.get(), tagValue, supervisorFlag);
+        return new TagCommand(personRange, tagName, tagValue, supervisorFlag);
     }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
 }
