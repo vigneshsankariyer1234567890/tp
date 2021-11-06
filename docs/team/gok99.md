@@ -17,18 +17,18 @@ Given below are my contributions to the project.
       * Justification: Tags would be significantly more useful, if tagged users can easily be exported in batch. For example, a supervisor might want to export all contacts assigned to their employee Joanne.
 
 * **Auto-complete feature**:
-    * Users can press the [TAB] key after typing the name of a command to autofill recommended flags for the command.
+    * Users can press the [TAB] key after typing the name of a command to autofill recommended flags for the command. (Pull request [\#87](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/87), [\#167](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/167))
       * Justification: Typing out flags for a command can be cumbersome. Autofill speeds up this process and allows users to avoid looking up the help message.
 
 * **GUI key bindings**:
-    * Set-up key bindings for [UP], [DOWN] (for command history) and [TAB] (for autocomplete) keys, to trigger actions on key-presses.
+    * Set-up key bindings for [UP], [DOWN] (for command history) and [TAB] (for autocomplete) keys, to trigger actions on key-presses. (Pull request [\#84](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/84))
     
 * **Enhancements to existing features**:
     * Improved Tag feature (as mentioned above) 
     * Improved workflow for creating commands with UI effects, with the help of `UiConsumer` which encapsulates changes to the UI (like a window pop-up), and reduces the overhead for generating new UI effects. (Pull requests [\#43](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/43), [\#182](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/182))
-
-
+    
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2122s1.github.io/tp-dashboard/?search=gok99&sort=groupTitle&sortWithin=title&since=2021-09-17&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=false&tabOpen=true&tabType=authorship&tabAuthor=gok99&tabRepo=AY2122S1-CS2103T-W15-4%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false)
+
 
 * **Project Management**:
     * Managed release `v1.2` on github
