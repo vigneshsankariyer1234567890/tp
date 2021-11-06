@@ -5,8 +5,8 @@
 
 .list-cell:empty {
     /* Empty cells will not have alternating colours */
-    -fx-background: #1d3e75;
-    -fx-border-color: #1d3e75;
+    -fx-background: #291d75;
+    -fx-border-color: #291d75;
 }
 
 .tag-selector {
@@ -21,6 +21,6 @@
 }
 
 .separator .line {
-    -fx-border-color: #6986b5;
+    -fx-border-color: #8969b5;
     -fx-border-width: 1;
 }
