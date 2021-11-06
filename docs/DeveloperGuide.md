@@ -299,7 +299,7 @@ The following activity diagram summarizes what happens when a user executes a pr
 
 ![ProfileActivityDiagram](images/ProfileActivityDiagram.png)
 
-The following sequence diagram further elaborates on how the `profile` operation works:
+The following sequence diagram further illustrates how the `profile` operation works:
 
 ![ProfileSequenceDiagram](images/ProfileSequenceDiagram.png)
 
@@ -314,9 +314,20 @@ The following sequence diagram further elaborates on how the `profile` operation
     * Pros: Ensures that both name and role are accounted for when changing the profile.
     * Cons: Both fields must be entered for the user to set the profile, which can be tedious if it has to be done multiple times.
 
-* **Alternative 2 (possible future implementation):** Profile can be set with only the name, or both name and role.
+* **Alternative 2:** Profile can be set with only the name, or both name and role.
     * Pros: Allows users to change their name alone without having to enter role as well.
     * Cons: The cost of implementation is not heavily outweighed by the explicit need for the feature, as there should be infrequent changes in the user's name.
+
+**Aspect: Number of times the user's profile can be set**
+
+* **Alternative 1 (current choice):** Profile can only be set once per user, excluding any undo.
+    * Pros: Ensures that users are unable to switch between telemarketer and supervisor functionalities. In the case where
+the user has misspelt their name, they can still use the undo command to revert back and re-enter the name for their profile.
+    * Cons: The user is unable to set their profile again in the case where their name or role has changed.
+
+* **Alternative 2:** No limits are placed on the number of times the user is able to set their profile.
+    * Pros: Allows users to change their name or role as needed, hassle-free.
+    * Cons: There is no explicit need for the feature, as there should be infrequent changes in the user's name and role.
 
 ### Mark contacts as done feature
 
