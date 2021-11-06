@@ -295,11 +295,11 @@ The following sequence diagram shows how the `import` operation works:
 Setting the user's profile is facilitated through the `ProfileCommand` and the `ProfileCommandParser` class, which
 parses the user's input to create a new `UserProfile` object to be set in the current `Model` component.
 
-The following activity diagram summarizes what happens when a user executes a profile command:
+The following activity diagram summarizes what happens when a user executes a `profile` command:
 
 ![ProfileActivityDiagram](images/ProfileActivityDiagram.png)
 
-The following sequence diagram further illustrates how the `profile` operation works:
+The following sequence diagram further illustrates how the `profile` command operation works:
 
 ![ProfileSequenceDiagram](images/ProfileSequenceDiagram.png)
 
@@ -328,6 +328,18 @@ the user has misspelt their name, they can still use the undo command to revert 
 * **Alternative 2:** No limits are placed on the number of times the user is able to set their profile.
     * Pros: Allows users to change their name or role as needed, hassle-free.
     * Cons: There is no explicit need for the feature, as there should be infrequent changes in the user's name and role.
+
+### Profile feature - Reset profile
+
+#### Implementation
+
+As stated above, users are only able to set their profile **once** using the `profile` command. 
+However, there may be times when there is a need for the users to change their name and/or role. In such circumstances,
+it is possible for the users to reset their profile by manually deleting `preferences.json`.
+
+The following activity diagram summarizes what happens when a user deletes `preferences.json`:
+
+![ProfileResetActivityDiagram](images/ProfileResetActivityDiagram.png)
 
 ### Mark contacts as done feature
 
