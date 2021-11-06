@@ -39,12 +39,12 @@ Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which strea
 within the application by centralising the entering of commands in a single text input window.
 
 #### _Seamless Data Integration_
-Teletubbies allows telemarketers and their supervisors to share and merge data seamlessly. Synchronization of customer 
+Teletubbies allows telemarketers, and their supervisors to share and merge data seamlessly. Synchronization of customer 
 data between telemarketers and their supervisors is often a necessary aspect of their job, and Teletubbies provides
 avenues to make this process easy and hassle-free.
 
 #### _Data Safety and Recoverability_
-With a large number of contacts stored in a contact list, it is vital that the user’s current progress is saved 
+With many contacts stored in a contact list, it is vital that the user’s current progress is saved 
 frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved 
 after each command issued by the user.
 
@@ -62,25 +62,6 @@ components of the application such as the `Logic`, `UI`, `Model`, and `Storage` 
 Along with the strict adherence to software design principles, such as **Single Responsibility** and
 **Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies 
 without having to deal with tedious side-effects.
-
-### **Glossary**
-**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
-
-**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
-
-**_User stories_**: Simple descriptions of features told from the perspective of the user.
-
-**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact 
-has been contacted.
-
-**_Role_**: Users are assigned either the role of telemarketer or supervisor.
-
-**_Single Responsibility Principle_**:  A software engineering principle that states that every module, class or 
-function in a computer program should be responsible for and encapsulate only a single part of 
-the program’s functionality.
-
-**_Separation of Concerns Principle_**: A software engineering principle that states that programs should be separated 
-into distinct sections which address concerns, or sets of information that affects the code of a computer program.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -122,7 +103,7 @@ The rest of the App consists of four components.
 
 #### How the architecture components interact with each other
 
-The Sequence Diagram below outlines how the components interact with each other, in a scenario where the user issues the command `delete p/87654321`.
+The Sequence Diagram below outlines how the components interact with each other, in a scenario where the user issues the command `delete -p 87654321`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -177,7 +158,8 @@ interface that allows the commands to access the functionality of `MainWindow`. 
 set-up:
 
 ```java
-return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
+return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, 
+        MainWindow::handleHelp);
 ```
 
 If the `UiEffect` type (the second constructor argument) does not exist for any new command that gets added, this
@@ -192,9 +174,9 @@ these classes, especially if new commands are added in.
 The implementation of the consumer interface instead allows these UI effects to be open for extension and closed for modification.
 Now, specific UI effects can be specified within the respective command, without having to change the code in `MainWindow` that handles the command's UI effect.
 
-The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete p/87654321")` API call.
+The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete -p 87654321")` API call.
 
-![Interactions Inside the Logic Component for the `delete p/87654321` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `delete -p 87654321` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -217,7 +199,7 @@ Similarly, all `XYZCommand` classes inherit from the `Command` class.
 
 Here's a (partial) class diagram of the `Model` component:
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.png" width="700" />
 
 
 The `Model` component,
@@ -328,9 +310,9 @@ The following sequence diagram shows how the `done` operation works:
 ### Delete contacts feature
 
 The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
-The user can delete a contact via a `delete i/1` or `delete p/87654321` input.
-* delete using a contact's displayed index number by using the `i/` prefix.'
-* delete using a contact's phone number by using the `p/` prefix.
+The user can delete a contact via a `delete -i 1` or `delete -p 87654321` input.
+* delete using a contact's displayed index number by using the `-i` prefix.'
+* delete using a contact's phone number by using the `-p` prefix.
 
 The following activity diagram summarizes what happens when a user executes a delete command:
 
@@ -428,7 +410,7 @@ Priorities:
 
 ### Use cases
 
-For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the user, unless specified otherwise.
+For all use cases below, the **System** is the `Teletubbies` application, and the **Actor** is the user, unless specified otherwise.
 
 #### Use case: Delete a person
 
@@ -539,13 +521,13 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete i/1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `delete -i 1`<br>
+      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. 
 
-   1. Test case: `delete i/0`<br>
+   1. Test case: `delete -i 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete i/x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete -i x`, `...` (where `x` is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
@@ -557,3 +539,24 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+--------------------------------------------------------------------------------------------------------------------
+
+### **Glossary**
+**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
+
+**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
+
+**_User stories_**: Simple descriptions of features told from the perspective of the user.
+
+**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact
+has been contacted.
+
+**_Role_**: Users are assigned either the role of telemarketer or supervisor.
+
+**_Single Responsibility Principle_**:  A software engineering principle that states that every module, class or
+function in a computer program should be responsible for and encapsulate only a single part of
+the program’s functionality.
+
+**_Separation of Concerns Principle_**: A software engineering principle that states that programs should be separated
+into distinct sections which address concerns, or sets of information that affects the code of a computer program.
