@@ -44,7 +44,6 @@ deactivate logic
 mainWindow -[UI_COLOR]> commandResult : result.executeUiEffect(this)
 activate commandResult LOGIC_COLOR_T2
 
-
 commandResult -[UI_COLOR]> HelpUiConsumer : uiConsumer.accept(m)
 activate HelpUiConsumer LOGIC_COLOR_T2
 
@@ -57,11 +56,8 @@ deactivate mainWindow
 HelpUiConsumer --[LOGIC_COLOR_T2]> commandResult
 deactivate HelpUiConsumer
 
-
 commandResult --[LOGIC_COLOR_T2]> mainWindow
 deactivate commandResult
-
-
 
 [<--mainWindow
 deactivate mainWindow
