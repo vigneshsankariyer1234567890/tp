@@ -13,26 +13,40 @@ skinparam TitleFontColor grey
 title Activity: Export Contact List
 
 start
-:User exports contacts;
+:User executes an Export command;
 
 'Since the beta syntax does not support placing the condition outside the
 'diamond we place it as the true branch instead.
 
 switch ()
-case ( [Exports using \n menu button] )
-    :Contact at given index is
-    deleted;
-case ( [valid phone \n number input] )
-    :Contact at given phone
-    number is deleted;
-
+case ( [Export all contacts] )
+    :Entire contact list
+     is displayed;
+case ( [Export contacts \n with specified tag(s)] )
+    :Filtered contact list 
+    is displayed;
 
 endswitch
 
-:Select save location
-and name file;
+:Await Export Confirmation 
+command from user;
 
-:Teletubbies exports the contact list;
+switch ()
+case ( [User executes\n another command] )
+    :Export is cancelled;
 
 stop
+case ( [User confirms export] )
+     :Open file selector window for user to
+      choose save location and name file;
+     
+     switch ()
+     case( [File chooser is closed] )
+        :Export cancelled and \nerror message shown;
+        stop
+     case( [User selects file location \n and names export file])
+        :Teletubbies exports the contact list;
+        stop
+     
+
 @enduml

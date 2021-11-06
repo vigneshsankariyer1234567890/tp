@@ -70,7 +70,7 @@ without having to deal with tedious side-effects.
 
 **_User stories_**: Simple descriptions of features told from the perspective of the user.
 
-**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact 
+**_Completion Status_**: A contact can be marked as either “complete”, "ongoing" or “incomplete”, indicating if the contact 
 has been contacted.
 
 **_Role_**: Users are assigned either the role of telemarketer or supervisor.
@@ -255,17 +255,17 @@ Classes used by multiple components are in the `teletubbies.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### Import, Export and Merge Features
+### Import, Merge and Export Features
 
 #### Implementation
 
-The `import`, `export` and `merge` mechanisms are supported by all the main components, specifically in the following ways:
+The `import`, `merge` and `export` mechanisms are supported by all the main components, specifically in the following ways:
 
 * The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFX FileChooser to select files to be imported, merged or exported to.
 
 * The execution of the `ImportCommand`, `ExportCommand` and `MergeCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
 
-* For import, the `Model` component is accessed to set the new AddressBook of contacts. For merge, contacts being merged are the . On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
+* For import, the `Model` component is accessed to set the new AddressBook of contacts. For merge, contacts are merged with the current AddressBook. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
 
 * Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
 
@@ -277,19 +277,31 @@ The following sequence diagram shows how the `import` operation works:
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
-#### Export Implementation
+
 
 #### Merge Implementation
+
+Merge functions in a similar way to import. However, instead of replacing the AddressBook, the contacts being merged are merged with the prevailing AddressBook.
+
+Merging takes place by 
+
+#### Export Implementation
+
+
+![](images/ExportActivityDiagram.png)
+
+The following sequence diagram shows how the `export` operation works:
+
 
 #### Design Considerations
 
 **Aspect: User Interface**
 
-* **Alternative 1 (current choice):** Import/Export command can be executed by CLI command or menu bar button.
+* **Alternative 1 (current choice):** Import/Export/Merge command can be executed by CLI command or menu bar button.
     * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference.
     * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
 
-* **Alternative 2:** Import and export are buttons in the menu bar only.
+* **Alternative 2:** Import, export and merge are buttons in the menu bar only.
     * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
     * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags.
 
