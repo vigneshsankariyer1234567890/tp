@@ -27,16 +27,6 @@ For more experienced users who know what they are looking for and want to quickl
 
 Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut **Command + F** to find specific keywords.
 
-### Glossary of definitions
-
-**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
-
-**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
-
-**_Parameter_**: Input to a command's field.
-
-**_JavaScript Object Notation (JSON)_**: A text-based representation of structured data that is used to save contacts as files in *Teletubbies*.
-
 ### Glossary of icons and symbols
 :information_source: : Additional information <br/>
 :bulb: : Tip <br/>
@@ -64,7 +54,7 @@ for more information on how to install Java `11`.
 
 3. Copy the file to the folder you want to use as the _home folder_ for your *Teletubbies* app.
 
-4. Double-click the file to start the app. The GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.
+4. Double-click the file to start the app. A GUI similar to below should appear in a few seconds. Note how the app contains some sample data.
 
 ![Ui](images/Ui.png)
 
@@ -75,7 +65,7 @@ Some example commands you can try:
 
    * `list`: Lists all contacts.
 
-   * `add -n John Doe -p 98765432`: Adds a contact named `John Doe` to *Teletubbies*.
+   * `add -n John Doe -p 87654321`: Adds a contact named `John Doe` to *Teletubbies*, with the phone number 87654321.
 
    * `delete -i 3`: Deletes the 3rd contact shown in the current list.
    
@@ -100,7 +90,7 @@ System commands | Format
 --------|------------------
 **[help](#viewing-help--help)** | `help`
 **[import](#importing-contacts--import)** | `import`
-**[merge](#merging-contacts-merge)** | `merge`
+**[merge](#merging-contacts--merge)** | `merge`
 **[export](#exporting-contacts-export)** | `export [-t TAGS]…​`
 **[profile](#setting-your-profile-profile)** | `profile -n NAME -role ROLE`
 **[history](#listing-your-previous-commands--history)** | `history`
@@ -295,7 +285,7 @@ Format: `history`
 **:information_source: Commands that will be displayed:**<br>
 
 The **current session** refers to the duration from the time you start up *Teletubbies* to the time
-you close / exit *Teletubbies*. Once you close or exit *Teletubbies*, your session will end, and the command history will be
+you close or exit *Teletubbies*. Once you close or exit *Teletubbies*, your session will end, and the command history will be
 reset. The next time you start up *Teletubbies*, you will not be able to access the command history from your
 previous session.
 
@@ -398,8 +388,12 @@ the contact has been deleted, you should no longer see their contact details on 
 You can choose to delete the contact using either the index, or the phone number. When deleting the contact using the phone number, make sure that the specified
 phone number is associated with a contact in the contact list.
 
+<div markdown="block" class="alert alert-info">
+
+**:bulb: Deleting with a contact's index:**<br>
 If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
+</div>
 Format: `delete -p PHONE_NUMBER` or `delete -i INDEX`
 
 Examples:
@@ -494,7 +488,7 @@ The `tagrm` command will help you to **remove** a tag from a contact. Note that 
 must already be a tag on the contact, otherwise no tags will be removed!
 
 When removing a tag from a contact, you can specify the **name** and **value** of the tag. Similar to the `tag` command, 
-the **name** is manadatory, but the **value** is optional. To specify which contact to be tagged, use the index of the 
+the **name** is mandatory, but the **value** is optional. To specify which contact to be tagged, use the index of the 
 contact. If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
 Note that tag name and tag value are case-sensitive. So, a command specifying tag name 'assignee' and tag value 'john'
@@ -688,7 +682,8 @@ For exporting the current data as a separate JSON file, refer to [Exporting cont
 
 *Teletubbies* will automatically load up the data from your previous session, allowing you to pick up right where you left off. There is no need to load manually.
 
-For importing a separate JSON file into the application, refer to [Importing contacts](#importing-contacts-import).
+For importing a contact list in the JSON file format into the application, refer to [Importing contacts](#importing-contacts--import).
+For merging a contact list from your hard disk with the contact list on the application, refer to [Merging contact lists](#merging-contacts--merge)  
 
 #### Editing the data
 
@@ -715,3 +710,13 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 
 --------------------------------------------------------------------------------------------------------------------
+
+### Glossary of definitions
+
+**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
+
+**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
+
+**_Parameter_**: Input to a command's field.
+
+**_JavaScript Object Notation (JSON)_**: A text-based representation of structured data that is used to save contacts as files in *Teletubbies*.
