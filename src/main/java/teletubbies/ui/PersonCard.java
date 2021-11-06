@@ -91,18 +91,22 @@ public class PersonCard extends UiPart<Region> {
             remark.setManaged(false);
         }
 
+        completionStatusLabel.setText(person.getCompletionStatus().status.name());
         switch (person.getCompletionStatus().status) {
         case COMPLETE:
             completionStatusTag.setProgress(1.0);
+            completionStatusLabel.setStyle("-fx-background-color: #237a1d;");
             break;
         case ONGOING:
             completionStatusTag.setProgress(0.5);
+            completionStatusLabel.setStyle("-fx-background-color: #e0872d;");
             break;
         default:
             completionStatusTag.setProgress(0.0);
+            completionStatusLabel.setStyle("-fx-background-color: #ec2626;");
         }
 
-        person.getAllTags().stream()
+        person.getTags().stream()
                 .sorted(Comparator.comparing(Tag::toString))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.toString())));
     }

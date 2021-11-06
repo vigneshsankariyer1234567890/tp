@@ -89,6 +89,8 @@ public class TagCommand extends Command {
         }
         // Throw messages if present
         throwMessages(feedbackMessages);
+
+        model.commitAddressBook();
         return new CommandResult(MESSAGE_COMPLETED_SUCCESS);
     }
 
