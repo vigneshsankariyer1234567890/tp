@@ -13,7 +13,7 @@ Given below are my contributions to the project.
   * What it does: Allows the user to add a remark to a customer using the `remark` command
   * Justification: The existing `tag` command is not ideal for comments longer then 1-2 words. Telemarketers may need to write down notes for certain customers such as “Need to call back for confirmation”.
 
-* **Enhancements to existing features**: 
+* **Enhancements to existing features**:
   * Updated contacts such that only name and phone number are mandatory fields, to make the application more customized for telemarketing (Pull request [\#44](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/44))
   * Disallow duplicate phone numbers in Teletubbies (Pull request [\#72](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/72))
   * Removed tag related features from `add` and `edit` commands, to allow tag handling to be done solely through the `tag` command (Pull request [\#160](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/160))
