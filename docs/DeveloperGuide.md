@@ -481,7 +481,25 @@ Step 6. The `clear` command is then executed by the user. `Model#commitAddressBo
 The `history` command allows the user to view the previous commands that were given to Teletubbies. This mechanism is supported by `CommandInputHistory`, which internally implements `HistoryManager`
 to store and track user inputs which are `String`s.
 
+`CommandInputHistory` also implements the following methods:
 
+* `CommandInputHistory#getChronologicallyAscendingHistory()` - This method returns a List of Strings which are the commands keyed in by the user
+in chronological order, i.e. the first element is the earliest command given by the user.
+* `CommandInputHistory#getChronologicallyDescendingHistory()` - This method returns a List of Strings which are the commands keyed in by the user
+in chronologically descending order, i.e. the first element is the latest command given by the user.
+* `CommandInputHistory#addCommandInput(String input)` - This method calls `HistoryManager#resetFullHistory()` before calling `HistoryManager#commitAndPush()` to add a new String
+to the `HistoryManager`. This is necessary as `CommandInputHistory` should keep track of all inputs without overwriting them.
+
+The `Model` interface also exposes methods such as `Model#addCommandInput()`, `Model#getNextCommand()` and `Model#getPreviousCommand()` that allows access to the previous and next commands 
+as stored by the `HistoryManager` in `CommandInputHistory`.
+
+The sequence diagram below shows the mechanism in storing the input given by the user.
+![HistorySequenceDiagramToStoreCommands](images/HistorySequenceToStoreCommandsDiagram.png)
+
+This allows the command to be stored regardless of the outcome of the command, even if it is an invalid command.
+
+The sequence diagram below shows the execution path which is taken by the `history` command.
+![HistoryCommandSequenceDiagram](images/HistoryCommandSequenceDiagram.png)
 
 --------------------------------------------------------------------------------------------------------------------
 

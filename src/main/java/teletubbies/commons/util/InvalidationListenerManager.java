@@ -8,7 +8,9 @@ import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 
 /**
- * Manages list of {@link InvalidationListener}. This was adapted from the implementation of Se-edu AB4.
+ * Manages list of {@link InvalidationListener}. This was reused from the implementation of Se-edu AB4, and can be
+ * referenced from the InvalidationListenerManager in https://github.com/se-edu/addressbook-level4
+ * (located in commons/util).
  */
 public class InvalidationListenerManager {
     private final ArrayList<InvalidationListener> listeners = new ArrayList<>();

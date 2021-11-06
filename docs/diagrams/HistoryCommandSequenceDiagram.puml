@@ -1,0 +1,88 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":InputParser" as InputParser LOGIC_COLOR
+participant "HistoryCommand" as HistoryCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":CommandInputHistory" as CommandInputHistory MODEL_COLOR
+participant ":HistoryManager" as HistoryManager MODEL_COLOR
+end box
+[-> LogicManager : execute(history)
+activate LogicManager
+
+LogicManager -> Model : addCommandInput(history)
+activate Model
+
+Model -> CommandInputHistory : addCommandInput(history)
+activate CommandInputHistory
+
+CommandInputHistory -> HistoryManager : resetFullHistory()
+activate HistoryManager
+
+HistoryManager --> CommandInputHistory
+deactivate HistoryManager
+
+CommandInputHistory -> HistoryManager : commitAndPush(history)
+activate HistoryManager
+
+HistoryManager --> CommandInputHistory
+deactivate HistoryManager
+
+CommandInputHistory --> Model
+deactivate CommandInputHistory
+
+Model --> LogicManager
+deactivate Model
+
+LogicManager -> InputParser : parseCommand(history)
+activate InputParser
+
+create HistoryCommand
+InputParser -> HistoryCommand
+activate HistoryCommand
+
+HistoryCommand --> InputParser
+deactivate HistoryCommand
+
+InputParser --> LogicManager : c
+deactivate InputParser
+
+LogicManager -> HistoryCommand : c.execute()
+activate HistoryCommand
+
+HistoryCommand -> Model : getChronologicallyDescendingHistory()
+activate Model
+
+Model -> CommandInputHistory : getChronologicallyDescendingHistory()
+activate CommandInputHistory
+
+CommandInputHistory -> HistoryManager : resetFullHistory()
+activate HistoryManager
+HistoryManager --> CommandInputHistory
+deactivate HistoryManager
+
+CommandInputHistory -> HistoryManager : getHistoryList()
+activate HistoryManager
+HistoryManager --> CommandInputHistory : historyList
+deactivate HistoryManager
+
+CommandInputHistory -> CommandInputHistory : Collections.reverse(historyList)
+CommandInputHistory --> Model : historyList
+deactivate CommandInputHistory
+
+Model --> HistoryCommand: historyList
+deactivate Model
+
+HistoryCommand --> LogicManager : result
+deactivate HistoryCommand
+HistoryCommand -[hidden]-> LogicManager : result
+destroy HistoryCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
