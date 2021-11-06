@@ -17,6 +17,10 @@ import teletubbies.model.person.Phone;
  */
 public class DeleteCommandParser implements Parser<DeleteCommand> {
 
+    public static final String MESSAGE_INVALID_REFERENCE_METHOD = "A person can be referenced by either phone "
+            + "number or index, but not both!";
+
+
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteCommand
      * and returns a DeleteCommand object for execution.
@@ -24,12 +28,17 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
      */
     public DeleteCommand parse(String args) throws ParseException {
 
+
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_PHONE, PREFIX_INDEX);
 
         if ((!arePrefixesPresent(argMultimap, PREFIX_PHONE) && !arePrefixesPresent(argMultimap, PREFIX_INDEX))
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+        }
+
+        if (arePrefixesPresent(argMultimap, PREFIX_PHONE) && arePrefixesPresent(argMultimap, PREFIX_INDEX)) {
+            throw new ParseException(MESSAGE_INVALID_REFERENCE_METHOD);
         }
 
         try {

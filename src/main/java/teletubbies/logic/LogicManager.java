@@ -36,7 +36,7 @@ public class LogicManager implements Logic {
         this.model = model;
         this.storage = storage;
         inputParser = new teletubbies.logic.parser.InputParser();
-        model.getAddressBook().addListener(observable -> isModified = true);
+        model.addListener(observable -> isModified = true);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class LogicManager implements Logic {
                 throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
             }
         }
-
+        isModified = false;
         return commandResult;
     }
 
