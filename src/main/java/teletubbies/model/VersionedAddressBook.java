@@ -2,7 +2,6 @@ package teletubbies.model;
 
 import java.util.List;
 
-import teletubbies.commons.core.HistoryManager;
 import teletubbies.commons.exceptions.EarliestAddressBookVersionException;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.LatestAddressBookVersionException;
@@ -10,6 +9,7 @@ import teletubbies.commons.exceptions.LatestVersionException;
 
 /**
  * A data structure to encapsulate the logic needed to store previous AddressBook states using HistoryManager.
+ * Solution to undoing and redoing states adapted from https://github.com/se-edu/addressbook-level4/blob/master/src/main/java/seedu/address/model/VersionedAddressBook.java
  */
 public class VersionedAddressBook extends AddressBook {
     private HistoryManager<ReadOnlyAddressBook> addressBookHistoryManager;

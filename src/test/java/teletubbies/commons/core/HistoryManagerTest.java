@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import teletubbies.commons.exceptions.EarliestVersionException;
 import teletubbies.commons.exceptions.LatestVersionException;
 import teletubbies.logic.commands.CommandTestUtil;
+import teletubbies.model.HistoryManager;
 
 public class HistoryManagerTest {
 

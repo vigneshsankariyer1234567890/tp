@@ -1,0 +1,21 @@
+@startuml
+!include style.puml
+skinparam ClassFontColor #000000
+skinparam ClassBorderColor #000000
+
+title HistoryManager after redoing once
+
+package historyStack {
+    class State1 as "__v0:T__"
+    class State2 as "__v1:T__"
+    class State3 as "__v2:T__"
+}
+State1 -[hidden]up-> State2
+State2 -[hidden]up-> State3
+'hide State1
+'hide State2
+'hide State3
+
+class Pointer as "stackPointer" #FFFFFF
+Pointer -left-> State2
+@end

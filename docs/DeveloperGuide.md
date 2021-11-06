@@ -222,16 +222,11 @@ Here's a (partial) class diagram of the `Model` component:
 
 The `Model` component,
 
-* stores the contacts, i.e. all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g. results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' (e.g. the `Ui` component can be bound to this list so that the UI automatically updates when the data in the list change).
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` object.
+* stores the list of contacts and all previous lists (or address books) in`VersionedAddressBook`, which inherits from `AddressBook`.
+* stores a history of all commands that were input by the user using `CommandInputHistory`.
+* stores the currently 'selected' `Person` objects (e.g. results of a search query) as a separate _filtered_ list, exposed to outsiders as an unmodifiable `ObservableList<Person>`.
+* stores a `UserPref` object that represents the user’s preferences. 
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components).
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
-</div>
 
 
 ### Storage component
@@ -247,7 +242,7 @@ The `Storage` component,
 
 ### Common classes
 
-Classes used by multiple components are in the `teletubbies.commons` package.
+Classes used by multiple components are in the `teletubbies.commons` package. 
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -350,6 +345,143 @@ it will be useful for them to interact with their contact lists through the cust
 * **Alternative 2:** Delete via phone number only.
     * Pros: Implementation is more straightforward, as there is only one type of input to be expected.
     * Cons: Removes the convenience of deleting using a contact's index.
+
+### History tracking features
+
+We saw a need for Teletubbies to track the history of the application as a core feature while we were devising our user stories. This would allow users to traverse back 
+and regain access to previous states, as well as access previous commands. 
+
+The features that required the tracking of history were the 
+* `undo`/`redo` commands,
+* `history` command, and
+* Unix-style way of obtaining previous and next commands, using the **UP** and **DOWN**
+arrow keys
+
+The `HistoryManager` class was created to serve as an abstraction for devices that can store the history of any object. It's sole responsibility is to 
+manage the history of the type of object we wanted to track, including the current state and a list of previous states or previously undone states. It is a generic class, which
+allows for efficient code re-usability.
+
+`HistoryManager` uses a stack-like data structure, with a *Last-In, First-out* (LIFO) method of storing states.
+
+`HistoryManager` contains an `ArrayList` called `historyStack` which serves as the stack-like data structure to store the states of the object in question, and a `stackPointer` which stores the 
+index of the current state in question.
+
+When `HistoryManager` is first initialised, `historyStack` is empty while `stackPointer` does not point to any state, since there are none stored.
+![HistoryManagerDiagram0](images/HistoryManagerDiagram0.png)
+
+Then, new states of the object with type parameter `T` are added and stored in the `HistoryManager`, using `HistoryManager#commitAndPush(T item)`. This method causes the new item to be added to 
+`historyStack` and the `stackPointer` to be pointed to the new item.
+![HistoryManagerDiagram1](images/HistoryManagerDiagram1.png)
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#commitAndPush(T item)` returns a *new* `HistoryManager` object which has the new state pushed to the top of the 
+`historyStack`. This ensures the immutability of historyStack and guarantees that if anything is added, `stackPointer` will point to the latest version.
+</div>
+
+The `HistoryManager#undo()` and `HistoryManager#redo()` methods allow the pointer to be pushed up or down to previous states or previously undone states, by simply pointing to the object below the current state or above it.
+
+For instance, this is how `HistoryManager` looks like after `HistoryManager#undo()` is called twice:
+![HistoryManagerDiagram2](images/HistoryManagerDiagram2.png)
+
+And after `HistoryManager#redo()` is called once, it looks like this:
+![HistoryManagerDiagram3](images/HistoryManagerDiagram3.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#undo()` and `HistoryManager#redo()` *do not* return new `HistoryManager` objects as the `historyStack` is not manipulated. 
+</div>
+
+Calling `HistoryManager#commitAndPush(T item)` here causes the states above the `stackPointer` to be removed and replaced by the new state, as indicated by item. 
+Once again, a new `HistoryManager` is created, this time with the new state added and the state `v2` to be removed.
+![HistoryManagerDiagram4](images/HistoryManagerDiagram4.png)
+
+`HistoryManager` also has a `HistoryManager#peek()` method which returns the current state that is pointed at by the `stackPointer`, as well as the
+`HistoryManager#resetFullHistory()` method which simply resets the `stackPointer` to point to the top of the `historyStack`.
+
+#### Design Considerations
+
+**Aspect: How can the previous states be stored**
+
+* **Alternative 1 (current choice):** Use a single stack to record the history
+  * Pros: Easy to visualise
+  * Cons: Need to be careful while committing as both previous states and previously undone states exist on the same stack. Does not adhere closely to Single Responsibility Principle.
+
+* **Alternative 2 (proposed):** Use a 2-stack method to record history, one which stores the states which can be undone and the other to store the states which can be redone.
+  * The `HistoryManager` would originally have 2 stacks: an undo stack and a redo stack. Before actions are undone, the redo stack would be empty while the new states would be added 
+directly to the top of redo stack. ![HistoryManagerAlternative0](images/HistoryManagerAlternativeDiagram0.png)
+  * Then, as `HistoryManager#undo()` or `HistoryManager#redo()` is called states would be popped from one stack and pushed to the other. ![HistoryManagerAlternative1](images/HistoryManagerAlternativeDiagram1.png)
+  * If we want to commit to `HistoryManager`, all we have to do is clear `redoStack` and push the new state to `undoStack`. ![HistoryManagerAlternative2](images/HistoryManagerAlternativeDiagram2.png)
+  * Pros: Single responsibility principle, `undoStack` only manages states to be undone while `redoStack` only manages states to be redone.
+  * Cons: Difficult to visualise.
+
+
+### Undo/Redo feature
+
+The `undo` command allows the telemarketer or the supervisor to revert to previous states. This mechanism is supported by the `VersionedAddressBook`. `VersionedAddressBook` extends
+`AddressBook`, but internally implements the `HistoryManager` class to store and track `ReadOnlyAddressBook`, the states of the address book.
+
+It also implements the following methods:
+
+* `VersionedAddressBook#commitCurrentStateAndSave()` - This action adds a copy of the current state to `HistoryManager`
+* `VersionedAddressBook#commitWithoutSavingCurrentState()` - This action clears previously undone states stored by `HistoryManager`. This method will only be called 
+* `VersionedAddressBook#undo()` - This action restores a previously stored state as stored in `HistoryManager`
+* `VersionedAddressBook#redo()` - This action restores a previously undone state as stored in `HistoryManager`
+
+The `Model` interface also exposes methods such as `Model#undoAddressBook()`, `Model#redoAddressBook()` and `Model#commitAddressBook()` that allows the states to be changed.
+
+An example of the usage scenario of `undo` is given below:
+
+Step 1. Teletubbies is launched for the first time by the user. `VersionedAddressBook` is first initialised with an initial address book state.
+![UndoState0](images/UndoRedoState0.png)
+
+Step 2. The user changes the current state of Teletubbies by executing a `done 1` command. The `done` command calls `Model#commitAddressBook()` which in turn causes
+`VersionedAddressBook#commitCurrentStateAndSave()` to be called. This causes the newest state of Teletubbies (which is different from it's previous state) to be 
+saved.
+![UndoState1](images/UndoRedoState1.png)
+
+Step 3. The user changes the current state of Teletubbies by executing a `delete -i 1` command. The `delete` command calls `Model#commitAddressBook()` as before, causing 
+the state of Teletubbies to be changed.
+![UndoState2](images/UndoRedoState2.png)
+
+Step 4. The user decides to undo by executing `undo`. This causes `Model#undoAddressBook()` to be called, which causes `HistoryManager` to revert back to state `tb1`.
+![UndoState3](images/UndoRedoState3.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the earliest 
+possible state, in this case tb0, Teletubbies will no longer be revertible, and the undo command will throw an exception. The undo command uses
+`Model#canUndoAddressBook()` to confirm if this is the case.
+</div>
+
+The sequence diagram below illustrates the undo operation:
+![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
+
+However, the `redo` command simply does the opposite and calls `Model#redoAddressBook()`, which causes the undone state to be reinstated.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the latest 
+possible state, in this case tb2, Teletubbies will no longer be able to restore undone states, and the redo command will throw an exception. The undo command uses
+`Model#canRedoAddressBook()` to confirm if this is the case.
+</div>
+
+Step 5. The user decides to execute the command `find Alex`. However, `find` does not modify `VersionedAddressBook`. Commands that do not modify `VersionedAddressBook` do not call
+`Model#commitAddressBook()` which allows the history of states to remain unchanged.
+![UndoState4](images/UndoRedoState4.png)
+
+Step 6. The `clear` command is then executed by the user. `Model#commitAddressBook()` is called by the command, which causes the states after the current state to no longer be stored.
+![UndoState5](images/UndoRedoState5.png)
+
+#### Design Considerations
+
+**Aspect: How `undo` and `redo` would be executed**
+
+* **Alternative 1 (current choice):** Just save the entire AddressBook state.
+  * Pros: Easier to implement, debug and trace together
+  * Cons: Very memory-intensive as multiple states and copies are stored.
+
+* **Alternative 2:** Only store the difference in the AddressBook states, much like GitHub's approach to version control. This means a separate data structure which stores the difference between states like a tree is needed.
+  * Pros: Much less memory-intensive since only differences between each version are saved
+  * Cons: Difficult to implement a tree-like data structure that can effectively track the changes within the given time period. Undo would simply be a traversal up the tree while redo would be traversing down. Cannot reuse `HistoryManager`
+
+### History feature
+
+The `history` command allows the user to view the previous commands that were given to Teletubbies. This mechanism is supported by `CommandInputHistory`, which internally implements `HistoryManager`
+to store and track user inputs which are `String`s.
+
+
 
 --------------------------------------------------------------------------------------------------------------------
 
