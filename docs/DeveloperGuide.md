@@ -501,6 +501,33 @@ This allows the command to be stored regardless of the outcome of the command, e
 The sequence diagram below shows the execution path which is taken by the `history` command.
 ![HistoryCommandSequenceDiagram](images/HistoryCommandSequenceDiagram.png)
 
+### Use of **UP** and **DOWN** to get previous or next commands
+
+As we were inspired heavily by the elegance of Unix-like systems and their ability to cycle through previously input commands,
+we decided to implement this as well. This feature is facilitated by the `Model` and `CommandHistoryInput`.
+
+The UI component uses EventHandlers that detects if the **UP** or **DOWN** buttons are pressed by the user. Then, UI calls upon `Model#getPreviousCommand()`
+or `Model#getNextCommand()` to get the previous or next command as stored by `CommandInputHistory`.
+
+The activity diagrams below show how each key press is handled.
+
+![UpButtonActivityDiagram](images/UpButtonActivityDiagram.png)
+
+![DownButtonActivityDiagram](images/DownButtonActivityDiagram.png)
+
+#### Design Considerations
+
+**Aspect: The interaction between `UI` and `CommandInputHistory`**
+
+* **Alternative 1 (current choice):** Let `Model` house `CommandInputHistory`
+    * Pros: Minimal dependency between `Logic` and the components of `Model`
+    * Cons: Additional dependency between `UI` and `Model` created as `UI` needs to call `Model` methods
+
+* **Alternative 2:** Let `Logic` house `CommandInputHistory`
+    * Pros: Since `Logic` already interacts with `UI`, no additional coupling created between them.
+    * Cons: Requires passing of `CommandInputHistory` to `InputParser` in order to handle `history` commands. The parser should not
+  have to know about `CommandInputHistory`
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, Logging, Testing, Configuration, Dev-ops**
