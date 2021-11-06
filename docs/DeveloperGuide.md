@@ -9,7 +9,7 @@ title: Developer Guide
 
 ## **Setting up, getting started**
 
-Refer to the guide [_Setting up and getting started_](SettingUp.md). 
+Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -20,47 +20,47 @@ This document describes the architecture and system design of the Teletubbies de
 for Telemarketers and Telemarketer Supervisors.
 
 ### **Scope**
-The document aims to comprehensively cover the software architecture and software design decisions for 
-the implementation of Teletubbies. It is intended to serve as a guide for the developers, the designers, and the testers 
+The document aims to comprehensively cover the software architecture and software design decisions for
+the implementation of Teletubbies. It is intended to serve as a guide for the developers, the designers, and the testers
 for the application.
 
 The definitions for the emboldened terms can be found in the [_Glossary_](#glossary) Section.
 
 ### **Design Goals**
-The developers work closely with telemarketers and telemarketer supervisors to better understand their needs, so that 
+The developers work closely with telemarketers and telemarketer supervisors to better understand their needs, so that
 the requirements of the product can be as clear-cut as possible.
 
 #### _User-Centricity_
-Teletubbies can be used by both telemarketers and supervisors, and chooses the appropriate features according to the 
+Teletubbies can be used by both telemarketers and supervisors, and chooses the appropriate features according to the
 current user's **role**, so that the user can work effectively and efficiently to complete their tasks.
 
 #### _Improved Workflow Efficiency_
-Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which streamlines workflow 
+Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which streamlines workflow
 within the application by centralising the entering of commands in a single text input window.
 
 #### _Seamless Data Integration_
-Teletubbies allows telemarketers and their supervisors to share and merge data seamlessly. Synchronization of customer 
+Teletubbies allows telemarketers and their supervisors to share and merge data seamlessly. Synchronization of customer
 data between telemarketers and their supervisors is often a necessary aspect of their job, and Teletubbies provides
 avenues to make this process easy and hassle-free.
 
 #### _Data Safety and Recoverability_
-With a large number of contacts stored in a contact list, it is vital that the user’s current progress is saved 
-frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved 
+With a large number of contacts stored in a contact list, it is vital that the user’s current progress is saved
+frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved
 after each command issued by the user.
 
-Additionally, in the event of human error, an undo command is available for users to revert to previous states 
+Additionally, in the event of human error, an undo command is available for users to revert to previous states
 within the session itself.
 
 #### _Scalability & Maintainability_
-Within a team of developers, it is important that the developers reduce dependencies within the project to increase 
+Within a team of developers, it is important that the developers reduce dependencies within the project to increase
 testability and extensibility.
 
-In addition, with requirements that constantly change, it is important to be able to easily modify features and 
+In addition, with requirements that constantly change, it is important to be able to easily modify features and
 functionalities that have already been written without disturbing other related components. Therefore, the main 
 components of the application such as the `Logic`, `UI`, `Model`, and `Storage` are separated into decoupled modules.
 
 Along with the strict adherence to software design principles, such as **Single Responsibility** and
-**Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies 
+**Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies
 without having to deal with tedious side-effects.
 
 ### **Glossary**
@@ -70,16 +70,16 @@ without having to deal with tedious side-effects.
 
 **_User stories_**: Simple descriptions of features told from the perspective of the user.
 
-**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact 
+**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact
 has been contacted.
 
 **_Role_**: Users are assigned either the role of telemarketer or supervisor.
 
-**_Single Responsibility Principle_**:  A software engineering principle that states that every module, class or 
-function in a computer program should be responsible for and encapsulate only a single part of 
+**_Single Responsibility Principle_**:  A software engineering principle that states that every module, class or
+function in a computer program should be responsible for and encapsulate only a single part of
 the program’s functionality.
 
-**_Separation of Concerns Principle_**: A software engineering principle that states that programs should be separated 
+**_Separation of Concerns Principle_**: A software engineering principle that states that programs should be separated
 into distinct sections which address concerns, or sets of information that affects the code of a computer program.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -187,7 +187,7 @@ On the other hand, if a command has no special UI response, the `UiEffect` type 
 
 The previous implementation of `UiEffect` was solely restricted to help and exit commands. Creating more commands with UI effects would have required hard-coding
 more flags for these effects in `CommandResult`, and in turn hard-coding these effects again in `MainWindow`. This would have required significant modifications in both of
-these classes, especially if new commands are added in. 
+these classes, especially if new commands are added in.
 
 The implementation of the consumer interface instead allows these UI effects to be open for extension and closed for modification.
 Now, specific UI effects can be specified within the respective command, without having to change the code in `MainWindow` that handles the command's UI effect.
@@ -225,7 +225,7 @@ The `Model` component,
 * stores the list of contacts and all previous lists (or address books) in`VersionedAddressBook`, which inherits from `AddressBook`.
 * stores a history of all commands that were input by the user using `CommandInputHistory`.
 * stores the currently 'selected' `Person` objects (e.g. results of a search query) as a separate _filtered_ list, exposed to outsiders as an unmodifiable `ObservableList<Person>`.
-* stores a `UserPref` object that represents the user’s preferences. 
+* stores a `UserPref` object that represents the user’s preferences.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components).
 
 
@@ -242,7 +242,7 @@ The `Storage` component,
 
 ### Common classes
 
-Classes used by multiple components are in the `teletubbies.commons` package. 
+Classes used by multiple components are in the `teletubbies.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -322,7 +322,7 @@ The following sequence diagram shows how the `done` operation works:
 
 ### Delete contacts feature
 
-The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
+The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number.
 The user can delete a contact via a `delete i/1` or `delete p/87654321` input.
 * delete using a contact's displayed index number by using the `i/` prefix.'
 * delete using a contact's phone number by using the `p/` prefix.
@@ -335,7 +335,7 @@ The following activity diagram summarizes what happens when a user executes a de
 
 **Aspect: Parameters of the `delete` command**
 
-Since the telemarketer is responsible for talking to customers on the phone to sell products, 
+Since the telemarketer is responsible for talking to customers on the phone to sell products,
 it will be useful for them to interact with their contact lists through the customer's phone number.
 
 * **Alternative 1 (current choice):** Delete using either index or phone number.
@@ -348,31 +348,31 @@ it will be useful for them to interact with their contact lists through the cust
 
 ### History tracking features
 
-We saw a need for Teletubbies to track the history of the application as a core feature while we were devising our user stories. This would allow users to traverse back 
-and regain access to previous states, as well as access previous commands. 
+We saw a need for Teletubbies to track the history of the application as a core feature while we were devising our user stories. This would allow users to traverse back
+and regain access to previous states, as well as access previous commands.
 
-The features that required the tracking of history were the 
+The features that required the tracking of history were the
 * `undo`/`redo` commands,
 * `history` command, and
 * Unix-style way of obtaining previous and next commands, using the **UP** and **DOWN**
 arrow keys
 
-The `HistoryManager` class was created to serve as an abstraction for devices that can store the history of any object. It's sole responsibility is to 
+The `HistoryManager` class was created to serve as an abstraction for devices that can store the history of any object. It's sole responsibility is to
 manage the history of the type of object we wanted to track, including the current state and a list of previous states or previously undone states. It is a generic class, which
 allows for efficient code re-usability.
 
 `HistoryManager` uses a stack-like data structure, with a *Last-In, First-out* (LIFO) method of storing states.
 
-`HistoryManager` contains an `ArrayList` called `historyStack` which serves as the stack-like data structure to store the states of the object in question, and a `stackPointer` which stores the 
+`HistoryManager` contains an `ArrayList` called `historyStack` which serves as the stack-like data structure to store the states of the object in question, and a `stackPointer` which stores the
 index of the current state in question.
 
 When `HistoryManager` is first initialised, `historyStack` is empty while `stackPointer` does not point to any state, since there are none stored.
 ![HistoryManagerDiagram0](images/HistoryManagerDiagram0.png)
 
-Then, new states of the object with type parameter `T` are added and stored in the `HistoryManager`, using `HistoryManager#commitAndPush(T item)`. This method causes the new item to be added to 
+Then, new states of the object with type parameter `T` are added and stored in the `HistoryManager`, using `HistoryManager#commitAndPush(T item)`. This method causes the new item to be added to
 `historyStack` and the `stackPointer` to be pointed to the new item.
 ![HistoryManagerDiagram1](images/HistoryManagerDiagram1.png)
-<div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#commitAndPush(T item)` returns a *new* `HistoryManager` object which has the new state pushed to the top of the 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#commitAndPush(T item)` returns a *new* `HistoryManager` object which has the new state pushed to the top of the
 `historyStack`. This ensures the immutability of historyStack and guarantees that if anything is added, `stackPointer` will point to the latest version.
 </div>
 
@@ -384,10 +384,10 @@ For instance, this is how `HistoryManager` looks like after `HistoryManager#undo
 And after `HistoryManager#redo()` is called once, it looks like this:
 ![HistoryManagerDiagram3](images/HistoryManagerDiagram3.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#undo()` and `HistoryManager#redo()` *do not* return new `HistoryManager` objects as the `historyStack` is not manipulated. 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#undo()` and `HistoryManager#redo()` *do not* return new `HistoryManager` objects as the `historyStack` is not manipulated.
 </div>
 
-Calling `HistoryManager#commitAndPush(T item)` here causes the states above the `stackPointer` to be removed and replaced by the new state, as indicated by item. 
+Calling `HistoryManager#commitAndPush(T item)` here causes the states above the `stackPointer` to be removed and replaced by the new state, as indicated by item.
 Once again, a new `HistoryManager` is created, this time with the new state added and the state `v2` to be removed.
 ![HistoryManagerDiagram4](images/HistoryManagerDiagram4.png)
 
@@ -403,7 +403,7 @@ Once again, a new `HistoryManager` is created, this time with the new state adde
   * Cons: Need to be careful while committing as both previous states and previously undone states exist on the same stack. Does not adhere closely to Single Responsibility Principle.
 
 * **Alternative 2 (proposed):** Use a 2-stack method to record history, one which stores the states which can be undone and the other to store the states which can be redone.
-  * The `HistoryManager` would originally have 2 stacks: an undo stack and a redo stack. Before actions are undone, the redo stack would be empty while the new states would be added 
+  * The `HistoryManager` would originally have 2 stacks: an undo stack and a redo stack. Before actions are undone, the redo stack would be empty while the new states would be added
 directly to the top of redo stack. ![HistoryManagerAlternative0](images/HistoryManagerAlternativeDiagram0.png)
   * Then, as `HistoryManager#undo()` or `HistoryManager#redo()` is called states would be popped from one stack and pushed to the other. ![HistoryManagerAlternative1](images/HistoryManagerAlternativeDiagram1.png)
   * If we want to commit to `HistoryManager`, all we have to do is clear `redoStack` and push the new state to `undoStack`. ![HistoryManagerAlternative2](images/HistoryManagerAlternativeDiagram2.png)
@@ -419,7 +419,7 @@ The `undo` command allows the telemarketer or the supervisor to revert to previo
 It also implements the following methods:
 
 * `VersionedAddressBook#commitCurrentStateAndSave()` - This action adds a copy of the current state to `HistoryManager`
-* `VersionedAddressBook#commitWithoutSavingCurrentState()` - This action clears previously undone states stored by `HistoryManager`. This method will only be called 
+* `VersionedAddressBook#commitWithoutSavingCurrentState()` - This action clears previously undone states stored by `HistoryManager`. This method will only be called
 * `VersionedAddressBook#undo()` - This action restores a previously stored state as stored in `HistoryManager`
 * `VersionedAddressBook#redo()` - This action restores a previously undone state as stored in `HistoryManager`
 
@@ -431,18 +431,18 @@ Step 1. Teletubbies is launched for the first time by the user. `VersionedAddres
 ![UndoState0](images/UndoRedoState0.png)
 
 Step 2. The user changes the current state of Teletubbies by executing a `done 1` command. The `done` command calls `Model#commitAddressBook()` which in turn causes
-`VersionedAddressBook#commitCurrentStateAndSave()` to be called. This causes the newest state of Teletubbies (which is different from it's previous state) to be 
+`VersionedAddressBook#commitCurrentStateAndSave()` to be called. This causes the newest state of Teletubbies (which is different from it's previous state) to be
 saved.
 ![UndoState1](images/UndoRedoState1.png)
 
-Step 3. The user changes the current state of Teletubbies by executing a `delete -i 1` command. The `delete` command calls `Model#commitAddressBook()` as before, causing 
+Step 3. The user changes the current state of Teletubbies by executing a `delete -i 1` command. The `delete` command calls `Model#commitAddressBook()` as before, causing
 the state of Teletubbies to be changed.
 ![UndoState2](images/UndoRedoState2.png)
 
 Step 4. The user decides to undo by executing `undo`. This causes `Model#undoAddressBook()` to be called, which causes `HistoryManager` to revert back to state `tb1`.
 ![UndoState3](images/UndoRedoState3.png)
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the earliest 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the earliest
 possible state, in this case tb0, Teletubbies will no longer be revertible, and the undo command will throw an exception. The undo command uses
 `Model#canUndoAddressBook()` to confirm if this is the case.
 </div>
@@ -452,7 +452,7 @@ The sequence diagram below illustrates the undo operation:
 
 However, the `redo` command simply does the opposite and calls `Model#redoAddressBook()`, which causes the undone state to be reinstated.
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the latest 
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the latest
 possible state, in this case tb2, Teletubbies will no longer be able to restore undone states, and the redo command will throw an exception. The undo command uses
 `Model#canRedoAddressBook()` to confirm if this is the case.
 </div>
@@ -490,7 +490,7 @@ in chronologically descending order, i.e. the first element is the latest comman
 * `CommandInputHistory#addCommandInput(String input)` - This method calls `HistoryManager#resetFullHistory()` before calling `HistoryManager#commitAndPush()` to add a new String
 to the `HistoryManager`. This is necessary as `CommandInputHistory` should keep track of all inputs without overwriting them.
 
-The `Model` interface also exposes methods such as `Model#addCommandInput()`, `Model#getNextCommand()` and `Model#getPreviousCommand()` that allows access to the previous and next commands 
+The `Model` interface also exposes methods such as `Model#addCommandInput()`, `Model#getNextCommand()` and `Model#getPreviousCommand()` that allows access to the previous and next commands
 as stored by the `HistoryManager` in `CommandInputHistory`.
 
 The sequence diagram below shows the mechanism in storing the input given by the user.
@@ -524,7 +524,7 @@ The sequence diagram below shows the execution path which is taken by the `histo
 David Wong
 * works as a **telemarketer** from home and makes internet calls on his computer
 * likes to import/export data quickly
-* wants to mark the contacts that he has already called and/or successfully marketed to 
+* wants to mark the contacts that he has already called and/or successfully marketed to
 * wants to keep track of his progress
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -534,7 +534,7 @@ David Wong
 
 <br>
 
-Anne Goh 
+Anne Goh
 * works as a **telemarketing supervisor** from home
 * needs to pass lists of contacts to her subordinates to contact
 * wants to monitor the performance of her subordinates
@@ -555,7 +555,7 @@ Anne Goh
 
 ### User stories
 
-Priorities: 
+Priorities:
 * High (must have) - `* * *`
 * Medium (nice to have) - `* *`
 * Low (unlikely to have) - `*`
@@ -625,7 +625,7 @@ Use case ends.
   * 3a1. Teletubbies displays a message prompting the Telemarketer to try importing JSON file again.
   * 3a2. Telemarketer imports a JSON file containing the customers’ details
   * Steps 3a1 to 3a2 are repeated until a valid JSON file is selected
-  
+
   Use case resumes from step 4.
 
 
@@ -641,7 +641,7 @@ Use case ends.
   * 5a1. Teletubbies displays a message to inform Telemarketer about the input error
   * 5a2. Telemarketer re-enters the command with a correct index number for the contact
   * Steps 5a1 to 5a2 are repeated until a valid customer phone number is input
-  
+
   Use case resumes from step 6.
 
 
