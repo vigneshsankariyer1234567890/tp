@@ -25,6 +25,7 @@ public class CommandMap {
         classMap.put(ProfileCommand.COMMAND_WORD, ProfileCommand.class);
         classMap.put(RemoveTagCommand.COMMAND_WORD, RemoveTagCommand.class);
         classMap.put(TagCommand.COMMAND_WORD, TagCommand.class);
+        classMap.put(RemarkCommand.COMMAND_WORD, RemarkCommand.class);
     }
 
     public static Class<? extends Command> getClass(String commandWord) {

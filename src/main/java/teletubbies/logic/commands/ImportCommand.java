@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.exceptions.DataConversionException;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.commands.uiEffects.ImportUiConsumer;
 import teletubbies.model.Model;
 import teletubbies.model.ReadOnlyAddressBook;
 import teletubbies.storage.JsonAddressBookStorage;
@@ -34,29 +35,7 @@ public class ImportCommand extends Command {
         requireNonNull(model);
         model.cancelPendingExport();
 
-        return new CommandResult(MESSAGE_SUCCESS, CommandResult.UiEffect.IMPORT, mainWindow -> {
-            try {
-                File fileToImport = mainWindow.handleFileChooser("Import Contacts File",
-                        MainWindow.FileSelectType.OPEN);
-                requireNonNull(fileToImport);
-
-                Path filePath = fileToImport.toPath();
-
-                Optional<ReadOnlyAddressBook> addressBookOptional = new JsonAddressBookStorage(filePath)
-                        .readAddressBook();
-                if (addressBookOptional.isEmpty()) {
-                    throw new CommandException(MESSAGE_FILE_NOT_FOUND);
-                }
-                ReadOnlyAddressBook newContacts = addressBookOptional.get();
-                model.setAddressBook(newContacts);
-                model.commitAddressBook();
-                logger.info("Imported contacts from " + filePath);
-            } catch (DataConversionException e) {
-                throw new CommandException(MESSAGE_INCORRECT_FORMAT);
-            } catch (NullPointerException e) {
-                throw new CommandException(MESSAGE_FILE_NOT_FOUND);
-            }
-        });
+        return new CommandResult(MESSAGE_SUCCESS, CommandResult.UiEffect.IMPORT, new ImportUiConsumer(model));
     }
 
     @Override

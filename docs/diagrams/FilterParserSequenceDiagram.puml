@@ -1,0 +1,35 @@
+@startuml
+!include style.puml
+
+
+participant ":FilterCommandParser" as FilterCommandParser LOGIC_COLOR_T4
+participant ":ParserUtil" as ParserUtil LOGIC_COLOR_T3
+participant "predicate:PersonHasTagsPredicate" as Predicate LOGIC_COLOR_T3
+participant "command:TagCommand" as TagCommand LOGIC_COLOR_T2
+
+[-> FilterCommandParser : parse(arguments)
+activate FilterCommandParser
+
+FilterCommandParser -> ParserUtil : parseTagsWithValue(...)
+activate ParserUtil
+ParserUtil --> FilterCommandParser : tags
+deactivate ParserUtil
+
+create Predicate
+FilterCommandParser -> Predicate : new PersonHasTagsPredicate(tags)
+activate Predicate
+Predicate --> FilterCommandParser : predicate
+deactivate Predicate
+
+create TagCommand
+FilterCommandParser -> TagCommand : new TagCommand(predicate)
+activate TagCommand
+TagCommand --> FilterCommandParser : command
+deactivate TagCommand
+
+[<-- FilterCommandParser
+deactivate FilterCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+FilterCommandParser -[hidden]->
+destroy FilterCommandParser
+@enduml

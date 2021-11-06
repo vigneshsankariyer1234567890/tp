@@ -5,8 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.Objects;
 
 import teletubbies.commons.exceptions.DataConversionException;
-import teletubbies.commons.util.ThrowingConsumer;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.commands.uiEffects.UiConsumer;
 import teletubbies.ui.MainWindow;
 
 /**
@@ -25,7 +25,7 @@ public class CommandResult {
         MERGE, //The application should merge data
         NONE
     }
-    private final ThrowingConsumer<MainWindow> uiConsumer;
+    private final UiConsumer uiConsumer;
     private final UiEffect uiEffect;
     private final String feedbackToUser;
 
@@ -37,7 +37,7 @@ public class CommandResult {
      * @param uiConsumer consumer of MainWindow for command to interact
      *                   with ui
      */
-    public CommandResult(String feedbackToUser, UiEffect uiEffect, ThrowingConsumer<MainWindow> uiConsumer) {
+    public CommandResult(String feedbackToUser, UiEffect uiEffect, UiConsumer uiConsumer) {
         this.feedbackToUser = requireNonNull(feedbackToUser);
         this.uiEffect = uiEffect;
         this.uiConsumer = uiConsumer;

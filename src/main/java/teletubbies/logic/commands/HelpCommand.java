@@ -2,6 +2,7 @@ package teletubbies.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import teletubbies.logic.commands.uiEffects.HelpUiConsumer;
 import teletubbies.model.Model;
 import teletubbies.ui.MainWindow;
 
@@ -21,6 +22,6 @@ public class HelpCommand extends Command {
         requireNonNull(model);
         model.cancelPendingExport();
 
-        return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
+        return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, new HelpUiConsumer());
     }
 }

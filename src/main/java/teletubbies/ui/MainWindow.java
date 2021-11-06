@@ -170,6 +170,7 @@ public class MainWindow extends UiPart<Stage> {
     @SuppressWarnings("unchecked")
     private void handleTab() {
         String commandText = commandBox.getText().trim();
+        // Solution adapted from: https://tinyurl.com/java-hotexamples-reference
         Class<? extends Command> commandClass = CommandMap.getClass(commandText);
         if (commandClass == null) {
             logger.info("No such command");

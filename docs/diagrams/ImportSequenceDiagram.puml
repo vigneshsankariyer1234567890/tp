@@ -1,26 +1,26 @@
 @startuml
 !include style.puml
 
+box Ui UI_COLOR_T1
+participant "m:MainWindow" as MainWindow UI_COLOR
+end box
+
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
 participant "c:ImportCommand" as ImportCommand LOGIC_COLOR
+participant "uiEffect: ImportUiConsumer" as UiConsumer LOGIC_COLOR
 participant "result:CommandResult" as CommandResult LOGIC_COLOR
-end box
-
-box Ui UI_COLOR_T1
-participant ":MainWindow" as MainWindow UI_COLOR
-end box
-
-box Storage STORAGE_COLOR_T1
-participant ":JsonAddressBookStorage" as JsonAddressBookStorage STORAGE_COLOR
 end box
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("import")
+[-> MainWindow : executeCommand("import")
+activate MainWindow
+
+MainWindow -> LogicManager : execute("import")
 activate LogicManager
 
 LogicManager -> AddressBookParser : parseCommand("import")
@@ -39,28 +39,16 @@ deactivate AddressBookParser
 LogicManager -> ImportCommand : execute()
 activate ImportCommand
 
+
+create UiConsumer
+ImportCommand -> UiConsumer
+activate UiConsumer
+UiConsumer --> ImportCommand
+deactivate UiConsumer
+
 create CommandResult
-ImportCommand -> CommandResult
+ImportCommand -> CommandResult : new CommandResult(.., uiEffect)
 activate CommandResult
-
-CommandResult -> MainWindow : handleFileChooser()
-activate MainWindow
-
-MainWindow --> CommandResult :fileToImport
-deactivate MainWindow
-
-create JsonAddressBookStorage
-CommandResult -> JsonAddressBookStorage
-activate JsonAddressBookStorage
-
-CommandResult -> JsonAddressBookStorage : readAddressBook()
-JsonAddressBookStorage --> CommandResult : addressBookOptional
-deactivate JsonAddressBookStorage
-
-
-CommandResult -> Model : setAddressBook()
-activate Model
-deactivate Model
 
 CommandResult --> ImportCommand
 deactivate CommandResult
@@ -69,6 +57,30 @@ deactivate ImportCommand
 ImportCommand -[hidden]-> LogicManager : result
 destroy ImportCommand
 
-[<--LogicManager
+MainWindow<--LogicManager : result
 deactivate LogicManager
+
+MainWindow -> CommandResult : executeUiEffect(this)
+activate CommandResult
+
+CommandResult -> UiConsumer : accept(m)
+activate UiConsumer
+
+UiConsumer -> MainWindow : handleFileChooser()
+activate MainWindow
+
+MainWindow --> UiConsumer :fileToImport
+deactivate MainWindow
+
+UiConsumer -> Model : setAddressBook()
+activate Model
+deactivate Model
+
+UiConsumer --> CommandResult
+deactivate UiConsumer
+
+CommandResult --> MainWindow
+deactivate CommandResult
+
+
 @enduml
