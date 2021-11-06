@@ -295,7 +295,11 @@ The following sequence diagram shows how the `import` operation works:
 Setting the user's profile is facilitated through the `ProfileCommand` and the `ProfileCommandParser` class, which
 parses the user's input to create a new `UserProfile` object to be set in the current `Model` component.
 
-The following sequence diagram shows how the `profile` operation works:
+The following activity diagram summarizes what happens when a user executes a profile command:
+
+![ProfileActivityDiagram](images/ProfileActivityDiagram.png)
+
+The following sequence diagram further elaborates on how the `profile` operation works:
 
 ![ProfileSequenceDiagram](images/ProfileSequenceDiagram.png)
 
