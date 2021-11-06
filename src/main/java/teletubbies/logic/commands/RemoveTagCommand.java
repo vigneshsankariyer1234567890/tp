@@ -81,6 +81,8 @@ public class RemoveTagCommand extends Command {
         }
         // Throw messages if present
         throwMessages(feedbackMessages);
+
+        model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_COMPLETED_SUCCESS, entryCount));
     }
 
