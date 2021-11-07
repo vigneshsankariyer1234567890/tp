@@ -277,7 +277,11 @@ The following sequence diagram shows how the `import` operation works:
 Setting the user's profile is facilitated through the `ProfileCommand` and the `ProfileCommandParser` class, which
 parses the user's input to create a new `UserProfile` object to be set in the current `Model` component.
 
-The following sequence diagram shows how the `profile` operation works:
+The following activity diagram summarizes what happens when a user executes a `profile` command:
+
+![ProfileActivityDiagram](images/ProfileActivityDiagram.png)
+
+The following sequence diagram further illustrates how the `profile` command operation works:
 
 ![ProfileSequenceDiagram](images/ProfileSequenceDiagram.png)
 
@@ -292,9 +296,32 @@ The following sequence diagram shows how the `profile` operation works:
     * Pros: Ensures that both name and role are accounted for when changing the profile.
     * Cons: Both fields must be entered for the user to set the profile, which can be tedious if it has to be done multiple times.
 
-* **Alternative 2 (possible future implementation):** Profile can be set with only the name, or both name and role.
+* **Alternative 2:** Profile can be set with only the name, or both name and role.
     * Pros: Allows users to change their name alone without having to enter role as well.
     * Cons: The cost of implementation is not heavily outweighed by the explicit need for the feature, as there should be infrequent changes in the user's name.
+    
+**Aspect: Number of times the user's profile can be set**
+
+* **Alternative 1 (current choice):** Profile can only be set once per user, excluding any undo.
+    * Pros: Ensures that users are unable to switch between telemarketer and supervisor functionalities. In the case where
+the user has misspelt their name, they can still use the undo command to revert back and re-enter the name for their profile.
+    * Cons: The user is unable to set their profile again in the case where their name or role has changed.
+
+* **Alternative 2:** No limits are placed on the number of times the user is able to set their profile.
+    * Pros: Allows users to change their name or role as needed, hassle-free.
+    * Cons: There is no explicit need for the feature, as there should be infrequent changes in the user's name and role.
+
+### Profile feature - Reset profile
+
+#### Implementation
+
+As stated above, users are only able to set their profile **once** using the `profile` command. 
+However, there may be times when there is a need for the users to change their name and/or role. In such circumstances,
+it is possible for the users to reset their profile by manually deleting `preferences.json`.
+
+The following activity diagram summarizes what happens when a user deletes `preferences.json`:
+
+![ProfileResetActivityDiagram](images/ProfileResetActivityDiagram.png)
 
 ### Mark Contacts as Done Feature
 
@@ -549,7 +576,7 @@ testers are expected to do more *exploratory* testing.
 
 **_User stories_**: Simple descriptions of features told from the perspective of the user.
 
-**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact
+**_Completion Status_**: A contact can be marked as either “Complete”, "Ongoing" or “Incomplete”, indicating if the contact
 has been contacted.
 
 **_Role_**: Users are assigned either the role of telemarketer or supervisor.
