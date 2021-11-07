@@ -15,6 +15,9 @@ import teletubbies.model.person.Remark;
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
 
+    // @@author: j-lum
+    // Reused from
+    // https://github.com/se-edu/addressbook-level3/compare/tutorial-add-remark
     /**
      * Parses the given {@code String} of arguments in the context of the {@code RemarkCommand}
      * and returns a {@code RemarkCommand} object for execution.
