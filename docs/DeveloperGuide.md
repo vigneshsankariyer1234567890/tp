@@ -360,6 +360,22 @@ it will be useful for them to interact with their contact lists through the cust
     * Pros: Implementation is more straightforward, as there is only one type of input to be expected.
     * Cons: Removes the convenience of deleting using a contact's index.
 
+### Auto completion feature
+
+Since Teletubbies is designed to be mainly used through its CLI, we prioritised the convenience of our users in typing
+out commands by implementing an auto completion feature.
+
+The autocompletion mechanism is facilitated by the `CommandMap` class. The `CommandMap` contains a a `HashMap`
+called `classMap` which stores the individual command words as keys and the `XYZCommand` classes as values. Within
+each `XYZCommand` class, the recommended command fields for the command are stored in a `List` called `RECOMMENDED_FLAGS`.
+This list is not stored if the command does not require command fields. Here, `XYZ` is a placeholder for the specific
+command name, e.g. `AddCommand`.
+
+The UI component uses EventHandlers that detects if the **TAB** button is pressed by the user. Then, UI calls
+upon `CommandMap#getClass()` to retrieve the class that corresponds to the input command, which then prints out
+the command fields specified within the `RECOMMENDED_FLAGS` list (or does not print out anything, in the case that no command fields
+are required for the input command).
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, Logging, Testing, Configuration, Dev-ops**
