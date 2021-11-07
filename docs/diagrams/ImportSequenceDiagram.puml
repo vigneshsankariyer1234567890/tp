@@ -7,7 +7,7 @@ end box
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":InputParser" as InputParser LOGIC_COLOR
 participant "c:ImportCommand" as ImportCommand LOGIC_COLOR
 participant "uiEffect: ImportUiConsumer" as UiConsumer LOGIC_COLOR
 participant "result:CommandResult" as CommandResult LOGIC_COLOR
@@ -23,18 +23,18 @@ activate MainWindow
 MainWindow -> LogicManager : execute("import")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("import")
-activate AddressBookParser
+LogicManager -> InputParser : parseCommand("import")
+activate InputParser
 
 create ImportCommand
-AddressBookParser -> ImportCommand
+InputParser -> ImportCommand
 activate ImportCommand
 
-ImportCommand --> AddressBookParser
+ImportCommand --> InputParser
 deactivate ImportCommand
 
-AddressBookParser --> LogicManager : c
-deactivate AddressBookParser
+InputParser --> LogicManager : c
+deactivate InputParser
 
 LogicManager -> ImportCommand : execute()
 activate ImportCommand
@@ -82,5 +82,7 @@ deactivate UiConsumer
 CommandResult --> MainWindow
 deactivate CommandResult
 
+[<-- MainWindow
+deactivate MainWindow
 
 @enduml
