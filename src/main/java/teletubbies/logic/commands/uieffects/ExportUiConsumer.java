@@ -2,6 +2,11 @@ package teletubbies.logic.commands.uieffects;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.logging.Logger;
+
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.exceptions.DataConversionException;
 import teletubbies.commons.util.StringUtil;
@@ -10,11 +15,6 @@ import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.ui.MainWindow;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
-import java.util.logging.Logger;
 
 public class ExportUiConsumer implements UiConsumer {
 

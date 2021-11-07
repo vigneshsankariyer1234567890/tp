@@ -4,6 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static teletubbies.logic.commands.MergeCommand.MESSAGE_FILE_NOT_FOUND;
 import static teletubbies.logic.commands.MergeCommand.MESSAGE_INCORRECT_FORMAT;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Optional;
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.exceptions.DataConversionException;
@@ -13,12 +18,6 @@ import teletubbies.model.ReadOnlyAddressBook;
 import teletubbies.model.person.Person;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.ui.MainWindow;
-
-import java.io.File;
-import java.nio.file.Path;
-import java.util.Optional;
-import java.util.logging.Logger;
-
 
 public class MergeUiConsumer implements UiConsumer {
     private Model model;

@@ -79,9 +79,9 @@ deactivate MainWindow
 UiConsumer -> Model : getExportAddressBook
 Model --> UiConsumer
 
-UiConsumer -> ConfirmExportCommand : saveAddressBookToPath(ab,\npathString)
-activate ConfirmExportCommand
-deactivate ConfirmExportCommand
+UiConsumer -> UiConsumer : saveAddressBookToPath()
+activate UiConsumer
+deactivate UiConsumer
 
 UiConsumer --> CommandResult
 deactivate UiConsumer

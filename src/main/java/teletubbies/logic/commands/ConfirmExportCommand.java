@@ -1,21 +1,12 @@
 package teletubbies.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.logging.Logger;
 
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.core.Messages;
-import teletubbies.commons.util.StringUtil;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.logic.commands.uieffects.ExportUiConsumer;
-import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
-import teletubbies.storage.JsonAddressBookStorage;
-import teletubbies.ui.MainWindow;
 
 /**
  * Exports selected persons to file in path specified by user after confirmation.

@@ -292,7 +292,7 @@ The `import`, `merge` and `export` mechanisms are supported by all the main comp
 
 * The `Ui` component is accessed in `CommandResult` through the `UiConsumer`. This allows the user to interact with the JavaFX FileChooser to select files to be imported, merged or exported to.
 
-* The execution of the `ImportCommand`, `ExportCommand` and `MergeCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
+* The execution of the `ImportCommand`, `MergeCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
 
 * For import, the `Model` component is accessed to set the new AddressBook of contacts. For merge, contacts are merged with the current AddressBook. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
 
@@ -302,7 +302,7 @@ The `import`, `merge` and `export` mechanisms are supported by all the main comp
 
 The `ImportCommand` allows users to import contact files to the Teletubbies app. The following sequence diagram shows how the `import` operation works:
 
-<img src="images/ImportSequenceDiagram.png" width="700" />
+<img src="images/ImportSequenceDiagram.png" width="750" />
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -319,25 +319,33 @@ Teletubbies provides commands for users to modify contacts by editing their part
 
 The following sequence diagram shows how the `merge` operation works:
 
-<img src="images/MergeSequenceDiagram.png" width="700" />
+<img src="images/MergeSequenceDiagram.png" width="750" />
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `MergeCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
 #### Export Implementation
 
-
+Export is distinct from other features as it comprises of 2 commands, as illustrated in this activity diagram:
 
 ![ExportActivityDiagram](images/ExportActivityDiagram.png)
 
+As seen in the activity diagram above,
+* The first command gives users a preview of the contacts to be exported
+* Second command is carried out by the user to confirm and execute the export
+* If the user types in another command instead of confirming the export, the pending export is cancelled and the new command is executed. 
 
+The following sequence diagram shows how the `export` operation works:
 
-The following sequence diagrams show how the `export` and export confirmation operations work:
+<img src="images/ExportSequenceDiagram.png" width="750" />
 
-<img src="images/ExportSequenceDiagram.png" width="700" />
+The first `export` command processes the AddressBook to filter contacts that contain the tags specified by the user. This is then stored in the `Model` until the export is confirmed and is displayed to the user too. 
 
-<img src="images/ConfirmExportSequenceDiagram.png" width="700" />
+The following sequence diagram shows how the `export` confirmation operation works:
 
+<img src="images/ConfirmExportSequenceDiagram.png" width="750" />
+
+The execution of the `ConfirmExportCommmand` is similar to the `import` and `merge` commands. The `Model` plays a key role in storing the AddressBook to be exported and the boolean `isAwaitingExportConfirmation` between the `ExportCommand` and `ConfirmExportCommand`.
 
 #### Design Considerations
 
