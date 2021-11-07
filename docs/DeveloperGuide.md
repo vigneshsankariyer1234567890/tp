@@ -285,6 +285,9 @@ Merge functions in a similar way to import. However, instead of replacing the Ad
 
 Merging takes place by 
 
+
+![](images/MergeSequenceDiagram.png)
+
 #### Export Implementation
 
 
