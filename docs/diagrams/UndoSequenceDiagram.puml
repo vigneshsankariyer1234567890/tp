@@ -10,9 +10,12 @@ end box
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 participant ":VersionedAddressBook" as VersionedAddressBook MODEL_COLOR
+participant ":HistoryManager" as HistoryManager MODEL_COLOR
 end box
 [-> LogicManager : execute(undo)
 activate LogicManager
+
+
 
 LogicManager -> InputParser : parseCommand(undo)
 activate InputParser
@@ -36,7 +39,14 @@ activate Model
 Model -> VersionedAddressBook : undo()
 activate VersionedAddressBook
 
-VersionedAddressBook -> VersionedAddressBook :resetData(ReadOnlyAddressBook)
+VersionedAddressBook -> HistoryManager : undo()
+activate HistoryManager
+
+HistoryManager -> HistoryManager : peek()
+HistoryManager --> VersionedAddressBook : undoneState
+deactivate HistoryManager
+
+VersionedAddressBook -> VersionedAddressBook :resetData(undoneState)
 VersionedAddressBook --> Model :
 deactivate VersionedAddressBook
 
