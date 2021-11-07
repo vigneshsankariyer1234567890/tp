@@ -31,7 +31,7 @@ public class ExportCommandTest {
     }
 
     @Test
-    public void filteredAddress_friendsTag_lengthEqualsTwo() {
+    public void filteredAddress_friendsTag_lengthEqualsThree() {
         // Set-up
         Set<Tag> tags = new HashSet<>();
         tags.add(new Tag("friends"));

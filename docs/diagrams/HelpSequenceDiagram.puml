@@ -1,0 +1,64 @@
+@startuml
+!include style.puml
+skinparam defaultFontSize 24
+
+Participant "m:MainWindow" as mainWindow UI_COLOR
+Participant ":LogicManager" as logic LOGIC_COLOR_T4
+Participant ":HelpCommand" as command LOGIC_COLOR_T3
+Participant "uiConsumer:HelpUiConsumer" as HelpUiConsumer LOGIC_COLOR_T2
+Participant "result:CommandResult" as commandResult LOGIC_COLOR_T2
+
+
+-> mainWindow
+activate mainWindow UI_COLOR
+
+mainWindow -[UI_COLOR]> logic : execute("help")
+activate logic LOGIC_COLOR_T4
+
+logic -[LOGIC_COLOR_T4]> command : command.execute(model)
+activate command LOGIC_COLOR_T3
+
+create HelpUiConsumer
+command -[LOGIC_COLOR_T3]> HelpUiConsumer
+activate HelpUiConsumer LOGIC_COLOR_T2
+
+HelpUiConsumer --[LOGIC_COLOR_T2]> command
+deactivate HelpUiConsumer
+
+create commandResult
+command -[LOGIC_COLOR_T3]> commandResult : new CommandResult(..., uiConsumer)
+activate commandResult LOGIC_COLOR_T2
+
+commandResult --[LOGIC_COLOR_T2]> command
+deactivate commandResult
+
+command -[LOGIC_COLOR_T3]-> logic : result
+deactivate command
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+command -[hidden]-> logic
+destroy command
+
+logic --[LOGIC_COLOR_T4]> mainWindow
+deactivate logic
+
+mainWindow -[UI_COLOR]> commandResult : result.executeUiEffect(this)
+activate commandResult LOGIC_COLOR_T2
+
+commandResult -[UI_COLOR]> HelpUiConsumer : uiConsumer.accept(m)
+activate HelpUiConsumer LOGIC_COLOR_T2
+
+HelpUiConsumer -[LOGIC_COLOR_T2]> mainWindow : handleHelp()
+activate mainWindow UI_COLOR
+
+mainWindow --[UI_COLOR]> HelpUiConsumer
+deactivate mainWindow
+
+HelpUiConsumer --[LOGIC_COLOR_T2]> commandResult
+deactivate HelpUiConsumer
+
+commandResult --[LOGIC_COLOR_T2]> mainWindow
+deactivate commandResult
+
+[<--mainWindow
+deactivate mainWindow
+@enduml

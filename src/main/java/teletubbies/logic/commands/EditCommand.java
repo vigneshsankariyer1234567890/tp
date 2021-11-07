@@ -35,7 +35,7 @@ public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+    public static final List<Prefix> RECOMMENDED_FLAGS = List.of(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
             PREFIX_ADDRESS);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
