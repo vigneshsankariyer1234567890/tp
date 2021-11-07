@@ -254,11 +254,7 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Implementation
 
-<<<<<<< HEAD
 The `import`, `merge` and `export` mechanisms are supported by all the main components, specifically in the following ways:
-=======
-The `import` and `export` mechanism is supported by all the main components, specifically in the following ways:
->>>>>>> d94988ab225192d9d560d2434a15e0cd7b7af60d
 
 * The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFX FileChooser to select files to be imported, merged or exported to.
 
@@ -269,6 +265,9 @@ The `import` and `export` mechanism is supported by all the main components, spe
 * Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
 
 #### Import Implementation
+
+
+
 The following sequence diagram shows how the `import` operation works:
 
 ![](images/ImportSequenceDiagram.png)
@@ -280,12 +279,16 @@ The following sequence diagram shows how the `import` operation works:
 
 #### Merge Implementation
 
-Merge functions in a similar way to import. However, instead of replacing the AddressBook, the contacts being merged are merged with the prevailing AddressBook.
+Merge functions in a similar way to import. However, instead of replacing the AddressBook, the incoming Persons are merged with the prevailing AddressBook.
 
-Merging takes place by 
+Teletubbies provides commands for users to modify contacts by editing their particulars or tagging them. Since a Person can drastically change, each Person is issued a Universally Unique Identifier (UUID) to facilitate the merging process. If there is a match for the UUID in the AddressBook, the incoming Person would replace it. Else, the Person is new and would be added to the AddressBook.
 
+The following sequence diagram shows how the `merge` operation works:
 
 ![](images/MergeSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `MergeCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
 
 #### Export Implementation
 
