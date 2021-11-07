@@ -1,0 +1,31 @@
+@startuml
+!include style.puml
+skinparam ClassFontColor #000000
+skinparam ClassBorderColor #000000
+
+title 2-Stack solution to `HistoryManager`
+
+package undoStack {
+    class State1 as "__v0:T__"
+    class State2 as "__v1:T__"
+    class State3 as "__v2:T__"
+    class State4 as "__v3:T__"
+    class State5 as "__v4:T__"
+    class State6 as "__v5:T__"
+}
+State1 -[hidden]up-> State2
+State2 -[hidden]up-> State3
+State3 -[hidden]up-> State4
+State4 -[hidden]up-> State5
+State5 -[hidden]up-> State6
+
+
+package redoStack {
+
+}
+
+
+
+
+
+@end
