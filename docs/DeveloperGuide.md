@@ -293,6 +293,10 @@ Merging takes place by
 
 ![](images/ExportActivityDiagram.png)
 
+![](images/ExportSequenceDiagram.png)
+
+![](images/ConfirmExportSequenceDiagram.png)
+
 The following sequence diagram shows how the `export` operation works:
 
 
