@@ -27,6 +27,7 @@ class ProfileCommandTest {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setUserProfile(userProfile);
         expectedModel.setUserPrefs(userPrefs);
+        expectedModel.commitAddressBook();
 
         CommandTestUtil.assertCommandSuccess(profileCommand, model, expectedMessage, expectedModel);
     }
@@ -42,6 +43,7 @@ class ProfileCommandTest {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setUserProfile(userProfile);
         expectedModel.setUserPrefs(userPrefs);
+        expectedModel.commitAddressBook();
 
         CommandTestUtil.assertCommandSuccess(profileCommand, model, expectedMessage, expectedModel);
     }
