@@ -27,6 +27,11 @@ import teletubbies.model.person.PersonHasTagsPredicate;
 import teletubbies.model.tag.Tag;
 import teletubbies.testutil.AddressBookBuilder;
 
+/**
+ * Some tests to confirm that unmodifiable commands are truly unmodifiable. Original intention
+ * was to test the ConfirmExportCommand, but it proved difficult to build a suitable stub for MainWindow
+ * without relying on Logic and other components.
+ */
 public class ModifiableAndUnmodifiableCommandIntegrationTest {
 
     private final ReadOnlyAddressBook addressBookWithAmyBobAndCarl =

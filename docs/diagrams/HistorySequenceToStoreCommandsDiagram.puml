@@ -4,7 +4,7 @@
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":InputParser" as InputParser LOGIC_COLOR
-participant "Command" as Command LOGIC_COLOR
+participant "c:XYZCommand" as Command LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
@@ -45,6 +45,7 @@ activate InputParser
 create Command
 InputParser -> Command
 activate Command
+note right of Command: XYZCommand = AddCommand, \nFindCommand, etc
 
 Command --> InputParser
 deactivate Command

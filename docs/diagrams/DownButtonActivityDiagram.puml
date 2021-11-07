@@ -17,10 +17,10 @@ start
 'diamond we place it as the true branch instead.
 
 switch ()
-case (latest command already retrieved)
+case ( [latest command already retrieved])
     :Record in logger that there are no more future commands available;
 
-case (else)
+case ( [else])
     :Set next command in CommandBox;
 
 endswitch
