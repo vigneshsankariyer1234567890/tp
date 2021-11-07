@@ -27,6 +27,16 @@ For more experienced users who know what they are looking for and want to quickl
 
 Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut **Command + F** to find specific keywords.
 
+### Glossary of definitions
+
+**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
+
+**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
+
+**_Parameter_**: Input to a command's field.
+
+**_JavaScript Object Notation (JSON)_**: A text-based representation of structured data that is used to save contacts as files in *Teletubbies*.
+
 ### Glossary of icons and symbols
 :information_source: : Additional information <br/>
 :bulb: : Tip <br/>
@@ -41,7 +51,6 @@ Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut
 </div>
 
 > Quotes are used to explain examples for commands.
-
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -88,34 +97,34 @@ The sections outline the detailed usage and examples for each of the command.
 
 System commands | Format
 --------|------------------
-**[help](#viewing-help--help)** | `help`
-**[import](#importing-contacts--import)** | `import`
-**[merge](#merging-contacts--merge)** | `merge`
+**[help](#viewing-help-help)** | `help`
+**[import](#importing-contacts-import)** | `import`
+**[merge](#merging-contacts-merge)** | `merge`
 **[export](#exporting-contacts-export)** | `export [-t TAGS]…​`
 **[profile](#setting-your-profile-profile)** | `profile -n NAME -role ROLE`
-**[history](#listing-your-previous-commands--history)** | `history`
-**[undo](#undoing-your-previous-commands--undo)** | `undo`
-**[redo](#redoing-your-previous-commands--redo)** | `redo`
-**[exit](#exiting-the-program--exit)** | `exit`
+**[history](#listing-your-previous-commands-history)** | `history`
+**[undo](#undoing-your-previous-commands-undo)** | `undo`
+**[redo](#redoing-your-previous-commands-redo)** | `redo`
+**[exit](#exiting-the-program-exit)** | `exit`
 
 Contact commands | Format
 --------|------------------
 **[add](#adding-a-contact-add)** | `add -n NAME -p PHONE_NUMBER [-a ADDRESS] [-e EMAIL]`
-**[delete](#deleting-a-contact--delete)** | `delete -p PHONE_NUMBER` or `delete -i INDEX`
-**[edit](#editing-a-contact--edit)** | `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS]`
+**[delete](#deleting-a-contact-delete)** | `delete -p PHONE_NUMBER` or `delete -i INDEX`
+**[edit](#editing-a-contact-edit)** | `edit INDEX [-n NAME] [-p PHONE] [-e EMAIL] [-a ADDRESS]`
 **[done](#marking-a-contact-as-completed-done)** | `done INDEX [STATUS]`
 **[tag](#tagging-contacts-tag)** | `tag INDEX -n TAGNAME [-v VALUE] [-s]`
 **[tagrm](#removing-tags-from-contacts-tagrm)** | `tagrm INDEX -n TAGNAME [-v VALUE]`
 **[tag <br>(multiple contacts)](#tagging-and-removing-tags-from-multiple-contacts)** | `tag INDEX [,INDEX]…​ -n TAGNAME [-v VALUE] [-s]` <br> `tag START-END -n TAGNAME [-v VALUE] [-s]`
 **[tagrm <br>(multiple contacts)](#tagging-and-removing-tags-from-multiple-contacts)** | `tagrm INDEX [,INDEX]…​ -n TAGNAME [-v VALUE]` <br> `tagrm START-END -n TAGNAME [-v VALUE]`
-**[remark](#adding-a-remark-to-a-contact--remark)** | `remark INDEX -r REMARK`
+**[remark](#adding-a-remark-to-a-contact-remark)** | `remark INDEX -r REMARK`
 
 List commands | Format
 --------|------------------
-**[list](#listing-all-contacts--list)** | `list`
+**[list](#listing-all-contacts-list)** | `list`
 **[find](#locating-contacts-by-name-find)** | `find KEYWORD [KEYWORD]…​`
 **[filter](#filtering-contact-list-filter)** | `filter -t TAGNAME[:TAGVALUE] [-t TAGNAME[:TAGVALUE]]…​ `
-**[clear](#clearing-all-entries--clear)** | `clear`
+**[clear](#clearing-all-entries-clear)** | `clear`
 
 <div markdown="block" class="alert alert-info">
 
@@ -155,17 +164,17 @@ Features and corresponding commands have been categorised into:
 ### System commands
 
 These commands are related to the *Teletubbies* application as a whole. The commands available are:
-* [`help`](#viewing-help--help)
-* [`import`](#importing-contacts--import)
-* [`merge`](#merging-contacts--merge)
+* [`help`](#viewing-help-help)
+* [`import`](#importing-contacts-import)
+* [`merge`](#merging-contacts-merge)
 * [`export`](#exporting-contacts-export)
 * [`profile`](#setting-your-profile-profile)
-* [`history`](#listing-your-previous-commands--history)
-* [`undo`](#undoing-your-previous-commands--undo)
-* [`redo`](#redoing-your-previous-commands--redo)
-* [`exit`](#exiting-the-program--exit)
+* [`history`](#listing-your-previous-commands-history)
+* [`undo`](#undoing-your-previous-commands-undo)
+* [`redo`](#redoing-your-previous-commands-redo)
+* [`exit`](#exiting-the-program-exit)
 
-#### Viewing help : `help`
+#### Viewing help: `help`
 
 The `help` command will display our comprehensive user guide (that you are reading right now), 
 as shown below!
@@ -174,7 +183,7 @@ as shown below!
 
 Format: `help`
 
-#### Importing contacts : `import`
+#### Importing contacts: `import`
 
 The `import` command will help you to import a set of customer contact data into the application.
 
@@ -192,7 +201,7 @@ Format: `import`
 If the format of the selected data file is invalid, Teletubbies will start with an empty contact list!
 </div>
 
-#### Merging contacts : `merge`
+#### Merging contacts: `merge`
 
 The `merge` command is a special kind of importing, and it will help you to merge a set of customer contact data 
 with the current data inside the application.
@@ -272,7 +281,7 @@ Examples:
 * `profile -n Anne Goh -role Supervisor`
 > This command will set your name as "Anne Goh" and your role as "Supervisor".
 
-#### Listing your previous commands : `history`
+#### Listing your previous commands: `history`
 
 The `history` command will help you to view all the commands that have been issued by you in the **current session**.
 
@@ -291,7 +300,7 @@ previous session.
 
 </div>
 
-#### Undoing your previous commands : `undo`
+#### Undoing your previous commands: `undo`
 
 The `undo` command will help you to undo any changes you have made with your previous command. 
 
@@ -303,7 +312,7 @@ Otherwise, any changes you may have made with your previous command will be undo
 
 Format: `undo`
 
-#### Redoing your previous commands : `redo`
+#### Redoing your previous commands: `redo`
 
 The `redo` command will help you to redo any `undo` command you have issued previously.
 
@@ -316,7 +325,7 @@ Otherwise, any changes you may have made with your previous `undo` command will 
 
 Format: `redo`
 
-#### Exiting the program : `exit`
+#### Exiting the program: `exit`
 
 The `exit` command will help you gracefully exit *Teletubbies*.
 
@@ -326,12 +335,12 @@ Format: `exit`
 
 These commands are related to the contacts stored in *Teletubbies*. The commands available are:
 * [`add`](#adding-a-contact-add)
-* [`delete`](#deleting-a-contact--delete)
-* [`edit`](#editing-a-contact--edit)
+* [`delete`](#deleting-a-contact-delete)
+* [`edit`](#editing-a-contact-edit)
 * [`done`](#marking-a-contact-as-completed-done)
 * [`tag`](#tagging-contacts-tag)
 * [`tagrm`](#removing-tags-from-contacts-tagrm)
-* [`remark`](#adding-a-remark-to-a-contact--remark)
+* [`remark`](#adding-a-remark-to-a-contact-remark)
 
 
 #### Finding the index
@@ -339,7 +348,7 @@ These commands are related to the contacts stored in *Teletubbies*. The commands
 When dealing with contacts in *Teletubbies*, you will often have to use something called the **index**
 of the contact. 
 
-To find out what the contact's index is, use the [List](#listing-all-contacts--list) feature to
+To find out what the contact's index is, use the [List](#listing-all-contacts-list) feature to
 find what number the contact is associated with in the contact list. 
 
 The index
@@ -380,7 +389,7 @@ Examples:
 > This command will add the contact details for "John Snoe", with their phone number as "98765432". It will 
 > also add their address as "Wall Street, Block 234, #08-06", and their email address as "johns@example.com".
 
-#### Deleting a contact : `delete`
+#### Deleting a contact: `delete`
 
 The `delete` command will help you to delete a customer's contact details from *Teletubbies*. Once 
 the contact has been deleted, you should no longer see their contact details on the contact list.
@@ -402,7 +411,7 @@ Examples:
 * `delete -p 87654321`
 > This command will delete the contact details for the contact with the phone number "87654321".
 
-#### Editing a contact : `edit`
+#### Editing a contact: `edit`
 
 The `edit` command will help you to edit / update a customer's contact details in *Teletubbies*. Note that
 you can only edit the details for a contact that is already in *Teletubbies*' contact list. 
@@ -464,7 +473,7 @@ If you don't know what the index is, refer to [Finding the index](#finding-the-i
 
 Take note that contacts cannot have tags with duplicate names. So, if you have a contact that is already tagged,
 and you decide to tag it again with the same **name** but different **value**, the new **value** will replace the old
-one! For example, if a contact tagged with `Friend: good`, and is tagged using another tag with the **name** "Friend" 
+one! For example, if a contact tagged with `Friend: good`, and is then tagged using another tag with the **name** "Friend" 
 and the **value** "close", the pre-existing tag will be updated from `Friend: good` to `Friend: close`.
 
 Finally, there is an additional parameter that is only available to supervisors. When you add a `-s` at the end 
@@ -538,7 +547,7 @@ Examples (`tagrm`):
 * `tagrm 1-5 -n Friend `
 > This command will remove the tag `Friend` from the first five contacts in the list.
 
-#### Adding a remark to a contact : `remark`
+#### Adding a remark to a contact: `remark`
 
 The `remark` command will help you to add a remark to a chosen contact in the list. Remarks are a more general version
 of the tags - the feature is for you to add extra information to a contact that you cannot add using tags.
@@ -551,8 +560,8 @@ Format: `remark INDEX -r REMARK`
 Examples:
 * `remark 1 -r Not answering any calls`
 > This command will add the remark `Not answering any calls` to the first contact in the list.
-* `remark 2 -r Not answering any calls`
-* `remark 2 -r Need to call back for confirmation`
+* `remark 2 -r Not answering any calls` </br>
+`remark 2 -r Need to call back for confirmation`
 > The first command will add the remark `Not answering any calls` to the second contact in the list. The second command 
 > will then add the new remark `Need to call back for confirmation` to the second contact in the list, which will replace the
 > old remark `Not answering any calls`.
@@ -567,13 +576,13 @@ will replace the existing remark.
 ### List commands
 
 These commands are related to the contact list stored in *Teletubbies*. The commands available are:
-* [`list`](#listing-all-contacts--list)
+* [`list`](#listing-all-contacts-list)
 * [`find`](#locating-contacts-by-name-find)
 * [`filter`](#filtering-contact-list-filter)
-* [`clear`](#clearing-all-entries--clear)
+* [`clear`](#clearing-all-entries-clear)
 
 
-#### Listing all contacts : `list`
+#### Listing all contacts: `list`
 
 The `list` command will help you to view the entire contact list currently in *Teletubbies*.
 
@@ -647,7 +656,7 @@ Examples:
 > This command will filter the displayed list to only users who have the tag `Friend` AND `Assignee: Ben`. Contacts 
 > that have only one of the given tags will NOT be listed.
 
-#### Clearing all entries : `clear`
+#### Clearing all entries: `clear`
 
 The `clear` command will help you clear all contacts from the Teletubbies application.
 
@@ -682,8 +691,8 @@ For exporting the current data as a separate JSON file, refer to [Exporting cont
 
 *Teletubbies* will automatically load up the data from your previous session, allowing you to pick up right where you left off. There is no need to load manually.
 
-For importing a contact list in the JSON file format into the application, refer to [Importing contacts](#importing-contacts--import).
-For merging a contact list from your hard disk with the contact list on the application, refer to [Merging contact lists](#merging-contacts--merge)  
+For importing a contact list in the JSON file format into the application, refer to [Importing contacts](#importing-contacts-import).
+For merging a contact list from your hard disk with the contact list on the application, refer to [Merging contact lists](#merging-contacts-merge)  
 
 #### Editing the data
 
@@ -700,7 +709,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 **Q**: How do I transfer my data to another Computer?<br>
 1. Install the *Teletubbies* app in the other computer.
 2. Use the [`export`](#exporting-contacts-export) command to export your contacts as a JSON file. Transfer the contacts file to the other computer.
-3. On the other computer, launch the *Teletubbies* app and use the [`import`](#importing-contacts--import) command to import the contacts file that you transferred over.
+3. On the other computer, launch the *Teletubbies* app and use the [`import`](#importing-contacts-import) command to import the contacts file that you transferred over.
 
 **Q** How do I change my role after setting it once?<br>
 **A**:
@@ -710,13 +719,3 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 
 --------------------------------------------------------------------------------------------------------------------
-
-### Glossary of definitions
-
-**_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
-
-**_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
-
-**_Parameter_**: Input to a command's field.
-
-**_JavaScript Object Notation (JSON)_**: A text-based representation of structured data that is used to save contacts as files in *Teletubbies*.
