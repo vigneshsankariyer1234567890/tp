@@ -4,7 +4,7 @@
 participant ":FilterCommandParser" as FilterCommandParser LOGIC_COLOR_T4
 participant ":ParserUtil" as ParserUtil LOGIC_COLOR_T3
 participant "predicate:PersonHasTagsPredicate" as Predicate LOGIC_COLOR_T3
-participant "command:TagCommand" as TagCommand LOGIC_COLOR_T2
+participant "command:FilterCommand" as TagCommand LOGIC_COLOR_T2
 
 [-> FilterCommandParser : parse(arguments)
 activate FilterCommandParser

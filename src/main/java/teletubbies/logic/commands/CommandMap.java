@@ -3,6 +3,10 @@ package teletubbies.logic.commands;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Map from command words to Command class to allow quick access
+ * to the Command classes
+ */
 public class CommandMap {
 
     private static final Map<String, Class<? extends Command>> classMap = new HashMap<>();

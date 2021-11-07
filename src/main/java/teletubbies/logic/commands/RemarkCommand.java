@@ -21,7 +21,7 @@ public class RemarkCommand extends Command {
 
     public static final String COMMAND_WORD = "remark";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_REMARK);
+    public static final List<Prefix> RECOMMENDED_FLAGS = List.of(PREFIX_REMARK);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the remark of the person identified "
             + "by the index number used in the current contact list. "

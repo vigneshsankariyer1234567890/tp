@@ -9,6 +9,7 @@ import static teletubbies.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static teletubbies.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static teletubbies.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static teletubbies.testutil.TypicalPersons.getTypicalAddressBook;
+import static teletubbies.testutil.TypicalPersons.getTypicalPersons;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,8 +21,12 @@ import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
 import teletubbies.model.person.Person;
+import teletubbies.model.tag.Tag;
 import teletubbies.testutil.EditPersonDescriptorBuilder;
 import teletubbies.testutil.PersonBuilder;
+
+import java.util.HashSet;
+import java.util.List;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -30,22 +35,23 @@ public class EditCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    // TODO fix this test
+    @Test
+    public void execute_allFieldsSpecifiedUnfilteredList_success() {
+        // Set tags and remark since edit doesn't change tags and remarks
+        Person editedPerson = new PersonBuilder().withTags("friends")
+                .withRemark("She likes aardvarks.").build();
 
-    //    @Test
-    //    public void execute_allFieldsSpecifiedUnfilteredList_success() {
-    //        Person editedPerson = new PersonBuilder().build();
-    //        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
-    //        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
-    //
-    //        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
-    //
-    //        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-    //        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
-    //        expectedModel.commitAddressBook();
-    //
-    //        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    //    }
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.commitAddressBook();
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {

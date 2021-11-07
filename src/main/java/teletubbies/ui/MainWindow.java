@@ -177,7 +177,7 @@ public class MainWindow extends UiPart<Stage> {
             return;
         }
         try {
-            List<String> requiredTags = ((List<Prefix>) commandClass.getDeclaredField("REQUIRED_FLAGS")
+            List<String> requiredTags = ((List<Prefix>) commandClass.getDeclaredField("RECOMMENDED_FLAGS")
                     .get(null))
                     .stream().map(Prefix::toString).collect(Collectors.toList());
             commandBox.setText(commandText + " " + String.join(" ", requiredTags));

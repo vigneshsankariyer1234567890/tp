@@ -25,7 +25,7 @@ public class TagCommand extends Command {
 
     public static final String COMMAND_WORD = "tag";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_VALUE);
+    public static final List<Prefix> RECOMMENDED_FLAGS = List.of(PREFIX_NAME, PREFIX_VALUE);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds specified tag to the "
             + "persons specified by the indices.\n"
