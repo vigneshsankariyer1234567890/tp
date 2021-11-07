@@ -23,12 +23,12 @@ case ( [Export all contacts] )
     :Entire contact list
      is displayed;
 case ( [Export contacts \n with specified tag(s)] )
-    :Filtered contact list 
+    :Filtered contact list
     is displayed;
 
 endswitch
 
-:Await Export Confirmation 
+:Await Export Confirmation
 command from user;
 
 switch ()
@@ -39,7 +39,7 @@ stop
 case ( [User confirms export] )
      :Open file selector window for user to
       choose save location and name file;
-     
+
      switch ()
      case( [File chooser is closed] )
         :Export cancelled and \nerror message shown;
@@ -47,6 +47,5 @@ case ( [User confirms export] )
      case( [User selects file location \n and names export file])
         :Teletubbies exports the contact list;
         stop
-     
 
 @enduml

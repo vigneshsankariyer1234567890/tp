@@ -21,7 +21,7 @@ Given below are my contributions to the project.
     * Justification: This feature improves contact management as users such as telemarketing supervisors can manage different contact lists and merge them to update their master list.
 
 * **New Feature**: Added an **export confirmation** command.
-    * Displays the list of contacts to be exported. Allows users to view and confirm if the correct contacts have been selected before the export is executed. 
+    * Displays the list of contacts to be exported. Allows users to view and confirm if the correct contacts have been selected before the export is executed.
 
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2122s1.github.io/tp-dashboard/?search=tanqiya&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-17&tabOpen=true&tabType=authorship&tabAuthor=tanqiya&tabRepo=AY2122S1-CS2103T-W15-4%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&zFR=false)
 
