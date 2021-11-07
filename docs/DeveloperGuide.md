@@ -9,7 +9,7 @@ title: Developer Guide
 
 ## **Setting up, getting started**
 
-Refer to the guide [_Setting up and getting started_](SettingUp.md). 
+Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -20,47 +20,47 @@ This document describes the architecture and system design of the Teletubbies de
 for Telemarketers and Telemarketer Supervisors.
 
 ### **Scope**
-The document aims to comprehensively cover the software architecture and software design decisions for 
-the implementation of Teletubbies. It is intended to serve as a guide for the developers, the designers, and the testers 
+The document aims to comprehensively cover the software architecture and software design decisions for
+the implementation of Teletubbies. It is intended to serve as a guide for the developers, the designers, and the testers
 for the application.
 
 The definitions for the emboldened terms can be found in the [_Glossary_](#glossary) Section.
 
 ### **Design Goals**
-The developers work closely with telemarketers and telemarketer supervisors to better understand their needs, so that 
+The developers work closely with telemarketers and telemarketer supervisors to better understand their needs, so that
 the requirements of the product can be as clear-cut as possible.
 
 #### _User-Centricity_
-Teletubbies can be used by both telemarketers and supervisors, and chooses the appropriate features according to the 
+Teletubbies can be used by both telemarketers and supervisors, and chooses the appropriate features according to the
 current user's **role**, so that the user can work effectively and efficiently to complete their tasks.
 
 #### _Improved Workflow Efficiency_
-Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which streamlines workflow 
+Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which streamlines workflow
 within the application by centralising the entering of commands in a single text input window.
 
 #### _Seamless Data Integration_
-Teletubbies allows telemarketers and their supervisors to share and merge data seamlessly. Synchronization of customer 
+Teletubbies allows telemarketers, and their supervisors to share and merge data seamlessly. Synchronization of customer
 data between telemarketers and their supervisors is often a necessary aspect of their job, and Teletubbies provides
 avenues to make this process easy and hassle-free.
 
 #### _Data Safety and Recoverability_
-With a large number of contacts stored in a contact list, it is vital that the user’s current progress is saved 
+With many contacts stored in a contact list, it is vital that the user’s current progress is saved 
 frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved 
 after each command issued by the user.
 
-Additionally, in the event of human error, an undo command is available for users to revert to previous states 
+Additionally, in the event of human error, an undo command is available for users to revert to previous states
 within the session itself.
 
 #### _Scalability & Maintainability_
-Within a team of developers, it is important that the developers reduce dependencies within the project to increase 
+Within a team of developers, it is important that the developers reduce dependencies within the project to increase
 testability and extensibility.
 
-In addition, with requirements that constantly change, it is important to be able to easily modify features and 
+In addition, with requirements that constantly change, it is important to be able to easily modify features and
 functionalities that have already been written without disturbing other related components. Therefore, the main 
 components of the application such as the `Logic`, `UI`, `Model`, and `Storage` are separated into decoupled modules.
 
 Along with the strict adherence to software design principles, such as **Single Responsibility** and
-**Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies 
+**Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies
 without having to deal with tedious side-effects.
 
 ### **Glossary**
@@ -70,16 +70,15 @@ without having to deal with tedious side-effects.
 
 **_User stories_**: Simple descriptions of features told from the perspective of the user.
 
-**_Completion Status_**: A contact can be marked as either “complete”, "ongoing" or “incomplete”, indicating if the contact 
-has been contacted.
+**_Completion Status_**: A contact can be marked as either “complete”, "ongoing" or “incomplete”, indicating if the contact has been contacted.
 
 **_Role_**: Users are assigned either the role of telemarketer or supervisor.
 
-**_Single Responsibility Principle_**:  A software engineering principle that states that every module, class or 
-function in a computer program should be responsible for and encapsulate only a single part of 
+**_Single Responsibility Principle_**:  A software engineering principle that states that every module, class or
+function in a computer program should be responsible for and encapsulate only a single part of
 the program’s functionality.
 
-**_Separation of Concerns Principle_**: A software engineering principle that states that programs should be separated 
+**_Separation of Concerns Principle_**: A software engineering principle that states that programs should be separated
 into distinct sections which address concerns, or sets of information that affects the code of a computer program.
 
 --------------------------------------------------------------------------------------------------------------------
@@ -122,7 +121,7 @@ The rest of the App consists of four components.
 
 #### How the architecture components interact with each other
 
-The Sequence Diagram below outlines how the components interact with each other, in a scenario where the user issues the command `delete p/87654321`.
+The Sequence Diagram below outlines how the components interact with each other, in a scenario where the user issues the command `delete -p 87654321`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -177,7 +176,8 @@ interface that allows the commands to access the functionality of `MainWindow`. 
 set-up:
 
 ```java
-return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
+return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, 
+        MainWindow::handleHelp);
 ```
 
 If the `UiEffect` type (the second constructor argument) does not exist for any new command that gets added, this
@@ -187,14 +187,14 @@ On the other hand, if a command has no special UI response, the `UiEffect` type 
 
 The previous implementation of `UiEffect` was solely restricted to help and exit commands. Creating more commands with UI effects would have required hard-coding
 more flags for these effects in `CommandResult`, and in turn hard-coding these effects again in `MainWindow`. This would have required significant modifications in both of
-these classes, especially if new commands are added in. 
+these classes, especially if new commands are added in.
 
 The implementation of the consumer interface instead allows these UI effects to be open for extension and closed for modification.
 Now, specific UI effects can be specified within the respective command, without having to change the code in `MainWindow` that handles the command's UI effect.
 
-The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete p/87654321")` API call.
+The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete -p 87654321")` API call.
 
-![Interactions Inside the Logic Component for the `delete p/87654321` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `delete -p 87654321` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -217,21 +217,16 @@ Similarly, all `XYZCommand` classes inherit from the `Command` class.
 
 Here's a (partial) class diagram of the `Model` component:
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.png" width="700" />
 
 
 The `Model` component,
 
-* stores the contacts, i.e. all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g. results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' (e.g. the `Ui` component can be bound to this list so that the UI automatically updates when the data in the list change).
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` object.
+* stores the list of contacts and all previous lists (or address books) in`VersionedAddressBook`, which inherits from `AddressBook`.
+* stores a history of all commands that were input by the user using `CommandInputHistory`.
+* stores the currently 'selected' `Person` objects (e.g. results of a search query) as a separate _filtered_ list, exposed to outsiders as an unmodifiable `ObservableList<Person>`.
+* stores a `UserPref` object that represents the user’s preferences.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components).
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<img src="images/BetterModelClassDiagram.png" width="450" />
-
-</div>
 
 
 ### Storage component
@@ -259,7 +254,11 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Implementation
 
+<<<<<<< HEAD
 The `import`, `merge` and `export` mechanisms are supported by all the main components, specifically in the following ways:
+=======
+The `import` and `export` mechanism is supported by all the main components, specifically in the following ways:
+>>>>>>> d94988ab225192d9d560d2434a15e0cd7b7af60d
 
 * The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFX FileChooser to select files to be imported, merged or exported to.
 
@@ -312,14 +311,18 @@ The following sequence diagram shows how the `export` operation works:
     * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
     * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags.
 
-### Profile feature
+### Profile Feature
 
 #### Implementation
 
 Setting the user's profile is facilitated through the `ProfileCommand` and the `ProfileCommandParser` class, which
 parses the user's input to create a new `UserProfile` object to be set in the current `Model` component.
 
-The following sequence diagram shows how the `profile` operation works:
+The following activity diagram summarizes what happens when a user executes a `profile` command:
+
+![ProfileActivityDiagram](images/ProfileActivityDiagram.png)
+
+The following sequence diagram further illustrates how the `profile` command operation works:
 
 ![ProfileSequenceDiagram](images/ProfileSequenceDiagram.png)
 
@@ -334,11 +337,34 @@ The following sequence diagram shows how the `profile` operation works:
     * Pros: Ensures that both name and role are accounted for when changing the profile.
     * Cons: Both fields must be entered for the user to set the profile, which can be tedious if it has to be done multiple times.
 
-* **Alternative 2 (possible future implementation):** Profile can be set with only the name, or both name and role.
+* **Alternative 2:** Profile can be set with only the name, or both name and role.
     * Pros: Allows users to change their name alone without having to enter role as well.
     * Cons: The cost of implementation is not heavily outweighed by the explicit need for the feature, as there should be infrequent changes in the user's name.
+    
+**Aspect: Number of times the user's profile can be set**
 
-### Mark contacts as done feature
+* **Alternative 1 (current choice):** Profile can only be set once per user, excluding any undo.
+    * Pros: Ensures that users are unable to switch between telemarketer and supervisor functionalities. In the case where
+the user has misspelt their name, they can still use the undo command to revert back and re-enter the name for their profile.
+    * Cons: The user is unable to set their profile again in the case where their name or role has changed.
+
+* **Alternative 2:** No limits are placed on the number of times the user is able to set their profile.
+    * Pros: Allows users to change their name or role as needed, hassle-free.
+    * Cons: There is no explicit need for the feature, as there should be infrequent changes in the user's name and role.
+
+### Profile feature - Reset profile
+
+#### Implementation
+
+As stated above, users are only able to set their profile **once** using the `profile` command. 
+However, there may be times when there is a need for the users to change their name and/or role. In such circumstances,
+it is possible for the users to reset their profile by manually deleting `preferences.json`.
+
+The following activity diagram summarizes what happens when a user deletes `preferences.json`:
+
+![ProfileResetActivityDiagram](images/ProfileResetActivityDiagram.png)
+
+### Mark Contacts as Done Feature
 
 #### Implementation
 
@@ -349,22 +375,22 @@ The following sequence diagram shows how the `done` operation works:
 
 ![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
 
-### Delete contacts feature
+### Delete Contacts Feature
 
 The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
-The user can delete a contact via a `delete i/1` or `delete p/87654321` input.
-* delete using a contact's displayed index number by using the `i/` prefix.'
-* delete using a contact's phone number by using the `p/` prefix.
+The user can delete a contact via a `delete -i 1` or `delete -p 87654321` input.
+* delete using a contact's displayed index number by using the `-i` prefix.'
+* delete using a contact's phone number by using the `-p` prefix.
 
 The following activity diagram summarizes what happens when a user executes a delete command:
 
 ![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
 
-#### Design considerations
+#### Design Considerations
 
 **Aspect: Parameters of the `delete` command**
 
-Since the telemarketer is responsible for talking to customers on the phone to sell products, 
+Since the telemarketer is responsible for talking to customers on the phone to sell products,
 it will be useful for them to interact with their contact lists through the customer's phone number.
 
 * **Alternative 1 (current choice):** Delete using either index or phone number.
@@ -374,6 +400,204 @@ it will be useful for them to interact with their contact lists through the cust
 * **Alternative 2:** Delete via phone number only.
     * Pros: Implementation is more straightforward, as there is only one type of input to be expected.
     * Cons: Removes the convenience of deleting using a contact's index.
+
+### History tracking features
+
+We saw a need for Teletubbies to track the history of the application as a core feature while we were devising our user stories. This would allow users to traverse back
+and regain access to previous states, as well as access previous commands.
+
+The features that required the tracking of history were the
+* `undo`/`redo` commands,
+* `history` command, and
+* Unix-style way of obtaining previous and next commands, using the **UP** and **DOWN**
+arrow keys
+
+The `HistoryManager` class was created to serve as an abstraction for devices that can store the history of any object. It's sole responsibility is to
+manage the history of the type of object we wanted to track, including the current state and a list of previous states or previously undone states. It is a generic class, which
+allows for efficient code re-usability.
+
+`HistoryManager` uses a stack-like data structure, with a *Last-In, First-out* (LIFO) method of storing states.
+
+`HistoryManager` contains an `ArrayList` called `historyStack` which serves as the stack-like data structure to store the states of the object in question, and a `stackPointer` which stores the
+index of the current state in question.
+
+When `HistoryManager` is first initialised, `historyStack` is empty while `stackPointer` does not point to any state, since there are none stored.
+![HistoryManagerDiagram0](images/HistoryManagerDiagram0.png)
+
+Then, new states of the object with type parameter `T` are added and stored in the `HistoryManager`, using `HistoryManager#commitAndPush(T item)`. This method causes the new item to be added to
+`historyStack` and the `stackPointer` to be pointed to the new item.
+![HistoryManagerDiagram1](images/HistoryManagerDiagram1.png)
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#commitAndPush(T item)` returns a *new* `HistoryManager` object which has the new state pushed to the top of the
+`historyStack`. This ensures the immutability of historyStack and guarantees that if anything is added, `stackPointer` will point to the latest version.
+</div>
+
+The `HistoryManager#undo()` and `HistoryManager#redo()` methods allow the pointer to be pushed up or down to previous states or previously undone states, by simply pointing to the object below the current state or above it.
+
+For instance, this is how `HistoryManager` looks like after `HistoryManager#undo()` is called twice:
+![HistoryManagerDiagram2](images/HistoryManagerDiagram2.png)
+
+And after `HistoryManager#redo()` is called once, it looks like this:
+![HistoryManagerDiagram3](images/HistoryManagerDiagram3.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#undo()` and `HistoryManager#redo()` *do not* return new `HistoryManager` objects as the `historyStack` is not manipulated.
+</div>
+
+Calling `HistoryManager#commitAndPush(T item)` here causes the states above the `stackPointer` to be removed and replaced by the new state, as indicated by item.
+Once again, a new `HistoryManager` is created, this time with the new state added and the state `v2` to be removed.
+![HistoryManagerDiagram4](images/HistoryManagerDiagram4.png)
+
+`HistoryManager` also has a `HistoryManager#peek()` method which returns the current state that is pointed at by the `stackPointer`, as well as the
+`HistoryManager#resetFullHistory()` method which simply resets the `stackPointer` to point to the top of the `historyStack`.
+
+#### Design Considerations
+
+**Aspect: How can the previous states be stored**
+
+* **Alternative 1 (current choice):** Use a single stack to record the history
+  * Pros: Easy to visualise
+  * Cons: Need to be careful while committing as both previous states and previously undone states exist on the same stack. Does not adhere closely to Single Responsibility Principle.
+
+* **Alternative 2 (proposed):** Use a 2-stack method to record history, one which stores the states which can be undone and the other to store the states which can be redone.
+  * The `HistoryManager` would originally have 2 stacks: an undo stack and a redo stack. Before actions are undone, the redo stack would be empty while the new states would be added
+directly to the top of redo stack. ![HistoryManagerAlternative0](images/HistoryManagerAlternativeDiagram0.png)
+  * Then, as `HistoryManager#undo()` or `HistoryManager#redo()` is called states would be popped from one stack and pushed to the other. ![HistoryManagerAlternative1](images/HistoryManagerAlternativeDiagram1.png)
+  * If we want to commit to `HistoryManager`, all we have to do is clear `redoStack` and push the new state to `undoStack`. ![HistoryManagerAlternative2](images/HistoryManagerAlternativeDiagram2.png)
+  * Pros: Single responsibility principle, `undoStack` only manages states to be undone while `redoStack` only manages states to be redone.
+  * Cons: Difficult to visualise.
+
+
+### Undo/Redo feature
+
+The `undo` command allows the telemarketer or the supervisor to revert to previous states. This mechanism is supported by the `VersionedAddressBook`. `VersionedAddressBook` extends
+`AddressBook`, but internally implements the `HistoryManager` class to store and track `ReadOnlyAddressBook`, the states of the address book.
+
+It also implements the following methods:
+
+* `VersionedAddressBook#commitCurrentStateAndSave()` - This action adds a copy of the current state to `HistoryManager`
+* `VersionedAddressBook#commitWithoutSavingCurrentState()` - This action clears previously undone states stored by `HistoryManager`. This method will only be called
+* `VersionedAddressBook#undo()` - This action restores a previously stored state as stored in `HistoryManager`
+* `VersionedAddressBook#redo()` - This action restores a previously undone state as stored in `HistoryManager`
+
+The `Model` interface also exposes methods such as `Model#undoAddressBook()`, `Model#redoAddressBook()` and `Model#commitAddressBook()` that allows the states to be changed.
+
+An example of the usage scenario of `undo` is given below:
+
+Step 1. Teletubbies is launched for the first time by the user. `VersionedAddressBook` is first initialised with an initial address book state.
+![UndoState0](images/UndoRedoState0.png)
+
+Step 2. The user changes the current state of Teletubbies by executing a `done 1` command. The `done` command calls `Model#commitAddressBook()` which in turn causes
+`VersionedAddressBook#commitCurrentStateAndSave()` to be called. This causes the newest state of Teletubbies (which is different from it's previous state) to be
+saved.
+![UndoState1](images/UndoRedoState1.png)
+
+Step 3. The user changes the current state of Teletubbies by executing a `delete -i 1` command. The `delete` command calls `Model#commitAddressBook()` as before, causing
+the state of Teletubbies to be changed.
+![UndoState2](images/UndoRedoState2.png)
+
+Step 4. The user decides to undo by executing `undo`. This causes `Model#undoAddressBook()` to be called, which causes `HistoryManager` to revert back to state `tb1`.
+![UndoState3](images/UndoRedoState3.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the earliest
+possible state, in this case tb0, Teletubbies will no longer be revertible, and the undo command will throw an exception. The undo command uses
+`Model#canUndoAddressBook()` to confirm if this is the case.
+</div>
+
+The sequence diagram below illustrates the undo operation:
+![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
+
+However, the `redo` command simply does the opposite and calls `Model#redoAddressBook()`, which causes the undone state to be reinstated.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the latest
+possible state, in this case tb2, Teletubbies will no longer be able to restore undone states, and the redo command will throw an exception. The undo command uses
+`Model#canRedoAddressBook()` to confirm if this is the case.
+</div>
+
+Step 5. The user decides to execute the command `find Alex`. However, `find` does not modify `VersionedAddressBook`. Commands that do not modify `VersionedAddressBook` do not call
+`Model#commitAddressBook()` which allows the history of states to remain unchanged.
+![UndoState4](images/UndoRedoState4.png)
+
+Step 6. The `clear` command is then executed by the user. `Model#commitAddressBook()` is called by the command, which causes the states after the current state to no longer be stored.
+![UndoState5](images/UndoRedoState5.png)
+
+#### Design Considerations
+
+**Aspect: How `undo` and `redo` would be executed**
+
+* **Alternative 1 (current choice):** Just save the entire AddressBook state.
+  * Pros: Easier to implement, debug and trace together
+  * Cons: Very memory-intensive as multiple states and copies are stored.
+
+* **Alternative 2:** Only store the difference in the AddressBook states, much like GitHub's approach to version control. This means a separate data structure which stores the difference between states like a tree is needed.
+  * Pros: Much less memory-intensive since only differences between each version are saved
+  * Cons: Difficult to implement a tree-like data structure that can effectively track the changes within the given time period. Undo would simply be a traversal up the tree while redo would be traversing down. Cannot reuse `HistoryManager`
+
+### History feature
+
+The `history` command allows the user to view the previous commands that were given to Teletubbies. This mechanism is supported by `CommandInputHistory`, which internally implements `HistoryManager`
+to store and track user inputs which are `String`s.
+
+`CommandInputHistory` also implements the following methods:
+
+* `CommandInputHistory#getChronologicallyAscendingHistory()` - This method returns a List of Strings which are the commands keyed in by the user
+in chronological order, i.e. the first element is the earliest command given by the user.
+* `CommandInputHistory#getChronologicallyDescendingHistory()` - This method returns a List of Strings which are the commands keyed in by the user
+in chronologically descending order, i.e. the first element is the latest command given by the user.
+* `CommandInputHistory#addCommandInput(String input)` - This method calls `HistoryManager#resetFullHistory()` before calling `HistoryManager#commitAndPush()` to add a new String
+to the `HistoryManager`. This is necessary as `CommandInputHistory` should keep track of all inputs without overwriting them.
+
+The `Model` interface also exposes methods such as `Model#addCommandInput()`, `Model#getNextCommand()` and `Model#getPreviousCommand()` that allows access to the previous and next commands
+as stored by the `HistoryManager` in `CommandInputHistory`.
+
+The sequence diagram below shows the mechanism in storing the input given by the user.
+![HistorySequenceDiagramToStoreCommands](images/HistorySequenceToStoreCommandsDiagram.png)
+
+This allows the command to be stored regardless of the outcome of the command, even if it is an invalid command.
+
+The sequence diagram below shows the execution path which is taken by the `history` command.
+![HistoryCommandSequenceDiagram](images/HistoryCommandSequenceDiagram.png)
+
+### Use of **UP** and **DOWN** to get previous or next commands
+
+As we were inspired heavily by the elegance of Unix-like systems and their ability to cycle through previously input commands,
+we decided to implement this as well. This feature is facilitated by the `Model` and `CommandHistoryInput`.
+
+The UI component uses EventHandlers that detects if the **UP** or **DOWN** buttons are pressed by the user. Then, UI calls upon `Model#getPreviousCommand()`
+or `Model#getNextCommand()` to get the previous or next command as stored by `CommandInputHistory`.
+
+The activity diagrams below show how each key press is handled.
+
+![UpButtonActivityDiagram](images/UpButtonActivityDiagram.png)
+
+![DownButtonActivityDiagram](images/DownButtonActivityDiagram.png)
+
+#### Design Considerations
+
+**Aspect: The interaction between `UI` and `CommandInputHistory`**
+
+* **Alternative 1 (current choice):** Let `Model` house `CommandInputHistory`
+    * Pros: Minimal dependency between `Logic` and the components of `Model`
+    * Cons: Additional dependency between `UI` and `Model` created as `UI` needs to call `Model` methods
+
+* **Alternative 2:** Let `Logic` house `CommandInputHistory`
+    * Pros: Since `Logic` already interacts with `UI`, no additional coupling created between them.
+    * Cons: Requires passing of `CommandInputHistory` to `InputParser` in order to handle `history` commands. The parser should not
+  have to know about `CommandInputHistory`
+
+### Auto completion feature
+
+Since Teletubbies is designed to be mainly used through its CLI, we prioritised the convenience of our users in typing
+out commands by implementing an auto completion feature.
+
+The autocompletion mechanism is facilitated by the `CommandMap` class. The `CommandMap` contains a a `HashMap`
+called `classMap` which stores the individual command words as keys and the `XYZCommand` classes as values. Within
+each `XYZCommand` class, the recommended command fields for the command are stored in a `List` called `RECOMMENDED_FLAGS`.
+This list is not stored if the command does not require command fields. Here, `XYZ` is a placeholder for the specific
+command name, e.g. `AddCommand`.
+
+The UI component uses EventHandlers that detects if the **TAB** button is pressed by the user. Then, UI calls
+upon `CommandMap#getClass()` to retrieve the class that corresponds to the input command, which then prints out
+the command fields specified within the `RECOMMENDED_FLAGS` list (or does not print out anything, in the case that no command fields
+are required for the input command).
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -391,14 +615,13 @@ it will be useful for them to interact with their contact lists through the cust
 
 ### Product scope
 
-
 #### **Target User Profiles**
 
 
 David Wong
 * works as a **telemarketer** from home and makes internet calls on his computer
 * likes to import/export data quickly
-* wants to mark the contacts that he has already called and/or successfully marketed to 
+* wants to mark the contacts that he has already called and/or successfully marketed to
 * wants to keep track of his progress
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
@@ -408,7 +631,7 @@ David Wong
 
 <br>
 
-Anne Goh 
+Anne Goh
 * works as a **telemarketing supervisor** from home
 * needs to pass lists of contacts to her subordinates to contact
 * wants to monitor the performance of her subordinates
@@ -429,7 +652,7 @@ Anne Goh
 
 ### User stories
 
-Priorities: 
+Priorities:
 * High (must have) - `* * *`
 * Medium (nice to have) - `* *`
 * Low (unlikely to have) - `*`
@@ -452,7 +675,7 @@ Priorities:
 
 ### Use cases
 
-For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the user, unless specified otherwise.
+For all use cases below, the **System** is the `Teletubbies` application, and the **Actor** is the user, unless specified otherwise.
 
 #### Use case: Delete a person
 
@@ -499,7 +722,7 @@ Use case ends.
   * 3a1. Teletubbies displays a message prompting the Telemarketer to try importing JSON file again.
   * 3a2. Telemarketer imports a JSON file containing the customers’ details
   * Steps 3a1 to 3a2 are repeated until a valid JSON file is selected
-  
+
   Use case resumes from step 4.
 
 
@@ -515,7 +738,7 @@ Use case ends.
   * 5a1. Teletubbies displays a message to inform Telemarketer about the input error
   * 5a2. Telemarketer re-enters the command with a correct index number for the contact
   * Steps 5a1 to 5a2 are repeated until a valid customer phone number is input
-  
+
   Use case resumes from step 6.
 
 
@@ -563,13 +786,13 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete i/1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `delete -i 1`<br>
+      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. 
 
-   1. Test case: `delete i/0`<br>
+   1. Test case: `delete -i 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete i/x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete -i x`, `...` (where `x` is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
@@ -581,3 +804,5 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+--------------------------------------------------------------------------------------------------------------------

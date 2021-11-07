@@ -1,0 +1,28 @@
+@startuml
+
+skinparam ActivityBorderColor black
+skinparam ArrowColor black
+
+skinparam ActivityDiamondBorderColor black
+skinparam activityDiamondBackgroundColor pink-mistyrose
+
+skinparam activityBackgroundColor powderblue-lightcyan
+
+skinparam TitleFontColor grey
+
+start
+:User presses *DOWN* arrow button;
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+switch ()
+case ( [latest command already retrieved])
+    :Record in logger that there are no more future commands available;
+
+case ( [else])
+    :Set next command in CommandBox;
+
+endswitch
+stop
+@enduml

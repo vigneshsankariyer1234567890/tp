@@ -19,6 +19,10 @@ import teletubbies.model.person.Remark;
  */
 public class RemarkCommand extends Command {
 
+    // @@author: j-lum
+    // Reused from
+    // https://github.com/se-edu/addressbook-level3/compare/tutorial-add-remark
+    // with minor modifications
     public static final String COMMAND_WORD = "remark";
 
     public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_REMARK);
@@ -64,6 +68,7 @@ public class RemarkCommand extends Command {
 
         model.setPerson(personToEdit, editedPerson);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.commitAddressBook();
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }

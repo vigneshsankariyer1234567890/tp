@@ -27,7 +27,13 @@ public class LogicManager implements Logic {
     private final Model model;
     private final Storage storage;
     private final teletubbies.logic.parser.InputParser inputParser;
+
+    //@@author pyokagan
+    // Reused from
+    // https://github.com/se-edu/addressbook-level4/blob/master/src/main/java/seedu/address/logic/LogicManager.java
+    // with minor modifications
     private boolean isModified;
+    //@@author pyokagan
 
     /**
      * Constructs a {@code LogicManager} with the given {@code Model} and {@code Storage}.
@@ -36,6 +42,9 @@ public class LogicManager implements Logic {
         this.model = model;
         this.storage = storage;
         inputParser = new teletubbies.logic.parser.InputParser();
+        //@@author pyokagan
+        // Adapted from
+        // https://github.com/se-edu/addressbook-level4/blob/master/src/main/java/seedu/address/logic/LogicManager.java
         model.addListener(observable -> isModified = true);
     }
 

@@ -15,6 +15,11 @@ import teletubbies.model.person.Remark;
  */
 public class RemarkCommandParser implements Parser<RemarkCommand> {
 
+    public static final String MESSAGE_EXCEED_REMARK_CHARACTER_LIMIT = "There is a 40 character limit for a remark!";
+
+    // @@author: j-lum
+    // Reused from
+    // https://github.com/se-edu/addressbook-level3/compare/tutorial-add-remark
     /**
      * Parses the given {@code String} of arguments in the context of the {@code RemarkCommand}
      * and returns a {@code RemarkCommand} object for execution.
@@ -32,6 +37,12 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         }
 
         String remark = argMultimap.getValue(PREFIX_REMARK).orElse("");
+
+        int numberOfCharacters = remark.length();
+
+        if (numberOfCharacters > 40) {
+            throw new ParseException(MESSAGE_EXCEED_REMARK_CHARACTER_LIMIT);
+        }
 
         return new RemarkCommand(index, new Remark(remark));
     }

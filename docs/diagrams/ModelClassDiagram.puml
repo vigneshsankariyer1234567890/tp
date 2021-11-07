@@ -8,6 +8,7 @@ Package Model <<Rectangle>>{
 Interface ReadOnlyAddressBook <<Interface>>
 Interface ReadOnlyUserPrefs <<Interface>>
 Interface Model <<Interface>>
+Interface ObservableList <<Interface>>
 Class AddressBook
 Class ReadOnlyAddressBook
 Class Model
@@ -39,13 +40,9 @@ Class CompletionStatusTag
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 
-Class HiddenOutside1 #FFFFFF
-HiddenOutside1 ..> ReadOnlyAddressBook
-
-
-
 ModelManager .up.|> Model
 Model .right.> ReadOnlyAddressBook
+Model .left.> ObservableList
 ModelManager *-down-> "1" VersionedAddressBook
 ModelManager *-right-> "1" CommandInputHistory
 'ModelManager *-right-> "1" CommandInputHistory

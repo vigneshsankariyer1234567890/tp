@@ -13,7 +13,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/gok99.png" width="200px">
 
-[[github]](https://github.com/gok99) [portfolio]
+[[github]](https://github.com/gok99) [[portfolio]](team/gok99.md)
 
 * Role: Developer
 * Responsibilities: Code Quality, Integration
@@ -40,7 +40,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/tanqiya.png" width="200px">
 
-[[github]](https://github.com/tanqiya) [portfolio]
+[[github]](https://github.com/tanqiya) [[portfolio]](team/tanqiya.md)
 
 * Role: Developer
 * Responsibilities: Deliverables, Deadlines, Scheduling, Tracking

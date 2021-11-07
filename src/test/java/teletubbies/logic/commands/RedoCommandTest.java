@@ -15,7 +15,10 @@ import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
 
 public class RedoCommandTest {
-
+    //@@author: sijie123
+    // Reused from
+    // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/logic/commands
+    // /RedoCommandTest.java
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -46,5 +49,6 @@ public class RedoCommandTest {
         // no redoable state in model
         assertCommandFailure(new RedoCommand(), model, RedoCommand.MESSAGE_FAILURE);
     }
+    //@@author: sijie123
 
 }
