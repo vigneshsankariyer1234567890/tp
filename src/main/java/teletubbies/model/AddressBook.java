@@ -17,7 +17,11 @@ import teletubbies.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
+    //@@author pyokagan and Zhiyuan-Amos
+    // Reused from https://github.com/se-edu/addressbook-level4/commit/9582d6ac94fcbd939f243b054332e98974d6c738
+    // with minor modifications
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
+    //@@author pyokagan and Zhiyuan-Amos
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -108,6 +112,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         indicateModified();
     }
 
+    //@@author pyokagan and Zhiyuan-Amos
+    // Reused from https://github.com/se-edu/addressbook-level4/commit/9582d6ac94fcbd939f243b054332e98974d6c738
+    // with minor modifications
     @Override
     public void addListener(InvalidationListener listener) {
         invalidationListenerManager.addListener(listener);
@@ -124,6 +131,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     protected void indicateModified() {
         invalidationListenerManager.callListeners(this);
     }
+    //@@author pyokagan and Zhiyuan-Amos
 
     /**
      * Replaces the given person {@code personToMerge} in the address book.
