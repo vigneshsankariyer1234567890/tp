@@ -290,7 +290,7 @@ file choosers, pop-up windows) will be similar.
 
 The `import`, `merge` and `export` mechanisms are supported by all the main components, specifically in the following ways:
 
-* The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFX FileChooser to select files to be imported, merged or exported to.
+* The `Ui` component is accessed in `CommandResult` through the `UiConsumer`. This allows the user to interact with the JavaFX FileChooser to select files to be imported, merged or exported to.
 
 * The execution of the `ImportCommand`, `ExportCommand` and `MergeCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
 
@@ -332,10 +332,9 @@ The following sequence diagram shows how the `merge` operation works:
 
 
 
-The following sequence diagram shows how the `export` operation works:
-<img src="images/ExportSequenceDiagram.png" width="700" />
+The following sequence diagrams show how the `export` and export confirmation operations work:
 
-The following sequence diagram shows how the `ConfirmExport` operation works:
+<img src="images/ExportSequenceDiagram.png" width="700" />
 
 <img src="images/ConfirmExportSequenceDiagram.png" width="700" />
 
