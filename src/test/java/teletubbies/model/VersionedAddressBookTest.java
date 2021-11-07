@@ -91,6 +91,9 @@ public class VersionedAddressBookTest {
 
     @Test
     public void canUndo_multiple_returnsTrue() throws EmptyAddressBookStateListException, EarliestVersionException {
+        // Adapted from
+        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
+        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
         assertTrue(versionedAddressBook.canUndo());
@@ -101,6 +104,9 @@ public class VersionedAddressBookTest {
     @Test
     public void canUndo_pointingToStart_returnsFalse()
             throws EmptyAddressBookStateListException, EarliestVersionException {
+        // Adapted from
+        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
+        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
         undoVersionedAddressBookNTimes(versionedAddressBook, 2);
@@ -109,12 +115,18 @@ public class VersionedAddressBookTest {
 
     @Test
     public void canUndo_single_returnsFalse() throws EmptyAddressBookStateListException {
+        // Adapted from
+        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
+        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(emptyAddressBook);
         assertFalse(versionedAddressBook.canUndo());
     }
 
     @Test
     public void canRedo_single_returnsFalse() throws EmptyAddressBookStateListException {
+        // Adapted from
+        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
+        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(emptyAddressBook);
         assertFalse(versionedAddressBook.canRedo());
     }
@@ -131,6 +143,9 @@ public class VersionedAddressBookTest {
     @Test
     public void undo_multipleAtEndOfStateList_success()
             throws EmptyAddressBookStateListException, EarliestVersionException, LatestVersionException {
+        // Adapted from
+        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
+        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
 
@@ -144,6 +159,9 @@ public class VersionedAddressBookTest {
     @Test
     public void undo_multipleNotAtEndOfStateList_success()
             throws EmptyAddressBookStateListException, EarliestVersionException, LatestVersionException {
+        // Adapted from
+        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
+        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
         undoVersionedAddressBookNTimes(versionedAddressBook, 1);
@@ -158,6 +176,10 @@ public class VersionedAddressBookTest {
     @Test
     public void undo_single_throwsEarliestVersionException()
             throws EmptyAddressBookStateListException {
+        //@@author: sijie123
+        // Adapted from
+        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
+        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(emptyAddressBook);
         assertThrows(EarliestVersionException.class, versionedAddressBook::undo);
     }
@@ -302,7 +324,7 @@ public class VersionedAddressBookTest {
     /**
      * Creates a loaded {@code VersionedAddressBook} with the relevant states.
      */
-    private VersionedAddressBook makeVersionedAddressBook(ReadOnlyAddressBook... addressBooks)
+    public static VersionedAddressBook makeVersionedAddressBook(ReadOnlyAddressBook... addressBooks)
             throws EmptyAddressBookStateListException {
         assertTrue(addressBooks.length != 0);
         return VersionedAddressBook.of(addressBooks);
@@ -311,7 +333,7 @@ public class VersionedAddressBookTest {
     /**
      * Creates a loaded {@code VersionedAddressBook} with the relevant states.
      */
-    private VersionedAddressBook makeVersionedAddressBook(List<ReadOnlyAddressBook> addressBooks)
+    public static VersionedAddressBook makeVersionedAddressBook(List<ReadOnlyAddressBook> addressBooks)
             throws EmptyAddressBookStateListException {
         assertFalse(addressBooks.isEmpty());
         return VersionedAddressBook.of(addressBooks);
