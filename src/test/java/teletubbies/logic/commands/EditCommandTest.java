@@ -9,7 +9,6 @@ import static teletubbies.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static teletubbies.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static teletubbies.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static teletubbies.testutil.TypicalPersons.getTypicalAddressBook;
-import static teletubbies.testutil.TypicalPersons.getTypicalPersons;
 
 import org.junit.jupiter.api.Test;
 
@@ -21,12 +20,8 @@ import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
 import teletubbies.model.person.Person;
-import teletubbies.model.tag.Tag;
 import teletubbies.testutil.EditPersonDescriptorBuilder;
 import teletubbies.testutil.PersonBuilder;
-
-import java.util.HashSet;
-import java.util.List;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
