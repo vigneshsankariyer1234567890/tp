@@ -243,8 +243,8 @@ return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP,
 ```
 
 The third argument of this method call (`new HelpUiConsumer()`), is a `UiConsumer` that uses the `handleHelp` method in `MainWindow`. More complicated effects
-can be constructed with the exposed functions in `MainWindow` (See [Import/Export Features](#import--export-features)). The `UiConsumer` can be implemented 
-either as a concrete class (like `HelpUiConsumer`) or as a lambda function. 
+can be constructed with the exposed functions in `MainWindow` (See [Import, Merge and Export Feature](#import-merge-and-export-features)). The `UiConsumer` can be implemented 
+either as a concrete class (like `HelpUiConsumer`) or as a lambda function.
 
 If the `UiEffect` type (the second constructor argument) does not exist for a new command that you want to add, this corresponding `UiEffect`
 type should be added into the `UiEffect` enum in `CommandResult`.
@@ -300,16 +300,16 @@ The `import`, `merge` and `export` mechanisms are supported by all the main comp
 
 #### Import Implementation
 
+The `ImportCommand` allows users to import contact files to the Teletubbies app. The following sequence diagram shows how the `import` operation works:
 
-
-The following sequence diagram shows how the `import` operation works:
-
-![](images/ImportSequenceDiagram.png)
+<img src="images/ImportSequenceDiagram.png" width="700" />
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
-
+* After an `ImportCommand` is created, it will be executed by the `LogicManager`. During the execution, a new `CommandResult` is returned with the `ImportUiConsumer`.
+* The `UiEffect` of the `CommandResult` is executed by the `MainWindow`. The `ImportUiConsumer` then calls `MainWindow#handleImport`, which opens the file chooser for the user to choose a file to import. 
+* When the file is selected, the `ImportUiConsumer` converts the JSON file to an AddressBook and calls `Model#setAddressBook`. The updated contact list is then displayed in the GUI.
 
 #### Merge Implementation
 
@@ -328,7 +328,7 @@ The following sequence diagram shows how the `merge` operation works:
 
 
 
-![](images/ExportActivityDiagram.png)
+![ExportActivityDiagram](images/ExportActivityDiagram.png)
 
 
 
