@@ -550,7 +550,8 @@ Examples (`tagrm`):
 #### Adding a remark to a contact: `remark`
 
 The `remark` command will help you to add a remark to a chosen contact in the list. Remarks are a more general version
-of the tags - the feature is for you to add extra information to a contact that you cannot add using tags.
+of the tags - the feature is for you to add extra information to a contact that you cannot add using tags. Note that a 
+remark cannot be longer than 40 letters!
 
 To specify which contact to add a remark to, use the index of the contact. If you don't know what the index is, 
 refer to [Finding the index](#finding-the-index).
