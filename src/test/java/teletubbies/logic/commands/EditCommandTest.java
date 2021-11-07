@@ -30,22 +30,23 @@ public class EditCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    // TODO fix this test
+    @Test
+    public void execute_allFieldsSpecifiedUnfilteredList_success() {
+        // Set tags and remark since edit doesn't change tags and remarks
+        Person editedPerson = new PersonBuilder().withTags("friends")
+                .withRemark("She likes aardvarks.").build();
 
-    //    @Test
-    //    public void execute_allFieldsSpecifiedUnfilteredList_success() {
-    //        Person editedPerson = new PersonBuilder().build();
-    //        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
-    //        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
-    //
-    //        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
-    //
-    //        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-    //        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
-    //        expectedModel.commitAddressBook();
-    //
-    //        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
-    //    }
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
+        EditCommand editCommand = new EditCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, editedPerson);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.setPerson(model.getFilteredPersonList().get(0), editedPerson);
+        expectedModel.commitAddressBook();
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
 
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {

@@ -24,7 +24,7 @@ public class RemoveTagCommand extends Command {
 
     public static final String COMMAND_WORD = "tagrm";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_VALUE);
+    public static final List<Prefix> RECOMMENDED_FLAGS = List.of(PREFIX_NAME, PREFIX_VALUE);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Removes tag from "
             + "persons specified by the indices.\n"

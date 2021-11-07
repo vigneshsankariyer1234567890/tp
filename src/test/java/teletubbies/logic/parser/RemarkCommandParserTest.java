@@ -14,6 +14,9 @@ import teletubbies.model.person.Remark;
 
 public class RemarkCommandParserTest {
 
+    // @@author: j-lum
+    // Reused from
+    // https://github.com/se-edu/addressbook-level3/compare/tutorial-add-remark
     private RemarkCommandParser parser = new RemarkCommandParser();
     private final String nonEmptyRemark = "Some remark.";
 

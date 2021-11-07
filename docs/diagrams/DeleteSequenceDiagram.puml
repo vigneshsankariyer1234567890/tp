@@ -7,16 +7,17 @@ participant ":InputParser" as InputParser LOGIC_COLOR
 participant ":DeleteCommandParser" as DeleteCommandParser LOGIC_COLOR
 participant "d:DeleteCommand" as DeleteCommand LOGIC_COLOR
 participant ":CommandResult" as CommandResult LOGIC_COLOR
+participant ":UiConsumer" as UiConsumer LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("delete p/87654321")
+[-> LogicManager : execute("delete -p 87654321")
 activate LogicManager
 
-LogicManager -> InputParser : parseCommand("delete p/87654321")
+LogicManager -> InputParser : parseCommand("delete -p 87654321")
 activate InputParser
 
 create DeleteCommandParser
@@ -27,7 +28,7 @@ DeleteCommandParser --> InputParser
 deactivate DeleteCommandParser
 
 
-InputParser -> DeleteCommandParser : parse("p/87654321")
+InputParser -> DeleteCommandParser : parse("-p 87654321")
 activate DeleteCommandParser
 
 create DeleteCommand
@@ -58,6 +59,12 @@ deactivate Model
 create CommandResult
 DeleteCommand -> CommandResult
 activate CommandResult
+
+create UiConsumer
+CommandResult --> UiConsumer
+activate UiConsumer
+UiConsumer --> CommandResult
+deactivate UiConsumer
 
 CommandResult --> DeleteCommand
 deactivate CommandResult

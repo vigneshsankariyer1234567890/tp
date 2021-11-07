@@ -170,13 +170,14 @@ public class MainWindow extends UiPart<Stage> {
     @SuppressWarnings("unchecked")
     private void handleTab() {
         String commandText = commandBox.getText().trim();
+        // Solution adapted from: https://tinyurl.com/java-hotexamples-reference
         Class<? extends Command> commandClass = CommandMap.getClass(commandText);
         if (commandClass == null) {
             logger.info("No such command");
             return;
         }
         try {
-            List<String> requiredTags = ((List<Prefix>) commandClass.getDeclaredField("REQUIRED_FLAGS")
+            List<String> requiredTags = ((List<Prefix>) commandClass.getDeclaredField("RECOMMENDED_FLAGS")
                     .get(null))
                     .stream().map(Prefix::toString).collect(Collectors.toList());
             commandBox.setText(commandText + " " + String.join(" ", requiredTags));

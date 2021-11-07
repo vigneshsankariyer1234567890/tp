@@ -14,10 +14,10 @@ participant ":Model" as Model MODEL_COLOR
 participant "userProfile:UserProfile" as UserProfile MODEL_COLOR
 end box
 
-[-> LogicManager : execute("profile n/NAME r/TELEMARKETER")
+[-> LogicManager : execute("profile -n NAME \n -role TELEMARKETER")
 activate LogicManager
 
-LogicManager -> InputParser : parseCommand("profile n/NAME r/TELEMARKETER")
+LogicManager -> InputParser : parseCommand("profile -n NAME \n -role TELEMARKETER")
 activate InputParser
 
 create ProfileCommandParser
@@ -27,7 +27,7 @@ activate ProfileCommandParser
 ProfileCommandParser --> InputParser
 deactivate ProfileCommandParser
 
-InputParser -> ProfileCommandParser : parse("n/NAME r/TELEMARKETER")
+InputParser -> ProfileCommandParser : parse("-n NAME \n -role TELEMARKETER")
 activate ProfileCommandParser
 
 create ProfileCommand
