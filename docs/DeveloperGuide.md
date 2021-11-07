@@ -418,7 +418,7 @@ it will be useful for them to interact with their contact lists through the cust
 The following section will describe the implementation of the tag feature. The implementation for remove tag feature is 
 similar and hence won't be repeated in this section. 
 
-The `TagCommand` allows user to tag contacts. A tag has a mandatory name and an optional value (both are case-sensitive).
+The `TagCommand` allows users to tag contacts. A tag has a mandatory name and an optional value (both are case-sensitive).
 It also requires a specification of indices of the contacts to tag. To allow batch tagging, this is done with a `Range`
 (found in `commons/core/index`). A `Range` encapsulates a set of indices. The `TagCommandParser` supports ranges of the 
 form `1,2,3` (Comma-separated) or `1-5` (Hyphen-separated). The parsing of range is handled by `ParserUtil#parseRange`.
