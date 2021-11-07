@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 public class RemarkTest {
 
+    // @@author: j-lum
+    // Reused from
+    // https://github.com/se-edu/addressbook-level3/compare/tutorial-add-remark
     @Test
     public void equals() {
         Remark remark = new Remark("Hello");

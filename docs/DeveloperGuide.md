@@ -39,13 +39,13 @@ Teletubbies is optimised for **Command-Line Interface** (CLI) usage, which strea
 within the application by centralising the entering of commands in a single text input window.
 
 #### _Seamless Data Integration_
-Teletubbies allows telemarketers and their supervisors to share and merge data seamlessly. Synchronization of customer
+Teletubbies allows telemarketers, and their supervisors to share and merge data seamlessly. Synchronization of customer
 data between telemarketers and their supervisors is often a necessary aspect of their job, and Teletubbies provides
 avenues to make this process easy and hassle-free.
 
 #### _Data Safety and Recoverability_
-With a large number of contacts stored in a contact list, it is vital that the user’s current progress is saved
-frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved
+With many contacts stored in a contact list, it is vital that the user’s current progress is saved 
+frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved 
 after each command issued by the user.
 
 Additionally, in the event of human error, an undo command is available for users to revert to previous states
@@ -122,7 +122,7 @@ The rest of the App consists of four components.
 
 #### How the architecture components interact with each other
 
-The Sequence Diagram below outlines how the components interact with each other, in a scenario where the user issues the command `delete p/87654321`.
+The Sequence Diagram below outlines how the components interact with each other, in a scenario where the user issues the command `delete -p 87654321`.
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
@@ -177,7 +177,8 @@ interface that allows the commands to access the functionality of `MainWindow`. 
 set-up:
 
 ```java
-return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, MainWindow::handleHelp);
+return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, 
+        MainWindow::handleHelp);
 ```
 
 If the `UiEffect` type (the second constructor argument) does not exist for any new command that gets added, this
@@ -192,9 +193,9 @@ these classes, especially if new commands are added in.
 The implementation of the consumer interface instead allows these UI effects to be open for extension and closed for modification.
 Now, specific UI effects can be specified within the respective command, without having to change the code in `MainWindow` that handles the command's UI effect.
 
-The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete p/87654321")` API call.
+The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete -p 87654321")` API call.
 
-![Interactions Inside the Logic Component for the `delete p/87654321` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `delete -p 87654321` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -217,7 +218,7 @@ Similarly, all `XYZCommand` classes inherit from the `Command` class.
 
 Here's a (partial) class diagram of the `Model` component:
 
-<img src="images/ModelClassDiagram.png" width="450" />
+<img src="images/ModelClassDiagram.png" width="700" />
 
 
 The `Model` component,
@@ -254,7 +255,7 @@ This section describes some noteworthy details on how certain features are imple
 
 #### Implementation
 
-The `import` and `export` mechanism is supported by all of the main components, specifically in the following ways:
+The `import` and `export` mechanism is supported by all the main components, specifically in the following ways:
 
 * The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFx FileChooser to select files to be imported/exported to.
 
@@ -283,7 +284,7 @@ The following sequence diagram shows how the `import` operation works:
     * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
     * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags.
 
-### Profile feature
+### Profile Feature
 
 #### Implementation
 
@@ -312,7 +313,7 @@ The following sequence diagram further illustrates how the `profile` command ope
 * **Alternative 2:** Profile can be set with only the name, or both name and role.
     * Pros: Allows users to change their name alone without having to enter role as well.
     * Cons: The cost of implementation is not heavily outweighed by the explicit need for the feature, as there should be infrequent changes in the user's name.
-
+    
 **Aspect: Number of times the user's profile can be set**
 
 * **Alternative 1 (current choice):** Profile can only be set once per user, excluding any undo.
@@ -336,7 +337,7 @@ The following activity diagram summarizes what happens when a user deletes `pref
 
 ![ProfileResetActivityDiagram](images/ProfileResetActivityDiagram.png)
 
-### Mark contacts as done feature
+### Mark Contacts as Done Feature
 
 #### Implementation
 
@@ -347,18 +348,18 @@ The following sequence diagram shows how the `done` operation works:
 
 ![DoneSequenceDiagram](images/DoneSequenceDiagram.png)
 
-### Delete contacts feature
+### Delete Contacts Feature
 
-The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number.
-The user can delete a contact via a `delete i/1` or `delete p/87654321` input.
-* delete using a contact's displayed index number by using the `i/` prefix.'
-* delete using a contact's phone number by using the `p/` prefix.
+The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
+The user can delete a contact via a `delete -i 1` or `delete -p 87654321` input.
+* delete using a contact's displayed index number by using the `-i` prefix.'
+* delete using a contact's phone number by using the `-p` prefix.
 
 The following activity diagram summarizes what happens when a user executes a delete command:
 
 ![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
 
-#### Design considerations
+#### Design Considerations
 
 **Aspect: Parameters of the `delete` command**
 
@@ -555,6 +556,22 @@ The activity diagrams below show how each key press is handled.
     * Cons: Requires passing of `CommandInputHistory` to `InputParser` in order to handle `history` commands. The parser should not
   have to know about `CommandInputHistory`
 
+### Auto completion feature
+
+Since Teletubbies is designed to be mainly used through its CLI, we prioritised the convenience of our users in typing
+out commands by implementing an auto completion feature.
+
+The autocompletion mechanism is facilitated by the `CommandMap` class. The `CommandMap` contains a a `HashMap`
+called `classMap` which stores the individual command words as keys and the `XYZCommand` classes as values. Within
+each `XYZCommand` class, the recommended command fields for the command are stored in a `List` called `RECOMMENDED_FLAGS`.
+This list is not stored if the command does not require command fields. Here, `XYZ` is a placeholder for the specific
+command name, e.g. `AddCommand`.
+
+The UI component uses EventHandlers that detects if the **TAB** button is pressed by the user. Then, UI calls
+upon `CommandMap#getClass()` to retrieve the class that corresponds to the input command, which then prints out
+the command fields specified within the `RECOMMENDED_FLAGS` list (or does not print out anything, in the case that no command fields
+are required for the input command).
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, Logging, Testing, Configuration, Dev-ops**
@@ -570,7 +587,6 @@ The activity diagrams below show how each key press is handled.
 ## **Appendix: Requirements**
 
 ### Product scope
-
 
 #### **Target User Profiles**
 
@@ -632,7 +648,7 @@ Priorities:
 
 ### Use cases
 
-For all use cases below, the **System** is the `Teletubbies` application and the **Actor** is the user, unless specified otherwise.
+For all use cases below, the **System** is the `Teletubbies` application, and the **Actor** is the user, unless specified otherwise.
 
 #### Use case: Delete a person
 
@@ -743,13 +759,13 @@ testers are expected to do more *exploratory* testing.
 
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
-   1. Test case: `delete i/1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   1. Test case: `delete -i 1`<br>
+      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. 
 
-   1. Test case: `delete i/0`<br>
+   1. Test case: `delete -i 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete i/x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete -i x`, `...` (where `x` is larger than the list size)<br>
       Expected: Similar to previous.
 
 1. _{ more test cases …​ }_
@@ -761,3 +777,5 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+--------------------------------------------------------------------------------------------------------------------

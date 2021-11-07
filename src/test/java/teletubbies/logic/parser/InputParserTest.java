@@ -96,6 +96,9 @@ public class InputParserTest {
         assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
     }
 
+    // @@author: j-lum
+    // Reused from
+    // https://github.com/se-edu/addressbook-level3/compare/tutorial-add-remark
     @Test
     public void parseCommand_remark() throws Exception {
         final Remark remark = new Remark("Some remark.");

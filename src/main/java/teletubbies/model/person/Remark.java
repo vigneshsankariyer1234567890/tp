@@ -9,6 +9,9 @@ import static teletubbies.logic.parser.CliSyntax.EMPTY_REMARK;
  */
 public class Remark {
 
+    // @@author: j-lum
+    // Reused from
+    // https://github.com/se-edu/addressbook-level3/compare/tutorial-add-remark
     public final String value;
 
     /**
