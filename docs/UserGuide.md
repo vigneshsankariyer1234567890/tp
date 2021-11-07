@@ -5,10 +5,10 @@ title: User Guide
 
 ## Product Overview
 
-*Teletubbies* is a **desktop app developed and designed for telemarketers and telemarketing supervisors to manage their 
+*Teletubbies* is a **desktop app developed and designed for telemarketers and telemarketing supervisors to manage their
 customer contacts**. *Teletubbies* allows users to create a checklist based on a set of customer contact data, with additional
-features such as tagging and viewing statistics to help improve their workflow. It is optimized for use via a 
-Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, 
+features such as tagging and viewing statistics to help improve their workflow. It is optimized for use via a
+Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast,
 Teletubbies can get your contact management tasks done faster than traditional GUI apps.
 
 ## Table of Contents
@@ -23,7 +23,7 @@ This User Guide for *Teletubbies* is written with chronological navigation in mi
 the document to navigate from section to section. If you are new to *Teletubbies*, we recommend that you take this
 approach for an introduction to the features.
 
-For more experienced users who know what they are looking for and want to quickly jump to a specific section, you can move to your section of choice using the [Table of Contents](#table-of-contents), or from the [Command Summary](#command-summary) section if you are interested in learning about the usage of a specific command. 
+For more experienced users who know what they are looking for and want to quickly jump to a specific section, you can move to your section of choice using the [Table of Contents](#table-of-contents), or from the [Command Summary](#command-summary) section if you are interested in learning about the usage of a specific command.
 
 Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut **Command + F** to find specific keywords.
 
@@ -66,9 +66,9 @@ for more information on how to install Java `11`.
 
 ![Ui](images/Ui.png)
 
-5. Type the command in the command box and press Enter to execute it. 
+5. Type the command in the command box and press Enter to execute it.
 > E.g. typing **`help`** and pressing Enter will open the help window.<br>
-   
+
 Some example commands you can try:
 
    * `list`: Lists all contacts.
@@ -76,9 +76,7 @@ Some example commands you can try:
    * `add -n John Doe -p 98765432`: Adds a contact named `John Doe` to *Teletubbies*.
 
    * `delete -i 3`: Deletes the 3rd contact shown in the current list.
-   
    * `done 3`: Marks the 3rd contact shown in the current list as done.
-
    * `clear`: Deletes all contacts.
 
    * `exit`: Exits the app.

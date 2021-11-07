@@ -1,0 +1,68 @@
+@startuml
+!include style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":InputParser" as InputParser LOGIC_COLOR
+participant "c:XYZCommand" as Command LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":CommandInputHistory" as CommandInputHistory MODEL_COLOR
+participant ":HistoryManager" as HistoryManager MODEL_COLOR
+end box
+[-> LogicManager : execute(someCommand)
+activate LogicManager
+
+LogicManager -> Model : addCommandInput(someCommand)
+activate Model
+
+Model -> CommandInputHistory : addCommandInput(someCommand)
+activate CommandInputHistory
+
+CommandInputHistory -> HistoryManager : resetFullHistory()
+activate HistoryManager
+
+HistoryManager --> CommandInputHistory
+deactivate HistoryManager
+
+CommandInputHistory -> HistoryManager : commitAndPush(someCommand)
+activate HistoryManager
+
+HistoryManager --> CommandInputHistory
+deactivate HistoryManager
+
+CommandInputHistory --> Model
+deactivate CommandInputHistory
+
+Model --> LogicManager
+deactivate Model
+
+LogicManager -> InputParser : parseCommand(someCommand)
+activate InputParser
+
+create Command
+InputParser -> Command
+activate Command
+note right of Command: XYZCommand = AddCommand, \nFindCommand, etc
+
+Command --> InputParser
+deactivate Command
+
+InputParser --> LogicManager : c
+deactivate InputParser
+
+LogicManager -> Command : c.execute()
+activate Command
+
+
+
+Command --> LogicManager : result
+deactivate Command
+Command -[hidden]-> LogicManager : result
+destroy Command
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

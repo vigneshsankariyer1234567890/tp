@@ -188,6 +188,9 @@ public interface Model {
      */
     String getPreviousCommand() throws EarliestVersionException;
 
+    //@@author yamidark
+    //Reused from https://github.com/se-edu/addressbook-level4/blob/master/src/main/java/seedu/address/model/Model.java
+    // with minor modifications
     /**
      * Returns true if the model has previous address book states to restore.
      */
@@ -212,5 +215,6 @@ public interface Model {
      * Saves the current address book state for undo/redo.
      */
     void commitAddressBook();
+    //@@author yamidark
 
 }
