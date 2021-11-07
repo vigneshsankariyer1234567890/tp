@@ -43,6 +43,7 @@ public class RemarkCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.commitAddressBook();
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
     }
@@ -59,6 +60,7 @@ public class RemarkCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.commitAddressBook();
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
     }
@@ -77,6 +79,7 @@ public class RemarkCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setPerson(firstPerson, editedPerson);
+        expectedModel.commitAddressBook();
 
         assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
     }

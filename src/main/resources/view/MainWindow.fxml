@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         title="Teletubbies" minWidth="840" minHeight="600" maxWidth="960" maxHeight="840" onCloseRequest="#handleExit">
+         title="Teletubbies" minWidth="780" minHeight="600" maxWidth="960" maxHeight="840" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -53,7 +53,7 @@
               </padding>
               <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" maxHeight="Infinity"/>
             </VBox>
-            <VBox VBox.vgrow="ALWAYS" styleClass="pane-with-border" minWidth="420" maxWidth="Infinity">
+            <VBox VBox.vgrow="ALWAYS" styleClass="pane-with-border" minWidth="360" maxWidth="Infinity">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
