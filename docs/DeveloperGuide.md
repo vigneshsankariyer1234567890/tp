@@ -467,7 +467,7 @@ to a particular assignee for contact dissemination, which is a critical feature 
 * **Alternative 1 (current choice):** Users are free to set tag name, value and accessibility
     * Pros: 
       * Users have more configurability options for tags, which opens up use-cases and ultimately makes tags more useful.
-      * Implementation for `filter` and `export` is simplified since only tags will be used to specifying contacts for these commands.
+      * Implementation for `filter` and `export` is simplified since only tags will be used to specify contacts for these commands.
     * Cons: 
       * Commands pertaining to adding and removing tags now get more complex and risk being counter-intuitive since there are more configuration options. 
 
