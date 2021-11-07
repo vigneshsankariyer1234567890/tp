@@ -1,0 +1,39 @@
+@startuml
+
+skinparam ActivityBorderColor black
+skinparam ArrowColor black
+
+skinparam ActivityDiamondBorderColor black
+skinparam activityDiamondBackgroundColor pink-mistyrose
+
+skinparam activityBackgroundColor powderblue-lightcyan
+
+skinparam TitleFontColor grey
+
+title Activity: Create a Profile
+
+start
+:User executes a
+Profile command with
+the correct syntax;
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+switch ()
+case ( [valid role input] )
+    :Profile is set using the
+    given name and role;
+case ( [invalid role input] )
+    :Invalid profile command
+    error message shown;
+    stop
+
+endswitch
+:Teletubbies saves the
+user's name and role as
+profile (cannot be changed
+in future sessions);
+
+stop
+@enduml

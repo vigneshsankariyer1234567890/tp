@@ -170,7 +170,7 @@ These commands are related to the *Teletubbies* application as a whole. The comm
 The `help` command will display our comprehensive user guide (that you are reading right now), 
 as shown below!
 
-![helpPage](images/userGuide/helpPage.jpg)
+![helpPage](images/userGuide/helpPage.png)
 
 Format: `help`
 
@@ -184,7 +184,7 @@ selecting `File -> Import`. Once the command is issued, *Teletubbies* will open 
 The data to be imported must be a JSON file, with the file extension `.json`.
 
 
-![import_file](images/userGuide/importFile.jpg)
+![import_file](images/userGuide/importFile.png)
 
 Format: `import`
 
@@ -205,7 +205,7 @@ selecting `File -> Merge`. Once the command is issued, *Teletubbies* will open a
 
 The data to be imported and merged must be a JSON file, with the file extension `.json`.
 
-![import_file](images/userGuide/importFile.jpg)
+![import_file](images/userGuide/importFile.png)
 
 Format: `merge`
 
