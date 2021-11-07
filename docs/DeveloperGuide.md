@@ -44,13 +44,8 @@ data between telemarketers and their supervisors is often a necessary aspect of 
 avenues to make this process easy and hassle-free.
 
 #### _Data Safety and Recoverability_
-<<<<<<< HEAD
 With many contacts stored in a contact list, it is vital that the user’s current progress is saved 
 frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved 
-=======
-With a large number of contacts stored in a contact list, it is vital that the user’s current progress is saved
-frequently to assist in data recovery in the event of unexpected system failure. Hence, the contact list is saved
->>>>>>> 4782413be93eed14e6dac47f13c9a0e8f43f8f94
 after each command issued by the user.
 
 Additionally, in the event of human error, an undo command is available for users to revert to previous states
