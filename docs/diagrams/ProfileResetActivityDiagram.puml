@@ -1,0 +1,47 @@
+@startuml
+
+skinparam ActivityBorderColor black
+skinparam ArrowColor black
+
+skinparam ActivityDiamondBorderColor black
+skinparam activityDiamondBackgroundColor pink-mistyrose
+
+skinparam activityBackgroundColor powderblue-lightcyan
+
+skinparam TitleFontColor grey
+
+title Activity: Reset a Profile
+
+start
+:User executes a
+Profile command with
+the correct syntax;
+
+switch ()
+case ( [need to change profile] )
+    :User deletes the
+    preferences.json;
+case ( [no need to change profile] )
+    :User continues to use
+    Teletubbies with the
+    current profile;
+    stop
+
+endswitch
+
+:User starts up a
+new session of
+Teletubbies;
+
+:Teletubbies creates
+a new preferences.json
+with an empty name by
+default, and a default
+role of "Telemarketer";
+
+:User executes a
+Profile command with
+the correct syntax;
+
+stop
+@enduml
