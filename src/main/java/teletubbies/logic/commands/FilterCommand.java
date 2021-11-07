@@ -18,7 +18,7 @@ public class FilterCommand extends Command {
 
     public static final String COMMAND_WORD = "filter";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_TAG);
+    public static final List<Prefix> RECOMMENDED_FLAGS = List.of(PREFIX_TAG);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Filters person to only those with the specified "
             + "tag names and values (case-sensitive) and displays them as a list with index numbers.\n"

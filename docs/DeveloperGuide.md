@@ -165,32 +165,12 @@ Here's a (partial) class diagram of the `Logic` component:
 
 How the `Logic` component works:
 1. When `Logic` is called upon to execute a command, it uses the `InputParser` class to parse the user command.
-2. This results in a `Command` object (more precisely, an object of one of its subclasses, e.g. `AddCommand`) which is executed by the `LogicManager`.
+2. This results in a `Command` object which is executed by the `LogicManager`.
 3. The command can communicate with the `Model` when it is executed (e.g. to add a person).
-4. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+4. The result of the command execution is encapsulated as a `CommandResult` object which is returned from `Logic` back to the `UI`.
+5. The `CommandResult` object also contains a `UiConsumer` object, which consumes `MainWindow` from `UI`, and encapsulates instructions for 
+the Command's UI effects (e.g. opening help menu, opening file select window).
 
-#### Commands with UI Effects
-
-Commands that need the UI to require a UI response from the user (e.g. opening a file chooser) will need to set up a UI consumer (`ThrowingConsumer<MainWindow>`), a functional
-interface that allows the commands to access the functionality of `MainWindow`. The following is an example of a constructor for `CommandResult` that includes this
-set-up:
-
-```java
-return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, 
-        MainWindow::handleHelp);
-```
-
-If the `UiEffect` type (the second constructor argument) does not exist for any new command that gets added, this
-corresponding `UiEffect` type should be added into the `UiEffect` enum in `CommandResult`.
-
-On the other hand, if a command has no special UI response, the `UiEffect` type should be `NONE`.
-
-The previous implementation of `UiEffect` was solely restricted to help and exit commands. Creating more commands with UI effects would have required hard-coding
-more flags for these effects in `CommandResult`, and in turn hard-coding these effects again in `MainWindow`. This would have required significant modifications in both of
-these classes, especially if new commands are added in.
-
-The implementation of the consumer interface instead allows these UI effects to be open for extension and closed for modification.
-Now, specific UI effects can be specified within the respective command, without having to change the code in `MainWindow` that handles the command's UI effect.
 
 The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete -p 87654321")` API call.
 
@@ -198,6 +178,9 @@ The Sequence Diagram below illustrates the interactions within the `Logic` compo
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
+
+In the diagram above, the creation of the `UiConsumer` object is represented. Since DeleteCommand does not have a UI effect, the consumer simply does nothing. For more details on how a UI effect is 
+executed, please see [Commands with UI effects](#commands-with-ui-effects). Subsequent sequence diagrams for commands with no UI effect might omit the `UiConsumer` portion of `Command Result`.
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
@@ -250,6 +233,57 @@ Classes used by multiple components are in the `teletubbies.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
+### Commands with UI effects
+
+Commands that require a UI effect will need to set up the `UiConsumer` functional interface that allows the commands to access the functionality
+of `MainWindow`. The following is an example of a constructor for `CommandResult` that includes this set-up:
+
+```java
+return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, new HelpUiConsumer());
+```
+
+The third argument of this method call (`new HelpUiConsumer()`), is a `UiConsumer` that uses the `handleHelp` method in `MainWindow`. More complicated effects
+can be constructed with the exposed functions in `MainWindow` (See [Import/Export Features](#import--export-features)). The `UiConsumer` can be implemented 
+either as a concrete class (like `HelpUiConsumer`) or as a lambda function. 
+
+If the `UiEffect` type (the second constructor argument) does not exist for a new command that you want to add, this corresponding `UiEffect`
+type should be added into the `UiEffect` enum in `CommandResult`.
+
+On the other hand, if a command has no special UI response, the `UiEffect` type should be `NONE`.
+
+#### Implementation (`help` command)
+
+This section describes the implementation of the `help` command. The implementation of other commands that make use of UI effects/responses (e.g. 
+file choosers, pop-up windows) will be similar.
+
+![](images/HelpSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+**Step 1.** The user enters the `help` command in the command box. 
+
+**Step 2.** A `CommandResult` object containing a `UiConsumer` is created and returned by the `HelpCommand`. The `UiConsumer` contains instructions for the UI effect of the help command.
+
+**Step 3.** `MainWindow` calls `CommandResult#executeUiEffect` of the returned `CommandResult` object, which in turn call the `UiConsumer`. 
+
+**Step 4.** The `UiConsumer` (which contains the implementation for the `help` command's) UI effect, calls `MainWindow#handleHelp` which invokes the help window pop-up.
+
+#### Design Considerations
+
+* **Alternative 1 (current implementation):** Use `UiConsumer` to encapsulate UI effects
+    * Pros
+      * Allows UI effects to be open for extension and closed for modification. Adding additional UI effects incur minimal cost.
+      * UI effects can contain a combination of features exposed by `MainWindow` to create arbitrarily complex UI effects.
+    * Cons
+      * Creates significant coupling between `MainWindow` (UI) and `UiConsumer` (Logic).
+      
+* **Alternative 2 (previous implementation):** Use boolean flags in `CommandResult` to signify instructions for UiEffects
+    * Pros
+        * Ease of implementation
+    * Cons
+        * If a new UI effect needs to be allowed, both `MainWindow` and `CommandResult` will need to be modified with further boolean flags and checks for whether a UI effect has been enabled. This would be in violation of the open-closed principle, since this is not closed to modification.
+        
 ### Import, Merge and Export Features
 
 #### Implementation
@@ -308,7 +342,7 @@ The following sequence diagram shows how the `ConfirmExport` operation works:
 
 #### Design Considerations
 
-**Aspect: User Interface**
+**Aspect: How to allow commands to specify UI effects**
 
 * **Alternative 1 (current choice):** Import/Export/Merge command can be executed by CLI command or menu bar button.
     * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference.
@@ -407,6 +441,96 @@ it will be useful for them to interact with their contact lists through the cust
 * **Alternative 2:** Delete via phone number only.
     * Pros: Implementation is more straightforward, as there is only one type of input to be expected.
     * Cons: Removes the convenience of deleting using a contact's index.
+
+### Tag feature
+
+The following section will describe the implementation of the tag feature. The implementation for remove tag feature is 
+similar and hence won't be repeated in this section. 
+
+The `TagCommand` allows users to tag contacts. A tag has a mandatory name and an optional value (both are case-sensitive).
+It also requires a specification of indices of the contacts to tag. To allow batch tagging, this is done with a `Range`
+(found in `commons/core/index`). A `Range` encapsulates a set of indices. The `TagCommandParser` supports ranges of the 
+form `1,2,3` (Comma-separated) or `1-5` (Hyphen-separated). The parsing of range is handled by `ParserUtil#parseRange`.
+
+The sequence diagram below represents the creation of a `TagCommand` object by the `TagCommandParser`. Details related to 
+obtaining the tag's name, value and supervisor flag have been omitted from the diagram below.
+
+![](images/TagParserSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ProfileCommandParser` and `ProfileCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+After the creation of the `TagCommand`, it will be executed by `LogicManager`. Below is the sequence diagram for the execution 
+of the `TagCommand`.
+
+![](images/TagSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ProfileCommandParser` and `ProfileCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+**Step 1.** `LogicManager` executes the `TagCommand`.
+
+**Step 2.** `TagCommand` obtains the list of `Person`s corresponding to its range.
+
+**Step 3.** For each person in the obtained person list a new tag is generated by generateNewTag() and added to the person's list of tags (or used to replace the existing 
+tag if the person already has the tag). The new set of tags is used to instantiate the `editedPerson`. Details of adding the tag to the `editedPerson` has been 
+omitted for brevity.
+
+**Step 4.** The updated `editedPerson` is used to replace the original `person` with `setPerson`.
+
+#### Design Considerations
+
+Tags are used extensively in Teletubbies with a variety of purposes. Tags in Teletubbies are much more versatile than their
+implementation in AB-3. Tags now have both names and values, and can also be set to be only editable by supervisors. This
+allows for supervisors to create assignee tags for example, with name 'assignee' and value as the name of the assignee. 
+The tag can also be set to be modifiable only by supervisors, so that employees won't be able to tamper with the manpower 
+assignment. 
+
+The completion status of a contact is also internally represented as a tag, with name 'CompletionStatus' and value
+either 'INCOMPLETE', 'ONGOING' or 'COMPLETE'. Since the `filter` and `export` commands make use of tags, this allows users to filter and
+export contacts by 'CompletionStatus', since CompletionStatus is also a tag after all. Supervisors can also export contacts corresponding
+to a particular assignee for contact dissemination, which is a critical feature for supervisors.
+
+**Aspect: How general (in terms of functionality) should tags be?**
+
+* **Alternative 1 (current choice):** Users are free to set tag name, value and accessibility
+    * Pros: 
+      * Users have more configurability options for tags, which opens up use-cases and ultimately makes tags more useful.
+      * Implementation for `filter` and `export` is simplified since only tags will be used to specify contacts for these commands.
+    * Cons: 
+      * Commands pertaining to adding and removing tags now get more complex and risk being counter-intuitive since there are more configuration options. 
+
+* **Alternative 2:** Tags only have a name attribute.
+    * Pros: 
+      * Ease of implementation (virtually identical to AB-3).
+      * Lesser configurability of tags and hence simpler and easier to use tag commands.
+    * Cons: 
+      * Separate functionality will need to be created for assignee and completion status, which will function very similarly to tags, but are not tags.
+      * `filter` and `export` commands will potentially be a lot more complex, since users can export by tags, completion status or assignee, and they can't be handled similarly.
+
+
+### Filter feature
+
+The following section will describe the implementation of the filter feature. The use of a `Predicate<Person>` here to 
+filter the person list is similar to the implementation of the find feature. 
+
+The sequence diagram below represents the creation of a `FilterCommand` object by the `FilterCommandParser`.
+
+![](images/FilterParserSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ProfileCommandParser` and `ProfileCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+`PersonHasTagsPredicate` is a subclass of Predicate<Person>. Below is the sequence diagram for the execution of the `FilterCommand`.
+
+![](images/FilterSequenceDiagram.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ProfileCommandParser` and `ProfileCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+The existing functionality of Java's `FilteredList` is leveraged for the implementation of the command. The execution of the
+`FindCommand` is near identical except to `FilterCommand` for the use of `NameContainsKeywordsPredicate` instead of
+`PersonHasTagsPredicate`.
 
 ### History tracking features
 
