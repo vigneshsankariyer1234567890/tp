@@ -281,11 +281,11 @@ The following sequence diagram shows how the `import` operation works:
 
 Merge functions in a similar way to import. However, instead of replacing the AddressBook, the incoming Persons are merged with the prevailing AddressBook.
 
-Teletubbies provides commands for users to modify contacts by editing their particulars or tagging them. Since a Person can drastically change, each Person is issued a Universally Unique Identifier (UUID) to facilitate the merging process. If there is a match for the UUID in the AddressBook, the incoming Person would replace it. Else, the Person is new and would be added to the AddressBook.
+Teletubbies provides commands for users to modify contacts by editing their particulars or tagging them. Since a Person can change drastically, each Person is issued a Universally Unique Identifier (UUID) to facilitate the merging process. If there is a match for the UUID in the AddressBook, the incoming Person would replace it. Else, the Person is new and would be added to the AddressBook.
 
 The following sequence diagram shows how the `merge` operation works:
 
-![](images/MergeSequenceDiagram.png)
+<img src="images/MergeSequenceDiagram.png" width="700" />
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `MergeCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -293,13 +293,17 @@ The following sequence diagram shows how the `merge` operation works:
 #### Export Implementation
 
 
+
 ![](images/ExportActivityDiagram.png)
 
-![](images/ExportSequenceDiagram.png)
 
-![](images/ConfirmExportSequenceDiagram.png)
 
 The following sequence diagram shows how the `export` operation works:
+<img src="images/ExportSequenceDiagram.png" width="700" />
+
+The following sequence diagram shows how the `ConfirmExport` operation works:
+
+<img src="images/ConfirmExportSequenceDiagram.png" width="700" />
 
 
 #### Design Considerations
