@@ -287,7 +287,7 @@ Examples:
 
 Teletubbies provides the option for users to leave their names as empty, but it is highly recommended for you to set your name for identification purposes.
 
-Additionally, the `profile` command can only be used to set up your user profile once. To modify your name or role, please follow the steps [here](#frequently-asked-questions).
+Additionally, the `profile` command can only be used to set up your user profile once. To modify your name or role, please follow the steps [here](#faq).
 
 </div>
 
