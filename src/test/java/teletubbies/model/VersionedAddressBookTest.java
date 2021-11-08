@@ -91,48 +91,29 @@ public class VersionedAddressBookTest {
 
     @Test
     public void canUndo_multiple_returnsTrue() throws EmptyAddressBookStateListException, EarliestVersionException {
-        // Adapted from
-        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
-        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        assertTrue(versionedAddressBook.canUndo());
-        versionedAddressBook.undo();
-        assertTrue(versionedAddressBook.canUndo());
-    }
-
-    @Test
-    public void canUndo_pointingToStart_returnsFalse()
-            throws EmptyAddressBookStateListException, EarliestVersionException {
-        // Adapted from
-        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
-        // /VersionedAddressBookTest.java
-        VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
-                emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        undoVersionedAddressBookNTimes(versionedAddressBook, 2);
+        for (int i = 0; i<2; i++) {
+            assertTrue(versionedAddressBook.canUndo());
+            versionedAddressBook.undo();
+        }
         assertFalse(versionedAddressBook.canUndo());
     }
 
     @Test
     public void canUndo_single_returnsFalse() throws EmptyAddressBookStateListException {
-        // Adapted from
-        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
-        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(emptyAddressBook);
         assertFalse(versionedAddressBook.canUndo());
     }
 
     @Test
     public void canRedo_single_returnsFalse() throws EmptyAddressBookStateListException {
-        // Adapted from
-        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
-        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(emptyAddressBook);
         assertFalse(versionedAddressBook.canRedo());
     }
 
     @Test
-    public void canRedo_multiplePointingToStart_returnsFalse()
+    public void canRedo_multipleMaximallyUndone_returnsFalse()
             throws EmptyAddressBookStateListException, EarliestVersionException {
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
@@ -143,12 +124,8 @@ public class VersionedAddressBookTest {
     @Test
     public void undo_multipleAtEndOfStateList_success()
             throws EmptyAddressBookStateListException, EarliestVersionException, LatestVersionException {
-        // Adapted from
-        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
-        // /VersionedAddressBookTest.java
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-
         versionedAddressBook.undo();
         assertAddressBookListStatus(versionedAddressBook,
                 List.of(emptyAddressBook),
@@ -237,14 +214,9 @@ public class VersionedAddressBookTest {
     }
 
     @Test
-    public void redo_singleAddressBook_throwsLatestVersionException() throws EmptyAddressBookStateListException {
-        //@@author: sijie123
-        // Reused from
-        // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/model
-        // /VersionedAddressBookTest.java
-        VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(emptyAddressBook);
+    public void redo_single_throwsLatestVersionException() throws EmptyAddressBookStateListException {
+        VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(addressBookWithBob);
         assertThrows(LatestVersionException.class, versionedAddressBook::redo);
-        //@@author: sijie123
     }
 
     @Test
