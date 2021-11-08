@@ -308,7 +308,7 @@ The `ImportCommand` allows users to import contact files to the Teletubbies app.
 </div>
 
 * After an `ImportCommand` is created, it will be executed by the `LogicManager`. During the execution, a new `CommandResult` is returned with the `ImportUiConsumer`.
-* The `UiEffect` of the `CommandResult` is executed by the `MainWindow`. The `ImportUiConsumer` then calls `MainWindow#handleImport`, which opens the file chooser for the user to choose a file to import. 
+* `CommandResult#executeUiEffect` is called by the `MainWindow`. The `ImportUiConsumer` then calls `MainWindow#handleImport`, which opens the file chooser for the user to choose a file to import. 
 * When the file is selected, the `ImportUiConsumer` converts the JSON file to an AddressBook and calls `Model#setAddressBook`. The updated contact list is then displayed in the GUI.
 
 #### Merge Implementation
