@@ -758,6 +758,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 **Q** How do I change my role after setting it once?<br>
 1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
 2. In `preferences.json`, locate the `isProfileSet` field and set it to false as follows:
+
 <pre>
   <code class="json">
   {
