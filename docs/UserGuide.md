@@ -693,7 +693,25 @@ the chart will update automatically!
 
 #### Convenience features
 
-You can use the **[UP]** and **[DOWN]** arrows on your keyboard to navigate the command history, and the **[TAB]** key to autocomplete after a command word for recommended command fields.
+Sometimes, you may feel hard-pressed from typing these commands repeatedly. You can avoid this by trying out some 
+of our convenience features in Teletubbies. These include:
+* Pressing the **[UP]** arrow button on your keyboard to retrieve a previously keyed-in command,
+> You can only access the previous commands up to the first command keyed in after starting Teletubbies. Once the earliest command is obtained, you will continue to see that command on the text input box.
+* Pressing the **[DOWN]** arrow button on your keyboard to retrieve the command after the current command,
+> Once the most recent command is obtained, you will continue to see that command on the text input box.
+* Pressing the **[TAB]** key after typing a command to automatically complete and suggest to you the required fields needed for the command word.
+> For instance, pressing the **[TAB]** key after typing `add` produces `add -n -p -e -a` on the text input box.
+> 
+> 
+> Here is an image of Teletubbies before pressing the **[TAB]** key:
+>![Before pressing Tab](images/tab/GUIImageBeforeTab.png) 
+> 
+> 
+> And here is an image of Teletubbies after pressing the **[TAB]** key:
+>![After pressing Tab](images/tab/GUIImageAfterTab.png)
+> 
+> It is important to note that pressing the **TAB** key will only work if the given word is a command word. For example,
+> if you type `ad` and then press the **TAB** key, the given text will remain.
 
 ##### Saving the data
 
