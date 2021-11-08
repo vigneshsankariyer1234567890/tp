@@ -20,7 +20,7 @@ Given below are my contributions to the project.
 * **New Feature** (v1.3): Added the ability to see the current role. (Pull Request [\#88](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/88))
   * What it does: allows the user to view their current role on the menu bar.
   * Justification: This feature enhances the product because the user can now refer to their current role, and hence know what are the functionalities currently available to them.
-* 
+
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2122s1.github.io/tp-dashboard/?search=lhw-1&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-17&tabOpen=true&tabType=authorship&tabAuthor=lhw-1&tabRepo=AY2122S1-CS2103T-W15-4%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code~other&authorshipIsBinaryFileTypeChecked=false)
 
 * **Project management**:
