@@ -1,0 +1,50 @@
+@startuml
+!include style.puml
+
+box Model MODEL_COLOR_T1
+participant ":ModelManager" as Model MODEL_COLOR
+participant ":VersionedAddressBook" as VersionedAddressBook MODEL_COLOR
+participant ":HistoryManager" as HistoryManager MODEL_COLOR
+end box
+
+[-> Model : cancelPendingExport()
+activate Model
+
+alt isAwaitingExportConfirmation && isExportListModified
+    Model -> Model : undoVersionedAddressBookAndCommit()
+    activate Model
+
+    Model -> VersionedAddressBook : undo()
+    activate VersionedAddressBook
+    deactivate VersionedAddressBook
+
+    Model -> VersionedAddressBook: commitWithoutSavingCurrentState()
+    activate VersionedAddressBook
+
+    VersionedAddressBook -> HistoryManager: HistoryManager.clearedCopy(addressBookHistoryManager)
+    activate HistoryManager
+    deactivate HistoryManager
+
+    VersionedAddressBook -> VersionedAddressBook: setAddressBookHistoryManager(addressBookHistoryManager)
+    activate VersionedAddressBook
+    deactivate VersionedAddressBook
+
+    deactivate VersionedAddressBook
+
+    deactivate Model
+
+end
+
+
+Model -> Model: resetExportConfirmation()
+activate Model
+deactivate Model
+
+Model -> Model: resetExportListModified()
+activate Model
+deactivate Model
+
+
+
+
+@enduml
