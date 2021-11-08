@@ -10,7 +10,6 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import teletubbies.commons.core.Range;
-import teletubbies.commons.core.UserProfile;
 import teletubbies.commons.exceptions.UserRoleSetException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
