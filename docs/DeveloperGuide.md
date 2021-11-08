@@ -61,7 +61,7 @@ components of the application such as the `Logic`, `UI`, `Model`, and `Storage` 
 
 Along with the strict adherence to software design principles, such as **Single Responsibility** and
 **Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies
-without having to deal with tedious side-effects.
+without having to deal with tedious side effects.
 
 ### **Glossary**
 **_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
