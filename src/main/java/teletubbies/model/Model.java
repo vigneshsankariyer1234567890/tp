@@ -147,10 +147,10 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
-     * Replaces the given person in the address book.
-     * @param person
+     * Merges incoming address book with the current address book.
+     * @param addressBook Incoming address book to merge
      */
-    void mergePerson(Person person);
+    void mergeAddressBook(ReadOnlyAddressBook addressBook);
 
     /**
      * Adds the recent text input to the history as stored by {@code CommandInputHistory}.

@@ -1,8 +1,8 @@
 package teletubbies.logic.commands.uieffects;
 
 import static java.util.Objects.requireNonNull;
-import static teletubbies.logic.commands.ImportCommand.MESSAGE_FILE_NOT_FOUND;
-import static teletubbies.logic.commands.ImportCommand.MESSAGE_INCORRECT_FORMAT;
+import static teletubbies.logic.commands.MergeCommand.MESSAGE_FILE_NOT_FOUND;
+import static teletubbies.logic.commands.MergeCommand.MESSAGE_INCORRECT_FORMAT;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -17,20 +17,18 @@ import teletubbies.model.ReadOnlyAddressBook;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.ui.MainWindow;
 
-public class ImportUiConsumer implements UiConsumer {
-
+public class MergeUiConsumer implements UiConsumer {
     private Model model;
     private final Logger logger = LogsCenter.getLogger(getClass());
 
-
-    public ImportUiConsumer(Model model) {
+    public MergeUiConsumer(Model model) {
         this.model = model;
     }
 
     @Override
     public void accept(MainWindow window) throws CommandException, DataConversionException {
         try {
-            File fileToImport = window.handleFileChooser("Import Contacts File",
+            File fileToImport = window.handleFileChooser("Merge Contacts File",
                     MainWindow.FileSelectType.OPEN);
             requireNonNull(fileToImport);
 
@@ -41,10 +39,11 @@ public class ImportUiConsumer implements UiConsumer {
             if (addressBookOptional.isEmpty()) {
                 throw new CommandException(MESSAGE_FILE_NOT_FOUND);
             }
-            ReadOnlyAddressBook newContacts = addressBookOptional.get();
-            model.setAddressBook(newContacts);
+            ReadOnlyAddressBook addressBookToMerge = addressBookOptional.get();
+            model.mergeAddressBook(addressBookToMerge);
+            model.commitAddressBook();
 
-            logger.info("Imported contacts from " + filePath);
+            logger.info("Merged contacts from " + filePath);
         } catch (DataConversionException e) {
             throw new CommandException(MESSAGE_INCORRECT_FORMAT);
         } catch (NullPointerException e) {

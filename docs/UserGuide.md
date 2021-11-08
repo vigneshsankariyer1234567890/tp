@@ -33,9 +33,9 @@ Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut
 
 **_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
 
-**_Parameter_**: Input to a command's field.
-
 **_JavaScript Object Notation (JSON)_**: A text-based representation of structured data that is used to save contacts as files in *Teletubbies*.
+
+**_Parameter_**: Input to a command's field.
 
 ### Glossary of icons and symbols
 :information_source: : Additional information <br/>
@@ -132,7 +132,7 @@ List commands | Format
   e.g. in `add -n NAME`, `NAME` is a parameter which can be used as `add -n John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `-n NAME [-t TAG]` can be used as `-n John Doe -t friend` or as `-n John Doe`.
+  e.g. `-n NAME [-t TAG]` can be used as `-n John Doe -t friend` or as `-n John Doe`.
 
 * Items with `…`​ after them can be used multiple times or left blank.<br>
   e.g. `[-t TAG]…​` can be used as ` ` (i.e. 0 times), `-t friend`, `-t friend -t family` etc.
@@ -209,7 +209,7 @@ selecting `File -> Merge`. Once the command is issued, *Teletubbies* will open a
 
 The data to be imported and merged must be a JSON file, with the file extension `.json`.
 
-![import_file](images/userGuide/importFile.png)
+![merge_file](images/userGuide/mergeFile.png)
 
 Format: `merge`
 
@@ -236,9 +236,9 @@ If you decide to cancel the export, you can type in any other command. *Teletubb
 for you as long as the next command received is NOT `y`.
 
 After export has been confirmed, *Teletubbies* will open a file selector window as shown below. Using
-the file selector, you can choose where the exported file will be saved.
+the file selector, you can choose where the exported file will be saved and name the file.
 
-<<< IMAGE REQUIRED >>>
+![export_file](images/userGuide/exportFile.png)
 
 Format: `export [-t TAGS]…​`
 
@@ -278,6 +278,18 @@ Examples:
 > This command will set your name as "David Wong" and your role as "Telemarketer".
 * `profile -n Anne Goh -role Supervisor`
 > This command will set your name as "Anne Goh" and your role as "Supervisor".
+* `profile -n -role Telemarketer`
+> This command will set your role as "Telemarketer". 
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note:**<br>
+
+Teletubbies provides the option for users to leave their names as empty, but it is highly recommended for you to set your name for identification purposes.
+
+Additionally, the `profile` command can only be used to set up your user profile once. To modify your name or role, please follow the steps [here](#faq).
+
+</div>
 
 #### Listing your previous commands: `history`
 
@@ -309,6 +321,21 @@ If there are no commands that have previously been issued in the current session
 Otherwise, any changes you may have made with your previous command will be undone, so be careful when using this command!
 
 Format: `undo`
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note:**<br>
+
+The following commands cannot be undone since they don't affect contact information:
+* `export`
+* `filter`
+* `find`
+* `help`
+* `history`
+* `list`
+* `profile`
+
+</div>
 
 #### Redoing your previous commands: `redo`
 
@@ -730,8 +757,25 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 **Q** How do I change my role after setting it once?<br>
 1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
-2. Delete `preferences.json`, and start Teletubbies again.
-3. Now, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
+2. In `preferences.json`, locate the `isProfileSet` field and set it to false as follows:
+
+    ```
+      {
+        
+        ...
+        
+        "userProfile" : {
+          "name" : "",
+          "role" : "SUPERVISOR"
+        },
+        "isProfileSet" : false, // set this field to false
+        
+        ...
+                
+      }
+    ```
+
+3. When you restart teletubbies, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
 
 
 --------------------------------------------------------------------------------------------------------------------

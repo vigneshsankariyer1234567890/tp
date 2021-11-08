@@ -21,7 +21,7 @@ public class ImportCommand extends Command {
     public static final String MESSAGE_FILE_NOT_FOUND = "Data file not found. Please try again.";
     public static final String MESSAGE_INCORRECT_FORMAT = "Data file not in the correct format.";
 
-    private final Logger logger = LogsCenter.getLogger(getClass()); // TODO make a singleton logger or something
+    private final Logger logger = LogsCenter.getLogger(getClass());
 
     @Override
     public CommandResult execute(Model model) throws CommandException {

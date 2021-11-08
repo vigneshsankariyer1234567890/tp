@@ -70,8 +70,7 @@ without having to deal with tedious side-effects.
 
 **_User stories_**: Simple descriptions of features told from the perspective of the user.
 
-**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact
-has been contacted.
+**_Completion Status_**: A contact can be marked as either “complete”, "ongoing" or “incomplete”, indicating if the contact has been contacted.
 
 **_Role_**: Users are assigned either the role of telemarketer or supervisor.
 
@@ -240,12 +239,12 @@ Commands that require a UI effect will need to set up the `UiConsumer` functiona
 of `MainWindow`. The following is an example of a constructor for `CommandResult` that includes this set-up:
 
 ```java
-return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, new HelpUiConsumer());
+new CommandResult(MESSAGE, UiEffect.SHOW_HELP, new HelpUiConsumer());
 ```
 
 The third argument of this method call (`new HelpUiConsumer()`), is a `UiConsumer` that uses the `handleHelp` method in `MainWindow`. More complicated effects
-can be constructed with the exposed functions in `MainWindow` (See [Import/Export Features](#import--export-features)). The `UiConsumer` can be implemented 
-either as a concrete class (like `HelpUiConsumer`) or as a lambda function. 
+can be constructed with the exposed functions in `MainWindow` (See [Import, Merge and Export Feature](#import-merge-and-export-features)). The `UiConsumer` can be implemented 
+either as a concrete class (like `HelpUiConsumer`) or as a lambda function.
 
 If the `UiEffect` type (the second constructor argument) does not exist for a new command that you want to add, this corresponding `UiEffect`
 type should be added into the `UiEffect` enum in `CommandResult`.
@@ -284,38 +283,105 @@ file choosers, pop-up windows) will be similar.
         * Ease of implementation
     * Cons
         * If a new UI effect needs to be allowed, both `MainWindow` and `CommandResult` will need to be modified with further boolean flags and checks for whether a UI effect has been enabled. This would be in violation of the open-closed principle, since this is not closed to modification.
-
-
-### Import / Export Features
+        
+### Import, Merge and Export Features
 
 #### Implementation
 
-The `import` and `export` mechanism is supported by all the main components, specifically in the following ways:
+The `import`, `merge` and `export` mechanisms are supported by all the main components, specifically in the following ways:
 
-* The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFx FileChooser to select files to be imported/exported to.
+* The `Ui` component is accessed in `CommandResult` through the `UiConsumer`. This allows the user to interact with the JavaFX FileChooser to select files to be imported, merged or exported to.
 
-* The execution of the `ImportCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
+* The execution of the `ImportCommand`, `MergeCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
 
-* For import, the `Model` component is accessed to set the new AddressBook of contacts. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
+* For import, the `Model` component is accessed to set the new AddressBook of contacts. For merge, contacts are merged with the current AddressBook. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
 
 * Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
 
-The following sequence diagram shows how the `import` operation works:
+#### Import Implementation
 
-![](images/ImportSequenceDiagram.png)
+The `ImportCommand` allows users to import contact files to the Teletubbies app. The following sequence diagram shows how the `import` operation works:
+
+<img src="images/ImportSequenceDiagram.png" width="750" />
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
+
+* After an `ImportCommand` is created, it will be executed by the `LogicManager`. During the execution, a new `CommandResult` is returned with the `ImportUiConsumer`.
+* `CommandResult#executeUiEffect` is called by the `MainWindow`. The `ImportUiConsumer` then calls `MainWindow#handleImport`, which opens the file chooser for the user to choose a file to import. 
+* When the file is selected, the `ImportUiConsumer` converts the JSON file to an AddressBook and calls `Model#setAddressBook`. The updated contact list is then displayed in the GUI.
+
+#### Merge Implementation
+
+Merge functions in a similar way to import. However, instead of replacing the previous AddressBook, the incoming AddressBook is merged with it.
+
+Teletubbies provides commands for users to modify contacts by editing their particulars or tagging them. Since a Person can be entirely changed, each Person is issued a Universally Unique Identifier (UUID) to facilitate the merging process.
+* If there is a Person with a matching UUID in the AddressBook, the incoming Person would replace it. 
+* Else, the Person is new and would be added to the AddressBook.
+
+The following sequence diagram shows how the `merge` operation works:
+
+<img src="images/MergeSequenceDiagram.png" width="750" />
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `MergeCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+#### Export Implementation
+
+Export is distinct from other features as it comprises of 2 commands, as illustrated in this activity diagram:
+
+![ExportActivityDiagram](images/ExportActivityDiagram.png)
+
+As seen in the activity diagram above,
+* The first command gives users a preview of the contacts to be exported
+* Second command is carried out by the user to confirm and execute the export
+* If the user types in another command instead of confirming the export, the pending export is cancelled and the new command is executed. 
+
+The following sequence diagram shows how the `export` operation works:
+
+<img src="images/ExportSequenceDiagram.png" width="750" />
+
+The first `export` command processes the AddressBook to filter contacts that contain the tags specified by the user. This is then stored in the `Model` until the export is confirmed and is displayed to the user too. 
+
+The interaction between `ExportCommand` and `Model` is illustrated in the sequence diagram below:
+
+<img src="images/ModelUpdateExportListSequenceDiagram.png" width="750" />
+
+The `ExportCommand` calls `Model#updateExportList`, invoking `ModelManager` to do the following:
+* Set the boolean `isAwaitingExportConfirmation` to true to manage the subsequent confirmation command.
+* Update the Model's `versionedAddressBook` with the `filteredPersonsList`. This displays the filtered contact list for users to view before confirming export.
+* Create a copy of the filtered address book and compares it with the previous address book. If they are different, `ModelManager` calls `VersionedAddressBook#commitCurrentStateAndSave`, which commits and pushes the state on the `HistoryManager`. This enables `ModelManager` to revert to the original address book after the next command is executed. 
+
+The following sequence diagram shows how the `ConfirmExport` operation works:
+
+<img src="images/ConfirmExportSequenceDiagram.png" width="750" />
+
+The execution of the `ConfirmExportCommmand` is similar to the `import` and `merge` commands in the use of `UiConsumer`. If `isAwaitingExportConfirmation` in the `Model` is true, the `ExportUiConsumer` retrieves the AddressBook to be exported from the `Model` as shown in the sequence diagram below:
+
+<img src="images/ModelGetExportAddressBookSequenceDiagram.png" width="750" />
+
+The `ExportUiConsumer` calls `Model#getExportAddressBook`, invoking `ModelManager` to do the following:
+* Creates a copy of the AddressBook called `toExport` containing contacts to be exported. This is subsequently returned to the `ExportUiConsumer` to be converted and exported as a JSON file.
+* If `isExportListModified` was set to true in the `ExportCommand`, 
+    * `versionedAddressBook` is undone.
+    * `VersionedAddressBook#commitWithoutSavingCurrentState()` is called, which clears the history after the `historyStack` pointer and resets the `HistoryManager` of the `versionedAddressBook`.
+* Resets export related booleans in `ModelManager`.
+
+During the execution of other Teletubbies commands, `Model#cancelPendingExport()` is called to undo the `VersionedAddresBook` if there is a pending export, before the actual execution of the command. The operation of `Model#cancelPendingExport()` is shown in the sequence diagram below:
+
+<img src="images/ModelCancelPendingExportSequenceDiagram.png" width="750" />
+
+The `VersionedAdressBook` and `HistoryManager` are reset in the same way as `Model#getExportAddressBook`, which was elaborated above. 
 
 #### Design Considerations
 
 **Aspect: How to allow commands to specify UI effects**
 
-* **Alternative 1 (current choice):** Import/Export command can be executed by CLI command or menu bar button.
+* **Alternative 1 (current choice):** Import/Export/Merge command can be executed by CLI command or menu bar button.
     * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference.
     * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
 
-* **Alternative 2:** Import and export are buttons in the menu bar only.
+* **Alternative 2:** Import, export and merge are buttons in the menu bar only.
     * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
     * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags.
 
@@ -755,19 +821,32 @@ Priorities:
 * Medium (nice to have) - `* *`
 * Low (unlikely to have) - `*`
 
-| Priority | As a …​                              | I want to …​                  | So that I can…​                                                           |
-| -------- | --------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------- |
-| `* * *`  | Telemarketer                            | import the list of customers     | easily view all the contacts I need to call                                  |
-| `* * *`  | Telemarketer                            | export the list of customers     | send the list to my supervisor                                               |
-| `* * *`  | Telemarketing Supervisor                | import the list of customers     | easily view the contacts completion status of my subordinates                |
-| `* * *`  | Telemarketing Supervisor                | export the list of customers     | send the list to my subordinates for them to complete                        |
-| `* * *`  | Telemarketer / Telemarketing Supervisor | save data from current session   | save my current progress to continue during the next session                 |
-| `* * *`  | Telemarketer / Telemarketing Supervisor | load data from previous session  | pick up where I left off from my previous session                            |
-| `* * *`  | Telemarketer                            | indicate my name under 'profile' | identify myself in progress reports for my supervisor                        |
-| `* * *`  | Telemarketer / Telemarketing Supervisor | indicate my role under 'profile' | get access to the functionalities that cater to my specific job              |
-| `* * *`  | Telemarketer                            | mark a contact as completed      | see that I have already called a contact successfully                        |
-| `* * *`  | Telemarketing Supervisor                | add a contact                    | add contacts that need to be called by my subordinates                       |
-| `* * *`  | Telemarketing Supervisor                | delete a contact                 | remove contacts that no longer need to be tracked or have been added wrongly |
+| Priority | As a …​                              | I want to …​                                          | So that I can…​                                                                     |
+| -------- | --------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `* * *`  | Telemarketer                            | import the list of customers                             | easily view all the contacts I need to call                                            |
+| `* * *`  | Telemarketer                            | export the list of customers                             | send the list to my supervisor                                                         |
+| `* * *`  | Telemarketing Supervisor                | merge my employees' customer lists                       | easily view the contacts completion status of my subordinates                          |
+| `* * *`  | Telemarketing Supervisor                | export the list of customers                             | send the list to my subordinates for them to complete                                  |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | save data from current session                           | save my current progress to continue during the next session                           |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | load data from previous session                          | pick up where I left off from my previous session                                      |
+| `* * *`  | Telemarketer                            | indicate my name under 'profile'                         | identify myself in progress reports for my supervisor                                  |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | indicate my role under 'profile'                         | get access to the functionalities that cater to my specific job                        |
+| `* * *`  | Telemarketer                            | mark a contact as completed                              | see that I have already called a contact successfully                                  |
+| `* * *`  | Telemarketer                            | click to copy the contact's phone number to my clipboard | easily transfer it to my calling app                                           |
+| `* * *`  | Telemarketer                            | add remarks to my contacts                               | store additional long-form information about specific contacts                         |
+| `* * *`  | Telemarketing Supervisor                | add a contact                                            | add contacts that need to be called by my subordinates                                 |
+| `* * *`  | Telemarketing Supervisor                | delete a contact                                         | remove contacts that no longer need to be tracked or have been added wrongly           |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | view progress on the contacts in a simple chart          | so that I can easily get help whenever I need it without losing focus                  |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | undo or redo previously made changes                     | revert any possible mistakes made                                                      |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | tag contacts with additional information                 | get useful analytics on specific contacts and include useful information like assignee |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | filter entries by tag                                    | focus my view of contacts                                                              |
+| `* *`    | Telemarketer / Telemarketing Supervisor | view the user guide from the app                         | easily get help whenever I need it without losing focus                                |
+| `* *`    | Telemarketer / Telemarketing Supervisor | use up-down arrows to access command history             | repeat previous commands without needed to type it out again                           |
+| `* *`    | Telemarketer / Telemarketing Supervisor | preview and confirm the contacts I'm exporting           | reduce export mistakes                                                                 |
+| `*`      | Telemarketer / Telemarketing Supervisor | press tab to autofill recommended tags                   | quickly fill out flags without needing to check the user guide                         |
+| `*`      | Telemarketer / Telemarketing Supervisor | view my command history                                  | trace previously entered commands at a glance                                          |
+
+
 
 *{ More to be added as new features are introduced }*
 
@@ -799,6 +878,7 @@ For all use cases below, the **System** is the `Teletubbies` application, and th
   Use case resumes at step 2.
 
 #### Use case: Telemarketer workflow during a shift
+
 * Actor: Telemarketer User
 * Precondition: Telemarketer has obtained a list of customers assigned by Supervisor
 
@@ -865,42 +945,189 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the [jar file](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases) and copy into an empty folder
+1. Download the [jar file](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases) and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+1. Re-launch the app by double-clicking the jar file.<br>
+   Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Managing contacts
 
-### Deleting a person
+#### Deleting a contact
 
-1. Deleting a person while all persons are being shown
+1. Deleting a contact with the correct command format, **by referencing their index while all persons are being shown**
+   1. Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
+   2. Test case: `delete -i 1`<br>
+      * Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Pie chart will be updated to reflect the progress of the updated contact list.
+   3. Test case: `delete -i 0`<br>
+      * Expected: No contact is deleted. Error details shown in the status message. Pie chart remains the same
+   4. Other incorrect delete commands to try: `delete`, `delete -i x`, `...` (where `x` is larger than the list size)<br>
+      * Expected: Similar to previous.
+2. Deleting a contact with the correct command format, **by referencing their phone number** while all contacts are being shown
+   1. Prerequisites: List all contacts using the list command, Multiple contacts in the list.
+   2. Test case: `delete -p 87654321`
+      * Expected: Assuming a contact with phone number 87654321 exists, that contact is deleted from the list. Details of the deleted contact shown in the status message. Pie chart will be updated to reflect the progress of the updated contact list.
+   3. Test case: `delete -p 11111111`
+      * Expected: Assuming a contact with phone number 11111111 does not exist, no contact is deleted. Pie chart remains the same.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+#### Adding a contact
 
-   1. Test case: `delete -i 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. 
+1. Adding a contact with the correct command format
+    1. Prerequisites: None.
+    2. Test case: `add -n John Doe -p 87654321`
+       * Expected: A contact named “John Doe” with phone number 87654321 will be added into the contact list. The pie chart will be updated to reflect the progress of the updated contact list.
+    3. Test case: `add -n Albert Saw -p 98765432 -e albertsaw@gmail.com -a Tampines Street 23, Block 777, #05-12`
+       * Expected: A contact named “Albert Saw” with phone number 98765432, email address “albertsaw@gmail.com” and address “Tampines Street 23, Block 777, #05-12
+       “ will be added into the contact list.
+2. Adding a contact with an incorrect command format
+    1. Prerequisites: None.
+    1. Test case: `add -n John Doe -e johndoe@gmail.com`
+       * Expected: No contact is added. Error details are shown in the status message.
 
-   1. Test case: `delete -i 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+#### Editing a contact
 
-   1. Other incorrect delete commands to try: `delete`, `delete -i x`, `...` (where `x` is larger than the list size)<br>
-      Expected: Similar to previous.
+1. Editing a contact with the correct command format
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list
+    1. Test case: `edit 1 -n Regina Phalange -p 999`
+       * Expected: The first contact in the list has name set to “Regina Phalange” and phone	number 999
+1. Editing a contact with an incorrect command format (wrong email format)
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list
+    1. Test case: `edit 1 -e help@`
+       * Expected: Error message detailing correct expected email format
+1. Editing a contact with an incorrect command format (wrong phone number format)
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list
+    1. Test case: `edit 1 -p 99`
+       * Expected: Error message explaining phone number should be at least 3 digits long
 
-1. _{ more test cases …​ }_
+#### Adding a remark to a contact
 
-### Saving data
+1. Adding a remark to a contact with the correct command format (with `-r` flag)
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list
+    2. Test case: `remark 1 -r Need to call back`
+       * Expected:  A remark “Need to call back” is added to the first contact in the list.
+    3. Test case: `remark 1 -r `
+       * Expected: Assuming that the contact has an existing remark, the existing remark is removed from the contact.
+2. Adding a remark to a contact with the correct command format (with no `-r` flag)
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list, contact at index 1 with remark: ‘Call back at 2pm’
+    2. Test case: remark 1 
+       * Expected: A message is shown that the remark has been removed from the first person on the contact list.
+    3. Test case: `remark 1 remark`
+       * Expected: Error message about command format
+3. Other incorrect remark commands to try: `remark `, `remark  -r x`, `...` (where `x` is larger than the list size or a negative number)<br>
 
-1. Dealing with missing/corrupted data files
+#### Tagging and removing tag from contact
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+1. Adding a tag to a range of contacts with the correct command format
+    1. Prerequisites: List all contacts using the list command, At least 6 contacts in the list
+    2. Test case: `tag 1-4 -n Assignee -v Ken`
+       * Expected: A success message with the first 4 contacts in the list with the `Assignee: Ken` tag
+    3. Other correct inputs to try:
+       1. Comma separated indices (e.g. `tag 1,2,3,4 -n Assignee -v Ken`)
+       2. Range with single value (e.g. `tag 1 -n Assignee -v Ken`)
+       3. Name and no value (e.g. tag 1-4 -n IMPORTANT)
+2. Adding a tag with incorrect command format (with value and no name)
+    1. Prerequisites: List all contacts using the list command, Non-empty contact list
+    1. Test case: `tag 1 -v TEST`
+       * Expected: Error message about command format
+3. Removing a tag from a range of contacts with correct command format (with name and value)
+    1. Prerequisites: List all contacts using the list command, Contact list must be of length at least 6, and contacts at index 1, 3, and 5 with the tag `priority:IMPORTANT`
+    1. Test case: `tagrm 1-6 -n priority -v IMPORTANT`
+       * Expected: No contact from index 1 to 6 (inclusive) should have the `priority: IMPORTANT` tag
+4. Removing a tag from a range of contacts with correct command format (with name and no value)
+    1. Prerequisites: List all contacts using the list command, Contact list must be of length at least 6, with the contacts at index 1, 3, and 5 with the tag `priority:IMPORTANT`, and contact at index 2 with the tag `priority: LOW`
+    1. Test case: `tagrm 1-6 -n priority`
+       * Expected: No contact from index 1 to 6 (inclusive) should have a tag with the name `important`, including `priority: IMPORTANT` and `priority: LOW`.
 
-1. _{ more test cases …​ }_
+### Setting Profile
+
+1. Setting the user profile with the correct command format
+    1. Prerequisites: None.
+    1. Note: Between test cases for the `profile` command, set the field `isProfileSet` to false in the `preferences.json` file, which can be found in the same folder as `teletubbies.jar`.
+    1. Test case: `profile -n John Doe -role Telemarketer`
+       * Expected: A success message showing the user’s newly set name and role
+
+    1. Test case: `profile -n John Boe -role Supervisor`
+       * Expected: A success message showing the user’s newly set name and role
+
+    1. Test case: `profile -n -role Telemarketer`
+       * Expected: A success message showing the user’s newly set name (empty) and role
+
+### Importing, Exporting and Merging contacts
+1. If you have been using the app prior to this, exit the app and delete the contacts file `[JAR file location]/data/teletubbies.json`.
+2. Launch the Teletubbies app by double-clicking the jar file.
+3. Export contacts with a specified tag
+   1. Prerequisites: Contacts list contains the sample data set.
+
+   2. Test case: `export -t ProductB`
+      * Expected: The contact list would contain contacts that have the tag “ProductB”. There would also be a message requesting user confirmation for export.
+   3. Test case: `y` (continued)
+      * Expected: File chooser window opens.
+   4. Test case: Choose a file location and name file
+      * Expected: A success message showing that the export was successful. Original contact list is displayed
+4. Import contacts from a file
+   1. Prerequisite: Completed the Export test case above or have a correctly formatted contact data file
+   2. Test case: `import`
+      * Expected: File chooser window opens.
+   3. Test case: Choose the file to import
+      * Expected: A success message showing that the import was successful. Contact list is updated with contacts from the imported file.
+5. Merge contacts from a file
+   1. Prerequisite: Contact list has a few contacts. Export a subset of the contacts and make changes to the JSON file (E.g. change their particulars) ensuring that the JSON formatting remains correct
+   2. Test case: `merge`
+      * Expected: File chooser window opens.
+   3. Test case: Choose the file to merge
+      * Expected: A success message showing that the merge was successful. Contacts that were originally in the list are updated with the changes made in the merged list. Contacts that were not in the merged list remain unchanged.
+   4. Other incorrect commands to try: Closing the file selector window
+
+
+### `undo` / `redo`
+1. If you have been using the application before this, exit the app
+2. Launch the application by double-clicking on the jar file.
+    1. Test case: `undo`
+        * Expected: An error message which says “Teletubbies is currently at its earliest version and cannot be reverted.”
+    2. Test case: Clear the Teletubbies application by pressing `clear` and type `undo`
+       * Expected: The application reverts back to the state before the `clear` command was input.
+    3. Test case: `undo`
+        * Expected: An error message which says “Teletubbies is currently at its earliest version and cannot be reverted.”
+    4. Test case: `redo`
+        * Expected: The empty teletubbies application which was present after `clear`
+    5. Test case: `redo`
+        * Expected: An error message which says “Teletubbies is currently at its latest version and cannot be redone.”
+    6. Test case: Enter 3 unique commands of either `add`, `delete`, `tag`, `done`, `remark` and take note of the order. These are some of the Contact Commands that you can type to modify contacts
+   Key in `undo` 3 times, and after each `undo` is keyed in, verify that the state corresponds with the state from before.
+        * Expected: All states are verified to be accurate
+    7. Test case: Enter one command of either `add`, `delete`, `tag`, `done` or `remark` and ensure that a previous command was not keyed in.
+   Key in `undo` twice. 
+        * Expected: The first `undo` command would return a Teletubbies state which corresponds to the state it was in when it originally started. The second `undo` command should return an error message which says “Teletubbies is currently at it's earliest version and cannot be reverted.”
+    8. Test case: Enter `redo` twice
+        * Expected: The first `redo` command returns the Teletubbies state which was present after 7a was executed. The second `redo` command should return an error message which says “Teletubbies is currently at it's latest version and cannot be redone.”
+
+### `history`
+
+1. Prerequisite: Enter at least 5 commands after starting up the application and remember the order in which the commands were keyed in.
+2. Test case: Key in `history`
+   * Expected: a list of commands keyed in chronologically descending order, with history at the top.
+
+### Key bindings ([UP], [DOWN] and [TAB])
+
+1. [UP], and [DOWN] arrows keys to navigate command history
+    1. Prerequisite: Enter at least 5 unique commands after starting up the application
+    2. Test case: Pressing the [UP] and [DOWN] keys in some order, making sure to press [UP] more than 5 times, and [DOWN] more than 5 times in a row
+       * Expected: The command box text should correspond with the appropriate commands in the command history (viewable with the `history` command). [UP] should show a previous command and [DOWN] should show a later command. If the first command is showing [UP] should not change the command box text. If the last command is showing, [DOWN] should not change the command box text.
+
+1. [TAB] key to autocomplete command flags
+    1. Test case: Type the command `add` (or another command) and press [TAB]
+       * Expected: The command box text should show the command word, with the recommended flags. For add, it should show: `add -n -p -e -a`
+
 
 --------------------------------------------------------------------------------------------------------------------
+
+## References 
+
+The [Commands with UI effects](#commands-with-ui-effects) section was in part adapted from the Developer's Guide of
+[CoLAB](https://ay2021s2-cs2103t-t11-2.github.io/tp/) from AY20/21 since their product had a feature involving very 
+similar implementation considerations and diagrams.
