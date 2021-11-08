@@ -93,7 +93,7 @@ public class VersionedAddressBookTest {
     public void canUndo_multiple_returnsTrue() throws EmptyAddressBookStateListException, EarliestVersionException {
         VersionedAddressBook versionedAddressBook = makeVersionedAddressBook(
                 emptyAddressBook, addressBookWithAmy, addressBookWithBob);
-        for (int i = 0; i<2; i++) {
+        for (int i = 0; i < 2; i++) {
             assertTrue(versionedAddressBook.canUndo());
             versionedAddressBook.undo();
         }
