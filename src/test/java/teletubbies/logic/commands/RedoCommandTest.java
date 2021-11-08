@@ -15,28 +15,12 @@ import teletubbies.model.ModelManager;
 import teletubbies.model.UserPrefs;
 
 public class RedoCommandTest {
-
-    // @@author: sijie123
-    // Reused from
-    // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/logic/commands
-    // RedoCommandTest.java
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final int numberOfDeletes = 5;
 
     @BeforeEach
     public void setUp() throws EarliestVersionException {
-        // set up of model's' undo/redo history
-        deleteFirstPerson(model);
-        deleteFirstPerson(model);
-        model.undoAddressBook();
-        model.undoAddressBook();
-
-        deleteFirstPerson(expectedModel);
-        deleteFirstPerson(expectedModel);
-        expectedModel.undoAddressBook();
-        expectedModel.undoAddressBook();
-
         for (int i = 0; i < numberOfDeletes; i++) {
             deleteFirstPerson(model);
             deleteFirstPerson(expectedModel);
