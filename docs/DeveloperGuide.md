@@ -641,8 +641,14 @@ directly to the top of redo stack.
     
 ![HistoryManagerAlternative0](images/HistoryManagerAlternativeDiagram0.png)
 
-  * Then, as `HistoryManager#undo()` or `HistoryManager#redo()` is called states would be popped from one stack and pushed to the other. ![HistoryManagerAlternative1](images/HistoryManagerAlternativeDiagram1.png)
-  * If we want to commit to `HistoryManager`, all we have to do is clear `redoStack` and push the new state to `undoStack`. ![HistoryManagerAlternative2](images/HistoryManagerAlternativeDiagram2.png)
+  * Then, as `HistoryManager#undo()` or `HistoryManager#redo()` is called states would be popped from one stack and pushed to the other. 
+    
+![HistoryManagerAlternative1](images/HistoryManagerAlternativeDiagram1.png)
+
+  * If we want to commit to `HistoryManager`, all we have to do is clear `redoStack` and push the new state to `undoStack`. 
+    
+![HistoryManagerAlternative2](images/HistoryManagerAlternativeDiagram2.png)
+
   * Pros: Single responsibility principle, `undoStack` only manages states to be undone while `redoStack` only manages states to be redone.
   * Cons: Difficult to visualise.
 
