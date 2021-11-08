@@ -239,7 +239,7 @@ Commands that require a UI effect will need to set up the `UiConsumer` functiona
 of `MainWindow`. The following is an example of a constructor for `CommandResult` that includes this set-up:
 
 ```java
-return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, new HelpUiConsumer());
+new CommandResult(MESSAGE, UiEffect.SHOW_HELP, new HelpUiConsumer());
 ```
 
 The third argument of this method call (`new HelpUiConsumer()`), is a `UiConsumer` that uses the `handleHelp` method in `MainWindow`. More complicated effects
