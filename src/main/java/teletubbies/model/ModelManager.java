@@ -157,8 +157,13 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void mergePerson(Person person) {
-        versionedAddressBook.mergePerson(person);
+    public void mergeAddressBook(ReadOnlyAddressBook addressBookToMerge) {
+        AddressBook mergedAddressBook = new VersionedAddressBook(this.versionedAddressBook
+                .getMostRecentReadOnlyAddressBook());
+        ObservableList<Person> personsToMerge = addressBookToMerge.getPersonList();
+        personsToMerge.stream().forEach(mergedAddressBook::mergePerson);
+        setAddressBook(mergedAddressBook);
+        versionedAddressBook.commitCurrentStateAndSave();
     }
 
     @Override

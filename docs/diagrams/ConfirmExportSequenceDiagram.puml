@@ -1,0 +1,93 @@
+@startuml
+!include style.puml
+
+box Ui UI_COLOR_T1
+participant "m:MainWindow" as MainWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":InputParser" as InputParser LOGIC_COLOR
+participant "c:ConfirmExportCommand" as ConfirmExportCommand LOGIC_COLOR
+participant "uiEffect: ExportUiConsumer" as UiConsumer LOGIC_COLOR
+participant "result:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> MainWindow : executeCommand("y")
+activate MainWindow
+
+MainWindow -> LogicManager : execute("y")
+activate LogicManager
+
+LogicManager -> InputParser : parseCommand("y")
+activate InputParser
+
+create ConfirmExportCommand
+InputParser -> ConfirmExportCommand
+activate ConfirmExportCommand
+
+ConfirmExportCommand --> InputParser
+deactivate ConfirmExportCommand
+
+InputParser --> LogicManager : c
+deactivate InputParser
+
+LogicManager -> ConfirmExportCommand : execute()
+activate ConfirmExportCommand
+
+ConfirmExportCommand -> Model : isAwaitingExportConfirmation()
+activate Model
+Model --> ConfirmExportCommand
+
+create UiConsumer
+ConfirmExportCommand -> UiConsumer
+activate UiConsumer
+UiConsumer --> ConfirmExportCommand
+deactivate UiConsumer
+
+create CommandResult
+ConfirmExportCommand -> CommandResult : new CommandResult(.., uiEffect)
+activate CommandResult
+
+CommandResult --> ConfirmExportCommand
+deactivate CommandResult
+ConfirmExportCommand --> LogicManager : result
+deactivate ConfirmExportCommand
+ConfirmExportCommand -[hidden]-> LogicManager : result
+destroy ConfirmExportCommand
+
+MainWindow<--LogicManager : result
+deactivate LogicManager
+
+MainWindow -> CommandResult : executeUiEffect(this)
+activate CommandResult
+
+CommandResult -> UiConsumer : accept(m)
+activate UiConsumer
+
+UiConsumer -> MainWindow : handleFileChooser()
+activate MainWindow
+
+MainWindow --> UiConsumer :fileToSave
+deactivate MainWindow
+
+UiConsumer -> Model : getExportAddressBook
+Model --> UiConsumer
+deactivate Model
+
+UiConsumer -> UiConsumer : saveAddressBookToPath()
+activate UiConsumer
+deactivate UiConsumer
+
+UiConsumer --> CommandResult
+deactivate UiConsumer
+
+CommandResult --> MainWindow
+deactivate CommandResult
+
+
+@enduml

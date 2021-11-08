@@ -219,7 +219,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void mergePerson(Person person) {
+        public void mergeAddressBook(ReadOnlyAddressBook addressBook) {
             throw new AssertionError("This method should not be called.");
         }
 
