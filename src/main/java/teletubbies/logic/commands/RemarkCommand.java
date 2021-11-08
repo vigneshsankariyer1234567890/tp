@@ -33,7 +33,7 @@ public class RemarkCommand extends Command {
             + "Parameters: INDEX (must be a positive integer) "
             + PREFIX_REMARK + " REMARK\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_REMARK + " Likes to swim.";
+            + PREFIX_REMARK + " Need to call back.";
 
     public static final String MESSAGE_ARGUMENTS = "Index: %1$d, Remark: %2$s";
     public static final String MESSAGE_ADD_REMARK_SUCCESS = "Added remark to person: %1$s";
@@ -62,6 +62,11 @@ public class RemarkCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
+
+        if (!personToEdit.getRemark().isPresent() && remark.value.isEmpty()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_REMARK);
+        }
+
         Person editedPerson = new Person(personToEdit.getUuid(),
                 personToEdit.getName(), personToEdit.getPhone(), personToEdit.getEmail(),
                 personToEdit.getAddress(), personToEdit.getCompletionStatus(), remark, personToEdit.getTags());
