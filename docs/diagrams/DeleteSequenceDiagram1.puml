@@ -11,12 +11,14 @@ end box
 
 box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
+participant ":AddressBook" as AddressBook MODEL_COLOR
+participant ":UniquePersonList" as UniquePersonList MODEL_COLOR
 end box
 
-[-> LogicManager : execute("delete -i 1")
+[-> LogicManager : execute("delete -p 87654321")
 activate LogicManager
 
-LogicManager -> InputParser : parseCommand("delete -1 1")
+LogicManager -> InputParser : parseCommand("delete -p 87654321")
 activate InputParser
 
 create DeleteCommandParser
@@ -27,7 +29,7 @@ DeleteCommandParser --> InputParser
 deactivate DeleteCommandParser
 
 
-InputParser -> DeleteCommandParser : parse("delete -i 1")
+InputParser -> DeleteCommandParser : parse("-p 87654321")
 activate DeleteCommandParser
 
 create DeleteCommand
@@ -49,8 +51,20 @@ deactivate InputParser
 LogicManager -> DeleteCommand : execute()
 activate DeleteCommand
 
-DeleteCommand -> Model : deletePerson
+DeleteCommand -> Model : deletePerson(personToDelete)
 activate Model
+
+Model -> AddressBook : removePerson(personToDelete)
+activate AddressBook
+
+AddressBook -> UniquePersonList: remove(personToDelete)
+activate UniquePersonList
+
+UniquePersonList --> AddressBook
+deactivate UniquePersonList
+
+AddressBook --> Model
+deactivate AddressBook
 
 Model --> DeleteCommand
 deactivate Model
