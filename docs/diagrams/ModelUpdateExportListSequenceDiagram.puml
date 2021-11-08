@@ -35,6 +35,8 @@ alt !checkEqualityOfAddressBooks(copy, mostRecentState)
     Model -> Model: setExportListModified(true)
 end
 
+destroy AddressBook
+
 deactivate Model
 
 @enduml
