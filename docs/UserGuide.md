@@ -33,9 +33,9 @@ Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut
 
 **_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
 
-**_Parameter_**: Input to a command's field.
-
 **_JavaScript Object Notation (JSON)_**: A text-based representation of structured data that is used to save contacts as files in *Teletubbies*.
+
+**_Parameter_**: Input to a command's field.
 
 ### Glossary of icons and symbols
 :information_source: : Additional information <br/>
@@ -278,10 +278,16 @@ Examples:
 > This command will set your name as "David Wong" and your role as "Telemarketer".
 * `profile -n Anne Goh -role Supervisor`
 > This command will set your name as "Anne Goh" and your role as "Supervisor".
+* `profile -n -role Telemarketer`
+> This command will set your role as "Telemarketer". 
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Note: The `profile` command can only be used to set up your user profile once. To modify your name or role, please follow the steps [here](#frequently-asked-questions).
+**:information_source: Note:**<br>
+
+Teletubbies provides the option for users to leave their names as empty, but it is highly recommended for you to set your name for identification purposes.
+
+Additionally, the `profile` command can only be used to set up your user profile once. To modify your name or role, please follow the steps [here](#frequently-asked-questions).
 
 </div>
 
