@@ -33,9 +33,9 @@ Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut
 
 **_Graphical User Interface (GUI)_**: A user interface that allows users to interact with a system through graphical icons.
 
-**_Parameter_**: Input to a command's field.
-
 **_JavaScript Object Notation (JSON)_**: A text-based representation of structured data that is used to save contacts as files in *Teletubbies*.
+
+**_Parameter_**: Input to a command's field.
 
 ### Glossary of icons and symbols
 :information_source: : Additional information <br/>
@@ -73,13 +73,10 @@ for more information on how to install Java `11`.
 Some example commands you can try:
 
    * `list`: Lists all contacts.
-
    * `add -n John Doe -p 87654321`: Adds a contact named `John Doe` to *Teletubbies*, with the phone number 87654321.
-
    * `delete -i 3`: Deletes the 3rd contact shown in the current list.
    * `done 3`: Marks the 3rd contact shown in the current list as done.
    * `clear`: Deletes all contacts.
-
    * `exit`: Exits the app.
 
 6. Refer to the [Features](#features) section for details of each command.
@@ -278,10 +275,16 @@ Examples:
 > This command will set your name as "David Wong" and your role as "Telemarketer".
 * `profile -n Anne Goh -role Supervisor`
 > This command will set your name as "Anne Goh" and your role as "Supervisor".
+* `profile -n -role Telemarketer`
+> This command will set your role as "Telemarketer". 
 
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Note: The `profile` command can only be used to set up your user profile once. To modify your name or role, please follow the steps [here](#frequently-asked-questions).
+**:information_source: Note:**<br>
+
+Teletubbies provides the option for users to leave their names as empty, but it is highly recommended for you to set your name for identification purposes.
+
+Additionally, the `profile` command can only be used to set up your user profile once. To modify your name or role, please follow the steps [here](#faq).
 
 </div>
 
@@ -419,9 +422,11 @@ phone number is associated with a contact in the contact list.
 <div markdown="block" class="alert alert-info">
 
 **:bulb: Deleting with a contact's index:**<br>
+
 If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
 </div>
+
 Format: `delete -p PHONE_NUMBER` or `delete -i INDEX`
 
 Examples:
@@ -580,15 +585,20 @@ Format: `remark INDEX -r REMARK`
 Examples:
 * `remark 1 -r Not answering any calls`
 > This command will add the remark `Not answering any calls` to the first contact in the list.
-* `remark 2 -r Not answering any calls` </br>
-`remark 2 -r Need to call back for confirmation`
+* `remark 1 -r `
+> This command will remove the existing remark from the first contact in the list.
+* `remark 2 -r Not answering any calls` 
+* `remark 2 -r Need to call back for confirmation`
 > The first command will add the remark `Not answering any calls` to the second contact in the list. The second command 
 > will then add the new remark `Need to call back for confirmation` to the second contact in the list, which will replace the
 > old remark `Not answering any calls`.
 
+
+
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Only one remark allowed per contact:**<br>
+**:information_source: Only one remark allowed per contact**<br>
+
 A contact can only have a maximum of **one** remark. If a contact already has a remark, any new remark added
 will replace the existing remark.
 </div>
@@ -656,6 +666,7 @@ your filter if necessary.
 <div markdown="block" class="alert alert-info">
 
 **:information_source: Tag name and tag value are case-sensitive:**<br>
+
 This means that the following tags are different:
 - `assignee: john`
 - `assignee: John`
@@ -752,22 +763,22 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 **Q** How do I change my role after setting it once?<br>
 1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
 2. In `preferences.json`, locate the `isProfileSet` field and set it to false as follows:
-```json
-{
-  
-  ...
-  
-  "userProfile" : {
-    "name" : "",
-    "role" : "SUPERVISOR"
-  },
-  "isProfileSet" : false, // set this field to false
-  
-  ...
-          
-}
-```
+
+    ```
+      {
+        
+        ...
+        
+        "userProfile" : {
+          "name" : "",
+          "role" : "SUPERVISOR"
+        },
+        "isProfileSet" : false, // set this field to false
+        
+        ...
+                
+      }
+    ```
+
 3. When you restart teletubbies, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
 
-
---------------------------------------------------------------------------------------------------------------------

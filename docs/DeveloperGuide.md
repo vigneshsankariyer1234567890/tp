@@ -61,7 +61,7 @@ components of the application such as the `Logic`, `UI`, `Model`, and `Storage` 
 
 Along with the strict adherence to software design principles, such as **Single Responsibility** and
 **Separation of Concerns**, the modularity of the software design allows future developers to add features to Teletubbies
-without having to deal with tedious side-effects.
+without having to deal with tedious side effects.
 
 ### **Glossary**
 **_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
@@ -172,9 +172,9 @@ How the `Logic` component works:
 the Command's UI effects (e.g. opening help menu, opening file select window).
 
 
-The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete -p 87654321")` API call.
+The Sequence Diagram below illustrates the interactions within the `Logic` component for the `execute("delete -i 1")` API call.
 
-![Interactions Inside the Logic Component for the `delete -p 87654321` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `delete -i 1` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -239,7 +239,7 @@ Commands that require a UI effect will need to set up the `UiConsumer` functiona
 of `MainWindow`. The following is an example of a constructor for `CommandResult` that includes this set-up:
 
 ```java
-return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP, new HelpUiConsumer());
+new CommandResult(MESSAGE, UiEffect.SHOW_HELP, new HelpUiConsumer());
 ```
 
 The third argument of this method call (`new HelpUiConsumer()`), is a `UiConsumer` that uses the `handleHelp` method in `MainWindow`. More complicated effects
@@ -451,10 +451,17 @@ The following sequence diagram shows how the `done` operation works:
 
 ### Delete Contacts Feature
 
-The `delete` command allows the telemarketer to delete a contact using a contact's displayed index number or phone number. 
-The user can delete a contact via a `delete -i 1` or `delete -p 87654321` input.
-* delete using a contact's displayed index number by using the `-i` prefix.'
-* delete using a contact's phone number by using the `-p` prefix.
+#### Implementation
+
+Deletion of a contact is supported by the `DeleteCommand` and `DeleteCommandParser` classes. The `DeleteCommandParser`
+parses the user's input and deletes the contact at the given index or with the given phone number.
+
+The following sequence diagram shows how the `delete` operation works:
+
+![DeleteSequenceDiagram1](images/DeleteSequenceDiagram1.png)
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
 
 The following activity diagram summarizes what happens when a user executes a delete command:
 
@@ -468,8 +475,9 @@ Since the telemarketer is responsible for talking to customers on the phone to s
 it will be useful for them to interact with their contact lists through the customer's phone number.
 
 * **Alternative 1 (current choice):** Delete using either index or phone number.
-    * Pros: Flexibility in method of deletion.
-    * Cons: Slightly more complicated for user to delete a contact.
+    * Pros: Flexibility in method of deletion, as users can specify whether they would like to reference a contact by
+      index or phone number by using the `-i` or `-p` prefixes.
+    * Cons: Slightly more complicated for user to delete a contact, as a longer command has to be typed.
 
 * **Alternative 2:** Delete via phone number only.
     * Pros: Implementation is more straightforward, as there is only one type of input to be expected.
@@ -586,11 +594,14 @@ allows for efficient code re-usability.
 index of the current state in question.
 
 When `HistoryManager` is first initialised, `historyStack` is empty while `stackPointer` does not point to any state, since there are none stored.
+
 ![HistoryManagerDiagram0](images/HistoryManagerDiagram0.png)
 
 Then, new states of the object with type parameter `T` are added and stored in the `HistoryManager`, using `HistoryManager#commitAndPush(T item)`. This method causes the new item to be added to
 `historyStack` and the `stackPointer` to be pointed to the new item.
+
 ![HistoryManagerDiagram1](images/HistoryManagerDiagram1.png)
+
 <div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#commitAndPush(T item)` returns a *new* `HistoryManager` object which has the new state pushed to the top of the
 `historyStack`. This ensures the immutability of historyStack and guarantees that if anything is added, `stackPointer` will point to the latest version.
 </div>
@@ -598,9 +609,11 @@ Then, new states of the object with type parameter `T` are added and stored in t
 The `HistoryManager#undo()` and `HistoryManager#redo()` methods allow the pointer to be pushed up or down to previous states or previously undone states, by simply pointing to the object below the current state or above it.
 
 For instance, this is how `HistoryManager` looks like after `HistoryManager#undo()` is called twice:
+
 ![HistoryManagerDiagram2](images/HistoryManagerDiagram2.png)
 
 And after `HistoryManager#redo()` is called once, it looks like this:
+
 ![HistoryManagerDiagram3](images/HistoryManagerDiagram3.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** `HistoryManager#undo()` and `HistoryManager#redo()` *do not* return new `HistoryManager` objects as the `historyStack` is not manipulated.
@@ -608,6 +621,7 @@ And after `HistoryManager#redo()` is called once, it looks like this:
 
 Calling `HistoryManager#commitAndPush(T item)` here causes the states above the `stackPointer` to be removed and replaced by the new state, as indicated by item.
 Once again, a new `HistoryManager` is created, this time with the new state added and the state `v2` to be removed.
+
 ![HistoryManagerDiagram4](images/HistoryManagerDiagram4.png)
 
 `HistoryManager` also has a `HistoryManager#peek()` method which returns the current state that is pointed at by the `stackPointer`, as well as the
@@ -623,7 +637,10 @@ Once again, a new `HistoryManager` is created, this time with the new state adde
 
 * **Alternative 2 (proposed):** Use a 2-stack method to record history, one which stores the states which can be undone and the other to store the states which can be redone.
   * The `HistoryManager` would originally have 2 stacks: an undo stack and a redo stack. Before actions are undone, the redo stack would be empty while the new states would be added
-directly to the top of redo stack. ![HistoryManagerAlternative0](images/HistoryManagerAlternativeDiagram0.png)
+directly to the top of redo stack. 
+    
+![HistoryManagerAlternative0](images/HistoryManagerAlternativeDiagram0.png)
+
   * Then, as `HistoryManager#undo()` or `HistoryManager#redo()` is called states would be popped from one stack and pushed to the other. ![HistoryManagerAlternative1](images/HistoryManagerAlternativeDiagram1.png)
   * If we want to commit to `HistoryManager`, all we have to do is clear `redoStack` and push the new state to `undoStack`. ![HistoryManagerAlternative2](images/HistoryManagerAlternativeDiagram2.png)
   * Pros: Single responsibility principle, `undoStack` only manages states to be undone while `redoStack` only manages states to be redone.
@@ -647,18 +664,22 @@ The `Model` interface also exposes methods such as `Model#undoAddressBook()`, `M
 An example of the usage scenario of `undo` is given below:
 
 Step 1. Teletubbies is launched for the first time by the user. `VersionedAddressBook` is first initialised with an initial address book state.
+
 ![UndoState0](images/UndoRedoState0.png)
 
 Step 2. The user changes the current state of Teletubbies by executing a `done 1` command. The `done` command calls `Model#commitAddressBook()` which in turn causes
 `VersionedAddressBook#commitCurrentStateAndSave()` to be called. This causes the newest state of Teletubbies (which is different from it's previous state) to be
 saved.
+
 ![UndoState1](images/UndoRedoState1.png)
 
 Step 3. The user changes the current state of Teletubbies by executing a `delete -i 1` command. The `delete` command calls `Model#commitAddressBook()` as before, causing
 the state of Teletubbies to be changed.
+
 ![UndoState2](images/UndoRedoState2.png)
 
 Step 4. The user decides to undo by executing `undo`. This causes `Model#undoAddressBook()` to be called, which causes `HistoryManager` to revert back to state `tb1`.
+
 ![UndoState3](images/UndoRedoState3.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** If the current state is the earliest
@@ -667,6 +688,7 @@ possible state, in this case tb0, Teletubbies will no longer be revertible, and 
 </div>
 
 The sequence diagram below illustrates the undo operation:
+
 ![UndoSequenceDiagram](images/UndoSequenceDiagram.png)
 
 However, the `redo` command simply does the opposite and calls `Model#redoAddressBook()`, which causes the undone state to be reinstated.
@@ -678,9 +700,11 @@ possible state, in this case tb2, Teletubbies will no longer be able to restore 
 
 Step 5. The user decides to execute the command `find Alex`. However, `find` does not modify `VersionedAddressBook`. Commands that do not modify `VersionedAddressBook` do not call
 `Model#commitAddressBook()` which allows the history of states to remain unchanged.
+
 ![UndoState4](images/UndoRedoState4.png)
 
 Step 6. The `clear` command is then executed by the user. `Model#commitAddressBook()` is called by the command, which causes the states after the current state to no longer be stored.
+
 ![UndoState5](images/UndoRedoState5.png)
 
 #### Design Considerations
@@ -713,11 +737,13 @@ The `Model` interface also exposes methods such as `Model#addCommandInput()`, `M
 as stored by the `HistoryManager` in `CommandInputHistory`.
 
 The sequence diagram below shows the mechanism in storing the input given by the user.
+
 ![HistorySequenceDiagramToStoreCommands](images/HistorySequenceToStoreCommandsDiagram.png)
 
 This allows the command to be stored regardless of the outcome of the command, even if it is an invalid command.
 
 The sequence diagram below shows the execution path which is taken by the `history` command.
+
 ![HistoryCommandSequenceDiagram](images/HistoryCommandSequenceDiagram.png)
 
 ### Use of **UP** and **DOWN** to get previous or next commands
@@ -728,9 +754,11 @@ we decided to implement this as well. This feature is facilitated by the `Model`
 The UI component uses EventHandlers that detects if the **UP** or **DOWN** buttons are pressed by the user. Then, UI calls upon `Model#getPreviousCommand()`
 or `Model#getNextCommand()` to get the previous or next command as stored by `CommandInputHistory`.
 
-The activity diagrams below show how each key press is handled.
+The activity diagram below show how the **UP** button key press is handled.
 
 ![UpButtonActivityDiagram](images/UpButtonActivityDiagram.png)
+
+The activity diagram below show how the **DOWN** button key press is handled.
 
 ![DownButtonActivityDiagram](images/DownButtonActivityDiagram.png)
 
@@ -945,43 +973,184 @@ testers are expected to do more *exploratory* testing.
 
 1. Initial launch
 
-   1. Download the [jar file](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases) and copy into an empty folder
+1. Download the [jar file](https://github.com/AY2122S1-CS2103T-W15-4/tp/releases) and copy into an empty folder
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 1. Saving window preferences
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
+1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+1. Re-launch the app by double-clicking the jar file.<br>
+   Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+### Managing contacts
 
-### Deleting a person
+#### Deleting a contact
 
-1. Deleting a person while all persons are being shown
+1. Deleting a contact with the correct command format, **by referencing their index while all persons are being shown**
+   1. Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
+   2. Test case: `delete -i 1`<br>
+      * Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Pie chart will be updated to reflect the progress of the updated contact list.
+   3. Test case: `delete -i 0`<br>
+      * Expected: No contact is deleted. Error details shown in the status message. Pie chart remains the same
+   4. Other incorrect delete commands to try: `delete`, `delete -i x`, `...` (where `x` is larger than the list size)<br>
+      * Expected: Similar to previous.
+2. Deleting a contact with the correct command format, **by referencing their phone number** while all contacts are being shown
+   1. Prerequisites: List all contacts using the list command, Multiple contacts in the list.
+   2. Test case: `delete -p 87654321`
+      * Expected: Assuming a contact with phone number 87654321 exists, that contact is deleted from the list. Details of the deleted contact shown in the status message. Pie chart will be updated to reflect the progress of the updated contact list.
+   3. Test case: `delete -p 11111111`
+      * Expected: Assuming a contact with phone number 11111111 does not exist, no contact is deleted. Pie chart remains the same.
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+#### Adding a contact
 
-   1. Test case: `delete -i 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. 
+1. Adding a contact with the correct command format
+    1. Prerequisites: None.
+    2. Test case: `add -n John Doe -p 87654321`
+       * Expected: A contact named “John Doe” with phone number 87654321 will be added into the contact list. The pie chart will be updated to reflect the progress of the updated contact list.
+    3. Test case: `add -n Albert Saw -p 98765432 -e albertsaw@gmail.com -a Tampines Street 23, Block 777, #05-12`
+       * Expected: A contact named “Albert Saw” with phone number 98765432, email address “albertsaw@gmail.com” and address “Tampines Street 23, Block 777, #05-12
+       “ will be added into the contact list.
+2. Adding a contact with an incorrect command format
+    1. Prerequisites: None.
+    1. Test case: `add -n John Doe -e johndoe@gmail.com`
+       * Expected: No contact is added. Error details are shown in the status message.
 
-   1. Test case: `delete -i 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+#### Editing a contact
 
-   1. Other incorrect delete commands to try: `delete`, `delete -i x`, `...` (where `x` is larger than the list size)<br>
-      Expected: Similar to previous.
+1. Editing a contact with the correct command format
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list
+    1. Test case: `edit 1 -n Regina Phalange -p 999`
+       * Expected: The first contact in the list has name set to “Regina Phalange” and phone	number 999
+1. Editing a contact with an incorrect command format (wrong email format)
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list
+    1. Test case: `edit 1 -e help@`
+       * Expected: Error message detailing correct expected email format
+1. Editing a contact with an incorrect command format (wrong phone number format)
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list
+    1. Test case: `edit 1 -p 99`
+       * Expected: Error message explaining phone number should be at least 3 digits long
 
-1. _{ more test cases …​ }_
+#### Adding a remark to a contact
 
-### Saving data
+1. Adding a remark to a contact with the correct command format (with `-r` flag)
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list
+    2. Test case: `remark 1 -r Need to call back`
+       * Expected:  A remark “Need to call back” is added to the first contact in the list.
+    3. Test case: `remark 1 -r `
+       * Expected: Assuming that the contact has an existing remark, the existing remark is removed from the contact.
+2. Adding a remark to a contact with the correct command format (with no `-r` flag)
+    1. Prerequisites: List all contacts using the list command, Multiple contacts in the list, contact at index 1 with remark: ‘Call back at 2pm’
+    2. Test case: remark 1 
+       * Expected: A message is shown that the remark has been removed from the first person on the contact list.
+    3. Test case: `remark 1 remark`
+       * Expected: Error message about command format
+3. Other incorrect remark commands to try: `remark `, `remark  -r x`, `...` (where `x` is larger than the list size or a negative number)<br>
 
-1. Dealing with missing/corrupted data files
+#### Tagging and removing tag from contact
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+1. Adding a tag to a range of contacts with the correct command format
+    1. Prerequisites: List all contacts using the list command, At least 6 contacts in the list
+    2. Test case: `tag 1-4 -n Assignee -v Ken`
+       * Expected: A success message with the first 4 contacts in the list with the `Assignee: Ken` tag
+    3. Other correct inputs to try:
+       1. Comma separated indices (e.g. `tag 1,2,3,4 -n Assignee -v Ken`)
+       2. Range with single value (e.g. `tag 1 -n Assignee -v Ken`)
+       3. Name and no value (e.g. tag 1-4 -n IMPORTANT)
+2. Adding a tag with incorrect command format (with value and no name)
+    1. Prerequisites: List all contacts using the list command, Non-empty contact list
+    1. Test case: `tag 1 -v TEST`
+       * Expected: Error message about command format
+3. Removing a tag from a range of contacts with correct command format (with name and value)
+    1. Prerequisites: List all contacts using the list command, Contact list must be of length at least 6, and contacts at index 1, 3, and 5 with the tag `priority:IMPORTANT`
+    1. Test case: `tagrm 1-6 -n priority -v IMPORTANT`
+       * Expected: No contact from index 1 to 6 (inclusive) should have the `priority: IMPORTANT` tag
+4. Removing a tag from a range of contacts with correct command format (with name and no value)
+    1. Prerequisites: List all contacts using the list command, Contact list must be of length at least 6, with the contacts at index 1, 3, and 5 with the tag `priority:IMPORTANT`, and contact at index 2 with the tag `priority: LOW`
+    1. Test case: `tagrm 1-6 -n priority`
+       * Expected: No contact from index 1 to 6 (inclusive) should have a tag with the name `important`, including `priority: IMPORTANT` and `priority: LOW`.
 
-1. _{ more test cases …​ }_
+### Setting Profile
+
+1. Setting the user profile with the correct command format
+    1. Prerequisites: None.
+    1. Note: Between test cases for the `profile` command, set the field `isProfileSet` to false in the `preferences.json` file, which can be found in the same folder as `teletubbies.jar`.
+    1. Test case: `profile -n John Doe -role Telemarketer`
+       * Expected: A success message showing the user’s newly set name and role
+
+    1. Test case: `profile -n John Boe -role Supervisor`
+       * Expected: A success message showing the user’s newly set name and role
+
+    1. Test case: `profile -n -role Telemarketer`
+       * Expected: A success message showing the user’s newly set name (empty) and role
+
+### Importing, Exporting and Merging contacts
+1. If you have been using the app prior to this, exit the app and delete the contacts file `[JAR file location]/data/teletubbies.json`.
+2. Launch the Teletubbies app by double-clicking the jar file.
+3. Export contacts with a specified tag
+   1. Prerequisites: Contacts list contains the sample data set.
+
+   2. Test case: `export -t ProductB`
+      * Expected: The contact list would contain contacts that have the tag “ProductB”. There would also be a message requesting user confirmation for export.
+   3. Test case: `y` (continued)
+      * Expected: File chooser window opens.
+   4. Test case: Choose a file location and name file
+      * Expected: A success message showing that the export was successful. Original contact list is displayed
+4. Import contacts from a file
+   1. Prerequisite: Completed the Export test case above or have a correctly formatted contact data file
+   2. Test case: `import`
+      * Expected: File chooser window opens.
+   3. Test case: Choose the file to import
+      * Expected: A success message showing that the import was successful. Contact list is updated with contacts from the imported file.
+5. Merge contacts from a file
+   1. Prerequisite: Contact list has a few contacts. Export a subset of the contacts and make changes to the JSON file (E.g. change their particulars) ensuring that the JSON formatting remains correct
+   2. Test case: `merge`
+      * Expected: File chooser window opens.
+   3. Test case: Choose the file to merge
+      * Expected: A success message showing that the merge was successful. Contacts that were originally in the list are updated with the changes made in the merged list. Contacts that were not in the merged list remain unchanged.
+   4. Other incorrect commands to try: Closing the file selector window
+
+
+### `undo` / `redo`
+1. If you have been using the application before this, exit the app
+2. Launch the application by double-clicking on the jar file.
+    1. Test case: `undo`
+        * Expected: An error message which says “Teletubbies is currently at its earliest version and cannot be reverted.”
+    2. Test case: Clear the Teletubbies application by pressing `clear` and type `undo`
+       * Expected: The application reverts back to the state before the `clear` command was input.
+    3. Test case: `undo`
+        * Expected: An error message which says “Teletubbies is currently at its earliest version and cannot be reverted.”
+    4. Test case: `redo`
+        * Expected: The empty teletubbies application which was present after `clear`
+    5. Test case: `redo`
+        * Expected: An error message which says “Teletubbies is currently at its latest version and cannot be redone.”
+    6. Test case: Enter 3 unique commands of either `add`, `delete`, `tag`, `done`, `remark` and take note of the order. These are some of the Contact Commands that you can type to modify contacts
+   Key in `undo` 3 times, and after each `undo` is keyed in, verify that the state corresponds with the state from before.
+        * Expected: All states are verified to be accurate
+    7. Test case: Enter one command of either `add`, `delete`, `tag`, `done` or `remark` and ensure that a previous command was not keyed in.
+   Key in `undo` twice. 
+        * Expected: The first `undo` command would return a Teletubbies state which corresponds to the state it was in when it originally started. The second `undo` command should return an error message which says “Teletubbies is currently at it's earliest version and cannot be reverted.”
+    8. Test case: Enter `redo` twice
+        * Expected: The first `redo` command returns the Teletubbies state which was present after 7a was executed. The second `redo` command should return an error message which says “Teletubbies is currently at it's latest version and cannot be redone.”
+
+### `history`
+
+1. Prerequisite: Enter at least 5 commands after starting up the application and remember the order in which the commands were keyed in.
+2. Test case: Key in `history`
+   * Expected: a list of commands keyed in chronologically descending order, with history at the top.
+
+### Key bindings ([UP], [DOWN] and [TAB])
+
+1. [UP], and [DOWN] arrows keys to navigate command history
+    1. Prerequisite: Enter at least 5 unique commands after starting up the application
+    2. Test case: Pressing the [UP] and [DOWN] keys in some order, making sure to press [UP] more than 5 times, and [DOWN] more than 5 times in a row
+       * Expected: The command box text should correspond with the appropriate commands in the command history (viewable with the `history` command). [UP] should show a previous command and [DOWN] should show a later command. If the first command is showing [UP] should not change the command box text. If the last command is showing, [DOWN] should not change the command box text.
+
+1. [TAB] key to autocomplete command flags
+    1. Test case: Type the command `add` (or another command) and press [TAB]
+       * Expected: The command box text should show the command word, with the recommended flags. For add, it should show: `add -n -p -e -a`
+
 
 --------------------------------------------------------------------------------------------------------------------
 
