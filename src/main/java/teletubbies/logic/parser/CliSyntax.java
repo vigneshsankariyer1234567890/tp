@@ -18,6 +18,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_INCOMPLETE = new Prefix("-inc");
     public static final Prefix PREFIX_VALUE = new Prefix("-v");
     public static final Prefix PREFIX_SUPERVISOR_FLAG = new Prefix("-s");
+    public static final Prefix PREFIX_UUID = new Prefix("-u"); //Only used for testing AddCommandParser
 
     public static final String DEFAULT_EMAIL = "hello@tp.com";
     public static final String DEFAULT_ADDRESS = "NUS";

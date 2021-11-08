@@ -13,7 +13,7 @@ public class UndoCommand extends Command {
 
     public static final String COMMAND_WORD = "undo";
     public static final String MESSAGE_SUCCESS = "Teletubbies was successfully undone!";
-    public static final String MESSAGE_FAILURE = "Teletubbies is currently at it's earliest version and cannot be "
+    public static final String MESSAGE_FAILURE = "Teletubbies is currently at its earliest version and cannot be "
             + "reverted.";
 
     @Override

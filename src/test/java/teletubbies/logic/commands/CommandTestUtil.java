@@ -7,6 +7,7 @@ import static teletubbies.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_NAME;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_PHONE;
 import static teletubbies.logic.parser.CliSyntax.PREFIX_TAG;
+import static teletubbies.logic.parser.CliSyntax.PREFIX_UUID;
 import static teletubbies.testutil.Assert.assertThrows;
 
 import java.util.ArrayList;
@@ -40,6 +41,8 @@ public class CommandTestUtil {
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
 
+    public static final String UUID_DESC_AMY = " " + PREFIX_UUID + VALID_UUID_AMY;
+    public static final String UUID_DESC_BOB = " " + PREFIX_UUID + VALID_UUID_BOB;
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
@@ -57,7 +60,7 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
-    public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
+    public static final String PREAMBLE_WHITESPACE = "-t  -r  -n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;

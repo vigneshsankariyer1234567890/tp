@@ -18,6 +18,7 @@ import teletubbies.model.person.Address;
 import teletubbies.model.person.Email;
 import teletubbies.model.person.Name;
 import teletubbies.model.person.Phone;
+import teletubbies.model.person.Uuid;
 import teletubbies.model.tag.Tag;
 
 /**
