@@ -49,7 +49,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/vigneshsankariyer1234567890.png" width="200px">
 
-[[github]](https://github.com/vigneshsankariyer1234567890) [portfolio]
+[[github]](https://github.com/vigneshsankariyer1234567890) [[portfolio]](team/vigneshsankariyer1234567890.md)
 
 * Role: Developer
 * Responsibilities: Testing
