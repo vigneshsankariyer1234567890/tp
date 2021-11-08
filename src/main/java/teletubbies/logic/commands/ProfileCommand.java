@@ -53,7 +53,6 @@ public class ProfileCommand extends Command {
             throw new CommandException(urse.getMessage());
         }
 
-        model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_PROFILE_SUCCESS, userProfile));
     }
 

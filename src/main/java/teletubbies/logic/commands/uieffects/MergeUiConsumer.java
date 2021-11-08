@@ -41,6 +41,7 @@ public class MergeUiConsumer implements UiConsumer {
             }
             ReadOnlyAddressBook addressBookToMerge = addressBookOptional.get();
             model.mergeAddressBook(addressBookToMerge);
+            model.commitAddressBook();
 
             logger.info("Merged contacts from " + filePath);
         } catch (DataConversionException e) {
