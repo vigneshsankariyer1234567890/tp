@@ -31,7 +31,7 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_PHONE, CliSyntax.PREFIX_EMAIL,
-                        CliSyntax.PREFIX_ADDRESS);
+                        CliSyntax.PREFIX_ADDRESS, CliSyntax.PREFIX_UUID);
 
         if (!arePrefixesPresent(argMultimap, CliSyntax.PREFIX_NAME, CliSyntax.PREFIX_PHONE)
                 || !argMultimap.getPreamble().isEmpty()) {
@@ -56,6 +56,10 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = new HashSet<>();
 
         String uuid = UUID.randomUUID().toString();
+        if (arePrefixesPresent(argMultimap, CliSyntax.PREFIX_UUID)) {
+            //Only used for testing AddCommandParser
+            uuid = argMultimap.getValue(CliSyntax.PREFIX_UUID).get().trim();
+        }
         Person person = new Person(new Uuid(uuid), name, phone, email, address,
                 new CompletionStatusTag(), remark, tagList);
 

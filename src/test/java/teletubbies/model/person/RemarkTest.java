@@ -2,10 +2,16 @@ package teletubbies.model.person;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static teletubbies.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
 public class RemarkTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new Remark(null));
+    }
 
     // @@author: j-lum
     // Reused from

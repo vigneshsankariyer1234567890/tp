@@ -13,7 +13,7 @@ public class RedoCommand extends Command {
 
     public static final String COMMAND_WORD = "redo";
     public static final String MESSAGE_SUCCESS = "Teletubbies was successfully redone!";
-    public static final String MESSAGE_FAILURE = "Teletubbies is currently at it's latest version and cannot be "
+    public static final String MESSAGE_FAILURE = "Teletubbies is currently at its latest version and cannot be "
             + "redone.";
 
     @Override
