@@ -27,6 +27,8 @@ For more experienced users who know what they are looking for and want to quickl
 
 Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut **Command + F** to find specific keywords.
 
+<div style="page-break-after: always;"></div>
+
 ### Glossary of definitions
 
 **_Command-line Interface (CLI)_**: A user interface that allows users to interact with a system through text commands.
@@ -53,6 +55,8 @@ Alternatively, you may use the Windows shortcut **Ctrl + F** or the Mac shortcut
 > Quotes are used to explain examples for commands.
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## Quick start
 
@@ -82,6 +86,8 @@ Some example commands you can try:
 6. Refer to the [Features](#features) section for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## Command summary
 
@@ -169,6 +175,8 @@ These commands are related to the *Teletubbies* application as a whole. The comm
 * [`redo`](#redoing-your-previous-commands-redo)
 * [`exit`](#exiting-the-program-exit)
 
+<div style="page-break-after: always;"></div>
+
 #### Viewing help: `help`
 
 The `help` command will display our comprehensive user guide (that you are reading right now), 
@@ -177,6 +185,8 @@ as shown below!
 ![helpPage](images/userGuide/helpPage.png)
 
 Format: `help`
+
+<div style="page-break-after: always;"></div>
 
 #### Importing contacts: `import`
 
@@ -187,7 +197,6 @@ selecting `File -> Import`. Once the command is issued, *Teletubbies* will open 
 
 The data to be imported must be a JSON file, with the file extension `.json`.
 
-
 ![import_file](images/userGuide/importFile.png)
 
 Format: `import`
@@ -195,6 +204,8 @@ Format: `import`
 <div markdown="span" class="alert alert-warning">:exclamation: Caution:
 If the format of the selected data file is invalid, Teletubbies will start with an empty contact list!
 </div>
+
+<div style="page-break-after: always;"></div>
 
 #### Merging contacts: `merge`
 
@@ -214,6 +225,8 @@ Format: `merge`
 This command should only be used if you are sure that you want to combine the new data to be imported with 
 the current data in the application. The new data will overwrite the current data, so be careful!
 </div>
+
+<div style="page-break-after: always;"></div>
 
 #### Exporting contacts: `export`
 
@@ -246,6 +259,8 @@ Examples:
 > This command will export all contacts containing the "friends" tag.
 * `export -t friends -t family`
 > This command will export all contacts containing BOTH the "friends" tag, and the "family" tag.
+
+<div style="page-break-after: always;"></div>
 
 #### Setting your profile: `profile`
 
@@ -288,6 +303,8 @@ Additionally, the `profile` command can only be used to set up your user profile
 
 </div>
 
+<div style="page-break-after: always;"></div>
+
 #### Listing your previous commands: `history`
 
 The `history` command will help you to view all the commands that have been issued by you in the **current session**.
@@ -306,6 +323,8 @@ reset. The next time you start up *Teletubbies*, you will not be able to access 
 previous session.
 
 </div>
+
+<div style="page-break-after: always;"></div>
 
 #### Undoing your previous commands: `undo`
 
@@ -347,11 +366,15 @@ Otherwise, any changes you may have made with your previous `undo` command will 
 
 Format: `redo`
 
+<div style="page-break-after: always;"></div>
+
 #### Exiting the program: `exit`
 
 The `exit` command will help you gracefully exit *Teletubbies*.
 
 Format: `exit`
+
+<div style="page-break-after: always;"></div>
 
 ### Contact commands
 
@@ -387,6 +410,7 @@ clipboard icon that looks like this: ![](images/icon_clipboard.png)
 When you click on the icon, it will copy the phone number to your clipboard, so that you can paste it onto
 your desktop calling app!
 
+<div style="page-break-after: always;"></div>
 
 #### Adding a contact: `add`
 
@@ -410,6 +434,8 @@ Examples:
 * `add -n John Snoe -p 98765432 -a Wall Street, Block 234, #08-06 -e johns@example.com`
 > This command will add the contact details for "John Snoe", with their phone number as "98765432". It will 
 > also add their address as "Wall Street, Block 234, #08-06", and their email address as "johns@example.com".
+
+<div style="page-break-after: always;"></div>
 
 #### Deleting a contact: `delete`
 
@@ -435,6 +461,8 @@ Examples:
 * `delete -p 87654321`
 > This command will delete the contact details for the contact with the phone number "87654321".
 
+<div style="page-break-after: always;"></div>
+
 #### Editing a contact: `edit`
 
 The `edit` command will help you to edit / update a customer's contact details in *Teletubbies*. Note that
@@ -456,6 +484,8 @@ Examples:
 > This command will edit the name of the first person in the list to be "Betsy Crower".
 * `edit 2 -p 91234567 -e johndoe@example.com`
 > This command will edit the phone number of the second person in the list to be "91234567", and the email address to be "johndoe@example.com".
+
+<div style="page-break-after: always;"></div>
 
 #### Marking a contact as completed: `done`
 
@@ -480,6 +510,8 @@ Examples:
 > This command will mark the second contact in the list as "Ongoing".
 * `done 3 -inc`
 > This command will mark the third contact in the list as "Incomplete".
+
+<div style="page-break-after: always;"></div>
 
 #### Tagging contacts: `tag`
 
@@ -515,6 +547,8 @@ Examples:
 > This command will tag the fourth contact in the list with the tag `Assignee: Mel`. Because of the `-s`, this tag will only be editable / removable by 
 > users whose roles are set as "Supervisor" For more information on roles, refer to [Setting your profile](#setting-your-profile-profile).
 
+<div style="page-break-after: always;"></div>
+
 #### Removing tags from contacts: `tagrm`
 
 The `tagrm` command will help you to **remove** a tag from a contact. Note that the tag to be removed
@@ -537,6 +571,8 @@ Examples:
 > This command will remove the tag `Friend` from the first contact in the list.
 * `tagrm 2 -n Friend -v close`
 > This command will remove the tag `Friend: close` from the second contact in the list.
+
+<div style="page-break-after: always;"></div>
 
 #### Tagging and Removing tags from multiple contacts
 
@@ -571,6 +607,8 @@ Examples (`tagrm`):
 * `tagrm 1-5 -n Friend `
 > This command will remove the tag `Friend` from the first five contacts in the list.
 
+<div style="page-break-after: always;"></div>
+
 #### Adding a remark to a contact: `remark`
 
 The `remark` command will help you to add a remark to a chosen contact in the list. Remarks are a more general version
@@ -594,7 +632,6 @@ Examples:
 > old remark `Not answering any calls`.
 
 
-
 <div markdown="block" class="alert alert-info">
 
 **:information_source: Only one remark allowed per contact**<br>
@@ -602,6 +639,8 @@ Examples:
 A contact can only have a maximum of **one** remark. If a contact already has a remark, any new remark added
 will replace the existing remark.
 </div>
+
+<div style="page-break-after: always;"></div>
 
 ### List commands
 
@@ -620,6 +659,8 @@ By listing all contacts, you will be able to find the number associated with a s
 This number is known as the `index` of the contact.
 
 Format: `list`
+
+<div style="page-break-after: always;"></div>
 
 #### Locating contacts by name: `find`
 
@@ -655,6 +696,8 @@ The search process is case-insensitive, meaning that if a keyword `hans` is give
 be returned.
 </div>
 
+<div style="page-break-after: always;"></div>
+
 #### Filtering contact list: `filter`
 
 The `filter` command will help you filter the current contact list using the given tag(s), and will change the contact list
@@ -687,6 +730,8 @@ Examples:
 > This command will filter the displayed list to only users who have the tag `Friend` AND `Assignee: Ben`. Contacts 
 > that have only one of the given tags will NOT be listed.
 
+<div style="page-break-after: always;"></div>
+
 #### Clearing all entries: `clear`
 
 The `clear` command will help you clear all contacts from the Teletubbies application.
@@ -696,6 +741,8 @@ Format: `clear`
 <div markdown="span" class="alert alert-warning">:exclamation: Caution:
 Do NOT issue this command unless you are absolutely sure that you want to clear the list.
 </div>
+
+<div style="page-break-after: always;"></div>
 
 ### Other features
 
@@ -722,13 +769,16 @@ of our convenience features in Teletubbies. These include:
 > 
 > Here is an image of Teletubbies before pressing the **[TAB]** key:
 >![Before pressing Tab](images/tab/GUIImageBeforeTab.png) 
-> 
-> 
+
+<div style="page-break-after: always;"></div>
+
 > And here is an image of Teletubbies after pressing the **[TAB]** key:
 >![After pressing Tab](images/tab/GUIImageAfterTab.png)
 > 
 > It is important to note that pressing the **TAB** key will only work if the given word is a command word. For example,
 > if you type `ad` and then press the **TAB** key, the given text will remain.
+
+<div style="page-break-after: always;"></div>
 
 ##### Saving the data
 
@@ -752,6 +802,8 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
+
+<div style="page-break-after: always;"></div>
 
 ## FAQ
 
