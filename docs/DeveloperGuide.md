@@ -343,6 +343,15 @@ The following sequence diagram shows how the `export` operation works:
 
 The first `export` command processes the AddressBook to filter contacts that contain the tags specified by the user. This is then stored in the `Model` until the export is confirmed and is displayed to the user too. 
 
+The interaction between `ExportCommand` and `Model` is illustrated in the sequence diagram below:
+
+<img src="images/ModelUpdateExportListSequenceDiagram.png" width="750" />
+
+The `ExportCommand` calls `Model#updateExportList`, where `ModelManager` does the following:
+* Set the boolean `isAwaitingExportConfirmation` to true to manage the subsequent confirmation command.
+* Update the Model's `versionedAddressBook` with the `filteredPersonsList`. This displays the filtered contact list for users to view before confirming export.
+* Create a copy of the filtered address book and compares it with the previous address book. If they are different, `ModelManager` calls `VersionedAddressBook#commitCurrentStateAndSave`, which commits and pushes the state on the `HistoryManager`. This enables `ModelManager` to revert to the original address book after the next command is executed. 
+
 The following sequence diagram shows how the `export` confirmation operation works:
 
 <img src="images/ConfirmExportSequenceDiagram.png" width="750" />
