@@ -22,7 +22,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/lhw-1.png" width="200px">
 
-[[github]](https://github.com/lhw-1) [portfolio]
+[[github]](https://github.com/lhw-1) [[portfolio]](team/lhw-1.md)
 
 * Role: Developer
 * Responsibilities: Documentation
