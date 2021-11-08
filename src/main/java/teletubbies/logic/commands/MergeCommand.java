@@ -47,6 +47,8 @@ public class MergeCommand extends Command {
                 ObservableList<Person> personsToMerge = addressBookToMerge.getPersonList();
                 personsToMerge.stream().forEach(person -> model.mergePerson(person));
 
+                model.commitAddressBook();
+
                 logger.info("Merged contacts from " + filePath);
             } catch (DataConversionException e) {
                 throw new CommandException(MESSAGE_INCORRECT_FORMAT);

@@ -8,7 +8,7 @@ title: Developer Guide
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Setting up, getting started**
-
+https://www.youtube.com/watch?v=rr2XfL_df3o
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
 --------------------------------------------------------------------------------------------------------------------
@@ -904,3 +904,9 @@ testers are expected to do more *exploratory* testing.
 1. _{ more test cases …​ }_
 
 --------------------------------------------------------------------------------------------------------------------
+
+## References 
+
+The [Commands with UI effects](#commands-with-ui-effects) section was in part adapted from the Developer's Guide of
+[CoLAB](https://ay2021s2-cs2103t-t11-2.github.io/tp/) from AY20/21 since their product had a feature involving very 
+similar implementation considerations and diagrams.

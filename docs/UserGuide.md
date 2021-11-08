@@ -310,6 +310,21 @@ Otherwise, any changes you may have made with your previous command will be undo
 
 Format: `undo`
 
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note:**<br>
+
+The following commands cannot be undone since they don't affect contact information:
+* `export`
+* `filter`
+* `find`
+* `help`
+* `history`
+* `list`
+* `profile`
+
+</div>
+
 #### Redoing your previous commands: `redo`
 
 The `redo` command will help you to redo any `undo` command you have issued previously.
@@ -712,8 +727,23 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 **Q** How do I change my role after setting it once?<br>
 1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
-2. Delete `preferences.json`, and start Teletubbies again.
-3. Now, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
+   1. In `preferences.json`, locate the `isProfileSet` field and set it to false as follows:
+```json
+{
+  
+  ...
+  
+  "userProfile" : {
+    "name" : "",
+    "role" : "SUPERVISOR"
+  },
+  "isProfileSet" : false, // set this field to false
+  
+  ...
+          
+}
+```
+3. When you restart teletubbies, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
 
 
 --------------------------------------------------------------------------------------------------------------------
