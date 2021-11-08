@@ -347,16 +347,31 @@ The interaction between `ExportCommand` and `Model` is illustrated in the sequen
 
 <img src="images/ModelUpdateExportListSequenceDiagram.png" width="750" />
 
-The `ExportCommand` calls `Model#updateExportList`, where `ModelManager` does the following:
+The `ExportCommand` calls `Model#updateExportList`, invoking `ModelManager` to do the following:
 * Set the boolean `isAwaitingExportConfirmation` to true to manage the subsequent confirmation command.
 * Update the Model's `versionedAddressBook` with the `filteredPersonsList`. This displays the filtered contact list for users to view before confirming export.
 * Create a copy of the filtered address book and compares it with the previous address book. If they are different, `ModelManager` calls `VersionedAddressBook#commitCurrentStateAndSave`, which commits and pushes the state on the `HistoryManager`. This enables `ModelManager` to revert to the original address book after the next command is executed. 
 
-The following sequence diagram shows how the `export` confirmation operation works:
+The following sequence diagram shows how the `ConfirmExport` operation works:
 
 <img src="images/ConfirmExportSequenceDiagram.png" width="750" />
 
-The execution of the `ConfirmExportCommmand` is similar to the `import` and `merge` commands. The `Model` plays a key role in storing the AddressBook to be exported and the boolean `isAwaitingExportConfirmation` between the `ExportCommand` and `ConfirmExportCommand`.
+The execution of the `ConfirmExportCommmand` is similar to the `import` and `merge` commands in the use of `UiConsumer`. If `isAwaitingExportConfirmation` in the `Model` is true, the `ExportUiConsumer` retrieves the AddressBook to be exported from the `Model` as shown in the sequence diagram below:
+
+<img src="images/ModelGetExportAddressBookSequenceDiagram.png" width="750" />
+
+The `ExportUiConsumer` calls `Model#getExportAddressBook`, invoking `ModelManager` to do the following:
+* Creates a copy of the AddressBook called `toExport` containing contacts to be exported. This is subsequently returned to the `ExportUiConsumer` to be converted and exported as a JSON file.
+* If `isExportListModified` was set to true in the `ExportCommand`, 
+    * `versionedAddressBook` is undone.
+    * `VersionedAddressBook#commitWithoutSavingCurrentState()` is called, which clears the history after the `historyStack` pointer and resets the `HistoryManager` of the `versionedAddressBook`.
+* Resets export related booleans in `ModelManager`.
+
+During the execution of other Teletubbies commands, `Model#cancelPendingExport()` is called to undo the `VersionedAddresBook` if there is a pending export, before the actual execution of the command. The operation of `Model#cancelPendingExport()` is shown in the sequence diagram below:
+
+<img src="images/ModelCancelPendingExportSequenceDiagram.png" width="750" />
+
+The `VersionedAdressBook` and `HistoryManager` are reset in the same way as `Model#getExportAddressBook`, which was elaborated above. 
 
 #### Design Considerations
 
