@@ -33,18 +33,20 @@ Given below are my contributions to the project.
   * (v1.3) Updated the GUI Layout to include the chart feature. (Pull Request [\#89](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/89))
   * (v1.4) Fixed and updated the inconsistencies between the Result display texts and the User Guide, raised during the PE Dry-run. (Pull Request [\#152](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/152))
   * (v1.4) Tweaked GUI according to issues raised during the PE Dry-run. (Pull Request [\#155](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/155))
-  * (v1.4) Tweaked GUI according to issues raised during the PE Dry-run, and updated the GUI Color Scheme. (Pull Request [\#172](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/172))
+  * (v1.4) Tweaked GUI according to issues raised during the PE Dry-run, and updated the GUI Color Scheme. (Pull Request [\#172](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/172), Pull Request [\#188](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/188))
 
 * **Documentation**:
   * User Guide:
     * Added documentation for the `save`, `load`, and `edit` features. (Pull Request [\#24](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/24))
     * Added documentation for the `profile` feature. (Pull Request [\#42](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/42))
     * Updated the User Guide in every section to enhance readability, consistency, and navigability. (Pull Request [\#152](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/152))
+    * Tweaked the User Guide in the `profile` and `help` sections. (Pull Request [\#190](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/190), Pull Request [\#192](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/192))
   * Developer Guide:
     * Added user stories. (Pull Request [\#25](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/25))
     * Added implementation details for the `profile` feature. (Pull Request [\#68](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/68))
     * Updated the Developer Guide in various sections to enhance readability, consistency, and navigability. (Pull Request [\#68](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/68))
     * Updated implementation details and considerations for the `profile` feature. (Pull Request [\#181](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/181))
+    * Added the Efforts section in the Developer Guide. (Pull Request [\#201](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/201))
 
 * **Community**:
   * PRs reviewed (with non-trivial review comments): [1](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/47), [2](https://github.com/AY2122S1-CS2103T-W15-4/tp/pull/69)
