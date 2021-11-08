@@ -36,7 +36,7 @@ Given below are my contributions to the project.
 * **Documentation**:
     * User Guide:
         * Added documentation for the features `tag`, `tagrm`, `export` and `filter`.
-        * Added documentation for key bindings (convenience features).
+        * Added instructions for resetting user role.
     * Developer Guide:
         * Added implementation details of `Logic` and the `UiConsumer`, `tag`, and `filter` feature.
 

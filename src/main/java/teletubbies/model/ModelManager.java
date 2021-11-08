@@ -170,14 +170,22 @@ public class ModelManager implements Model {
     public void updateExportList(List<Person> filteredPersonList) {
         // Since VersionedAddressBook stores all states, we can just store the new exportable list as a new state in
         // the VersionedAddressBook.
-        isAwaitingExportConfirmation = true;
+        setAwaitingExportConfirmation(true);
         this.versionedAddressBook.setPersons(filteredPersonList);
         ReadOnlyAddressBook copy = new AddressBook(versionedAddressBook);
         ReadOnlyAddressBook mostRecentState = versionedAddressBook.getMostRecentReadOnlyAddressBook();
         if (!checkEqualityOfAddressBooks(copy, mostRecentState)) {
             this.versionedAddressBook.commitCurrentStateAndSave();
-            isExportListModified = true;
+            setExportListModified(true);
         }
+    }
+
+    private void setExportListModified(boolean b) {
+        isExportListModified = b;
+    }
+
+    private void setAwaitingExportConfirmation(boolean b) {
+        isAwaitingExportConfirmation = b;
     }
 
     private boolean checkEqualityOfAddressBooks(ReadOnlyAddressBook addressBook1, ReadOnlyAddressBook addressBook2) {
@@ -191,11 +199,6 @@ public class ModelManager implements Model {
 
     @Override
     public AddressBook getExportAddressBook() {
-        // Steps:
-        // 1. Obtain the filtered list which will be the most recent addressBook state.
-        // 2. Undo the VersionedAddressBook to its previous state before the export command.
-        // 3. Commit the VersionedAddressBook to remove the filtered list.
-        // 4. Return the AddressBook to be exported.
         AddressBook toExport = new AddressBook(versionedAddressBook);
         if (isExportListModified) {
             undoVersionedAddressBookAndCommit();
@@ -215,11 +218,11 @@ public class ModelManager implements Model {
     }
 
     private void resetExportListModified() {
-        isExportListModified = false;
+        setExportListModified(false);
     }
 
     private void resetExportConfirmation() {
-        isAwaitingExportConfirmation = false;
+        setAwaitingExportConfirmation(false);
     }
 
     private void undoVersionedAddressBookAndCommit() {
