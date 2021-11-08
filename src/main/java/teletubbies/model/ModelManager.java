@@ -161,7 +161,7 @@ public class ModelManager implements Model {
         AddressBook mergedAddressBook = new VersionedAddressBook(this.versionedAddressBook
                 .getMostRecentReadOnlyAddressBook());
         ObservableList<Person> personsToMerge = addressBookToMerge.getPersonList();
-        personsToMerge.stream().forEach(person -> mergedAddressBook.mergePerson(person));
+        personsToMerge.stream().forEach(mergedAddressBook::mergePerson);
         setAddressBook(mergedAddressBook);
         versionedAddressBook.commitCurrentStateAndSave();
     }
