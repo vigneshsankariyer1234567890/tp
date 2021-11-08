@@ -19,7 +19,7 @@ public class Tag {
     public static final Function<String, String> RESERVED_NAME_CONSTRAINTS = (name) ->
         name + " is a reserved tag name. Please choose another name";
     public static final String ALPHANUMERIC_NAME_CONSTRAINTS = "Tag names should be alphanumeric";
-    public static final String MESSAGE_CONSTRAINTS = "Tag names should be alphanumeric and cannot be reserved";
+    public static final String MESSAGE_CONSTRAINTS = "Tag names should be alphanumeric and cannot be reserved or empty";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
 
     public final String tagName;
