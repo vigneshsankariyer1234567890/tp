@@ -1,0 +1,28 @@
+@startuml
+!include style.puml
+
+
+participant ":TagCommandParser" as TagCommandParser LOGIC_COLOR_T4
+participant ":ParserUtil" as ParserUtil LOGIC_COLOR_T3
+participant ":TagCommand" as TagCommand LOGIC_COLOR_T2
+
+[-> TagCommandParser : parse(arguments)
+activate TagCommandParser
+
+TagCommandParser -> ParserUtil : parseRange()
+activate ParserUtil
+ParserUtil --> TagCommandParser : range
+deactivate ParserUtil
+
+create TagCommand
+TagCommandParser -> TagCommand : new TagCommand(range, tagName, tagValue, isSupervisorOnly)
+activate TagCommand
+TagCommand --> TagCommandParser
+deactivate TagCommand
+
+[<-- TagCommandParser
+deactivate TagCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+TagCommandParser -[hidden]->
+destroy TagCommandParser
+@enduml

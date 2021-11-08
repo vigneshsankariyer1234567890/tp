@@ -24,7 +24,8 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
-    public static final String DEFAULT_REMARK = "She likes aardvarks.";
+    public static final String DEFAULT_REMARK = "";
+    public static final Set<Tag> DEFAULT_TAGS = new HashSet<>();
 
     private Uuid uuid;
     private Name name;
@@ -46,7 +47,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         completionStatusTag = new CompletionStatusTag();
         remark = new Remark(DEFAULT_REMARK);
-        tags = new HashSet<>();
+        tags = new HashSet<>(DEFAULT_TAGS);
     }
 
     /**

@@ -19,7 +19,7 @@ public class ProfileCommand extends Command {
 
     public static final String COMMAND_WORD = "profile";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_NAME, PREFIX_ROLE);
+    public static final List<Prefix> RECOMMENDED_FLAGS = List.of(PREFIX_NAME, PREFIX_ROLE);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Sets the name and role of the Teletubbies user.\n"
             + "Parameters: "
@@ -53,7 +53,6 @@ public class ProfileCommand extends Command {
             throw new CommandException(urse.getMessage());
         }
 
-        model.commitAddressBook();
         return new CommandResult(String.format(MESSAGE_PROFILE_SUCCESS, userProfile));
     }
 

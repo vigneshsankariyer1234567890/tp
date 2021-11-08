@@ -14,7 +14,10 @@ import teletubbies.model.UserPrefs;
 import teletubbies.model.person.Person;
 
 public class UndoCommandTest {
-
+    //@@author: sijie123
+    // Reused from
+    // https://github.com/se-edu/addressbook-level4/blob/master/src/test/java/seedu/address/logic/commands
+    // /UndoCommandTest.java
     private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     private final Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
@@ -41,6 +44,8 @@ public class UndoCommandTest {
         // no undoable states in model
         assertCommandFailure(new UndoCommand(), model, UndoCommand.MESSAGE_FAILURE);
     }
+    //@@author: sijie123
+
 
     public static void deleteFirstPerson(Model model) {
         Person firstPerson = model.getFilteredPersonList().get(0);
