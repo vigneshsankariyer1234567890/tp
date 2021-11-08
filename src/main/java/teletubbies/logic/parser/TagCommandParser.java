@@ -36,11 +36,11 @@ public class TagCommandParser implements Parser<TagCommand> {
 
         String tagName = argumentMultimap.getValue(PREFIX_NAME).get();
         String tagValue = argumentMultimap.getValue(PREFIX_VALUE).orElse("");
-        boolean supervisorFlag = argumentMultimap.getAllValues(PREFIX_SUPERVISOR_FLAG).isPresent();
+        boolean isSupervisorOnly = argumentMultimap.getAllValues(PREFIX_SUPERVISOR_FLAG).isPresent();
 
         Range personRange = ParserUtil.parseRange(preambleString);
 
-        return new TagCommand(personRange, tagName, tagValue, supervisorFlag);
+        return new TagCommand(personRange, tagName, tagValue, isSupervisorOnly);
     }
 
     /**

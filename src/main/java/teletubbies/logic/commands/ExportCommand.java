@@ -24,7 +24,7 @@ public class ExportCommand extends Command {
     public static final String MESSAGE_REQUEST_CONFIRMATION = "\nEnter y to confirm export.\n"
             + "Entering other commands would cancel the export.";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_TAG);
+    public static final List<Prefix> RECOMMENDED_FLAGS = List.of(PREFIX_TAG);
 
     private final Set<Tag> tags;
 

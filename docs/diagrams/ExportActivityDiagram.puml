@@ -1,0 +1,51 @@
+@startuml
+
+skinparam ActivityBorderColor black
+skinparam ArrowColor black
+
+skinparam ActivityDiamondBorderColor black
+skinparam activityDiamondBackgroundColor pink-mistyrose
+
+skinparam activityBackgroundColor powderblue-lightcyan
+
+skinparam TitleFontColor grey
+
+title Activity: Export Contact List
+
+start
+:User executes an Export command;
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+switch ()
+case ( [Export all contacts] )
+    :Entire contact list
+     is displayed;
+case ( [Export contacts \n with specified tag(s)] )
+    :Filtered contact list
+    is displayed;
+
+endswitch
+
+:Await Export Confirmation
+command from user;
+
+switch ()
+case ( [User executes\n another command] )
+    :Export is cancelled;
+
+stop
+case ( [User confirms export] )
+     :Open file selector window for user to
+      choose save location and name file;
+
+     switch ()
+     case( [File chooser is closed] )
+        :Export cancelled and \nerror message shown;
+        stop
+     case( [User selects file location \n and names export file])
+        :Teletubbies exports the contact list;
+        stop
+
+@enduml

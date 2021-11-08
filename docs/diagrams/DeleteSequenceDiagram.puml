@@ -7,6 +7,7 @@ participant ":InputParser" as InputParser LOGIC_COLOR
 participant ":DeleteCommandParser" as DeleteCommandParser LOGIC_COLOR
 participant "d:DeleteCommand" as DeleteCommand LOGIC_COLOR
 participant ":CommandResult" as CommandResult LOGIC_COLOR
+participant ":UiConsumer" as UiConsumer LOGIC_COLOR
 end box
 
 box Model MODEL_COLOR_T1
@@ -58,6 +59,12 @@ deactivate Model
 create CommandResult
 DeleteCommand -> CommandResult
 activate CommandResult
+
+create UiConsumer
+CommandResult --> UiConsumer
+activate UiConsumer
+UiConsumer --> CommandResult
+deactivate UiConsumer
 
 CommandResult --> DeleteCommand
 deactivate CommandResult

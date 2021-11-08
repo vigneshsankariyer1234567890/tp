@@ -22,7 +22,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/lhw-1.png" width="200px">
 
-[[github]](https://github.com/lhw-1) [portfolio]
+[[github]](https://github.com/lhw-1) [[portfolio]](team/lhw-1.md)
 
 * Role: Developer
 * Responsibilities: Documentation
@@ -40,7 +40,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/tanqiya.png" width="200px">
 
-[[github]](https://github.com/tanqiya) [portfolio]
+[[github]](https://github.com/tanqiya) [[portfolio]](team/tanqiya.md)
 
 * Role: Developer
 * Responsibilities: Deliverables, Deadlines, Scheduling, Tracking
@@ -49,7 +49,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/vigneshsankariyer1234567890.png" width="200px">
 
-[[github]](https://github.com/vigneshsankariyer1234567890) [portfolio]
+[[github]](https://github.com/vigneshsankariyer1234567890) [[portfolio]](team/vigneshsankariyer1234567890.md)
 
 * Role: Developer
 * Responsibilities: Testing

@@ -21,7 +21,7 @@ public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
-    public static final List<Prefix> REQUIRED_FLAGS = List.of(PREFIX_INDEX);
+    public static final List<Prefix> RECOMMENDED_FLAGS = List.of(PREFIX_INDEX);
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person with the given phone number or the index used in the contact list.\n"

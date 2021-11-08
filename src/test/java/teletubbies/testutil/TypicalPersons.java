@@ -27,9 +27,8 @@ public class TypicalPersons {
 
     public static final Person ALICE = new PersonBuilder().withUuid("5adca888-2825-49c2-82e2-78830d923aa4")
             .withName("Alice Pauline").withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
-            .withPhone("94351253").withTags("friends").withRemark("She likes aardvarks.")
-            .withUuid(UUID.randomUUID().toString()).build();
-    public static final Person BENSON = new PersonBuilder().withUuid("5adca839-2825-49c2-82e2-78830d911aa4")
+            .withPhone("94351253").withTags("friends").withRemark("She likes aardvarks.").build();
+    public static final Person BENSON = new PersonBuilder()
             .withName("Benson Meier").withAddress("311, Clementi Ave 2, #02-25").withEmail("johnd@example.com")
             .withPhone("98765432").withTags("owesMoney", "friends").withRemark("She likes aardvarks.")
             .withUuid(UUID.randomUUID().toString()).build();
