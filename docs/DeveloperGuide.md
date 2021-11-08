@@ -70,8 +70,7 @@ without having to deal with tedious side-effects.
 
 **_User stories_**: Simple descriptions of features told from the perspective of the user.
 
-**_Completion Status_**: A contact can be marked as either “completed” or “not completed”, indicating if the contact
-has been contacted.
+**_Completion Status_**: A contact can be marked as either “complete”, "ongoing" or “incomplete”, indicating if the contact has been contacted.
 
 **_Role_**: Users are assigned either the role of telemarketer or supervisor.
 
@@ -244,8 +243,8 @@ return new CommandResult(SHOWING_HELP_MESSAGE, CommandResult.UiEffect.SHOW_HELP,
 ```
 
 The third argument of this method call (`new HelpUiConsumer()`), is a `UiConsumer` that uses the `handleHelp` method in `MainWindow`. More complicated effects
-can be constructed with the exposed functions in `MainWindow` (See [Import/Export Features](#import--export-features)). The `UiConsumer` can be implemented 
-either as a concrete class (like `HelpUiConsumer`) or as a lambda function. 
+can be constructed with the exposed functions in `MainWindow` (See [Import, Merge and Export Feature](#import-merge-and-export-features)). The `UiConsumer` can be implemented 
+either as a concrete class (like `HelpUiConsumer`) or as a lambda function.
 
 If the `UiEffect` type (the second constructor argument) does not exist for a new command that you want to add, this corresponding `UiEffect`
 type should be added into the `UiEffect` enum in `CommandResult`.
@@ -284,38 +283,105 @@ file choosers, pop-up windows) will be similar.
         * Ease of implementation
     * Cons
         * If a new UI effect needs to be allowed, both `MainWindow` and `CommandResult` will need to be modified with further boolean flags and checks for whether a UI effect has been enabled. This would be in violation of the open-closed principle, since this is not closed to modification.
-
-
-### Import / Export Features
+        
+### Import, Merge and Export Features
 
 #### Implementation
 
-The `import` and `export` mechanism is supported by all the main components, specifically in the following ways:
+The `import`, `merge` and `export` mechanisms are supported by all the main components, specifically in the following ways:
 
-* The `Ui` component is accessed in `CommandResult` through a UI consumer (`ThrowingConsumer<MainWindow>`). This allows the user to interact with the JavaFx FileChooser to select files to be imported/exported to.
+* The `Ui` component is accessed in `CommandResult` through the `UiConsumer`. This allows the user to interact with the JavaFX FileChooser to select files to be imported, merged or exported to.
 
-* The execution of the `ImportCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
+* The execution of the `ImportCommand`, `MergeCommand` and `ExportCommand` is distinct from other commands executed by `Logic` because it is passed to the UI consumer in the `CommandResult` due to their reliance on the UI file chooser.
 
-* For import, the `Model` component is accessed to set the new AddressBook of contacts. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
+* For import, the `Model` component is accessed to set the new AddressBook of contacts. For merge, contacts are merged with the current AddressBook. On the other hand, export filters the AddressBook of the `Model` using the tags specified in the user command to retrieve contacts to be exported.
 
 * Functions in `Storage` were used to write AddressBooks to JSON files as well as read and convert JSON files to AddressBook objects.
 
-The following sequence diagram shows how the `import` operation works:
+#### Import Implementation
 
-![](images/ImportSequenceDiagram.png)
+The `ImportCommand` allows users to import contact files to the Teletubbies app. The following sequence diagram shows how the `import` operation works:
+
+<img src="images/ImportSequenceDiagram.png" width="750" />
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `ImportCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
+
+* After an `ImportCommand` is created, it will be executed by the `LogicManager`. During the execution, a new `CommandResult` is returned with the `ImportUiConsumer`.
+* `CommandResult#executeUiEffect` is called by the `MainWindow`. The `ImportUiConsumer` then calls `MainWindow#handleImport`, which opens the file chooser for the user to choose a file to import. 
+* When the file is selected, the `ImportUiConsumer` converts the JSON file to an AddressBook and calls `Model#setAddressBook`. The updated contact list is then displayed in the GUI.
+
+#### Merge Implementation
+
+Merge functions in a similar way to import. However, instead of replacing the previous AddressBook, the incoming AddressBook is merged with it.
+
+Teletubbies provides commands for users to modify contacts by editing their particulars or tagging them. Since a Person can be entirely changed, each Person is issued a Universally Unique Identifier (UUID) to facilitate the merging process.
+* If there is a Person with a matching UUID in the AddressBook, the incoming Person would replace it. 
+* Else, the Person is new and would be added to the AddressBook.
+
+The following sequence diagram shows how the `merge` operation works:
+
+<img src="images/MergeSequenceDiagram.png" width="750" />
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `MergeCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+#### Export Implementation
+
+Export is distinct from other features as it comprises of 2 commands, as illustrated in this activity diagram:
+
+![ExportActivityDiagram](images/ExportActivityDiagram.png)
+
+As seen in the activity diagram above,
+* The first command gives users a preview of the contacts to be exported
+* Second command is carried out by the user to confirm and execute the export
+* If the user types in another command instead of confirming the export, the pending export is cancelled and the new command is executed. 
+
+The following sequence diagram shows how the `export` operation works:
+
+<img src="images/ExportSequenceDiagram.png" width="750" />
+
+The first `export` command processes the AddressBook to filter contacts that contain the tags specified by the user. This is then stored in the `Model` until the export is confirmed and is displayed to the user too. 
+
+The interaction between `ExportCommand` and `Model` is illustrated in the sequence diagram below:
+
+<img src="images/ModelUpdateExportListSequenceDiagram.png" width="750" />
+
+The `ExportCommand` calls `Model#updateExportList`, invoking `ModelManager` to do the following:
+* Set the boolean `isAwaitingExportConfirmation` to true to manage the subsequent confirmation command.
+* Update the Model's `versionedAddressBook` with the `filteredPersonsList`. This displays the filtered contact list for users to view before confirming export.
+* Create a copy of the filtered address book and compares it with the previous address book. If they are different, `ModelManager` calls `VersionedAddressBook#commitCurrentStateAndSave`, which commits and pushes the state on the `HistoryManager`. This enables `ModelManager` to revert to the original address book after the next command is executed. 
+
+The following sequence diagram shows how the `ConfirmExport` operation works:
+
+<img src="images/ConfirmExportSequenceDiagram.png" width="750" />
+
+The execution of the `ConfirmExportCommmand` is similar to the `import` and `merge` commands in the use of `UiConsumer`. If `isAwaitingExportConfirmation` in the `Model` is true, the `ExportUiConsumer` retrieves the AddressBook to be exported from the `Model` as shown in the sequence diagram below:
+
+<img src="images/ModelGetExportAddressBookSequenceDiagram.png" width="750" />
+
+The `ExportUiConsumer` calls `Model#getExportAddressBook`, invoking `ModelManager` to do the following:
+* Creates a copy of the AddressBook called `toExport` containing contacts to be exported. This is subsequently returned to the `ExportUiConsumer` to be converted and exported as a JSON file.
+* If `isExportListModified` was set to true in the `ExportCommand`, 
+    * `versionedAddressBook` is undone.
+    * `VersionedAddressBook#commitWithoutSavingCurrentState()` is called, which clears the history after the `historyStack` pointer and resets the `HistoryManager` of the `versionedAddressBook`.
+* Resets export related booleans in `ModelManager`.
+
+During the execution of other Teletubbies commands, `Model#cancelPendingExport()` is called to undo the `VersionedAddresBook` if there is a pending export, before the actual execution of the command. The operation of `Model#cancelPendingExport()` is shown in the sequence diagram below:
+
+<img src="images/ModelCancelPendingExportSequenceDiagram.png" width="750" />
+
+The `VersionedAdressBook` and `HistoryManager` are reset in the same way as `Model#getExportAddressBook`, which was elaborated above. 
 
 #### Design Considerations
 
 **Aspect: How to allow commands to specify UI effects**
 
-* **Alternative 1 (current choice):** Import/Export command can be executed by CLI command or menu bar button.
+* **Alternative 1 (current choice):** Import/Export/Merge command can be executed by CLI command or menu bar button.
     * Pros: Users are given the flexibility of choosing either method to enter the command according to their preference.
     * Cons: Contacts to be exported are unable to be filtered by tags in the menu bar button.
 
-* **Alternative 2:** Import and export are buttons in the menu bar only.
+* **Alternative 2:** Import, export and merge are buttons in the menu bar only.
     * Pros: Similar to the layout of menu bars in Microsoft Office Applications, which might be familiar to users.
     * Cons: Target users can type fast and might prefer typing in commands. Contacts to be exported are unable to be filtered by tags.
 
@@ -755,19 +821,32 @@ Priorities:
 * Medium (nice to have) - `* *`
 * Low (unlikely to have) - `*`
 
-| Priority | As a …​                              | I want to …​                  | So that I can…​                                                           |
-| -------- | --------------------------------------- | -------------------------------- | ---------------------------------------------------------------------------- |
-| `* * *`  | Telemarketer                            | import the list of customers     | easily view all the contacts I need to call                                  |
-| `* * *`  | Telemarketer                            | export the list of customers     | send the list to my supervisor                                               |
-| `* * *`  | Telemarketing Supervisor                | import the list of customers     | easily view the contacts completion status of my subordinates                |
-| `* * *`  | Telemarketing Supervisor                | export the list of customers     | send the list to my subordinates for them to complete                        |
-| `* * *`  | Telemarketer / Telemarketing Supervisor | save data from current session   | save my current progress to continue during the next session                 |
-| `* * *`  | Telemarketer / Telemarketing Supervisor | load data from previous session  | pick up where I left off from my previous session                            |
-| `* * *`  | Telemarketer                            | indicate my name under 'profile' | identify myself in progress reports for my supervisor                        |
-| `* * *`  | Telemarketer / Telemarketing Supervisor | indicate my role under 'profile' | get access to the functionalities that cater to my specific job              |
-| `* * *`  | Telemarketer                            | mark a contact as completed      | see that I have already called a contact successfully                        |
-| `* * *`  | Telemarketing Supervisor                | add a contact                    | add contacts that need to be called by my subordinates                       |
-| `* * *`  | Telemarketing Supervisor                | delete a contact                 | remove contacts that no longer need to be tracked or have been added wrongly |
+| Priority | As a …​                              | I want to …​                                          | So that I can…​                                                                     |
+| -------- | --------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `* * *`  | Telemarketer                            | import the list of customers                             | easily view all the contacts I need to call                                            |
+| `* * *`  | Telemarketer                            | export the list of customers                             | send the list to my supervisor                                                         |
+| `* * *`  | Telemarketing Supervisor                | merge my employees' customer lists                       | easily view the contacts completion status of my subordinates                          |
+| `* * *`  | Telemarketing Supervisor                | export the list of customers                             | send the list to my subordinates for them to complete                                  |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | save data from current session                           | save my current progress to continue during the next session                           |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | load data from previous session                          | pick up where I left off from my previous session                                      |
+| `* * *`  | Telemarketer                            | indicate my name under 'profile'                         | identify myself in progress reports for my supervisor                                  |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | indicate my role under 'profile'                         | get access to the functionalities that cater to my specific job                        |
+| `* * *`  | Telemarketer                            | mark a contact as completed                              | see that I have already called a contact successfully                                  |
+| `* * *`  | Telemarketer                            | click to copy the contact's phone number to my clipboard | easily transfer it to my calling app                                           |
+| `* * *`  | Telemarketer                            | add remarks to my contacts                               | store additional long-form information about specific contacts                         |
+| `* * *`  | Telemarketing Supervisor                | add a contact                                            | add contacts that need to be called by my subordinates                                 |
+| `* * *`  | Telemarketing Supervisor                | delete a contact                                         | remove contacts that no longer need to be tracked or have been added wrongly           |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | view progress on the contacts in a simple chart          | so that I can easily get help whenever I need it without losing focus                  |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | undo or redo previously made changes                     | revert any possible mistakes made                                                      |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | tag contacts with additional information                 | get useful analytics on specific contacts and include useful information like assignee |
+| `* * *`  | Telemarketer / Telemarketing Supervisor | filter entries by tag                                    | focus my view of contacts                                                              |
+| `* *`    | Telemarketer / Telemarketing Supervisor | view the user guide from the app                         | easily get help whenever I need it without losing focus                                |
+| `* *`    | Telemarketer / Telemarketing Supervisor | use up-down arrows to access command history             | repeat previous commands without needed to type it out again                           |
+| `* *`    | Telemarketer / Telemarketing Supervisor | preview and confirm the contacts I'm exporting           | reduce export mistakes                                                                 |
+| `*`      | Telemarketer / Telemarketing Supervisor | press tab to autofill recommended tags                   | quickly fill out flags without needing to check the user guide                         |
+| `*`      | Telemarketer / Telemarketing Supervisor | view my command history                                  | trace previously entered commands at a glance                                          |
+
+
 
 *{ More to be added as new features are introduced }*
 
@@ -799,6 +878,7 @@ For all use cases below, the **System** is the `Teletubbies` application, and th
   Use case resumes at step 2.
 
 #### Use case: Telemarketer workflow during a shift
+
 * Actor: Telemarketer User
 * Precondition: Telemarketer has obtained a list of customers assigned by Supervisor
 
@@ -904,3 +984,9 @@ testers are expected to do more *exploratory* testing.
 1. _{ more test cases …​ }_
 
 --------------------------------------------------------------------------------------------------------------------
+
+## References 
+
+The [Commands with UI effects](#commands-with-ui-effects) section was in part adapted from the Developer's Guide of
+[CoLAB](https://ay2021s2-cs2103t-t11-2.github.io/tp/) from AY20/21 since their product had a feature involving very 
+similar implementation considerations and diagrams.

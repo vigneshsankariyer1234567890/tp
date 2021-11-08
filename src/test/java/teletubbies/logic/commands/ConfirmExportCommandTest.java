@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import teletubbies.commons.core.Messages;
 import teletubbies.logic.commands.exceptions.CommandException;
+import teletubbies.logic.commands.uieffects.ExportUiConsumer;
 import teletubbies.model.AddressBook;
 import teletubbies.model.Model;
 import teletubbies.model.ModelManager;
@@ -18,6 +19,7 @@ import teletubbies.testutil.TypicalPersons;
 class ConfirmExportCommandTest {
     private Model model = new ModelManager(TypicalPersons.getTypicalAddressBook(), new UserPrefs());
     private ConfirmExportCommand confirmExportCommand = new ConfirmExportCommand();
+    private ExportUiConsumer exportUiConsumer = new ExportUiConsumer(model);
 
     @Test
     public void execute_noPendingExport_throwsException() {
@@ -27,19 +29,19 @@ class ConfirmExportCommandTest {
     @Test
     public void saveAddressBookToPath_emptyPath_throwsException() {
         AddressBook original = TypicalPersons.getTypicalAddressBook();
-        assertThrows(CommandException.class, () -> confirmExportCommand.saveAddressBookToPath(original, ""));
+        assertThrows(CommandException.class, () -> exportUiConsumer.saveAddressBookToPath(original, ""));
     }
 
     @Test
     public void includeDotWithJson_addJson_true() {
         String s = "hello";
-        assertEquals(confirmExportCommand.includeDotJson(s), s + ".json");
+        assertEquals(exportUiConsumer.includeDotJson(s), s + ".json");
     }
 
     @Test
     public void includeDotWithJson_addJson_false() {
         String s = "hello.json";
-        assertEquals(confirmExportCommand.includeDotJson(s), s);
+        assertEquals(exportUiConsumer.includeDotJson(s), s);
     }
 
     @Test

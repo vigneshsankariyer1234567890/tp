@@ -49,7 +49,7 @@ public class SampleDataUtil {
             new Person(new Uuid("5adca839-2825-49c2-82e2-78830d923aa4"), new Name("Irfan Ibrahim"),
                 new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"), new CompletionStatusTag(), DEFAULT_REMARK,
-                getTagSet("ProductA")),
+                getTagSet("ProductB")),
             new Person(new Uuid("1e53b8d3-0303-4177-bb77-3ff9f010922f"), new Name("Roy Balakrishnan"),
                 new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"), new CompletionStatusTag(), DEFAULT_REMARK,
