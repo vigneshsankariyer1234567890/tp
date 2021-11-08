@@ -72,11 +72,9 @@ activate MainWindow
 MainWindow --> UiConsumer :fileToMerge
 deactivate MainWindow
 
-loop LOOP_COLOR until end of person list
-UiConsumer -> Model : mergePerson(person)
+UiConsumer -> Model : mergeAddressBook()
 activate Model
 deactivate Model
-end
 
 UiConsumer --> CommandResult
 deactivate UiConsumer

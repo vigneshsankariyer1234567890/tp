@@ -313,9 +313,11 @@ The `ImportCommand` allows users to import contact files to the Teletubbies app.
 
 #### Merge Implementation
 
-Merge functions in a similar way to import. However, instead of replacing the AddressBook, the incoming Persons are merged with the prevailing AddressBook.
+Merge functions in a similar way to import. However, instead of replacing the previous AddressBook, the incoming AddressBook is merged with it.
 
-Teletubbies provides commands for users to modify contacts by editing their particulars or tagging them. Since a Person can change drastically, each Person is issued a Universally Unique Identifier (UUID) to facilitate the merging process. If there is a match for the UUID in the AddressBook, the incoming Person would replace it. Else, the Person is new and would be added to the AddressBook.
+Teletubbies provides commands for users to modify contacts by editing their particulars or tagging them. Since a Person can be entirely changed, each Person is issued a Universally Unique Identifier (UUID) to facilitate the merging process.
+* If there is a Person with a matching UUID in the AddressBook, the incoming Person would replace it. 
+* Else, the Person is new and would be added to the AddressBook.
 
 The following sequence diagram shows how the `merge` operation works:
 

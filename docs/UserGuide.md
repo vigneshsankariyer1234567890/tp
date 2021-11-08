@@ -719,7 +719,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 **Q** How do I change my role after setting it once?<br>
 1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
 2. Delete `preferences.json`, and start Teletubbies again.
-3. Now, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
+3. Now, you should be able to modify your role with the [`profile`](#setting-your-profile-profile) command.
 
 
 --------------------------------------------------------------------------------------------------------------------
