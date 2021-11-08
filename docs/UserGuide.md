@@ -73,13 +73,10 @@ for more information on how to install Java `11`.
 Some example commands you can try:
 
    * `list`: Lists all contacts.
-
    * `add -n John Doe -p 87654321`: Adds a contact named `John Doe` to *Teletubbies*, with the phone number 87654321.
-
    * `delete -i 3`: Deletes the 3rd contact shown in the current list.
    * `done 3`: Marks the 3rd contact shown in the current list as done.
    * `clear`: Deletes all contacts.
-
    * `exit`: Exits the app.
 
 6. Refer to the [Features](#features) section for details of each command.
@@ -425,9 +422,11 @@ phone number is associated with a contact in the contact list.
 <div markdown="block" class="alert alert-info">
 
 **:bulb: Deleting with a contact's index:**<br>
+
 If you don't know what the index is, refer to [Finding the index](#finding-the-index).
 
 </div>
+
 Format: `delete -p PHONE_NUMBER` or `delete -i INDEX`
 
 Examples:
@@ -586,15 +585,20 @@ Format: `remark INDEX -r REMARK`
 Examples:
 * `remark 1 -r Not answering any calls`
 > This command will add the remark `Not answering any calls` to the first contact in the list.
-* `remark 2 -r Not answering any calls` </br>
-`remark 2 -r Need to call back for confirmation`
+* `remark 1 -r `
+> This command will remove the existing remark from the first contact in the list.
+* `remark 2 -r Not answering any calls` 
+* `remark 2 -r Need to call back for confirmation`
 > The first command will add the remark `Not answering any calls` to the second contact in the list. The second command 
 > will then add the new remark `Need to call back for confirmation` to the second contact in the list, which will replace the
 > old remark `Not answering any calls`.
 
+
+
 <div markdown="block" class="alert alert-info">
 
-**:information_source: Only one remark allowed per contact:**<br>
+**:information_source: Only one remark allowed per contact**<br>
+
 A contact can only have a maximum of **one** remark. If a contact already has a remark, any new remark added
 will replace the existing remark.
 </div>
@@ -662,6 +666,7 @@ your filter if necessary.
 <div markdown="block" class="alert alert-info">
 
 **:information_source: Tag name and tag value are case-sensitive:**<br>
+
 This means that the following tags are different:
 - `assignee: john`
 - `assignee: John`
@@ -777,5 +782,3 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 3. When you restart teletubbies, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
 
-
---------------------------------------------------------------------------------------------------------------------
