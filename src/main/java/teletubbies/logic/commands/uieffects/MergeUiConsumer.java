@@ -9,13 +9,11 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import javafx.collections.ObservableList;
 import teletubbies.commons.core.LogsCenter;
 import teletubbies.commons.exceptions.DataConversionException;
 import teletubbies.logic.commands.exceptions.CommandException;
 import teletubbies.model.Model;
 import teletubbies.model.ReadOnlyAddressBook;
-import teletubbies.model.person.Person;
 import teletubbies.storage.JsonAddressBookStorage;
 import teletubbies.ui.MainWindow;
 
@@ -42,9 +40,7 @@ public class MergeUiConsumer implements UiConsumer {
                 throw new CommandException(MESSAGE_FILE_NOT_FOUND);
             }
             ReadOnlyAddressBook addressBookToMerge = addressBookOptional.get();
-            ObservableList<Person> personsToMerge = addressBookToMerge.getPersonList();
-            personsToMerge.stream().forEach(person -> model.mergePerson(person));
-            model.commitAddressBook();
+            model.mergeAddressBook(addressBookToMerge);
 
             logger.info("Merged contacts from " + filePath);
         } catch (DataConversionException e) {

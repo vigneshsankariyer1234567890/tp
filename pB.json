@@ -1,0 +1,20 @@
+{
+  "persons" : [ {
+    "uuid" : "376fc044-f407-44a4-9abd-3035aedf27e3",
+    "name" : "CHarles",
+    "phone" : "93210283",
+    "email" : "charlotte@example.com",
+    "address" : "Blk 11 Ang Mo Kio Street 74, #11-04",
+    "remark" : "",
+    "tagged" : [ {
+      "tagName" : "ProductA",
+      "tagValue" : "",
+      "editAccessRoles" : [ "TELEMARKETER", "SUPERVISOR" ]
+    }, {
+      "tagName" : "ProductB",
+      "tagValue" : "",
+      "editAccessRoles" : [ "TELEMARKETER", "SUPERVISOR" ]
+    } ],
+    "completionStat" : "INCOMPLETE"
+  } ]
+}
