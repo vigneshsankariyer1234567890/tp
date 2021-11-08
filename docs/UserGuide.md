@@ -759,8 +759,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
 2. In `preferences.json`, locate the `isProfileSet` field and set it to false as follows:
 
-    <pre>
-      <code class="json">
+    ```
       {
         
         ...
@@ -774,8 +773,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
         ...
                 
       }
-      </code>
-    </pre>
+    ```
 
 3. When you restart teletubbies, you should be able to modify your role with the [profile](#setting-your-profile-profile) command.
 
