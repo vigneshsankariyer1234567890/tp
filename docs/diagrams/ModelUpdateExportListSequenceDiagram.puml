@@ -1,0 +1,40 @@
+@startuml
+!include style.puml
+
+box Model MODEL_COLOR_T1
+participant ":ModelManager" as Model MODEL_COLOR
+participant "versionedAddressBook:\nVersionedAddressBook" as VersionedAddressBook MODEL_COLOR
+participant "copy:ReadOnlyAddressBook" as AddressBook MODEL_COLOR
+end box
+
+[-> Model : updateExportList(filteredPersonList)
+activate Model
+
+Model -> Model: setAwaitingExportConfirmation(true)
+
+Model -> VersionedAddressBook: setPersons(filteredPersonList)
+activate VersionedAddressBook
+deactivate VersionedAddressBook
+
+create AddressBook
+Model -> AddressBook: new AddressBook(versionedAddressBook)
+activate AddressBook
+
+AddressBook --> Model
+deactivate AddressBook
+
+Model -> VersionedAddressBook: getMostRecentReadOnlyAddressBook()
+activate VersionedAddressBook
+VersionedAddressBook --> Model: mostRecentState
+deactivate VersionedAddressBook
+
+alt !checkEqualityOfAddressBooks(copy, mostRecentState)
+    Model -> VersionedAddressBook: commitCurrentStateAndSave()
+    activate VersionedAddressBook
+    deactivate VersionedAddressBook
+    Model -> Model: setExportListModified(true)
+end
+
+deactivate Model
+
+@enduml
