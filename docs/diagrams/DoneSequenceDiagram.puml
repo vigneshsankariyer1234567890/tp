@@ -3,7 +3,7 @@
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":InputParser" as InputParser LOGIC_COLOR
 participant ":DoneCommandParser" as DoneCommandParser LOGIC_COLOR
 participant "d:DoneCommand" as DoneCommand LOGIC_COLOR
 participant ":CommandResult" as CommandResult LOGIC_COLOR
@@ -18,17 +18,17 @@ end box
 [-> LogicManager : execute("done 1")
 activate LogicManager
 
-LogicManager -> AddressBookParser : parseCommand("done 1")
-activate AddressBookParser
+LogicManager -> InputParser : parseCommand("done 1")
+activate InputParser
 
 create DoneCommandParser
-AddressBookParser -> DoneCommandParser
+InputParser -> DoneCommandParser
 activate DoneCommandParser
 
-DoneCommandParser --> AddressBookParser
+DoneCommandParser --> InputParser
 deactivate DoneCommandParser
 
-AddressBookParser -> DoneCommandParser : parse("1")
+InputParser -> DoneCommandParser : parse("1")
 activate DoneCommandParser
 
 create DoneCommand
@@ -45,14 +45,14 @@ deactivate CompletionStatus
 DoneCommand --> DoneCommandParser : d
 deactivate DoneCommand
 
-DoneCommandParser --> AddressBookParser : d
+DoneCommandParser --> InputParser : d
 deactivate DoneCommandParser
 'Hidden arrow to position the destroy marker below the end of the activation bar.
-DoneCommandParser -[hidden]-> AddressBookParser
+DoneCommandParser -[hidden]-> InputParser
 destroy DoneCommandParser
 
-AddressBookParser --> LogicManager : d
-deactivate AddressBookParser
+InputParser --> LogicManager : d
+deactivate InputParser
 
 LogicManager -> DoneCommand : execute()
 activate DoneCommand

@@ -1,0 +1,86 @@
+@startuml
+!include style.puml
+
+box Ui UI_COLOR_T1
+participant "m:MainWindow" as MainWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":InputParser" as InputParser LOGIC_COLOR
+participant "c:MergeCommand" as MergeCommand LOGIC_COLOR
+participant "uiEffect: MergeUiConsumer" as UiConsumer LOGIC_COLOR
+participant "result:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> MainWindow : executeCommand("merge")
+activate MainWindow
+
+MainWindow -> LogicManager : execute("merge")
+activate LogicManager
+
+LogicManager -> InputParser : parseCommand("merge")
+activate InputParser
+
+create MergeCommand
+InputParser -> MergeCommand
+activate MergeCommand
+
+MergeCommand --> InputParser
+deactivate MergeCommand
+
+InputParser --> LogicManager : c
+deactivate InputParser
+
+LogicManager -> MergeCommand : execute()
+activate MergeCommand
+
+
+create UiConsumer
+MergeCommand -> UiConsumer
+activate UiConsumer
+UiConsumer --> MergeCommand
+deactivate UiConsumer
+
+create CommandResult
+MergeCommand -> CommandResult : new CommandResult(.., uiEffect)
+activate CommandResult
+
+CommandResult --> MergeCommand
+deactivate CommandResult
+MergeCommand --> LogicManager : result
+deactivate MergeCommand
+MergeCommand -[hidden]-> LogicManager : result
+destroy MergeCommand
+
+MainWindow<--LogicManager : result
+deactivate LogicManager
+
+MainWindow -> CommandResult : executeUiEffect(this)
+activate CommandResult
+
+CommandResult -> UiConsumer : accept(m)
+activate UiConsumer
+
+UiConsumer -> MainWindow : handleFileChooser()
+activate MainWindow
+
+MainWindow --> UiConsumer :fileToMerge
+deactivate MainWindow
+
+UiConsumer -> Model : mergeAddressBook()
+activate Model
+deactivate Model
+
+UiConsumer --> CommandResult
+deactivate UiConsumer
+
+CommandResult --> MainWindow
+deactivate CommandResult
+
+
+@enduml

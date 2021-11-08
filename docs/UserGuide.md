@@ -132,7 +132,7 @@ List commands | Format
   e.g. in `add -n NAME`, `NAME` is a parameter which can be used as `add -n John Doe`.
 
 * Items in square brackets are optional.<br>
-  e.g `-n NAME [-t TAG]` can be used as `-n John Doe -t friend` or as `-n John Doe`.
+  e.g. `-n NAME [-t TAG]` can be used as `-n John Doe -t friend` or as `-n John Doe`.
 
 * Items with `…`​ after them can be used multiple times or left blank.<br>
   e.g. `[-t TAG]…​` can be used as ` ` (i.e. 0 times), `-t friend`, `-t friend -t family` etc.
@@ -209,7 +209,7 @@ selecting `File -> Merge`. Once the command is issued, *Teletubbies* will open a
 
 The data to be imported and merged must be a JSON file, with the file extension `.json`.
 
-![import_file](images/userGuide/importFile.png)
+![merge_file](images/userGuide/mergeFile.png)
 
 Format: `merge`
 
@@ -236,9 +236,9 @@ If you decide to cancel the export, you can type in any other command. *Teletubb
 for you as long as the next command received is NOT `y`.
 
 After export has been confirmed, *Teletubbies* will open a file selector window as shown below. Using
-the file selector, you can choose where the exported file will be saved.
+the file selector, you can choose where the exported file will be saved and name the file.
 
-<<< IMAGE REQUIRED >>>
+![export_file](images/userGuide/exportFile.png)
 
 Format: `export [-t TAGS]…​`
 
@@ -278,6 +278,12 @@ Examples:
 > This command will set your name as "David Wong" and your role as "Telemarketer".
 * `profile -n Anne Goh -role Supervisor`
 > This command will set your name as "Anne Goh" and your role as "Supervisor".
+
+<div markdown="block" class="alert alert-info">
+
+**:information_source: Note: The `profile` command can only be used to set up your user profile once. To modify your name or role, please follow the steps [here](#frequently-asked-questions).
+
+</div>
 
 #### Listing your previous commands: `history`
 
@@ -745,7 +751,7 @@ If your changes to the data file makes its format invalid, Teletubbies will disc
 
 **Q** How do I change my role after setting it once?<br>
 1. In the same folder as `teletubbies.jar`, look for the `preferences.json` file.
-   1. In `preferences.json`, locate the `isProfileSet` field and set it to false as follows:
+2. In `preferences.json`, locate the `isProfileSet` field and set it to false as follows:
 ```json
 {
   

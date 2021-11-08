@@ -40,7 +40,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/tanqiya.png" width="200px">
 
-[[github]](https://github.com/tanqiya) [portfolio]
+[[github]](https://github.com/tanqiya) [[portfolio]](team/tanqiya.md)
 
 * Role: Developer
 * Responsibilities: Deliverables, Deadlines, Scheduling, Tracking
