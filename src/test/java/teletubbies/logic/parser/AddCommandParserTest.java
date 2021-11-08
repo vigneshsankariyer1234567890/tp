@@ -14,23 +14,14 @@ import static teletubbies.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static teletubbies.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
-import static teletubbies.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static teletubbies.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static teletubbies.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
 import static teletubbies.logic.commands.CommandTestUtil.UUID_DESC_AMY;
 import static teletubbies.logic.commands.CommandTestUtil.UUID_DESC_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static teletubbies.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static teletubbies.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static teletubbies.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static teletubbies.logic.commands.CommandTestUtil.VALID_UUID_BOB;
-import static teletubbies.logic.parser.CliSyntax.PREFIX_UUID;
 import static teletubbies.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static teletubbies.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static teletubbies.testutil.TypicalPersons.AMY;
-import static teletubbies.testutil.TypicalPersons.BOB;
 import static teletubbies.testutil.TypicalPersons.NO_ADDRESS_AMY;
 import static teletubbies.testutil.TypicalPersons.NO_EMAIL_AMY;
 import static teletubbies.testutil.TypicalPersons.NO_TAGS_AMY;
@@ -78,8 +69,8 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPerson = new PersonBuilder(NO_TAGS_AMY).build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + UUID_DESC_AMY,
-                new AddCommand(expectedPerson));
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                + UUID_DESC_AMY, new AddCommand(expectedPerson));
 
         // missing address
         Person expectedPerson1 = new PersonBuilder(NO_ADDRESS_AMY).build();
