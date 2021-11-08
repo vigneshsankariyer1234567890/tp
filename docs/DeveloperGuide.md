@@ -886,16 +886,55 @@ Priorities:
 
 ### Use cases
 
+| Use Case ID  | Description                            |
+| -----------  | -------------------------------------- |
+| [UC01](#uc01-supervisor-adds-a-contact) |     Supervisor adds a contact                 |
+| [UC02](#uc02-supervisor-deletes-a-contact) |     Supervisor deletes a contact                      |
+| [UC03](#uc03-supervisor-tags-a-contact) |     Supervisor tags a contact                     |
+| [UC04](#uc04-telemarketer-sets-a-person-as-done) |      Telemarketer sets a person as done           |
+| [UC05](#uc05-telemarketer-adds-a-remark-to-a-person) |    Telemarketer adds a remark to a person |
+| [UC06](#uc06-telemarketer-imports-a-customer-list-from-supervisor) |    Telemarketer imports a customer list from supervisor          |
+| [UC07](#uc07-telemarketer-exports-a-customer-contact-file) |      Telemarketer exports a customer contact file                |
+| [UC08](#uc08-telemarketer-undoes-teletubbies) |     Telemarketer undoes Teletubbies   |
+| [UC09](#uc09-telemarketer-redoes-teletubbies) |       Telemarketer redoes Teletubbies           |
+| [UC10](#uc10-telemarketer-checks-command-history) |       Telemarketer checks Command History                   |
+| [UC11](#uc11-user-views-the-help-page) |     User views the help page                  |
+
 For all use cases below, the **System** is the `Teletubbies` application, and the **Actor** is the user, unless specified otherwise.
 
-#### Use case: Delete a person
+#### UC01: Supervisor adds a contact
 
 **MSS**
 
-1.  User requests to list persons
-2.  Teletubbies shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  Teletubbies deletes the person
+1. User adds a contact.
+2. Teletubbies adds the contact to the contact list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. Flags are missing for the command / Fields are invalid / Compulsory fields are empty.
+  
+  * 2a1. Teletubbies shows an error message.
+
+    Use case ends.
+
+* 2b. There is an existing contact with the same phone number being added.
+
+  * 2b1. Teletubbies shows an error message.
+  
+    Use case ends.
+
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
+
+#### UC02: Supervisor deletes a contact
+
+**MSS**
+
+1.  User requests to list contact.
+1.  Teletubbies shows a list of contacts.
+1.  User requests to delete a specific contact in the list.
+1.  Teletubbies deletes the contact.
 
     Use case ends.
 
@@ -905,54 +944,206 @@ For all use cases below, the **System** is the `Teletubbies` application, and th
 
   Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. The given index is invalid or the given phone number does not exist.
 
     * 3a1. Teletubbies shows an error message.
 
-  Use case resumes at step 2.
+      Use case resumes at step 2.
 
-#### Use case: Telemarketer workflow during a shift
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
 
-* Actor: Telemarketer User
-* Precondition: Telemarketer has obtained a list of customers assigned by Supervisor
+
+#### UC03: Supervisor tags a contact
+
+**MSS**
+
+1. User requests to list contact.
+2. Teletubbies shows a list of contacts.
+3. User requests to tag a specific contact with a name and value.
+4. Teletubbies tags the contact appropriately.
+
+    Use case ends.
+
+**Extensions**
+
+* 3a. Teletubbies detects an invalid user input in the tag command.
+
+  * 3a1. Teletubbies displays an error message.
+  
+    Use case ends.
+
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
+
+#### UC04: Telemarketer sets a person as done
+
+**MSS**
+
+1. User requests to mark a contact as done.
+2. Teletubbies sets the completed status of the contact as `COMPLETE`.
+
+    Use case ends.
+
+**Extensions**
+
+* 1a. The specified contact index is invalid.
+
+  * 1a1. Teletubbies shows an error message.
+
+    Use case resumes at step 1.
+
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
+
+#### UC05: Telemarketer adds a remark to a person
+
+**MSS**
+
+1. User requests to add a remark to a contact.
+2. Teletubbies adds the remark to the contact.
+
+   Use case ends.
+
+**Extensions**
+
+* 1a. The specified contact index is invalid.
+  
+  * 1a1. Teletubbies shows an error message.
+  
+    Use case ends.
+
+* 1b. The remark is over the 40 character limit.
+
+  * 1b1. Teletubbies shows an error message.
+  
+    Use case ends.
+
+*a. At any time, User chooses the view help (UC11).
+*b. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
+
+#### UC06: Telemarketer imports a customer list from supervisor
 
 **MSS**
 
 1. User starts up the Teletubbies desktop application.
 2. User selects and imports the JSON file containing the list of contacts for the shift from a file location.
 3. Teletubbies displays the imported contacts.
-4. User copies a customer’s contact number and makes the phone call
-5. User marks the customer as completed
+4. User copies a customer’s contact number and makes the phone call.
+5. User marks the customer as completed.
 6. Teletubbies saves the file and displays that the call for the contact is completed.
 
-Use case ends.
+    Use case ends.
 
 **Extensions**
 
 * 3a. Teletubbies does not detect a JSON file in the specified file path.
 
-  * 3a1. Teletubbies displays a message prompting the Telemarketer to try importing JSON file again.
-  * 3a2. Telemarketer imports a JSON file containing the customers’ details
-  * Steps 3a1 to 3a2 are repeated until a valid JSON file is selected
+    * 3a1. Teletubbies displays a message prompting the Telemarketer to try importing the JSON file again.
+    * 3a2. Telemarketer imports a JSON file containing the customers’ details.
+  
+      Steps 3a1 to 3a2 are repeated until a valid JSON file is selected.
 
-  Use case resumes from step 4.
-
+      Use case resumes from step 4.
 
 * 3b. Teletubbies detects that the JSON file selected is not in the correct format.
 
     * 3b1. Teletubbies displays a message informing the Telemarketer that the file is not in the correct format.
-    * 3b2. Telemarketer informs their Supervisor about the error
+    * 3b2. Telemarketer informs their Supervisor about the error.
 
-  Use case ends.
+      Use case ends.
 
+* 5a. Teletubbies detects that the index used in the command is invalid.
+    * 5a1. Teletubbies displays a message to inform Telemarketer about the input error.
+    * 5a2. Telemarketer re-enters the command with a correct index number for the contact.
+      
+      Steps 5a1 to 5a2 are repeated until a valid customer phone number is input.
 
-* 5a. Teletubbies detects that index used in the command is invalid.
-  * 5a1. Teletubbies displays a message to inform Telemarketer about the input error
-  * 5a2. Telemarketer re-enters the command with a correct index number for the contact
-  * Steps 5a1 to 5a2 are repeated until a valid customer phone number is input
+      Use case resumes from step 6.
 
-  Use case resumes from step 6.
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
 
+#### UC07: Telemarketer exports a customer contact file
+
+**MSS**
+
+1. User enters the `export` command.
+2. Teletubbies requests for confirmation for export.
+3. User confirms request to export.
+4. Teletubbies opens the file chooser window.
+5. User selects a directory to export to.
+6. Teletubbies exports the customer contact list.
+   
+   Use case ends.
+
+**Extensions**
+
+* 1a. User chooses to export contacts with a specific tag.
+  
+  * 1a1. Teletubbies displays the contact list with the specified tags.
+  
+    Use case resumes at step 2.
+
+* 3a. User enters an invalid command.
+
+  * 3a1. Teletubbies cancels the request to export.
+  
+    Use case ends.
+
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
+
+#### UC08: Telemarketer undoes Teletubbies
+
+**MSS**
+1. User enters the `undo` command.
+2. Teletubbies undoes to the previous state.
+   
+   Use case ends.
+
+**Extensions**
+
+* 1a. Teletubbies is in its earliest possible state.
+  
+  * 1a1. Teletubbies shows an error message:  “Teletubbies is currently at its earliest version and cannot be reverted.”.
+
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
+
+#### UC09: Telemarketer redoes Teletubbies
+
+**MSS**
+1. User enters the `redo` command.
+2. Teletubbies redoes to the previously undone state.
+   
+   Use case ends.
+
+**Extensions**
+
+* 1a. Teletubbies is in its latest possible state.
+
+  * 1a1. Teletubbies shows an error message:  “Teletubbies is currently at its latest version and cannot be redone.”.
+
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
+
+#### UC10: Telemarketer checks Command History
+
+**MSS**
+1. User enters the `history` command.
+2. Teletubbies shows the recently keyed-in commands in chronologically-reverse order, with the latest command at the top after history.
+
+   Use case ends.
+
+**Extensions**
+
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
+
+#### UC11: User views the help page
+
+**MSS**
+1. User enters the help command.
+2. Teletubbies displays the user guide in a web view.
+   
+    Use case ends.
+
+**Extensions**
+
+*a. At any time, User chooses to undo [UC08](#uc08-telemarketer-undoes-teletubbies) or redo [UC09](#uc09-telemarketer-redoes-teletubbies).
 
 ### Non-Functional Requirements
 1. New telemarketers should be able to easily use the application. (**Quality requirement**)
@@ -1084,10 +1275,8 @@ testers are expected to do more *exploratory* testing.
     1. Note: Between test cases for the `profile` command, set the field `isProfileSet` to false in the `preferences.json` file, which can be found in the same folder as `teletubbies.jar`.
     1. Test case: `profile -n John Doe -role Telemarketer`
        * Expected: A success message showing the user’s newly set name and role
-
     1. Test case: `profile -n John Boe -role Supervisor`
        * Expected: A success message showing the user’s newly set name and role
-
     1. Test case: `profile -n -role Telemarketer`
        * Expected: A success message showing the user’s newly set name (empty) and role
 
@@ -1096,7 +1285,6 @@ testers are expected to do more *exploratory* testing.
 2. Launch the Teletubbies app by double-clicking the jar file.
 3. Export contacts with a specified tag
    1. Prerequisites: Contacts list contains the sample data set.
-
    2. Test case: `export -t ProductB`
       * Expected: The contact list would contain contacts that have the tag “ProductB”. There would also be a message requesting user confirmation for export.
    3. Test case: `y` (continued)
@@ -1121,23 +1309,24 @@ testers are expected to do more *exploratory* testing.
 ### `undo` / `redo`
 1. If you have been using the application before this, exit the app
 2. Launch the application by double-clicking on the jar file.
-    1. Test case: `undo`
+    1. Prerequisites: None.
+    2. Test case: `undo`
         * Expected: An error message which says “Teletubbies is currently at its earliest version and cannot be reverted.”
-    2. Test case: Clear the Teletubbies application by pressing `clear` and type `undo`
+    3. Test case: Clear the Teletubbies application by pressing `clear` and type `undo`
        * Expected: The application reverts back to the state before the `clear` command was input.
-    3. Test case: `undo`
+    4. Test case: `undo`
         * Expected: An error message which says “Teletubbies is currently at its earliest version and cannot be reverted.”
-    4. Test case: `redo`
-        * Expected: The empty teletubbies application which was present after `clear`
     5. Test case: `redo`
+        * Expected: The empty teletubbies application which was present after `clear`
+    6. Test case: `redo`
         * Expected: An error message which says “Teletubbies is currently at its latest version and cannot be redone.”
-    6. Test case: Enter 3 unique commands of either `add`, `delete`, `tag`, `done`, `remark` and take note of the order. These are some of the Contact Commands that you can type to modify contacts
+    7. Test case: Enter 3 unique commands of either `add`, `delete`, `tag`, `done`, `remark` and take note of the order. These are some of the Contact Commands that you can type to modify contacts
    Key in `undo` 3 times, and after each `undo` is keyed in, verify that the state corresponds with the state from before.
         * Expected: All states are verified to be accurate
-    7. Test case: Enter one command of either `add`, `delete`, `tag`, `done` or `remark` and ensure that a previous command was not keyed in.
+    8. Test case: Enter one command of either `add`, `delete`, `tag`, `done` or `remark` and ensure that a previous command was not keyed in.
    Key in `undo` twice. 
         * Expected: The first `undo` command would return a Teletubbies state which corresponds to the state it was in when it originally started. The second `undo` command should return an error message which says “Teletubbies is currently at it's earliest version and cannot be reverted.”
-    8. Test case: Enter `redo` twice
+    9. Test case: Enter `redo` twice
         * Expected: The first `redo` command returns the Teletubbies state which was present after 7a was executed. The second `redo` command should return an error message which says “Teletubbies is currently at it's latest version and cannot be redone.”
 
 ### `history`
@@ -1152,11 +1341,61 @@ testers are expected to do more *exploratory* testing.
     1. Prerequisite: Enter at least 5 unique commands after starting up the application
     2. Test case: Pressing the [UP] and [DOWN] keys in some order, making sure to press [UP] more than 5 times, and [DOWN] more than 5 times in a row
        * Expected: The command box text should correspond with the appropriate commands in the command history (viewable with the `history` command). [UP] should show a previous command and [DOWN] should show a later command. If the first command is showing [UP] should not change the command box text. If the last command is showing, [DOWN] should not change the command box text.
-
 1. [TAB] key to autocomplete command flags
     1. Test case: Type the command `add` (or another command) and press [TAB]
        * Expected: The command box text should show the command word, with the recommended flags. For add, it should show: `add -n -p -e -a`
 
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Effort**
+
+Teletubbies started out as a brownfield project that extended from AB3, and aimed to evolve it into an optimized contact manager application for a specific target audience (i.e. Telemarketers and Telemarketing supervisors).
+
+Our team has put in a significant amount of effort during the development of Teletubbies. We currently have a total of over [10,000 lines of code contributed](https://nus-cs2103-ay2122s1.github.io/tp-dashboard/?search=W15-4&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2021-09-17), and over 300 automated tests.
+
+Through the development period, we have made significant progress in terms of new features and enhancements. Listed below are the achievements of our brownfield project, and the challenges that we faced during development.
+
+### Project Achievements & Challenges
+
+1. **Enhancement of the CLI**
+
+As Teletubbies is a CLI-based application, we implemented various enhancements to the CLI, including:
+
+* Ability to view command history
+* Ability to access previous / next commands in the command history through **up** and **down** arrows
+* Ability to auto-complete commands
+* Ability to `undo` and `redo` commands
+
+The functionality of these commands were highly influenced by UNIX CLI. While the implementation of the command history and auto-complete features were not as complex, they nevertheless posed a moderate amount of challenge as we had to implement them from scratch.
+
+Moreover, the implementations of `undo` and `redo` commands were more complex than we initially thought, as we wanted the undo and redo features to revert back any changes made to the application as a whole. Hence, we had to develop a way to store the state for the entire application and manage the different stored states over a single session, which took some time to even conceptualise (with discussions on various edge cases), and posed a significant challenge to implement.
+
+2. **Enhancement of the GUI**
+
+While Teletubbies is a CLI-based application, it nevertheless uses a GUI for the users to interact with. Hence, we implemented various enhancements to the GUI as well:
+
+* Overhaul of the GUI
+* Ability to view progress of each contact as a progress bar
+* Ability to view the aggregate progress of the entire contact list as a pie chart
+* Ability to copy the phone number from a contact using a clipboard button
+* Ability to view the User Guide in a web view directly from the application
+
+The first GUI change that was made was the `help` feature. The original AB3 application simply had the help button show a copyable link to the User Guide, which was not very user-friendly. Hence, we decided to implement a web view of the User Guide within the application itself, as it seemed to be rather straightforward. However, this posed challenges not in terms of the actual implementation, but rather in terms of understanding the JavaFX mechanics, and as a result we spent some time on trying to resolve some JavaFX-related issues.
+
+As an app that tracks progress of each contact within a list of contacts, we also decided that the ability to view individual contact progress and the total progress over the current contact list as part of the GUI would be crucial. Hence, we implemented a progress bar and a pie chart respectively, which again posed some level of challenge in terms of learning the JavaFX architecture and the syntax, but was not overly complex to implement. Finally, in order to seamlessly incorporate these features into our application, we had to overhaul the GUI layout in order to fit these features in.
+
+3. **Implementation of Teletubbies-specific Features**
+
+* Ability to `import` / `export` / `merge` contact lists in JSON format
+* Ability to set user profile
+* Reworked tagging system separate from the `add` and `edit` commands
+* Ability to add remarks to contacts
+* Ability to `filter` the list based on tags
+
+The main challenge we faced when transforming AB3 into Teletubbies was the interaction of the contact list data with the application itself. Hence, we had to spend a considerable amount of time discussing the architecture and the implementation of the `import` / `export` features, and eventually, we decided to expand the `import` feature into two separate features: `import` and `merge`.
+
+Apart from the interaction of the application with the data files, we also reworked the existing systems and added in features that were Teletubbies-specific, such as the newly reworked tagging system that uses the `tag` and `tagrm` commands instead of the `add` and `edit` commands, the ability to add remarks to contacts via the `remark` command, filtering based on tags, and the ability for the user to set a profile that would determine the functionalities that the user has access to. The implementation for all these features also took some considerable amount of discussion and collaboration in order to ensure that all the features worked together seamlessly.
 
 --------------------------------------------------------------------------------------------------------------------
 
