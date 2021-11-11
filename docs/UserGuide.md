@@ -13,7 +13,7 @@ Teletubbies can get your contact management tasks done faster than traditional G
 
 ## Table of Contents
 * Table of Contents
-  {:toc}
+{:toc}
 
 --------------------------------------------------------------------------------------------------------------------
 
