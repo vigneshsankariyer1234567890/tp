@@ -234,7 +234,10 @@ Additionally, the `profile` command can only be used to set up your user profile
 </div>
 
 <div markdown="block" class="alert alert-warning">
-:exclamation: Important: If you are opening Teletubbies for the first time, you should be sure to set your profile before doing any actions. 
+
+**:exclamation: Important:**<br>
+
+If you are opening Teletubbies for the first time, you should be sure to set your profile before doing any actions. 
 </div>
 
 <div style="page-break-after: always;"></div>
@@ -255,6 +258,8 @@ Format: `import`
 <div markdown="span" class="alert alert-warning">:exclamation: Caution:
 If the format of the selected data file is invalid, Teletubbies will start with an empty contact list!
 </div>
+
+<br>
 
 <div markdown="span" class="alert alert-warning">:exclamation: Caution:
 `import` will cause all our current contacts to be wiped from Teletubbies! If you wish to keep 
